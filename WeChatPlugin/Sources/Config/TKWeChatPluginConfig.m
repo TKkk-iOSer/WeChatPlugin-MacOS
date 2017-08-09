@@ -7,11 +7,13 @@
 //
 
 #import "TKWeChatPluginConfig.h"
+#import "TKRemoteControlModel.h"
 
 static NSString * const kTKPreventRevokeEnableKey = @"kTKPreventRevokeEnableKey";
 static NSString * const kTKAutoReplyEnableKey = @"kTKAutoReplyEnableKey";
 static NSString * const kTKAutoReplyKeywordKey = @"kTKAutoReplyKeywordKey";
 static NSString * const kTKAutoReplyTextKey = @"kTKAutoReplyTextKey";
+static NSString * const kTKRemoteControlModelsFilePath = @"/Applications/WeChat.app/Contents/MacOS/WeChatPlugin.framework/Resources/TKRemoteControlCommands.plist";
 
 @implementation TKWeChatPluginConfig
 
@@ -58,6 +60,38 @@ static NSString * const kTKAutoReplyTextKey = @"kTKAutoReplyTextKey";
     _autoReplyText = autoReplyText;
     [[NSUserDefaults standardUserDefaults] setObject:autoReplyText forKey:kTKAutoReplyTextKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (NSArray *)remoteControlModels {
+    if (!_remoteControlModels) {
+        _remoteControlModels = ({
+            NSArray *originModels = [NSArray arrayWithContentsOfFile:kTKRemoteControlModelsFilePath];
+            NSMutableArray *newRemoteControlModels = [NSMutableArray array];
+            [originModels enumerateObjectsUsingBlock:^(NSArray *subModels, NSUInteger idx, BOOL * _Nonnull stop) {
+                NSMutableArray *newSubModels = [NSMutableArray array];
+                [subModels enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    TKRemoteControlModel *model = [[TKRemoteControlModel alloc] initWithDict:obj];
+                    [newSubModels addObject:model];
+                }];
+                [newRemoteControlModels addObject:newSubModels];
+            }];
+
+            newRemoteControlModels;
+        });
+    }
+    return _remoteControlModels;
+}
+
+- (void)saveRemoteControlModels {
+    NSMutableArray *needSaveModels = [NSMutableArray array];
+    [_remoteControlModels enumerateObjectsUsingBlock:^(NSArray *subModels, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSMutableArray *newSubModels = [NSMutableArray array];
+        [subModels enumerateObjectsUsingBlock:^(TKRemoteControlModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [newSubModels addObject:obj.dictionary];
+        }];
+        [needSaveModels addObject:newSubModels];
+    }];
+    [needSaveModels writeToFile:kTKRemoteControlModelsFilePath atomically:YES];
 }
 
 @end

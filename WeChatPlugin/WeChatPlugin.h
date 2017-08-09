@@ -13,10 +13,6 @@
 FOUNDATION_EXPORT double WeChatPluginVersionNumber;
 FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 
-#define SCREEN_WIDTH ([NSScreen mainScreen].frame.size.width)
-#define SCREEN_HEIGHT ([NSScreen mainScreen].frame.size.height)
-
-
 #pragma mark - 微信原始的部分类与方法
 
 @interface MMMainWindowController : NSObject
@@ -46,6 +42,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @property(retain, nonatomic, setter=SetFromUserName:) SKBuiltinString_t *fromUserName; // @synthesize fromUserName;
 @property(nonatomic, setter=SetMsgType:) int msgType; // @synthesize msgType;
 @property(retain, nonatomic, setter=SetToUserName:) SKBuiltinString_t *toUserName; // @synthesize toUserName;
+@property (nonatomic, assign) unsigned int createTime;
 @end
 
 @interface WeChat : NSObject
@@ -63,10 +60,14 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @interface MessageData : NSObject
 - (id)initWithMsgType:(long long)arg1;
 @property(retain, nonatomic) NSString *fromUsrName;
-@property(retain, nonatomic) NSString *toUsrName; 
+@property(retain, nonatomic) NSString *toUsrName;
 @property(retain, nonatomic) NSString *msgContent;
 @property(retain, nonatomic) NSString *msgPushContent;
 @property(nonatomic) int msgStatus;
 @property(nonatomic) int msgCreateTime;
 @property(nonatomic) int mesLocalID;
+@end
+
+@interface CUtility : NSObject
++ (BOOL)HasWechatInstance;
 @end

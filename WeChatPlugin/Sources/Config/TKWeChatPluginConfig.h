@@ -10,11 +10,13 @@
 
 @interface TKWeChatPluginConfig : NSObject
 
-+ (instancetype)sharedConfig;
-
 @property (nonatomic, assign) BOOL preventRevokeEnable;         /**<    是否开启防撤回    */
 @property (nonatomic, assign) BOOL autoReplyEnable;             /**<    是否开启自动回复  */
 @property (nonatomic, copy) NSString *autoReplyKeyword;         /**<    自动回复关键字    */
 @property (nonatomic, copy) NSString *autoReplyText;            /**<    自动回复的内容    */
+@property (nonatomic, copy) NSArray *remoteControlModels;       /**<    远程控制的数组    */
+
+- (void)saveRemoteControlModels;
++ (instancetype)sharedConfig;
 
 @end
