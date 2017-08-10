@@ -63,6 +63,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @property(retain, nonatomic) NSString *toUsrName;
 @property(retain, nonatomic) NSString *msgContent;
 @property(retain, nonatomic) NSString *msgPushContent;
+@property(nonatomic) int messageType;
 @property(nonatomic) int msgStatus;
 @property(nonatomic) int msgCreateTime;
 @property(nonatomic) int mesLocalID;

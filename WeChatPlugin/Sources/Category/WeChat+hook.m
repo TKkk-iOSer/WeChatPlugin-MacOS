@@ -168,17 +168,21 @@ static char tkRemoteControlWindowControllerKey;     //  自动回复窗口的关
             ContactStorage *contactStorage = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("ContactStorage")];
             WCContactData *selfContact = [contactStorage GetSelfContact];
 
-            NSString *newMsgContent;
+            NSString *newMsgContent = @"TK拦截到一条非文本撤回消息";
             //      判断是否是自己发起撤回
             if ([selfContact.m_nsUsrName isEqualToString:revokeMsgData.fromUsrName]) {
-                newMsgContent = [NSString stringWithFormat:@"TK拦截到你撤回了一条消息：\n %@",revokeMsgData.msgContent];
+                if (revokeMsgData.messageType == 1) {       // 判断是否为文本消息
+                    newMsgContent = [NSString stringWithFormat:@"TK拦截到你撤回了一条消息：\n %@",revokeMsgData.msgContent];
+                }
             } else {
-                newMsgContent = [NSString stringWithFormat:@"TK拦截到一条撤回消息：\n %@",revokeMsgData.msgPushContent];
-                //      消息免打扰的群，撤回时 msgPushContent 为空
-                if ([revokeMsgData.msgPushContent isEqualToString:@""]) {
+                if (![revokeMsgData.msgPushContent isEqualToString:@""]) {
+                    newMsgContent = [NSString stringWithFormat:@"TK拦截到一条撤回消息：\n %@",revokeMsgData.msgPushContent];
+                } else if (revokeMsgData.messageType == 1) {
                     NSRange range = [revokeMsgData.msgContent rangeOfString:@":\n"];
                     NSString *content = [revokeMsgData.msgContent substringFromIndex:range.location + range.length];
-                    newMsgContent = [NSString stringWithFormat:@"TK拦截到一条撤回消息：\n %@",content];
+                    if (range.length > 0) {
+                        newMsgContent = [NSString stringWithFormat:@"TK拦截到一条撤回消息：\n %@",content];
+                    }
                 }
             }
             MessageData *newMsgData = ({
