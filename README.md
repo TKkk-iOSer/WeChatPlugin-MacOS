@@ -1,10 +1,12 @@
 
-##WeChatPlugin-MacOS
+## WeChatPlugin-MacOS
 
 ![](https://img.shields.io/badge/platform-osx-lightgrey.svg) ![](https://img.shields.io/badge/support-wechat%202.2.8-green.svg)
    
-微信小助手 v1.0.0
-![微信小助手.png](http://upload-images.jianshu.io/upload_images/965383-80c56cbc5c192604.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+微信小助手 v1.0.0   
+
+![微信小助手.png](http://upload-images.jianshu.io/upload_images/965383-80c56cbc5c192604.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)   
+
 ~~主要实现 macOS 版微信的<a>消息防撤回与自动回复</a>的功能，详细内容，请参考[我的博客](http://www.jianshu.com/p/7f65287a2e7a)~~
 
 
@@ -21,8 +23,10 @@
 
 * 自动回复
 ![自动回复.gif](http://upload-images.jianshu.io/upload_images/965383-b61b6d983c90e0c5.gif?imageMogr2/auto-orient/strip)
+
 * 微信多开
 ![微信多开.gif](http://upload-images.jianshu.io/upload_images/965383-7f3bded66cec73e6.gif?imageMogr2/auto-orient/strip)
+
 * 远程控制(关闭Chrome、QQ、开启屏幕保护)
 ![远程控制.gif](http://upload-images.jianshu.io/upload_images/965383-0cf50d9b22b02f2f.gif?imageMogr2/auto-orient/strip)
 
