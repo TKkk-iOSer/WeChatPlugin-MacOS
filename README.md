@@ -1,5 +1,5 @@
 
-##WeChatPlugin-MacOS
+## WeChatPlugin-MacOS
 
 ![](https://img.shields.io/badge/platform-osx-lightgrey.svg) ![](https://img.shields.io/badge/support-wechat%202.2.8-green.svg)
    
@@ -7,12 +7,23 @@
 ![微信小助手.png](http://upload-images.jianshu.io/upload_images/965383-80c56cbc5c192604.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 ~~主要实现 macOS 版微信的<a>消息防撤回与自动回复</a>的功能，详细内容，请参考[我的博客](http://www.jianshu.com/p/7f65287a2e7a)~~
 
+---
 
 ### 功能
 * 消息自动回复
 * 消息防撤回
 * 远程控制
 * 微信多开
+
+远程控制：
+
+- [x] 屏幕保护
+- [x] 清空废纸篓
+- [x] 锁屏、休眠、关机、重启
+- [x] 退出QQ、Chreme、Safari、所有程序
+- [x] 网易云音乐(播放、暂停、下一首、上一首、喜欢、取消喜欢)
+
+---
 
 ### Demo 演示
 
@@ -21,20 +32,40 @@
 
 * 自动回复
 ![自动回复.gif](http://upload-images.jianshu.io/upload_images/965383-b61b6d983c90e0c5.gif?imageMogr2/auto-orient/strip)
+
 * 微信多开
 ![微信多开.gif](http://upload-images.jianshu.io/upload_images/965383-7f3bded66cec73e6.gif?imageMogr2/auto-orient/strip)
-* 远程控制(关闭Chrome、QQ、开启屏幕保护)
+
+* 远程控制 (测试关闭Chrome、QQ、开启屏幕保护)
 ![远程控制.gif](http://upload-images.jianshu.io/upload_images/965383-0cf50d9b22b02f2f.gif?imageMogr2/auto-orient/strip)
 
+---
 ### 安装
-* 下载 WeChatPlugin, 先进行 Build (`command + B`)，之后 Run (`command + R`)即可启动微信，此时插件注入完成。
+**1. 已安装Xcode**
+
+* 下载 WeChatPlugin, 用Xcode打开，先进行 Build (`command + B`)，之后 Run (`command + R`)即可启动微信，此时插件注入完成。
  
 * 若 Error，提示无权限，请对 WeChat 赋予权限。
 `sudo chmod -R 777 /Applications/WeChat.app`
 * 若 Error，提示找不到 Framework，先进行 Build。
 
-* 登录微信，在**菜单栏-帮助**中看到消息防撤回与自动回复即安装成功。
-![菜单栏-帮助.png](http://upload-images.jianshu.io/upload_images/965383-7c6ec7a738f81c0c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+--
+
+**2. 无安装Xcode**
+
+* 下载WeChatPlugin，用 Termimal 打开项目当前目录，执行 `./Other/Install.sh`即可。
+* 若 Error，提示无权限，请对 WeChat 、Install.sh 赋予权限。
+`sudo chmod -R 777 /Applications/WeChat.app`
+`sudo chmod 777 ./Other/Install.sh`
+
+--
+**3. 安装完成**
+
+* 登录微信，在**菜单栏**中看到**微信小助手**即安装成功。 
+![微信小助手.png](http://upload-images.jianshu.io/upload_images/965383-80c56cbc5c192604.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+--- 
 
 ### 使用
 
@@ -48,9 +79,12 @@
 * 远程控制：点击`远程控制Mac OS`或者快捷键`command + shift + c`,即可打开控制窗口。
 
 ![.png](http://upload-images.jianshu.io/upload_images/965383-9c67894ee7092600.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-①为选择是否开启远程控制此功能。
+
+①为选择是否开启远程控制此功能。   
+
 ②为能够触发远程控制的消息内容(仅向自己发送账号有效)。
 
+---
 
 ### 卸载
 
