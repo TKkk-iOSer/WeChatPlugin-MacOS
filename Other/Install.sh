@@ -11,5 +11,5 @@ if [ ! -f "$app_executable_backup_path" ]
 then
 cp "$app_executable_path" "$app_executable_backup_path"
 fi
-cp -r "./Products/Debug/${framework_name}.framework" ${app_bundle_path}
-./insert_dylib --all-yes "${framework_path}/${framework_name}" "$app_executable_backup_path" "$app_executable_path"
+cp -r "./Other/Products/Debug/${framework_name}.framework" ${app_bundle_path}
+./Other/insert_dylib --all-yes "${framework_path}/${framework_name}" "$app_executable_backup_path" "$app_executable_path"

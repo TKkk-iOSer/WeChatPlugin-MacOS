@@ -50,16 +50,20 @@
 
 * 下载 WeChatPlugin, 用Xcode打开，先进行 Build (`command + B`)，之后 Run (`command + R`)即可启动微信，此时插件注入完成。
  
-* 若 Error，提示无权限，请对 WeChat 赋予权限。
+* 若提示**Permission denied**，请对 WeChat 赋予权限。
 `sudo chmod -R 777 /Applications/WeChat.app`
 * 若 Error，提示找不到 Framework，先进行 Build。
 
 **2. 无安装Xcode**
 
 * 下载WeChatPlugin，用 Termimal 打开项目当前目录，执行 `./Other/Install.sh`即可。
-* 若 Error，提示无权限，请对 WeChat 、Install.sh 赋予权限。
-`sudo chmod -R 777 /Applications/WeChat.app`
-`sudo chmod 777 ./Other/Install.sh`
+* 若提示**Permission denied**，请对 WeChat 、Install.sh 赋予权限。
+![Permission denied.png](http://upload-images.jianshu.io/upload_images/965383-4bc0ba2e07b5d14d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+```
+sudo chmod -R 777 /Applications/WeChat.app
+sudo chmod 777 ./Other/Install.sh
+```
 
 **3. 安装完成**
 
