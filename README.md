@@ -22,7 +22,7 @@
 - [x] 屏幕保护
 - [x] 清空废纸篓
 - [x] 锁屏、休眠、关机、重启
-- [x] 退出QQ、Chreme、Safari、所有程序
+- [x] 退出QQ、Chrome、Safari、所有程序
 - [x] 网易云音乐(播放、暂停、下一首、上一首、喜欢、取消喜欢)
 
 ---
@@ -38,11 +38,8 @@
 * 微信多开
 ![微信多开.gif](http://upload-images.jianshu.io/upload_images/965383-7f3bded66cec73e6.gif?imageMogr2/auto-orient/strip)
 
-<<<<<<< HEAD
+
 * 远程控制 (测试关闭Chrome、QQ、开启屏幕保护)
-=======
-* 远程控制(关闭Chrome、QQ、开启屏幕保护)
->>>>>>> f6dca9353c4984abfab5c90aaf759b92d106c0b1
 ![远程控制.gif](http://upload-images.jianshu.io/upload_images/965383-0cf50d9b22b02f2f.gif?imageMogr2/auto-orient/strip)
 
 ---
@@ -55,8 +52,6 @@
 `sudo chmod -R 777 /Applications/WeChat.app`
 * 若 Error，提示找不到 Framework，先进行 Build。
 
---
-
 **2. 无安装Xcode**
 
 * 下载WeChatPlugin，用 Termimal 打开项目当前目录，执行 `./Other/Install.sh`即可。
@@ -64,7 +59,6 @@
 `sudo chmod -R 777 /Applications/WeChat.app`
 `sudo chmod 777 ./Other/Install.sh`
 
---
 **3. 安装完成**
 
 * 登录微信，在**菜单栏**中看到**微信小助手**即安装成功。 
