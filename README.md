@@ -25,6 +25,8 @@
 - [x] 退出QQ、Chrome、Safari、所有程序
 - [x] 网易云音乐(播放、暂停、下一首、上一首、喜欢、取消喜欢)
 
+**若想使用远程控制网易云音乐，请在“系统偏好设置 ==> 安全性与隐私 ==> 隐私 ==> 辅助功能”中添加微信**
+
 ---
 
 ### Demo 演示
@@ -92,5 +94,8 @@
 
 ~~在 `/Applications/WeChat.app/Contents/MacOS` 目录中，删除 `WeChat` 与 `WeChatPlugin.framework`，将`WeChat_backup` 重命名为 `WeChat` 即可。~~
 
+### Other
+
+若有其他好的想法、需求欢迎 Issue me。
 
 
