@@ -38,7 +38,8 @@
 ![自动回复.gif](http://upload-images.jianshu.io/upload_images/965383-b61b6d983c90e0c5.gif?imageMogr2/auto-orient/strip)
 
 * 微信多开
-![微信多开.gif](http://upload-images.jianshu.io/upload_images/965383-7f3bded66cec73e6.gif?imageMogr2/auto-orient/strip)
+![微信多开.gif](http://upload-images.jianshu.io/upload_images/965383-51d8eae02d48fda9.gif?imageMogr2/auto-orient/strip)
+
 
 
 * 远程控制 (测试关闭Chrome、QQ、开启屏幕保护)
