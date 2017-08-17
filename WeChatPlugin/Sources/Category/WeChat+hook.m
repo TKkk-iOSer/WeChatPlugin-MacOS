@@ -254,11 +254,15 @@ static char tkRemoteControlWindowControllerKey;     //  自动回复窗口的关
         //                        content = [addMsg.content.string substringFromIndex:range.location + range.length];
         //                    }
         //                }
+        
         ContactStorage *contactStorage = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("ContactStorage")];
         WCContactData *selfContact = [contactStorage GetSelfContact];
-
-        NSString *keyword = [[TKWeChatPluginConfig sharedConfig] autoReplyKeyword];
-        if ([keyword isEqualToString:@""] || [msg.content.string isEqualToString:keyword]) {
+        NSString *keyword = [[TKWeChatPluginConfig sharedConfig] autoReplyKeyword]; /// 获取关键字
+        NSArray * keyWordArray = [keyword componentsSeparatedByString:@","];        /// 用逗号截取成数组
+        if ([keyword isEqualToString:@""]   ||
+            [keyword isEqualToString:@"*"]  ||                                      /// 添加通配符 * 号 (建议判断空与判断通配符只留一个)
+            [keyWordArray containsObject:msg.content.string])                       
+        {
             [service SendTextMessage:selfContact.m_nsUsrName toUsrName:msg.fromUserName.string msgText:[[TKWeChatPluginConfig sharedConfig] autoReplyText] atUserList:nil];
         }
     }
