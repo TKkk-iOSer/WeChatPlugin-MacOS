@@ -8,13 +8,13 @@
 
 #import "WeChat+hook.h"
 #import "WeChatPlugin.h"
-#import "TKAutoReplyWindowController.h"
 #import "XMLReader.h"
 #import "TKRemoteControlController.h"
+#import "TKAutoReplyWindowController.h"
 #import "TKRemoteControlWindowController.h"
 
 static char tkAutoReplyWindowControllerKey;         //  自动回复窗口的关联 key
-static char tkRemoteControlWindowControllerKey;     //  自动回复窗口的关联 key
+static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关联 key
 
 @implementation NSObject (WeChatHook)
 

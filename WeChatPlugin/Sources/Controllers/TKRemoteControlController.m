@@ -20,11 +20,8 @@ static NSString * const kRemoteControlAppleScript = @"osascript /Applications/We
     [remoteControlModels enumerateObjectsUsingBlock:^(NSArray *subModels, NSUInteger index, BOOL * _Nonnull stop) {
         [subModels enumerateObjectsUsingBlock:^(TKRemoteControlModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
             if (model.enable && ![model.keyword isEqualToString:@""] && [msg isEqualToString:model.keyword]) {
-                if ([model.function isEqualToString:@"屏幕保护"]) {
-                    //      屏幕保护通过 Shell 命令来执行即可
-                    [self executeShellCommand:model.executeCommand];
-                } else if ([model.function isEqualToString:@"锁屏"]) {
-                    //      屏幕保护通过 Shell 命令来执行即可
+                if ([model.function isEqualToString:@"屏幕保护"] || [model.function isEqualToString:@"锁屏"]) {
+                    //      屏幕保护 & 锁屏 通过 Shell 命令来执行即可
                     [self executeShellCommand:model.executeCommand];
                 } else {
                     //      拼接相关参数，执行 AppleScript

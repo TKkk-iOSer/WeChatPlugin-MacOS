@@ -57,7 +57,7 @@
 }
 
 /**
- 关闭窗口时间
+ 关闭窗口事件
 
  */
 - (BOOL)windowShouldClose:(id)sender {
