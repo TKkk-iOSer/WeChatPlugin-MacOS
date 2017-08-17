@@ -59,7 +59,8 @@
 
 * 下载WeChatPlugin，用 Termimal 打开项目当前目录，执行 `./Other/Install.sh`即可。
 * 若提示**Permission denied**，请对 WeChat 、Install.sh 赋予权限。
-![Permission denied.png](http://upload-images.jianshu.io/upload_images/965383-4bc0ba2e07b5d14d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![Permission denied.png](http://upload-images.jianshu.io/upload_images/965383-11e4480553ba086e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 
 ```
 sudo chmod -R 777 /Applications/WeChat.app
