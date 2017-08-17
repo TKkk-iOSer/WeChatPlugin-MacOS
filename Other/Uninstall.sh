@@ -12,4 +12,7 @@ then
 rm "$app_executable_path"
 rm -rf "$framework_path"
 mv "$app_executable_backup_path" "$app_executable_path"
+echo "\n\t卸载成功"
+else
+echo "\n\t未发现微信小助手"
 fi
