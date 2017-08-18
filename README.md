@@ -52,7 +52,10 @@
 
 **2. 已安装Xcode**
 
-* 先更改微信的 owner `sudo chown -R $(whoami) /Applications/WeChat.app` 否则会出现类似**Permission denied**的错误。
+* 先更改微信的 owner，否则会出现类似**Permission denied**的错误。 
+
+`sudo chown -R $(whoami) /Applications/WeChat.app` 
+
 ![Permission denied.png](http://upload-images.jianshu.io/upload_images/965383-11e4480553ba086e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 * 下载 WeChatPlugin, 用Xcode打开，先进行 Build (`command + B`)，之后 Run (`command + R`)即可启动微信，此时插件注入完成。
