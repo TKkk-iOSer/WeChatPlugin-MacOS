@@ -48,7 +48,7 @@
 ---
 ### 安装
 
-* 先对微信赋予权限 `sudo chmod -R 777 /Applications/WeChat.app` 否则会出现类似**Permission denied**的错误。
+* 先对微信赋予权限 `sudo chown -R $(whoami) /Applications/WeChat.app` 否则会出现类似**Permission denied**的错误。
 ![Permission denied.png](http://upload-images.jianshu.io/upload_images/965383-11e4480553ba086e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 **1. 已安装Xcode**
