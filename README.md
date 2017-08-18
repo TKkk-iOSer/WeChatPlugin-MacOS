@@ -40,27 +40,24 @@
 * 微信多开
 ![微信多开.gif](http://upload-images.jianshu.io/upload_images/965383-51d8eae02d48fda9.gif?imageMogr2/auto-orient/strip)
 
-
-
 * 远程控制 (测试关闭Chrome、QQ、开启屏幕保护)
 ![远程控制.gif](http://upload-images.jianshu.io/upload_images/965383-0cf50d9b22b02f2f.gif?imageMogr2/auto-orient/strip)
 
 ---
 ### 安装
 
-* 先对微信赋予权限 `sudo chmod -R 777 /Applications/WeChat.app` 否则会出现类似**Permission denied**的错误。
+**1. 无安装Xcode**
+
+* 下载WeChatPlugin，用 Termimal 打开项目当前目录，执行 `./Other/Install.sh`即可。
+
+**2. 已安装Xcode**
+
+* 先更改微信的 owner `sudo chown -R $(whoami) /Applications/WeChat.app` 否则会出现类似**Permission denied**的错误。
 ![Permission denied.png](http://upload-images.jianshu.io/upload_images/965383-11e4480553ba086e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
-**1. 已安装Xcode**
-
 
 * 下载 WeChatPlugin, 用Xcode打开，先进行 Build (`command + B`)，之后 Run (`command + R`)即可启动微信，此时插件注入完成。
  
 * 若 Error，提示找不到 Framework，先进行 Build。
-
-**2. 无安装Xcode**
-
-* 下载WeChatPlugin，用 Termimal 打开项目当前目录，执行 `./Other/Install.sh`即可。
 
 **3. 安装完成**
 
