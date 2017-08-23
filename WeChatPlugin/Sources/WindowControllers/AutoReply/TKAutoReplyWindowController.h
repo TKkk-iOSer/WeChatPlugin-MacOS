@@ -7,9 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "TKAutoReplyModel.h"
 
 @interface TKAutoReplyWindowController : NSWindowController
 
-@property (nonatomic, copy) void (^startAutoReply)();
+@property (nonatomic, copy) TKAutoReplyModel *model;
 
 @end

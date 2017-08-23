@@ -8,11 +8,10 @@
 
 #import "TKWeChatPluginConfig.h"
 #import "TKRemoteControlModel.h"
+#import "TKAutoReplyModel.h"
 
 static NSString * const kTKPreventRevokeEnableKey = @"kTKPreventRevokeEnableKey";
-static NSString * const kTKAutoReplyEnableKey = @"kTKAutoReplyEnableKey";
-static NSString * const kTKAutoReplyKeywordKey = @"kTKAutoReplyKeywordKey";
-static NSString * const kTKAutoReplyTextKey = @"kTKAutoReplyTextKey";
+static NSString * const kTKAutoReplyModelsFilePath = @"/Applications/WeChat.app/Contents/MacOS/WeChatPlugin.framework/Resources/TKAutoReplyModels.plist";
 static NSString * const kTKRemoteControlModelsFilePath = @"/Applications/WeChat.app/Contents/MacOS/WeChatPlugin.framework/Resources/TKRemoteControlCommands.plist";
 
 @implementation TKWeChatPluginConfig
@@ -31,9 +30,6 @@ static NSString * const kTKRemoteControlModelsFilePath = @"/Applications/WeChat.
     self = [super init];
     if (self) {
         _preventRevokeEnable = [[NSUserDefaults standardUserDefaults] boolForKey:kTKPreventRevokeEnableKey];
-        _autoReplyEnable = [[NSUserDefaults standardUserDefaults] boolForKey:kTKAutoReplyEnableKey];
-        _autoReplyKeyword = [[NSUserDefaults standardUserDefaults] objectForKey:kTKAutoReplyKeywordKey];
-        _autoReplyText = [[NSUserDefaults standardUserDefaults] objectForKey:kTKAutoReplyTextKey];
     }
     return self;
 }
@@ -44,24 +40,38 @@ static NSString * const kTKRemoteControlModelsFilePath = @"/Applications/WeChat.
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (void)setAutoReplyEnable:(BOOL)autoReplyEnable {
-    _autoReplyEnable = autoReplyEnable;
-    [[NSUserDefaults standardUserDefaults] setBool:autoReplyEnable forKey:kTKAutoReplyEnableKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+#pragma mark - 自动回复
+- (NSArray *)autoReplyModels {
+    if (!_autoReplyModels) {
+        _autoReplyModels = ({
+            NSArray *originModels = [NSArray arrayWithContentsOfFile:kTKAutoReplyModelsFilePath];
+            NSMutableArray *newModels = [NSMutableArray array];
+            [originModels enumerateObjectsUsingBlock:^(NSDictionary *dict, NSUInteger idx, BOOL * _Nonnull stop) {
+                TKAutoReplyModel *model = [[TKAutoReplyModel alloc] initWithDict:dict];
+                [newModels addObject:model];
+            }];
+            
+            newModels;
+        });
+    }
+    return _autoReplyModels;
 }
 
-- (void)setAutoReplyKeyword:(NSString *)autoReplyKeyword {
-    _autoReplyKeyword = autoReplyKeyword;
-    [[NSUserDefaults standardUserDefaults] setObject:autoReplyKeyword forKey:kTKAutoReplyKeywordKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+- (void)saveAutoReplyModels {
+    NSMutableArray *needSaveModels = [NSMutableArray array];
+    [_autoReplyModels enumerateObjectsUsingBlock:^(TKAutoReplyModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (model.hasEmptyKeywordOrReplyContent) {
+            model.enable = NO;
+            model.enableGroupReply = NO;
+        }
+        model.replyContent = model.replyContent == nil ? @"" : model.replyContent;
+        model.keyword = model.keyword == nil ? @"" : model.keyword;
+        [needSaveModels addObject:model.dictionary];
+    }];
+    [needSaveModels writeToFile:kTKAutoReplyModelsFilePath atomically:YES];
 }
 
-- (void)setAutoReplyText:(NSString *)autoReplyText {
-    _autoReplyText = autoReplyText;
-    [[NSUserDefaults standardUserDefaults] setObject:autoReplyText forKey:kTKAutoReplyTextKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
+#pragma mark - 远程控制
 - (NSArray *)remoteControlModels {
     if (!_remoteControlModels) {
         _remoteControlModels = ({
@@ -75,7 +85,7 @@ static NSString * const kTKRemoteControlModelsFilePath = @"/Applications/WeChat.
                 }];
                 [newRemoteControlModels addObject:newSubModels];
             }];
-
+            
             newRemoteControlModels;
         });
     }

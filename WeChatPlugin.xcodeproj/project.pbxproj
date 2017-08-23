@@ -7,6 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		522547CF1F4AE5A700226A2A /* NSView+Action.h in Headers */ = {isa = PBXBuildFile; fileRef = 522547CD1F4AE5A700226A2A /* NSView+Action.h */; };
+		522547D01F4AE5A700226A2A /* NSView+Action.m in Sources */ = {isa = PBXBuildFile; fileRef = 522547CE1F4AE5A700226A2A /* NSView+Action.m */; };
+		522547DE1F4C312A00226A2A /* TKAutoReplyWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 522547D71F4C312A00226A2A /* TKAutoReplyWindowController.h */; };
+		522547DF1F4C312A00226A2A /* TKAutoReplyWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 522547D81F4C312A00226A2A /* TKAutoReplyWindowController.m */; };
+		522547E01F4C312A00226A2A /* TKAutoReplyWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 522547D91F4C312A00226A2A /* TKAutoReplyWindowController.xib */; };
+		522547E11F4C312A00226A2A /* TKRemoteControlWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 522547DB1F4C312A00226A2A /* TKRemoteControlWindowController.h */; };
+		522547E21F4C312A00226A2A /* TKRemoteControlWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 522547DC1F4C312A00226A2A /* TKRemoteControlWindowController.m */; };
+		522547E31F4C312A00226A2A /* TKRemoteControlWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 522547DD1F4C312A00226A2A /* TKRemoteControlWindowController.xib */; };
+		526F4D7D1F4AAADA00E46004 /* Color.h in Headers */ = {isa = PBXBuildFile; fileRef = 526F4D791F4AAADA00E46004 /* Color.h */; };
+		526F4D801F4AAADA00E46004 /* TKPrefixHeader.pch in Headers */ = {isa = PBXBuildFile; fileRef = 526F4D7C1F4AAADA00E46004 /* TKPrefixHeader.pch */; };
+		526F4D831F4AAC1900E46004 /* TKAutoReplyModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 526F4D811F4AAC1900E46004 /* TKAutoReplyModel.h */; };
+		526F4D841F4AAC1900E46004 /* TKAutoReplyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 526F4D821F4AAC1900E46004 /* TKAutoReplyModel.m */; };
+		526F4D8B1F4AAC3800E46004 /* TKAutoReplyContentView.h in Headers */ = {isa = PBXBuildFile; fileRef = 526F4D861F4AAC3800E46004 /* TKAutoReplyContentView.h */; };
+		526F4D8C1F4AAC3800E46004 /* TKAutoReplyContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 526F4D871F4AAC3800E46004 /* TKAutoReplyContentView.m */; };
+		526F4D8D1F4AAC3800E46004 /* TKRemoteControlCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 526F4D891F4AAC3800E46004 /* TKRemoteControlCell.h */; };
+		526F4D8E1F4AAC3800E46004 /* TKRemoteControlCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 526F4D8A1F4AAC3800E46004 /* TKRemoteControlCell.m */; };
+		526F4D911F4AAE6F00E46004 /* TKAutoReplyCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 526F4D8F1F4AAE6F00E46004 /* TKAutoReplyCell.h */; };
+		526F4D921F4AAE6F00E46004 /* TKAutoReplyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 526F4D901F4AAE6F00E46004 /* TKAutoReplyCell.m */; };
+		526F4D941F4ABAA000E46004 /* edit.png in Resources */ = {isa = PBXBuildFile; fileRef = 526F4D931F4ABAA000E46004 /* edit.png */; };
 		528B4F971EA7383800BC6A89 /* WeChatPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 528B4F951EA7383800BC6A89 /* WeChatPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		528B4FB41EA7386D00BC6A89 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 528B4FAA1EA7386D00BC6A89 /* main.mm */; };
 		52B5CEF21F3B4623000D9DD9 /* TKRemoteControlCommands.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52B5CEF01F3B4623000D9DD9 /* TKRemoteControlCommands.plist */; };
@@ -23,17 +42,28 @@
 		52B5CF1B1F3B4631000D9DD9 /* TKHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B5CF031F3B4631000D9DD9 /* TKHelper.m */; };
 		52B5CF1C1F3B4631000D9DD9 /* XMLReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 52B5CF041F3B4631000D9DD9 /* XMLReader.h */; };
 		52B5CF1D1F3B4631000D9DD9 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B5CF051F3B4631000D9DD9 /* XMLReader.m */; };
-		52B5CF1E1F3B4631000D9DD9 /* TKRemoteControlCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 52B5CF071F3B4631000D9DD9 /* TKRemoteControlCell.h */; };
-		52B5CF1F1F3B4631000D9DD9 /* TKRemoteControlCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B5CF081F3B4631000D9DD9 /* TKRemoteControlCell.m */; };
-		52B5CF201F3B4631000D9DD9 /* TKAutoReplyWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 52B5CF0B1F3B4631000D9DD9 /* TKAutoReplyWindowController.h */; };
-		52B5CF211F3B4631000D9DD9 /* TKAutoReplyWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B5CF0C1F3B4631000D9DD9 /* TKAutoReplyWindowController.m */; };
-		52B5CF221F3B4631000D9DD9 /* TKAutoReplyWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52B5CF0D1F3B4631000D9DD9 /* TKAutoReplyWindowController.xib */; };
-		52B5CF231F3B4631000D9DD9 /* TKRemoteControlWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 52B5CF0F1F3B4631000D9DD9 /* TKRemoteControlWindowController.h */; };
-		52B5CF241F3B4631000D9DD9 /* TKRemoteControlWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B5CF101F3B4631000D9DD9 /* TKRemoteControlWindowController.m */; };
-		52B5CF251F3B4631000D9DD9 /* TKRemoteControlWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52B5CF111F3B4631000D9DD9 /* TKRemoteControlWindowController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		522547CD1F4AE5A700226A2A /* NSView+Action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+Action.h"; sourceTree = "<group>"; };
+		522547CE1F4AE5A700226A2A /* NSView+Action.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+Action.m"; sourceTree = "<group>"; };
+		522547D71F4C312A00226A2A /* TKAutoReplyWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKAutoReplyWindowController.h; sourceTree = "<group>"; };
+		522547D81F4C312A00226A2A /* TKAutoReplyWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKAutoReplyWindowController.m; sourceTree = "<group>"; };
+		522547D91F4C312A00226A2A /* TKAutoReplyWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TKAutoReplyWindowController.xib; sourceTree = "<group>"; };
+		522547DB1F4C312A00226A2A /* TKRemoteControlWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKRemoteControlWindowController.h; sourceTree = "<group>"; };
+		522547DC1F4C312A00226A2A /* TKRemoteControlWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKRemoteControlWindowController.m; sourceTree = "<group>"; };
+		522547DD1F4C312A00226A2A /* TKRemoteControlWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TKRemoteControlWindowController.xib; sourceTree = "<group>"; };
+		526F4D791F4AAADA00E46004 /* Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Color.h; sourceTree = "<group>"; };
+		526F4D7C1F4AAADA00E46004 /* TKPrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKPrefixHeader.pch; sourceTree = "<group>"; };
+		526F4D811F4AAC1900E46004 /* TKAutoReplyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKAutoReplyModel.h; sourceTree = "<group>"; };
+		526F4D821F4AAC1900E46004 /* TKAutoReplyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKAutoReplyModel.m; sourceTree = "<group>"; };
+		526F4D861F4AAC3800E46004 /* TKAutoReplyContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKAutoReplyContentView.h; sourceTree = "<group>"; };
+		526F4D871F4AAC3800E46004 /* TKAutoReplyContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKAutoReplyContentView.m; sourceTree = "<group>"; };
+		526F4D891F4AAC3800E46004 /* TKRemoteControlCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKRemoteControlCell.h; sourceTree = "<group>"; };
+		526F4D8A1F4AAC3800E46004 /* TKRemoteControlCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKRemoteControlCell.m; sourceTree = "<group>"; };
+		526F4D8F1F4AAE6F00E46004 /* TKAutoReplyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKAutoReplyCell.h; sourceTree = "<group>"; };
+		526F4D901F4AAE6F00E46004 /* TKAutoReplyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKAutoReplyCell.m; sourceTree = "<group>"; };
+		526F4D931F4ABAA000E46004 /* edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit.png; sourceTree = "<group>"; };
 		528B4F921EA7383800BC6A89 /* WeChatPlugin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WeChatPlugin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		528B4F951EA7383800BC6A89 /* WeChatPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WeChatPlugin.h; sourceTree = "<group>"; };
 		528B4F961EA7383800BC6A89 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -52,14 +82,6 @@
 		52B5CF031F3B4631000D9DD9 /* TKHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKHelper.m; sourceTree = "<group>"; };
 		52B5CF041F3B4631000D9DD9 /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLReader.h; sourceTree = "<group>"; };
 		52B5CF051F3B4631000D9DD9 /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLReader.m; sourceTree = "<group>"; };
-		52B5CF071F3B4631000D9DD9 /* TKRemoteControlCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKRemoteControlCell.h; sourceTree = "<group>"; };
-		52B5CF081F3B4631000D9DD9 /* TKRemoteControlCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKRemoteControlCell.m; sourceTree = "<group>"; };
-		52B5CF0B1F3B4631000D9DD9 /* TKAutoReplyWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKAutoReplyWindowController.h; sourceTree = "<group>"; };
-		52B5CF0C1F3B4631000D9DD9 /* TKAutoReplyWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKAutoReplyWindowController.m; sourceTree = "<group>"; };
-		52B5CF0D1F3B4631000D9DD9 /* TKAutoReplyWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TKAutoReplyWindowController.xib; sourceTree = "<group>"; };
-		52B5CF0F1F3B4631000D9DD9 /* TKRemoteControlWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKRemoteControlWindowController.h; sourceTree = "<group>"; };
-		52B5CF101F3B4631000D9DD9 /* TKRemoteControlWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKRemoteControlWindowController.m; sourceTree = "<group>"; };
-		52B5CF111F3B4631000D9DD9 /* TKRemoteControlWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TKRemoteControlWindowController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +95,73 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		522547CC1F4AE5A700226A2A /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				522547CD1F4AE5A700226A2A /* NSView+Action.h */,
+				522547CE1F4AE5A700226A2A /* NSView+Action.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		522547D11F4AE5AE00226A2A /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		522547D61F4C312A00226A2A /* AutoReply */ = {
+			isa = PBXGroup;
+			children = (
+				522547D71F4C312A00226A2A /* TKAutoReplyWindowController.h */,
+				522547D81F4C312A00226A2A /* TKAutoReplyWindowController.m */,
+				522547D91F4C312A00226A2A /* TKAutoReplyWindowController.xib */,
+			);
+			path = AutoReply;
+			sourceTree = "<group>";
+		};
+		522547DA1F4C312A00226A2A /* RemoteControl */ = {
+			isa = PBXGroup;
+			children = (
+				522547DB1F4C312A00226A2A /* TKRemoteControlWindowController.h */,
+				522547DC1F4C312A00226A2A /* TKRemoteControlWindowController.m */,
+				522547DD1F4C312A00226A2A /* TKRemoteControlWindowController.xib */,
+			);
+			path = RemoteControl;
+			sourceTree = "<group>";
+		};
+		526F4D781F4AAADA00E46004 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				522547D11F4AE5AE00226A2A /* View */,
+				522547CC1F4AE5A700226A2A /* Category */,
+				526F4D791F4AAADA00E46004 /* Color.h */,
+				526F4D7C1F4AAADA00E46004 /* TKPrefixHeader.pch */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		526F4D851F4AAC3800E46004 /* AutoReply */ = {
+			isa = PBXGroup;
+			children = (
+				526F4D861F4AAC3800E46004 /* TKAutoReplyContentView.h */,
+				526F4D871F4AAC3800E46004 /* TKAutoReplyContentView.m */,
+				526F4D8F1F4AAE6F00E46004 /* TKAutoReplyCell.h */,
+				526F4D901F4AAE6F00E46004 /* TKAutoReplyCell.m */,
+			);
+			path = AutoReply;
+			sourceTree = "<group>";
+		};
+		526F4D881F4AAC3800E46004 /* RemoteControl */ = {
+			isa = PBXGroup;
+			children = (
+				526F4D891F4AAC3800E46004 /* TKRemoteControlCell.h */,
+				526F4D8A1F4AAC3800E46004 /* TKRemoteControlCell.m */,
+			);
+			path = RemoteControl;
+			sourceTree = "<group>";
+		};
 		528B4F881EA7383800BC6A89 = {
 			isa = PBXGroup;
 			children = (
@@ -101,6 +190,7 @@
 		52B5CEEF1F3B45ED000D9DD9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				526F4D931F4ABAA000E46004 /* edit.png */,
 				528B4FAA1EA7386D00BC6A89 /* main.mm */,
 				528B4F951EA7383800BC6A89 /* WeChatPlugin.h */,
 				528B4F961EA7383800BC6A89 /* Info.plist */,
@@ -113,6 +203,7 @@
 		52B5CEF41F3B4631000D9DD9 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				526F4D781F4AAADA00E46004 /* Common */,
 				52B5CEF51F3B4631000D9DD9 /* Category */,
 				52B5CEF81F3B4631000D9DD9 /* Config */,
 				52B5CEFB1F3B4631000D9DD9 /* Controllers */,
@@ -154,6 +245,8 @@
 		52B5CEFE1F3B4631000D9DD9 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				526F4D811F4AAC1900E46004 /* TKAutoReplyModel.h */,
+				526F4D821F4AAC1900E46004 /* TKAutoReplyModel.m */,
 				52B5CEFF1F3B4631000D9DD9 /* TKRemoteControlModel.h */,
 				52B5CF001F3B4631000D9DD9 /* TKRemoteControlModel.m */,
 			);
@@ -174,8 +267,8 @@
 		52B5CF061F3B4631000D9DD9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				52B5CF071F3B4631000D9DD9 /* TKRemoteControlCell.h */,
-				52B5CF081F3B4631000D9DD9 /* TKRemoteControlCell.m */,
+				526F4D851F4AAC3800E46004 /* AutoReply */,
+				526F4D881F4AAC3800E46004 /* RemoteControl */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -183,30 +276,10 @@
 		52B5CF091F3B4631000D9DD9 /* WindowControllers */ = {
 			isa = PBXGroup;
 			children = (
-				52B5CF0A1F3B4631000D9DD9 /* AutoReplyWindowController */,
-				52B5CF0E1F3B4631000D9DD9 /* RemoteControlWindowController */,
+				522547D61F4C312A00226A2A /* AutoReply */,
+				522547DA1F4C312A00226A2A /* RemoteControl */,
 			);
 			path = WindowControllers;
-			sourceTree = "<group>";
-		};
-		52B5CF0A1F3B4631000D9DD9 /* AutoReplyWindowController */ = {
-			isa = PBXGroup;
-			children = (
-				52B5CF0B1F3B4631000D9DD9 /* TKAutoReplyWindowController.h */,
-				52B5CF0C1F3B4631000D9DD9 /* TKAutoReplyWindowController.m */,
-				52B5CF0D1F3B4631000D9DD9 /* TKAutoReplyWindowController.xib */,
-			);
-			path = AutoReplyWindowController;
-			sourceTree = "<group>";
-		};
-		52B5CF0E1F3B4631000D9DD9 /* RemoteControlWindowController */ = {
-			isa = PBXGroup;
-			children = (
-				52B5CF0F1F3B4631000D9DD9 /* TKRemoteControlWindowController.h */,
-				52B5CF101F3B4631000D9DD9 /* TKRemoteControlWindowController.m */,
-				52B5CF111F3B4631000D9DD9 /* TKRemoteControlWindowController.xib */,
-			);
-			path = RemoteControlWindowController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -216,16 +289,22 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				522547DE1F4C312A00226A2A /* TKAutoReplyWindowController.h in Headers */,
+				526F4D7D1F4AAADA00E46004 /* Color.h in Headers */,
 				528B4F971EA7383800BC6A89 /* WeChatPlugin.h in Headers */,
+				526F4D801F4AAADA00E46004 /* TKPrefixHeader.pch in Headers */,
 				52B5CF1A1F3B4631000D9DD9 /* TKHelper.h in Headers */,
 				52B5CF1C1F3B4631000D9DD9 /* XMLReader.h in Headers */,
 				52B5CF161F3B4631000D9DD9 /* TKRemoteControlController.h in Headers */,
 				52B5CF121F3B4631000D9DD9 /* WeChat+hook.h in Headers */,
-				52B5CF231F3B4631000D9DD9 /* TKRemoteControlWindowController.h in Headers */,
+				526F4D8D1F4AAC3800E46004 /* TKRemoteControlCell.h in Headers */,
 				52B5CF181F3B4631000D9DD9 /* TKRemoteControlModel.h in Headers */,
-				52B5CF201F3B4631000D9DD9 /* TKAutoReplyWindowController.h in Headers */,
+				522547CF1F4AE5A700226A2A /* NSView+Action.h in Headers */,
+				526F4D911F4AAE6F00E46004 /* TKAutoReplyCell.h in Headers */,
+				526F4D8B1F4AAC3800E46004 /* TKAutoReplyContentView.h in Headers */,
+				522547E11F4C312A00226A2A /* TKRemoteControlWindowController.h in Headers */,
+				526F4D831F4AAC1900E46004 /* TKAutoReplyModel.h in Headers */,
 				52B5CF141F3B4631000D9DD9 /* TKWeChatPluginConfig.h in Headers */,
-				52B5CF1E1F3B4631000D9DD9 /* TKRemoteControlCell.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,10 +367,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52B5CF251F3B4631000D9DD9 /* TKRemoteControlWindowController.xib in Resources */,
+				522547E01F4C312A00226A2A /* TKAutoReplyWindowController.xib in Resources */,
+				526F4D941F4ABAA000E46004 /* edit.png in Resources */,
 				52B5CEF21F3B4623000D9DD9 /* TKRemoteControlCommands.plist in Resources */,
-				52B5CF221F3B4631000D9DD9 /* TKAutoReplyWindowController.xib in Resources */,
 				52B5CEF31F3B4623000D9DD9 /* TKRemoteControlScript.scpt in Resources */,
+				522547E31F4C312A00226A2A /* TKRemoteControlWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,13 +398,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				52B5CF241F3B4631000D9DD9 /* TKRemoteControlWindowController.m in Sources */,
-				52B5CF211F3B4631000D9DD9 /* TKAutoReplyWindowController.m in Sources */,
+				526F4D921F4AAE6F00E46004 /* TKAutoReplyCell.m in Sources */,
 				52B5CF151F3B4631000D9DD9 /* TKWeChatPluginConfig.m in Sources */,
+				522547E21F4C312A00226A2A /* TKRemoteControlWindowController.m in Sources */,
 				52B5CF131F3B4631000D9DD9 /* WeChat+hook.m in Sources */,
 				52B5CF1B1F3B4631000D9DD9 /* TKHelper.m in Sources */,
 				52B5CF171F3B4631000D9DD9 /* TKRemoteControlController.m in Sources */,
-				52B5CF1F1F3B4631000D9DD9 /* TKRemoteControlCell.m in Sources */,
+				522547D01F4AE5A700226A2A /* NSView+Action.m in Sources */,
+				526F4D8E1F4AAC3800E46004 /* TKRemoteControlCell.m in Sources */,
+				526F4D841F4AAC1900E46004 /* TKAutoReplyModel.m in Sources */,
+				526F4D8C1F4AAC3800E46004 /* TKAutoReplyContentView.m in Sources */,
+				522547DF1F4C312A00226A2A /* TKAutoReplyWindowController.m in Sources */,
 				52B5CF191F3B4631000D9DD9 /* TKRemoteControlModel.m in Sources */,
 				528B4FB41EA7386D00BC6A89 /* main.mm in Sources */,
 				52B5CF1D1F3B4631000D9DD9 /* XMLReader.m in Sources */,
@@ -437,6 +521,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/WeChatPlugin/Sources/Common/TKPrefixHeader.pch";
 				INFOPLIST_FILE = WeChatPlugin/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
@@ -456,6 +541,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/WeChatPlugin/Sources/Common/TKPrefixHeader.pch";
 				INFOPLIST_FILE = WeChatPlugin/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
