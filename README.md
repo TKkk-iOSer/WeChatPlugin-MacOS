@@ -29,6 +29,11 @@
 
 ---
 
+### 更新日志
+请查看[CHANGELOG](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/blob/master/CHANGELOG.md)
+
+---
+
 ### Demo 演示
 
 * 消息防撤回   
