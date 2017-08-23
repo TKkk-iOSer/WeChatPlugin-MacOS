@@ -40,6 +40,9 @@
     if (self.autoReplyModels && self.autoReplyModels.count == 0) {
         [self addModel];
     }
+    if (self.autoReplyModels.count > 0 && self.tableView) {
+         [self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:self.autoReplyModels.count - 1] byExtendingSelection:YES];
+    }
 }
 
 - (void)initSubviews {
