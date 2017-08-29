@@ -7,6 +7,8 @@
 
 ![微信小助手.png](http://upload-images.jianshu.io/upload_images/965383-80c56cbc5c192604.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)   
 
+**iOS版本请戳→_→ [WeChatPlugin-iOS](https://github.com/TKkk-iOSer/WeChatPlugin-iOS)**
+
 ~~主要实现 Mac OS 版微信的<a>消息防撤回与自动回复</a>的功能，详细内容，请参考[我的博客](http://www.jianshu.com/p/7f65287a2e7a)~~
 
 ---
