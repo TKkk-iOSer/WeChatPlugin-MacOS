@@ -119,31 +119,11 @@
 	<array>
 		<dict>
 			<key>executeCommand</key>
-			<string>musicPlay</string>
+			<string>musicToggle</string>
 			<key>keyword</key>
-			<string>TK-Play</string>
+			<string>TK-Toggle</string>
 			<key>function</key>
-			<string>播放</string>
-			<key>enable</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>executeCommand</key>
-			<string>musicPause</string>
-			<key>keyword</key>
-			<string>TK-Pause</string>
-			<key>function</key>
-			<string>暂停</string>
-			<key>enable</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>executeCommand</key>
-			<string>musicPrevious</string>
-			<key>keyword</key>
-			<string>TK-Previous</string>
-			<key>function</key>
-			<string>上一首</string>
+			<string>播放/暂停</string>
 			<key>enable</key>
 			<false/>
 		</dict>
@@ -159,21 +139,41 @@
 		</dict>
 		<dict>
 			<key>executeCommand</key>
-			<string>musicLike</string>
+			<string>musicPrevious</string>
 			<key>keyword</key>
-			<string>TK-Like</string>
+			<string>TK-Previous</string>
 			<key>function</key>
-			<string>喜欢歌曲</string>
+			<string>上一首</string>
 			<key>enable</key>
 			<false/>
 		</dict>
 		<dict>
 			<key>executeCommand</key>
-			<string>musicUnLike</string>
+			<string>musicVolumeUp</string>
 			<key>keyword</key>
-			<string>TK-Unlike</string>
+			<string>TK-VolumeUp</string>
 			<key>function</key>
-			<string>取消喜欢</string>
+			<string>增大音量</string>
+			<key>enable</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>executeCommand</key>
+			<string>musicVolumeDown</string>
+			<key>keyword</key>
+			<string>TK-VolumeDown</string>
+			<key>function</key>
+			<string>减小音量</string>
+			<key>enable</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>executeCommand</key>
+			<string>musicLike</string>
+			<key>keyword</key>
+			<string>TK-Like</string>
+			<key>function</key>
+			<string>喜欢/取消喜欢</string>
 			<key>enable</key>
 			<false/>
 		</dict>
