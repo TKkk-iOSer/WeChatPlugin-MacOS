@@ -99,7 +99,6 @@
         [alert addButtonWithTitle:@"确定"];
         [alert setMessageText:@"您还有一条自动回复设置未完成"];
         [alert setInformativeText:@"请完善未完成的自动回复设置"];
-        [alert setAlertStyle:NSAlertStyleWarning];
         
         alert;
     });
