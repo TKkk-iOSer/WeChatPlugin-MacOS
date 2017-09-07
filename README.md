@@ -9,7 +9,13 @@
 
 **iOS版本请戳→_→ [WeChatPlugin-iOS](https://github.com/TKkk-iOSer/WeChatPlugin-iOS)**
 
-~~主要实现 Mac OS 版微信的<a>消息防撤回与自动回复</a>的功能，详细内容，请参考[我的博客](http://www.jianshu.com/p/7f65287a2e7a)~~
+~~主要实现 mac OS 版微信的<a>消息防撤回与自动回复</a>的功能，详细内容，请参考[我的博客](http://www.jianshu.com/p/7f65287a2e7a)~~
+
+---
+
+### Tip
+   
+   使用该插件会导致之前保存的聊天记录消失，微信设置功能可能恢复成初始化状态，但是之前的聊天记录一直保存着，使用`./Other/Uninstall.sh`卸载即可恢复成之前的状态。因此无需担心聊天记录被删除，该问题之后再优化。
 
 ---
 
@@ -55,15 +61,17 @@
 ![远程控制.gif](http://upload-images.jianshu.io/upload_images/965383-0cf50d9b22b02f2f.gif?imageMogr2/auto-orient/strip)
 
 ---
-### 安装
+### 安装(懒癌直接执行第一步即可)
 
 **1. 无安装Xcode**
 
 * 下载WeChatPlugin，用 Termimal 打开项目当前目录，执行 `./Other/Install.sh`即可。
 
+~~期间如有提示输入密码无需担心，仅是为了获取写入微信文件夹的权限，即运行`sudo chown -R $(whoami) /Applications/WeChat.app`~~
+
 **2. 已安装Xcode**
 
-* 先更改微信的 owner，否则会出现类似**Permission denied**的错误。 
+* 先更改微信的 owner 以获取写入微信文件夹的权限，否则会出现类似**Permission denied**的错误。 
 
 `sudo chown -R $(whoami) /Applications/WeChat.app` 
 
