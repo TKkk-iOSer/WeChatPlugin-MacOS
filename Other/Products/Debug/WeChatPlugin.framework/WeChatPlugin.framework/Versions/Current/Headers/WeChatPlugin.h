@@ -51,10 +51,12 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 
 @interface ContactStorage : NSObject
 - (id)GetSelfContact;
+- (id)GetContact:(id)arg1;
 @end
 
 @interface WCContactData : NSObject
 @property(retain, nonatomic) NSString *m_nsUsrName; // @synthesize m_nsUsrName;
+@property(nonatomic) unsigned int m_uiFriendScene;  // @synthesize m_uiFriendScene;
 @end
 
 @interface MessageData : NSObject

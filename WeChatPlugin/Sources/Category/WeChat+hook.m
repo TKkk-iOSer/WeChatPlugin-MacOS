@@ -225,9 +225,15 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
  */
 - (void)autoReplyWithMsg:(AddMsg *)addMsg {
     if (addMsg.msgType != 1 && addMsg.msgType != 3) return;
+
+    ContactStorage *contactStorage = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("ContactStorage")];
+    WCContactData *msgContact = [contactStorage GetContact:addMsg.fromUserName.string];
+    if (msgContact.m_uiFriendScene == 0 && ![addMsg.fromUserName.string containsString:@"@chatroom"]) {
+        //        该消息为公众号
+        return;
+    }
     
     MessageService *service = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
-    ContactStorage *contactStorage = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("ContactStorage")];
     WCContactData *selfContact = [contactStorage GetSelfContact];
     
     NSArray *autoReplyModels = [[TKWeChatPluginConfig sharedConfig] autoReplyModels];
@@ -248,7 +254,6 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
                 [service SendTextMessage:selfContact.m_nsUsrName toUsrName:addMsg.fromUserName.string msgText:model.replyContent atUserList:nil];
             }
         }];
-        
     }];
 }
 
