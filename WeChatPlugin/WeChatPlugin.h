@@ -71,4 +71,20 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 
 @interface CUtility : NSObject
 + (BOOL)HasWechatInstance;
++ (unsigned long long)getFreeDiskSpace;
+@end
+
+#pragma mark - 调用 NSSearchPathForDirectoriesInDomains 的一些方法
+@interface PathUtility : NSObject
++ (id)getSysCachePath;
++ (id)getSysDocumentPath;
++ (id)getSysLibraryPath;
+@end
+
+@interface MemoryMappedKV : NSObject
++ (id)mappedKVPathWithID:(id)arg1;
+@end
+
+@interface JTStatisticManager : NSObject
+@property(retain, nonatomic) NSString *statFilePath; 
 @end
