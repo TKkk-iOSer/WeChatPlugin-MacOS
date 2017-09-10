@@ -5,7 +5,7 @@
    
 微信小助手 v1.0.0   
 
-![微信小助手.png](http://upload-images.jianshu.io/upload_images/965383-80c56cbc5c192604.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)   
+![微信小助手.png](http://upload-images.jianshu.io/upload_images/965383-2fd59d4d4a4b2729.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 **iOS版本请戳→_→ [WeChatPlugin-iOS](https://github.com/TKkk-iOSer/WeChatPlugin-iOS)**
 
@@ -54,8 +54,7 @@
 ![消息防撤回.gif](http://upload-images.jianshu.io/upload_images/965383-30cbea645661e627.gif?imageMogr2/auto-orient/strip)
 
 * 自动回复
-![自动回复.gif](http://upload-images.jianshu.io/upload_images/965383-98c4c62bbf1e8387.gif?imageMogr2/auto-orient/strip)
-
+![自动回复.gif](http://upload-images.jianshu.io/upload_images/965383-d488dce3696ba1b3.gif?imageMogr2/auto-orient/strip)
 
 * 微信多开
 ![微信多开.gif](http://upload-images.jianshu.io/upload_images/965383-51d8eae02d48fda9.gif?imageMogr2/auto-orient/strip)
