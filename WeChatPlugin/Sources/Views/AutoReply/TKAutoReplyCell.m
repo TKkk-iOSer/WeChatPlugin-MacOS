@@ -72,11 +72,14 @@
 
 - (void)clickSelectBtn:(NSButton *)btn {
     self.model.enable = btn.state;
+    if (!self.model.enableSingleReply && !self.model.enableGroupReply && btn.state == YES) {
+        self.model.enableSingleReply = YES;
+        if (self.updateModel) self.updateModel();
+    }
 }
 
 - (void)setModel:(TKAutoReplyModel *)model {
     _model = model;
-    
     if (model.keyword == nil && model.replyContent == nil) return;
     
     self.selectBtn.state = model.enable;

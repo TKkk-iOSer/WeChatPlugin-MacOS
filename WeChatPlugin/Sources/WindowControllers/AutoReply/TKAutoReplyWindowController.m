@@ -49,7 +49,7 @@
     NSScrollView *scrollView = ({
         NSScrollView *scrollView = [[NSScrollView alloc] init];
         scrollView.hasVerticalScroller = YES;
-        scrollView.frame = NSMakeRect(30, 50, 200, 350);
+        scrollView.frame = NSMakeRect(30, 50, 200, 375);
         scrollView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
         
         scrollView;
@@ -71,7 +71,7 @@
     
     self.contentView = ({
         TKAutoReplyContentView *contentView = [[TKAutoReplyContentView alloc] init];
-        contentView.frame = NSMakeRect(250, 50, 400, 350);
+        contentView.frame = NSMakeRect(250, 50, 400, 375);
         contentView.hidden = YES;
         
         contentView;
@@ -195,7 +195,10 @@
     TKAutoReplyCell *cell = [[TKAutoReplyCell alloc] init];
     cell.frame = NSMakeRect(0, 0, self.tableView.frame.size.width, 40);
     cell.model = self.autoReplyModels[row];
-    
+     __weak typeof(self) weakSelf = self;
+    cell.updateModel = ^{
+        weakSelf.contentView.model = weakSelf.autoReplyModels[row];
+    };
     return cell;
 }
 

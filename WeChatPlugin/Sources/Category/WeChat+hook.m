@@ -44,7 +44,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     NSMenuItem *preventRevokeItem = [[NSMenuItem alloc] initWithTitle:@"开启消息防撤回" action:@selector(onPreventRevoke:) keyEquivalent:@"t"];
     preventRevokeItem.state = [[TKWeChatPluginConfig sharedConfig] preventRevokeEnable];
     //        自动回复
-    NSMenuItem *autoReplyItem = [[NSMenuItem alloc] initWithTitle:@"自动回复设置w" action:@selector(onAutoReply:) keyEquivalent:@"k"];
+    NSMenuItem *autoReplyItem = [[NSMenuItem alloc] initWithTitle:@"自动回复设置" action:@selector(onAutoReply:) keyEquivalent:@"k"];
     //        登录新微信
     NSMenuItem *newWeChatItem = [[NSMenuItem alloc] initWithTitle:@"登录新微信" action:@selector(onNewWechatInstance:) keyEquivalent:@"N"];
     //        远程控制
@@ -225,7 +225,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
  */
 - (void)autoReplyWithMsg:(AddMsg *)addMsg {
     if (addMsg.msgType != 1 && addMsg.msgType != 3) return;
-
+    
     ContactStorage *contactStorage = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("ContactStorage")];
     WCContactData *msgContact = [contactStorage GetContact:addMsg.fromUserName.string];
     if (msgContact.m_uiFriendScene == 0 && ![addMsg.fromUserName.string containsString:@"@chatroom"]) {
@@ -238,8 +238,10 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     
     NSArray *autoReplyModels = [[TKWeChatPluginConfig sharedConfig] autoReplyModels];
     [autoReplyModels enumerateObjectsUsingBlock:^(TKAutoReplyModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (!model.enable) return ;
+        if (!model.enable) return;
+        if (!model.replyContent || model.replyContent.length == 0) return;
         if ([addMsg.fromUserName.string containsString:@"@chatroom"] && !model.enableGroupReply) return;
+        if (![addMsg.fromUserName.string containsString:@"@chatroom"] && !model.enableSingleReply) return;
         
         NSString *msgContent = addMsg.content.string;
         if ([addMsg.fromUserName.string containsString:@"@chatroom"]) {
@@ -248,12 +250,28 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
                 msgContent = [msgContent substringFromIndex:range.location + range.length];
             }
         }
-        NSArray * keyWordArray = [model.keyword componentsSeparatedByString:@"||"];
-        [keyWordArray enumerateObjectsUsingBlock:^(NSString *keyword, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([keyword isEqualToString:@"*"] || [msgContent isEqualToString:keyword]) {
-                [service SendTextMessage:selfContact.m_nsUsrName toUsrName:addMsg.fromUserName.string msgText:model.replyContent atUserList:nil];
+        
+        NSArray *replyArray = [model.replyContent componentsSeparatedByString:@"|"];
+        int index = arc4random() % replyArray.count;
+        NSString *randomReplyContent = replyArray[index];
+        
+        if (model.enableRegex) {
+            NSString *regex = model.keyword;
+            NSError *error;
+            NSRegularExpression *regular = [NSRegularExpression regularExpressionWithPattern:regex options:NSRegularExpressionCaseInsensitive error:&error];
+            if (error) return;
+            NSInteger count = [regular numberOfMatchesInString:msgContent options:NSMatchingReportCompletion range:NSMakeRange(0, msgContent.length)];
+            if (count > 0) {
+                [service SendTextMessage:selfContact.m_nsUsrName toUsrName:addMsg.fromUserName.string msgText:randomReplyContent atUserList:nil];
             }
-        }];
+        } else {
+            NSArray * keyWordArray = [model.keyword componentsSeparatedByString:@"|"];
+            [keyWordArray enumerateObjectsUsingBlock:^(NSString *keyword, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([keyword isEqualToString:@"*"] || [msgContent isEqualToString:keyword]) {
+                    [service SendTextMessage:selfContact.m_nsUsrName toUsrName:addMsg.fromUserName.string msgText:randomReplyContent atUserList:nil];
+                }
+            }];
+        }
     }];
 }
 
