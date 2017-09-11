@@ -51,10 +51,12 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 
 @interface ContactStorage : NSObject
 - (id)GetSelfContact;
+- (id)GetContact:(id)arg1;
 @end
 
 @interface WCContactData : NSObject
 @property(retain, nonatomic) NSString *m_nsUsrName; // @synthesize m_nsUsrName;
+@property(nonatomic) unsigned int m_uiFriendScene;  // @synthesize m_uiFriendScene;
 @end
 
 @interface MessageData : NSObject
@@ -71,4 +73,20 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 
 @interface CUtility : NSObject
 + (BOOL)HasWechatInstance;
++ (unsigned long long)getFreeDiskSpace;
+@end
+
+#pragma mark - 调用 NSSearchPathForDirectoriesInDomains 的一些方法
+@interface PathUtility : NSObject
++ (id)getSysCachePath;
++ (id)getSysDocumentPath;
++ (id)getSysLibraryPath;
+@end
+
+@interface MemoryMappedKV : NSObject
++ (id)mappedKVPathWithID:(id)arg1;
+@end
+
+@interface JTStatisticManager : NSObject
+@property(retain, nonatomic) NSString *statFilePath; 
 @end
