@@ -86,8 +86,7 @@
 **3. 安装完成**
 
 * 登录微信，在**菜单栏**中看到**微信小助手**即安装成功。 
-![微信小助手.png](http://upload-images.jianshu.io/upload_images/965383-80c56cbc5c192604.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+![微信小助手.png](http://upload-images.jianshu.io/upload_images/965383-2fd59d4d4a4b2729.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 --- 
 
@@ -96,10 +95,12 @@
 * 消息防撤回：点击`开启消息防撤回`或者快捷键`command + t`,即可开启、关闭。
 * 自动回复：点击`开启自动回复`或者快捷键`conmand + k`，将弹出自动回复设置的窗口，点击红色箭头的按钮设置开关。    
 
-如果关键字为 `*`，则任何信息都回复；如果关键字为`x||y`,则 x 和 y 都回复；
-若关键字**或者**自动回复为空，则不开启该条自动回复。
+>若关键字为 `*`，则任何信息都回复；
+>若关键字为`x|y`,则 x 和 y 都回复；
+>若关键字**或者**自动回复为空，则不开启该条自动回复。
+>若开启正则，请确认正则表达式书写正确，[在线正则表达式测试](http://tool.oschina.net/regex/)
 
-![自动回复设置.png](http://upload-images.jianshu.io/upload_images/965383-64cd9f319c5b444a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![自动回复设置.png](http://upload-images.jianshu.io/upload_images/965383-5aa2fd8fadc545c4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
 * 微信多开：点击`登录新微信`或者快捷键`command + shift + n`,即可多开微信。
