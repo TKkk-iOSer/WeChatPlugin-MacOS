@@ -158,6 +158,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
 - (void)hook_onRevokeMsg:(id)msg {
     if (![[TKWeChatPluginConfig sharedConfig] preventRevokeEnable]) {
         [self hook_onRevokeMsg:msg];
+        return;
     }
     if ([msg rangeOfString:@"<sysmsg"].length <= 0) return;
     
