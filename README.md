@@ -5,7 +5,7 @@
    
 微信小助手 v1.0.0   
 
-![微信小助手.png](http://upload-images.jianshu.io/upload_images/965383-2fd59d4d4a4b2729.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![微信小助手.png](http://upload-images.jianshu.io/upload_images/965383-0f65bb05dabf961b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 **iOS版本请戳→_→ [WeChatPlugin-iOS](https://github.com/TKkk-iOSer/WeChatPlugin-iOS)**
 
@@ -13,12 +13,15 @@
 
 ---
 
-### Tip
-   
-* 每次更新微信需要重新安装该插件才能生效
-* 聊天记录的问题已修复
-   
-   ~~使用该插件会导致之前保存的聊天记录消失，微信设置功能可能恢复成初始化状态，但是之前的聊天记录一直保存着，使用`./Other/Uninstall.sh`卸载即可恢复成之前的状态。因此无需担心聊天记录被删除，该问题之后再优化。~~
+### 更新日志
+
+[新增置底&免认证 (2017-09-17)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.3.0)
+
+[修复聊天记录消失的bug (2017-09-11)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.2.0)
+
+[重构自动回复，实现多回复 (2017-08-23)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.1.0)
+
+**详细内容请查看**[CHANGELOG](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/blob/master/CHANGELOG.md)
 
 ---
 
@@ -27,6 +30,8 @@
 * 消息防撤回
 * 远程控制
 * 微信多开
+* 第二次登录免认证
+* 置底功能(~~类似置顶~~)
 
 远程控制：
 
@@ -40,13 +45,6 @@
 
 ---
 
-### 更新日志
-
-[重构自动回复，实现多回复 (2017-08-23)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.1.0)
-
-**详细内容请查看**[CHANGELOG](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/blob/master/CHANGELOG.md)
-
----
 
 ### Demo 演示
 
@@ -62,16 +60,26 @@
 * 远程控制 (测试关闭Chrome、QQ、开启屏幕保护)
 ![远程控制.gif](http://upload-images.jianshu.io/upload_images/965383-0cf50d9b22b02f2f.gif?imageMogr2/auto-orient/strip)
 
----
-### 安装(懒癌直接执行第一步即可)
+* 免认证 & 置底
+![免认证&置底](http://upload-images.jianshu.io/upload_images/965383-cc656af55cc2d2f6.gif?imageMogr2/auto-orient/strip)
 
-**1. 无安装Xcode**
+---
+### 安装
+
+~~第一次安装需要输入密码，仅是为了获取写入微信文件夹的权限~~
+
+**0. 懒癌版安装(适合非程序猿)**
+
+打开`应用程序-实用工具-Terminal(终端)`，执行以下命令并根据提示输入密码即可。
+
+`cd ~/Downloads && git clone https://github.com/TKkk-iOSer/WeChatPlugin-MacOS.git && ./WeChatPlugin-MacOS/Other/Install.sh && rm -rf ./WeChatPlugin-MacOS/`
+
+**1. 普通安装**
 
 * 下载WeChatPlugin，用 Termimal 打开项目当前目录，执行 `./Other/Install.sh`即可。
 
-~~期间如有提示输入密码无需担心，仅是为了获取写入微信文件夹的权限，即运行`sudo chown -R $(whoami) /Applications/WeChat.app`~~
 
-**2. 已安装Xcode**
+**2. 若想修改源码&重编译**
 
 * 先更改微信的 owner 以获取写入微信文件夹的权限，否则会出现类似**Permission denied**的错误。 
 
@@ -86,7 +94,7 @@
 **3. 安装完成**
 
 * 登录微信，在**菜单栏**中看到**微信小助手**即安装成功。 
-![微信小助手.png](http://upload-images.jianshu.io/upload_images/965383-2fd59d4d4a4b2729.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![微信小助手.png](http://upload-images.jianshu.io/upload_images/965383-0f65bb05dabf961b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 --- 
 
@@ -117,12 +125,10 @@
 
 ### 卸载
 
-在Terminal中，运行 `./Other/Uninstall.sh` 即可
-
-~~在 `/Applications/WeChat.app/Contents/MacOS` 目录中，删除 `WeChat` 与 `WeChatPlugin.framework`，将`WeChat_backup` 重命名为 `WeChat` 即可。~~
+在`Terminal`(终端)打开该项目，运行 `./Other/Uninstall.sh` 即可
 
 ### Other
 
-若有其他好的想法、需求欢迎 Issue me 。
+若有其他好的想法欢迎 Issue me
 
 
