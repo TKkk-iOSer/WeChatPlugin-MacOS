@@ -271,10 +271,11 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     NSMutableArray *arrSession = sessionMgr.m_arrSession;
     NSMutableArray *ignoreSessions = [[[TKWeChatPluginConfig sharedConfig] ignoreSessionModels] mutableCopy];
     
+      NSString *currentUserName = [objc_getClass("CUtility") GetCurrentUserName];
     [ignoreSessions enumerateObjectsUsingBlock:^(TKIgnoreSessonModel *model, NSUInteger index, BOOL * _Nonnull stop) {
         __block NSInteger ignoreIdx = -1;
         [arrSession enumerateObjectsUsingBlock:^(MMSessionInfo *sessionInfo, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([model.userName isEqualToString:sessionInfo.m_nsUserName]) {
+            if ([model.userName isEqualToString:sessionInfo.m_nsUserName] && [model.selfContact isEqualToString:currentUserName]) {
                 ignoreIdx = idx;
                 *stop = YES;
             }
