@@ -15,7 +15,28 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 
 #pragma mark - 微信原始的部分类与方法
 
+@interface MMLoginOneClickViewController : NSObject
+@property(nonatomic) NSTextField *descriptionLabel;
+- (void)onLoginButtonClicked:(id)arg1;
+@property(nonatomic) NSButton *loginButton;
+@end
+
+@interface AccountService : NSObject
+- (id)GetLastLoginUserName;
+- (id)GetLastLoginAutoAuthKey;
+- (BOOL)canAutoAuth;
+- (void)AutoAuth;
+- (void)ManualLogin:(id)arg1 withPassword:(id)arg2;
+- (void)ManualLogout;
+- (void)QRCodeLoginWithUserName:(id)arg1 password:(id)arg2;
+@end
+
+@interface MMLoginViewController : NSObject
+@property(retain, nonatomic) MMLoginOneClickViewController *oneClickViewController;
+@end
+
 @interface MMMainWindowController : NSObject
+@property(retain, nonatomic) MMLoginViewController *loginViewController;
 - (void)onAuthOK;
 - (void)onLogOut;
 @end
@@ -45,8 +66,15 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @property (nonatomic, assign) unsigned int createTime;
 @end
 
+@interface MMChatsViewController : NSViewController <NSTableViewDataSource, NSTableViewDelegate>
+@property(nonatomic) __weak NSTableView *tableView;
+@end
+
 @interface WeChat : NSObject
 + (id)sharedInstance;
+@property(nonatomic) MMChatsViewController *chatsViewController;
+@property(retain, nonatomic) MMMainWindowController *mainWindowController;
+@property(nonatomic) BOOL isAppTerminating; 
 @end
 
 @interface ContactStorage : NSObject
@@ -74,6 +102,41 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @interface CUtility : NSObject
 + (BOOL)HasWechatInstance;
 + (unsigned long long)getFreeDiskSpace;
++ (void)ReloadSessionForMsgSync;
++ (id)GetCurrentUserName;
+@end
+
+@interface MMSessionInfo : NSObject
+@property(nonatomic) BOOL m_bIsTop; // @synthesize m_bIsTop;
+@property(nonatomic) BOOL m_bShowUnReadAsRedDot;
+@property(nonatomic) BOOL m_isMentionedUnread; // @synthesize
+@property(retain, nonatomic) NSString *m_nsUserName; // @synthesize m_nsUserName;
+@end
+
+
+@protocol MMChatsTableCellViewDelegate <NSObject>
+@optional
+- (void)cellViewReloadData:(MMSessionInfo *)arg1;
+@end
+
+@interface MMChatsTableCellView : NSTableCellView
+@property(nonatomic) __weak id <MMChatsTableCellViewDelegate> delegate; 
+@property(retain, nonatomic) MMSessionInfo *sessionInfo;
+- (void)menuWillOpen:(id)arg1;
+- (void)contextMenuSticky;
+@end
+
+@interface MMSessionMgr : NSObject
+@property(retain, nonatomic) NSMutableArray *m_arrSession;
+- (void)MuteSessionByUserName:(id)arg1;
+//- (void)TopSessionByUserName:(id)arg1;
+- (void)UnmuteSessionByUserName:(id)arg1;
+- (void)UntopSessionByUserName:(id)arg1;
+- (void)sortSessions;
+@end
+
+@interface LogoutCGI : NSTableCellView
+- (void)sendLogoutCGIWithCompletion:(id)arg1;
 @end
 
 #pragma mark - 调用 NSSearchPathForDirectoriesInDomains 的一些方法
@@ -88,5 +151,5 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @end
 
 @interface JTStatisticManager : NSObject
-@property(retain, nonatomic) NSString *statFilePath; 
+@property(retain, nonatomic) NSString *statFilePath;
 @end

@@ -20,5 +20,6 @@ alpha:(a)]
 
 #define kBG1 TK_GRAY(0xec)
 #define kBG2 TK_GRAY(0xe3)
+#define kBG3 TK_RGBA(0x2a, 0x2a, 0x2a, 0.5)
 
 #endif /* Color_h */

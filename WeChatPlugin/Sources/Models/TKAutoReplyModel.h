@@ -6,9 +6,9 @@
 //  Copyright © 2017年 tk. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "TKBaseModel.h"
 
-@interface TKAutoReplyModel : NSObject
+@interface TKAutoReplyModel : TKBaseModel
 
 @property (nonatomic, assign) BOOL enable;                  /**<    是否开启自动回复     */
 @property (nonatomic, copy) NSString *keyword;              /**<    自动回复关键字       */
@@ -17,8 +17,6 @@
 @property (nonatomic, assign) BOOL enableSingleReply;       /**<    是否开启私聊自动回复  */
 @property (nonatomic, assign) BOOL enableRegex;             /**<    是否开启正则匹配     */
 
-- (instancetype)initWithDict:(NSDictionary *)dict;
-- (NSDictionary *)dictionary;
 - (BOOL)hasEmptyKeywordOrReplyContent;
 
 @end
