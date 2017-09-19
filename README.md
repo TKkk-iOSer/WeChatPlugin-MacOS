@@ -127,8 +127,15 @@
 
 在`Terminal`(终端)打开该项目，运行 `./Other/Uninstall.sh` 即可
 
+---
+
 ### Other
 
 若有其他好的想法欢迎 Issue me
 
+---
+
+#### 听说你想请我喝下午茶？😏
+ 
+<img src="http://upload-images.jianshu.io/upload_images/965383-8e2af8fe607eee62.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1024" height="300" hspace="7" style="display: inline-block">
 
