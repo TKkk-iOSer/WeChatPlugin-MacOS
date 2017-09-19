@@ -22,6 +22,7 @@
     btn.title = title;
     btn.target = target;
     btn.action = action;
+    
     return btn;
 }
 

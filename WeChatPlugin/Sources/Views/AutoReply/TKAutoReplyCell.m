@@ -36,7 +36,7 @@
     });
     
     self.keywordLabel = ({
-        NSTextField *label = [NSTextField labelWithString:@""];
+        NSTextField *label = [NSTextField tk_labelWithString:@""];
         label.placeholderString = @"关键字";
         [[label cell] setLineBreakMode:NSLineBreakByCharWrapping];
         [[label cell] setTruncatesLastVisibleLine:YES];
@@ -47,7 +47,7 @@
     });
     
     self.replyContentLabel = ({
-        NSTextField *label = [NSTextField labelWithString:@""];
+        NSTextField *label = [NSTextField tk_labelWithString:@""];
         label.placeholderString = @"回复内容";
         [[label cell] setLineBreakMode:NSLineBreakByCharWrapping];
         [[label cell] setTruncatesLastVisibleLine:YES];

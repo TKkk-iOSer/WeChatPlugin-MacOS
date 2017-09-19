@@ -12,5 +12,6 @@
 #import "Color.h"
 #import "NSView+Action.h"
 #import "NSButton+Action.h"
+#import "NSTextField+Action.h"
 
 #endif /* TKPrefixHeader_pch */

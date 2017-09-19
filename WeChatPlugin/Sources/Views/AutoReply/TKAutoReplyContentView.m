@@ -62,7 +62,7 @@
     });
     
     self.autoReplyLabel = ({
-        NSTextField *label = [NSTextField labelWithString:@"自动回复："];
+        NSTextField *label = [NSTextField tk_labelWithString:@"自动回复："];
         label.frame = NSMakeRect(20, 250, 350, 20);
         
         label;
@@ -78,7 +78,7 @@
     });
     
     self.keywordLabel = ({
-        NSTextField *label = [NSTextField labelWithString:@"关键字："];
+        NSTextField *label = [NSTextField tk_labelWithString:@"关键字："];
         label.frame = NSMakeRect(20, 345, 350, 20);
         
         label;

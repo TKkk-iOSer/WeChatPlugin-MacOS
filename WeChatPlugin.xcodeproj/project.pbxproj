@@ -17,6 +17,8 @@
 		522547E31F4C312A00226A2A /* TKRemoteControlWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 522547DD1F4C312A00226A2A /* TKRemoteControlWindowController.xib */; };
 		5228EABA1F70B59500D808CF /* NSButton+Action.h in Headers */ = {isa = PBXBuildFile; fileRef = 5228EAB81F70B59500D808CF /* NSButton+Action.h */; };
 		5228EABB1F70B59500D808CF /* NSButton+Action.m in Sources */ = {isa = PBXBuildFile; fileRef = 5228EAB91F70B59500D808CF /* NSButton+Action.m */; };
+		523848AB1F70E73500771BA3 /* NSTextField+Action.h in Headers */ = {isa = PBXBuildFile; fileRef = 523848A91F70E73500771BA3 /* NSTextField+Action.h */; };
+		523848AC1F70E73500771BA3 /* NSTextField+Action.m in Sources */ = {isa = PBXBuildFile; fileRef = 523848AA1F70E73500771BA3 /* NSTextField+Action.m */; };
 		52475C2E1F6B993E00760E3E /* MMChatsTableCellView+hook.h in Headers */ = {isa = PBXBuildFile; fileRef = 52475C2C1F6B993E00760E3E /* MMChatsTableCellView+hook.h */; };
 		52475C2F1F6B993E00760E3E /* MMChatsTableCellView+hook.m in Sources */ = {isa = PBXBuildFile; fileRef = 52475C2D1F6B993E00760E3E /* MMChatsTableCellView+hook.m */; };
 		52475C321F6BA43800760E3E /* TKIgnoreSessonModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 52475C301F6BA43800760E3E /* TKIgnoreSessonModel.h */; };
@@ -62,6 +64,8 @@
 		522547DD1F4C312A00226A2A /* TKRemoteControlWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TKRemoteControlWindowController.xib; sourceTree = "<group>"; };
 		5228EAB81F70B59500D808CF /* NSButton+Action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSButton+Action.h"; sourceTree = "<group>"; };
 		5228EAB91F70B59500D808CF /* NSButton+Action.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSButton+Action.m"; sourceTree = "<group>"; };
+		523848A91F70E73500771BA3 /* NSTextField+Action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTextField+Action.h"; sourceTree = "<group>"; };
+		523848AA1F70E73500771BA3 /* NSTextField+Action.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTextField+Action.m"; sourceTree = "<group>"; };
 		52475C2C1F6B993E00760E3E /* MMChatsTableCellView+hook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MMChatsTableCellView+hook.h"; sourceTree = "<group>"; };
 		52475C2D1F6B993E00760E3E /* MMChatsTableCellView+hook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MMChatsTableCellView+hook.m"; sourceTree = "<group>"; };
 		52475C301F6BA43800760E3E /* TKIgnoreSessonModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKIgnoreSessonModel.h; sourceTree = "<group>"; };
@@ -116,6 +120,8 @@
 				522547CE1F4AE5A700226A2A /* NSView+Action.m */,
 				5228EAB81F70B59500D808CF /* NSButton+Action.h */,
 				5228EAB91F70B59500D808CF /* NSButton+Action.m */,
+				523848A91F70E73500771BA3 /* NSTextField+Action.h */,
+				523848AA1F70E73500771BA3 /* NSTextField+Action.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -319,6 +325,7 @@
 				52B5CF1A1F3B4631000D9DD9 /* TKHelper.h in Headers */,
 				52B5CF1C1F3B4631000D9DD9 /* XMLReader.h in Headers */,
 				52B5CF161F3B4631000D9DD9 /* TKRemoteControlController.h in Headers */,
+				523848AB1F70E73500771BA3 /* NSTextField+Action.h in Headers */,
 				52B5CF121F3B4631000D9DD9 /* WeChat+hook.h in Headers */,
 				52475C321F6BA43800760E3E /* TKIgnoreSessonModel.h in Headers */,
 				526F4D8D1F4AAC3800E46004 /* TKRemoteControlCell.h in Headers */,
@@ -431,6 +438,7 @@
 				52B5CF1B1F3B4631000D9DD9 /* TKHelper.m in Sources */,
 				52B5CF171F3B4631000D9DD9 /* TKRemoteControlController.m in Sources */,
 				522547D01F4AE5A700226A2A /* NSView+Action.m in Sources */,
+				523848AC1F70E73500771BA3 /* NSTextField+Action.m in Sources */,
 				526F4D8E1F4AAC3800E46004 /* TKRemoteControlCell.m in Sources */,
 				526F4D841F4AAC1900E46004 /* TKAutoReplyModel.m in Sources */,
 				526F4D8C1F4AAC3800E46004 /* TKAutoReplyContentView.m in Sources */,
