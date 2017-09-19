@@ -32,21 +32,21 @@
 
 - (void)initSubviews {
     self.enableRegexBtn = ({
-        NSButton *btn = [NSButton checkboxWithTitle:@"开启正则匹配" target:self action:@selector(clickEnableRegexBtn:)];
+        NSButton *btn = [NSButton tk_checkboxWithTitle:@"开启正则匹配" target:self action:@selector(clickEnableRegexBtn:)];
         btn.frame = NSMakeRect(20, 15, 400, 20);
         
         btn;
     });
     
     self.enableGroupReplyBtn = ({
-        NSButton *btn = [NSButton checkboxWithTitle:@"开启群聊自动回复" target:self action:@selector(clickEnableGroupBtn:)];
+        NSButton *btn = [NSButton tk_checkboxWithTitle:@"开启群聊自动回复" target:self action:@selector(clickEnableGroupBtn:)];
         btn.frame = NSMakeRect(20, 40, 400, 20);
         
         btn;
     });
     
     self.enableSingleReplyBtn = ({
-        NSButton *btn = [NSButton checkboxWithTitle:@"开启私聊自动回复" target:self action:@selector(clickEnableSingleBtn:)];
+        NSButton *btn = [NSButton tk_checkboxWithTitle:@"开启私聊自动回复" target:self action:@selector(clickEnableSingleBtn:)];
         btn.frame = NSMakeRect(200, 40, 400, 20);
         
         btn;

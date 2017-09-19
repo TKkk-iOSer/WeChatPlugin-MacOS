@@ -78,7 +78,7 @@
     });
     
     self.addButton = ({
-        NSButton *btn = [NSButton buttonWithTitle:@"＋" target:self action:@selector(addModel)];
+        NSButton *btn = [NSButton tk_buttonWithTitle:@"＋" target:self action:@selector(addModel)];
         btn.frame = NSMakeRect(30, 10, 40, 40);
         btn.bezelStyle = NSBezelStyleTexturedRounded;
         
@@ -86,7 +86,7 @@
     });
     
     self.reduceButton = ({
-        NSButton *btn = [NSButton buttonWithTitle:@"－" target:self action:@selector(reduceModel)];
+        NSButton *btn = [NSButton tk_buttonWithTitle:@"－" target:self action:@selector(reduceModel)];
         btn.frame = NSMakeRect(80, 10, 40, 40);
         btn.bezelStyle = NSBezelStyleTexturedRounded;
         btn.enabled = NO;

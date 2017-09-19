@@ -15,6 +15,8 @@
 		522547E11F4C312A00226A2A /* TKRemoteControlWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 522547DB1F4C312A00226A2A /* TKRemoteControlWindowController.h */; };
 		522547E21F4C312A00226A2A /* TKRemoteControlWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 522547DC1F4C312A00226A2A /* TKRemoteControlWindowController.m */; };
 		522547E31F4C312A00226A2A /* TKRemoteControlWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 522547DD1F4C312A00226A2A /* TKRemoteControlWindowController.xib */; };
+		5228EABA1F70B59500D808CF /* NSButton+Action.h in Headers */ = {isa = PBXBuildFile; fileRef = 5228EAB81F70B59500D808CF /* NSButton+Action.h */; };
+		5228EABB1F70B59500D808CF /* NSButton+Action.m in Sources */ = {isa = PBXBuildFile; fileRef = 5228EAB91F70B59500D808CF /* NSButton+Action.m */; };
 		52475C2E1F6B993E00760E3E /* MMChatsTableCellView+hook.h in Headers */ = {isa = PBXBuildFile; fileRef = 52475C2C1F6B993E00760E3E /* MMChatsTableCellView+hook.h */; };
 		52475C2F1F6B993E00760E3E /* MMChatsTableCellView+hook.m in Sources */ = {isa = PBXBuildFile; fileRef = 52475C2D1F6B993E00760E3E /* MMChatsTableCellView+hook.m */; };
 		52475C321F6BA43800760E3E /* TKIgnoreSessonModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 52475C301F6BA43800760E3E /* TKIgnoreSessonModel.h */; };
@@ -58,6 +60,8 @@
 		522547DB1F4C312A00226A2A /* TKRemoteControlWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKRemoteControlWindowController.h; sourceTree = "<group>"; };
 		522547DC1F4C312A00226A2A /* TKRemoteControlWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKRemoteControlWindowController.m; sourceTree = "<group>"; };
 		522547DD1F4C312A00226A2A /* TKRemoteControlWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TKRemoteControlWindowController.xib; sourceTree = "<group>"; };
+		5228EAB81F70B59500D808CF /* NSButton+Action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSButton+Action.h"; sourceTree = "<group>"; };
+		5228EAB91F70B59500D808CF /* NSButton+Action.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSButton+Action.m"; sourceTree = "<group>"; };
 		52475C2C1F6B993E00760E3E /* MMChatsTableCellView+hook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MMChatsTableCellView+hook.h"; sourceTree = "<group>"; };
 		52475C2D1F6B993E00760E3E /* MMChatsTableCellView+hook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MMChatsTableCellView+hook.m"; sourceTree = "<group>"; };
 		52475C301F6BA43800760E3E /* TKIgnoreSessonModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKIgnoreSessonModel.h; sourceTree = "<group>"; };
@@ -110,6 +114,8 @@
 			children = (
 				522547CD1F4AE5A700226A2A /* NSView+Action.h */,
 				522547CE1F4AE5A700226A2A /* NSView+Action.m */,
+				5228EAB81F70B59500D808CF /* NSButton+Action.h */,
+				5228EAB91F70B59500D808CF /* NSButton+Action.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -305,6 +311,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				522547DE1F4C312A00226A2A /* TKAutoReplyWindowController.h in Headers */,
+				5228EABA1F70B59500D808CF /* NSButton+Action.h in Headers */,
 				526F4D7D1F4AAADA00E46004 /* Color.h in Headers */,
 				528B4F971EA7383800BC6A89 /* WeChatPlugin.h in Headers */,
 				526F4D801F4AAADA00E46004 /* TKPrefixHeader.pch in Headers */,
@@ -429,6 +436,7 @@
 				526F4D8C1F4AAC3800E46004 /* TKAutoReplyContentView.m in Sources */,
 				522547DF1F4C312A00226A2A /* TKAutoReplyWindowController.m in Sources */,
 				52B5CF191F3B4631000D9DD9 /* TKRemoteControlModel.m in Sources */,
+				5228EABB1F70B59500D808CF /* NSButton+Action.m in Sources */,
 				528B4FB41EA7386D00BC6A89 /* main.mm in Sources */,
 				52B5CF1D1F3B4631000D9DD9 /* XMLReader.m in Sources */,
 				52475C331F6BA43800760E3E /* TKIgnoreSessonModel.m in Sources */,
