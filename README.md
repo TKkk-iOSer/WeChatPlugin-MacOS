@@ -3,7 +3,7 @@
 
 ![](https://img.shields.io/badge/platform-osx-lightgrey.svg) ![](https://img.shields.io/badge/support-wechat%202.2.8-green.svg)
    
-微信小助手 v1.0.0   
+微信小助手 v1.3.0   
 
 ![微信小助手.png](http://upload-images.jianshu.io/upload_images/965383-0f65bb05dabf961b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -128,7 +128,12 @@
 在`Terminal`(终端)打开该项目，运行 `./Other/Uninstall.sh` 即可
 
 ---
+### 依赖
 
+* [XMLReader](https://github.com/amarcadet/XMLReader)
+* [insert_dylib](https://github.com/Tyilo/insert_dylib)
+
+---
 ### Other
 
 若有其他好的想法欢迎 Issue me

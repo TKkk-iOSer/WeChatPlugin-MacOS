@@ -5,7 +5,7 @@
 	<array>
 		<dict>
 			<key>executeCommand</key>
-			<string>open /System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app</string>
+			<string>open /System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine.app || open /System/Library/CoreServices/ScreenSaverEngine.app </string>
 			<key>keyword</key>
 			<string>TK-PMBH</string>
 			<key>function</key>
