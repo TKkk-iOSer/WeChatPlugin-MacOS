@@ -13,6 +13,7 @@
 
 static NSString * const kTKPreventRevokeEnableKey = @"kTKPreventRevokeEnableKey";
 static NSString * const kTKAutoAuthEnableKey = @"kTKAutoAuthEnableKey";
+static NSString * const kTKOnTopKey = @"kTKOnTopKey";
 
 static NSString * const kTKAutoReplyModelsFilePath = @"/Applications/WeChat.app/Contents/MacOS/WeChatPlugin.framework/Resources/TKAutoReplyModels.plist";
 static NSString * const kTKRemoteControlModelsFilePath = @"/Applications/WeChat.app/Contents/MacOS/WeChatPlugin.framework/Resources/TKRemoteControlCommands.plist";
@@ -36,6 +37,7 @@ static NSString * const kTKIgnoreSessionModelsFilePath = @"/Applications/WeChat.
     if (self) {
         _preventRevokeEnable = [[NSUserDefaults standardUserDefaults] boolForKey:kTKPreventRevokeEnableKey];
         _autoAuthEnable = [[NSUserDefaults standardUserDefaults] boolForKey:kTKAutoAuthEnableKey];
+        _onTop = [[NSUserDefaults standardUserDefaults] boolForKey:kTKOnTopKey];
     }
     return self;
 }
@@ -51,6 +53,13 @@ static NSString * const kTKIgnoreSessionModelsFilePath = @"/Applications/WeChat.
     [[NSUserDefaults standardUserDefaults] setBool:autoAuthEnable forKey:kTKAutoAuthEnableKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
+
+- (void)setOnTop:(BOOL)onTop {
+    _onTop = onTop;
+    [[NSUserDefaults standardUserDefaults] setBool:_onTop forKey:kTKOnTopKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 #pragma mark - 自动回复
 - (NSArray *)autoReplyModels {
     if (!_autoReplyModels) {

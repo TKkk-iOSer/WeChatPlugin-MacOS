@@ -39,6 +39,10 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
 + (void)setup {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self addAssistantMenuItem];
+        
+        BOOL onTop = [[TKWeChatPluginConfig sharedConfig] onTop];
+        WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
+        wechat.mainWindowController.window.level = onTop == NSControlStateValueOn ? NSStatusWindowLevel : NSNormalWindowLevel;
     });
 }
 
@@ -55,6 +59,9 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     NSMenuItem *newWeChatItem = [[NSMenuItem alloc] initWithTitle:@"登录新微信" action:@selector(onNewWechatInstance:) keyEquivalent:@"N"];
     //        远程控制
     NSMenuItem *commandItem = [[NSMenuItem alloc] initWithTitle:@"远程控制Mac OS" action:@selector(onRemoteControl:) keyEquivalent:@"C"];
+    //        微信窗口置顶
+    NSMenuItem *onTopItem = [[NSMenuItem alloc] initWithTitle:@"微信窗口置顶" action:@selector(onWechatOnTopControl:) keyEquivalent:@"d"];
+    onTopItem.state = [[TKWeChatPluginConfig sharedConfig] onTop];
     //        免认证登录
     NSMenuItem *autoAuthItem = [[NSMenuItem alloc] initWithTitle:@"免认证登录" action:@selector(onAutoAuthControl:) keyEquivalent:@"M"];
     autoAuthItem.state = [[TKWeChatPluginConfig sharedConfig] autoAuthEnable];
@@ -64,6 +71,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     [subMenu addItem:autoReplyItem];
     [subMenu addItem:commandItem];
     [subMenu addItem:newWeChatItem];
+    [subMenu addItem:onTopItem];
     [subMenu addItem:autoAuthItem];
 
     NSMenuItem *menuItem = [[NSMenuItem alloc] init];
@@ -141,6 +149,17 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     [[TKWeChatPluginConfig sharedConfig] setAutoAuthEnable:item.state];
 }
 
+/**
+ 菜单栏-微信小助手-微信窗口置顶
+ 
+ @param item 免认证登录的 item
+ */
+- (void)onWechatOnTopControl:(NSMenuItem *)item {
+    item.state = !item.state;
+    [[TKWeChatPluginConfig sharedConfig] setOnTop:item.state];
+    WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
+    wechat.mainWindowController.window.level = item.state == NSControlStateValueOn ? NSStatusWindowLevel : NSNormalWindowLevel;
+}
 
 #pragma mark - hook 微信方法
 /**
