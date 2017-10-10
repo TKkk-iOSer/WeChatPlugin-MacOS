@@ -33,6 +33,7 @@
 * 第二次登录免认证
 * 聊天置底功能(~~类似置顶~~)
 * 微信窗口置顶
+* 会话多选删除
 
 远程控制：
 
@@ -61,8 +62,9 @@
 * 远程控制 (测试关闭Chrome、QQ、开启屏幕保护)
 ![远程控制.gif](http://upload-images.jianshu.io/upload_images/965383-0cf50d9b22b02f2f.gif?imageMogr2/auto-orient/strip)
 
-* 免认证 & 置底
-![免认证&置底](http://upload-images.jianshu.io/upload_images/965383-cc656af55cc2d2f6.gif?imageMogr2/auto-orient/strip)
+* 免认证 & 置底 & 多选删除
+![免认证&置底&多选删除](http://upload-images.jianshu.io/upload_images/965383-170592b03781cbf4.gif?imageMogr2/auto-orient/strip)
+
 
 ---
 ### 安装
@@ -95,7 +97,7 @@
 **3. 安装完成**
 
 * 登录微信，在**菜单栏**中看到**微信小助手**即安装成功。 
-![微信小助手.png](http://upload-images.jianshu.io/upload_images/965383-0f65bb05dabf961b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![微信小助手.png](http://upload-images.jianshu.io/upload_images/965383-31708af611b55ca4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 --- 
 
