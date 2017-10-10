@@ -74,7 +74,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 + (id)sharedInstance;
 @property(nonatomic) MMChatsViewController *chatsViewController;
 @property(retain, nonatomic) MMMainWindowController *mainWindowController;
-@property(nonatomic) BOOL isAppTerminating; 
+@property(nonatomic) BOOL isAppTerminating;
 @end
 
 @interface ContactStorage : NSObject
@@ -111,6 +111,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @property(nonatomic) BOOL m_bShowUnReadAsRedDot;
 @property(nonatomic) BOOL m_isMentionedUnread; // @synthesize
 @property(retain, nonatomic) NSString *m_nsUserName; // @synthesize m_nsUserName;
+@property(retain, nonatomic) WCContactData *m_contact;
 @end
 
 
@@ -120,18 +121,22 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @end
 
 @interface MMChatsTableCellView : NSTableCellView
-@property(nonatomic) __weak id <MMChatsTableCellViewDelegate> delegate; 
+@property(nonatomic) __weak id <MMChatsTableCellViewDelegate> delegate;
 @property(retain, nonatomic) MMSessionInfo *sessionInfo;
 - (void)menuWillOpen:(id)arg1;
 - (void)contextMenuSticky;
+- (void)contextMenuDelete;
+
 @end
 
 @interface MMSessionMgr : NSObject
 @property(retain, nonatomic) NSMutableArray *m_arrSession;
+- (id)GetSessionAtIndex:(unsigned long long)arg1;
 - (void)MuteSessionByUserName:(id)arg1;
 //- (void)TopSessionByUserName:(id)arg1;
 - (void)UnmuteSessionByUserName:(id)arg1;
 - (void)UntopSessionByUserName:(id)arg1;
+- (void)deleteSessionWithoutSyncToServerWithUserName:(id)arg1;
 - (void)sortSessions;
 @end
 

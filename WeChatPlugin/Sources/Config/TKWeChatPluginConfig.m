@@ -14,10 +14,8 @@
 static NSString * const kTKPreventRevokeEnableKey = @"kTKPreventRevokeEnableKey";
 static NSString * const kTKAutoAuthEnableKey = @"kTKAutoAuthEnableKey";
 static NSString * const kTKOnTopKey = @"kTKOnTopKey";
-
 static NSString * const kTKAutoReplyModelsFilePath = @"/Applications/WeChat.app/Contents/MacOS/WeChatPlugin.framework/Resources/TKAutoReplyModels.plist";
 static NSString * const kTKRemoteControlModelsFilePath = @"/Applications/WeChat.app/Contents/MacOS/WeChatPlugin.framework/Resources/TKRemoteControlCommands.plist";
-
 static NSString * const kTKIgnoreSessionModelsFilePath = @"/Applications/WeChat.app/Contents/MacOS/WeChatPlugin.framework/Resources/TKIgnoreSessons.plist";
 
 @implementation TKWeChatPluginConfig
@@ -28,7 +26,6 @@ static NSString * const kTKIgnoreSessionModelsFilePath = @"/Applications/WeChat.
     dispatch_once(&onceToken, ^{
         config = [[TKWeChatPluginConfig alloc] init];
     });
-
     return config;
 }
 
@@ -119,7 +116,7 @@ static NSString * const kTKIgnoreSessionModelsFilePath = @"/Applications/WeChat.
 - (NSArray *)ignoreSessionModels {
     if (!_ignoreSessionModels) {
         _ignoreSessionModels = [self getArrayClass:[TKIgnoreSessonModel class] filePath:kTKIgnoreSessionModelsFilePath];
-        
+
     }
     return _ignoreSessionModels;
 }
@@ -133,15 +130,14 @@ static NSString * const kTKIgnoreSessionModelsFilePath = @"/Applications/WeChat.
 - (NSMutableArray *)getArrayClass:(Class)class filePath:(NSString *)filePath {
     NSArray *originModels = [NSArray arrayWithContentsOfFile:filePath];
     NSMutableArray *newModels = [NSMutableArray array];
-    
+
     __weak Class weakClass = class;
     [originModels enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         TKIgnoreSessonModel *model = [[weakClass alloc] initWithDict:obj];
         [newModels addObject:model];
     }];
-    
    return newModels;
-    
+
 }
 
 - (void)saveArray:(NSMutableArray *)array filePath:(NSString *)filePath {
@@ -149,8 +145,15 @@ static NSString * const kTKIgnoreSessionModelsFilePath = @"/Applications/WeChat.
     [array enumerateObjectsUsingBlock:^(TKBaseModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [needSaveArray addObject:obj.dictionary];
     }];
-    
+
     [needSaveArray writeToFile:filePath atomically:YES];
+}
+
+- (NSMutableArray *)selectSessions {
+    if (!_selectSessions) {
+        _selectSessions = [NSMutableArray array];
+    }
+    return _selectSessions;
 }
 
 @end
