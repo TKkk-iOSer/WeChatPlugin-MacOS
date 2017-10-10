@@ -5,7 +5,7 @@
    
 微信小助手 v1.3.0   
 
-![微信小助手.png](http://upload-images.jianshu.io/upload_images/965383-0f65bb05dabf961b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![微信小助手.png](http://upload-images.jianshu.io/upload_images/965383-31708af611b55ca4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 **iOS版本请戳→_→ [WeChatPlugin-iOS](https://github.com/TKkk-iOSer/WeChatPlugin-iOS)**
 
@@ -31,7 +31,8 @@
 * 远程控制
 * 微信多开
 * 第二次登录免认证
-* 置底功能(~~类似置顶~~)
+* 聊天置底功能(~~类似置顶~~)
+* 微信窗口置顶
 
 远程控制：
 
@@ -70,13 +71,13 @@
 
 **0. 懒癌版安装(适合非程序猿)**
 
-打开`应用程序-实用工具-Terminal(终端)`，执行以下命令并根据提示输入密码即可。
+打开`应用程序-实用工具-Terminal(终端)`，执行以下命令并根据提示输入密码即可。~~(需要git支持)~~
 
 `cd ~/Downloads && git clone https://github.com/TKkk-iOSer/WeChatPlugin-MacOS.git && ./WeChatPlugin-MacOS/Other/Install.sh`
 
 **1. 普通安装**
 
-* 下载WeChatPlugin，用 Termimal 打开项目当前目录，执行 `./Other/Install.sh`即可。
+* 点击`clone or download`按钮下载 WeChatPlugin 并解压，用 Termimal 打开项目当前目录，执行 `./Other/Install.sh`即可。
 
 
 **2. 若想修改源码&重编译**
