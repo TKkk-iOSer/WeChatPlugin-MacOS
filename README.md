@@ -3,7 +3,7 @@
 
 ![](https://img.shields.io/badge/platform-osx-lightgrey.svg) ![](https://img.shields.io/badge/support-wechat%202.2.8-green.svg)
    
-微信小助手 v1.3.0   
+微信小助手 v1.4.0   
 
 ![微信小助手.png](http://upload-images.jianshu.io/upload_images/965383-31708af611b55ca4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -14,6 +14,8 @@
 ---
 
 ### 更新日志
+
+[新增窗口置顶&多选删除等等 (2017-10-11)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.4.0)
 
 [新增置底&免认证 (2017-09-17)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.3.0)
 
@@ -36,6 +38,8 @@
 * 会话多选删除
 
 远程控制：
+
+>远程控制新增指令发送成功回调、发送`获取指令`获得当前所有远程控制信息。
 
 - [x] 屏幕保护
 - [x] 清空废纸篓
@@ -79,7 +83,7 @@
 
 **1. 普通安装**
 
-* 点击`clone or download`按钮下载 WeChatPlugin 并解压，用 Termimal 打开项目当前目录，执行 `./Other/Install.sh`即可。
+* 点击`clone or download`按钮下载 WeChatPlugin 至`下载`目录并解压，打开Termimal，执行 `~/Downloads/WeChatPlugin-MacOS-master/Other/Install.sh`即可。
 
 
 **2. 若想修改源码&重编译**
@@ -123,6 +127,11 @@
 ①为选择是否开启远程控制此功能。   
 
 ②为能够触发远程控制的消息内容(仅向自己发送账号有效)。
+
+
+* 远程控制：发送`获取指令`，手机端可查看所有指令信息。
+
+![远程控制.png](http://upload-images.jianshu.io/upload_images/965383-7c2a4b17e5a6867f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ---
 

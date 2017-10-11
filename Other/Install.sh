@@ -22,7 +22,7 @@ then
 cp "$app_executable_path" "$app_executable_backup_path"
 result="y"
 else
-read -t 15 -p "已安装微信小助手，是否覆盖？[y/n]:" result
+read -t 150 -p "已安装微信小助手，是否覆盖？[y/n]:" result
 fi
 
 if [[ "$result" == 'y' ]]; then

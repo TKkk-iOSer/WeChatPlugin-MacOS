@@ -125,6 +125,8 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @property(retain, nonatomic) MMSessionInfo *sessionInfo;
 - (void)menuWillOpen:(id)arg1;
 - (void)contextMenuSticky;
+- (void)contextMenuDelete;
+
 @end
 
 @interface MMSessionMgr : NSObject

@@ -12,5 +12,6 @@
 
 + (void)executeRemoteControlCommandWithMsg:(NSString *)msg;
 + (void)executeShellCommand:(NSString *)msg;
++ (NSString *)remoteControlCommandsString;
 
 @end
