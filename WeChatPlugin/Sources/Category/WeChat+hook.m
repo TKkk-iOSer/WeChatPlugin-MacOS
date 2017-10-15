@@ -31,9 +31,19 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     tk_hookMethod(objc_getClass("LogoutCGI"), @selector(sendLogoutCGIWithCompletion:), [self class], @selector(hook_sendLogoutCGIWithCompletion:));
     //      置底
     tk_hookMethod(objc_getClass("MMSessionMgr"), @selector(sortSessions), [self class], @selector(hook_sortSessions));
-    
+    //      获取sqlcipher Key
+    tk_hookMethod_2(objc_getClass("WCDataBase"), @selector(initWithPath:withEncryptKey:), [self class], @selector(hook_initWithPath:withEncryptKey:), [self class], @selector(origin_initWithPath:withEncryptKey:));
     [self setup];
     [self replaceAboutFilePathMethod];
+}
+
+- (id)origin_initWithPath:(id)arg1 withEncryptKey:(id)arg2 {
+    return NULL;
+}
+
+- (id)hook_initWithPath:(id)arg1 withEncryptKey:(id)arg2 {
+    NSLog(@"%@", arg2);
+    return [self origin_initWithPath:arg1 withEncryptKey:arg2];
 }
 
 + (void)setup {
