@@ -29,14 +29,14 @@
 
 - (void)initSubviews {
     self.selectBtn = ({
-        NSButton *btn = [NSButton checkboxWithTitle:@"" target:self action:@selector(clickSelectBtn:)];
+        NSButton *btn = [NSButton tk_checkboxWithTitle:@"" target:self action:@selector(clickSelectBtn:)];
         btn.frame = NSMakeRect(5, 15, 20, 20);
         
         btn;
     });
     
     self.keywordLabel = ({
-        NSTextField *label = [NSTextField labelWithString:@""];
+        NSTextField *label = [NSTextField tk_labelWithString:@""];
         label.placeholderString = @"关键字";
         [[label cell] setLineBreakMode:NSLineBreakByCharWrapping];
         [[label cell] setTruncatesLastVisibleLine:YES];
@@ -47,7 +47,7 @@
     });
     
     self.replyContentLabel = ({
-        NSTextField *label = [NSTextField labelWithString:@""];
+        NSTextField *label = [NSTextField tk_labelWithString:@""];
         label.placeholderString = @"回复内容";
         [[label cell] setLineBreakMode:NSLineBreakByCharWrapping];
         [[label cell] setTruncatesLastVisibleLine:YES];
@@ -72,11 +72,14 @@
 
 - (void)clickSelectBtn:(NSButton *)btn {
     self.model.enable = btn.state;
+    if (!self.model.enableSingleReply && !self.model.enableGroupReply && btn.state == YES) {
+        self.model.enableSingleReply = YES;
+        if (self.updateModel) self.updateModel();
+    }
 }
 
 - (void)setModel:(TKAutoReplyModel *)model {
     _model = model;
-    
     if (model.keyword == nil && model.replyContent == nil) return;
     
     self.selectBtn.state = model.enable;

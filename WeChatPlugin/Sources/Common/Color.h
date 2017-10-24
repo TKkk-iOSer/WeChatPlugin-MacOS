@@ -15,10 +15,12 @@ blue:(b) / 255.0 \
 alpha:(a)]
 
 #define TK_RGB(r, g, b) TK_RGBA(r, g, b, 1.0)
-
-#define TK_GRAY(c) TK_RGB(c, c, c)
+#define TK_GRAYA(c, a) TK_RGBA(c, c, c, a)
+#define TK_GRAY(c) TK_GRAYA(c, 1.0)
 
 #define kBG1 TK_GRAY(0xec)
 #define kBG2 TK_GRAY(0xe3)
+#define kBG3 TK_GRAYA(0x2a, 0.5)
+#define kBG4 TK_GRAYA(0x7a, 0.5)
 
 #endif /* Color_h */

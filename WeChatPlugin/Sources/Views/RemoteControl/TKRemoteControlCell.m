@@ -29,7 +29,7 @@
 
 - (void)initSubviews {
     self.selectBtn = ({
-        NSButton *btn = [NSButton checkboxWithTitle:@"" target:self action:@selector(clickSelectBtn:)];
+        NSButton *btn = [NSButton tk_checkboxWithTitle:@"" target:self action:@selector(clickSelectBtn:)];
         btn.frame = NSMakeRect(50, 10, 150, 30);
         
         btn;

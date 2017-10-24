@@ -9,6 +9,7 @@
 #import "TKRemoteControlController.h"
 #import "TKWeChatPluginConfig.h"
 #import "TKRemoteControlModel.h"
+#import "WeChatPlugin.h"
 
 //      执行 AppleScript
 static NSString * const kRemoteControlAppleScript = @"osascript /Applications/WeChat.app/Contents/MacOS/WeChatPlugin.framework/Resources/TKRemoteControlScript.scpt";
@@ -35,6 +36,10 @@ static NSString * const kRemoteControlAppleScript = @"osascript /Applications/We
                         }
                     });
                 }
+                NSString *currentUserName = [objc_getClass("CUtility") GetCurrentUserName];
+                NSString *callBack = [NSString stringWithFormat:@"小助手收到一条指令：%@",model.function];
+                MessageService *service = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
+                [service SendTextMessage:currentUserName toUsrName:currentUserName msgText:callBack atUserList:nil];
             }
         }];
     }];
@@ -42,7 +47,7 @@ static NSString * const kRemoteControlAppleScript = @"osascript /Applications/We
 
 /**
  通过 NSTask 执行 Shell 命令
- 
+
  @param cmd Terminal命令
  */
 + (void)executeShellCommand:(NSString *)cmd {
@@ -50,6 +55,32 @@ static NSString * const kRemoteControlAppleScript = @"osascript /Applications/We
     [task setLaunchPath:@"/bin/bash"];
     [task setArguments:@[@"-c", cmd]];
     [task launch];
+}
+
++ (NSString *)remoteControlCommandsString {
+    NSMutableString *replyContent = [NSMutableString stringWithFormat:@"远程控制指令：\n(功能-指令-是否开启)\n\n"];
+
+    NSArray *remoteControlModels = [TKWeChatPluginConfig sharedConfig].remoteControlModels;
+    [remoteControlModels enumerateObjectsUsingBlock:^(NSArray *subModels, NSUInteger index, BOOL * _Nonnull stop) {
+        switch (index) {
+            case 0:
+                [replyContent appendString:@"macbook控制:\n"];
+                break;
+            case 1:
+                [replyContent appendString:@"app控制:\n"];
+                break;
+            case 2:
+                [replyContent appendString:@"网易云音乐控制:\n"];
+                break;
+            default:
+                break;
+        }
+        [subModels enumerateObjectsUsingBlock:^(TKRemoteControlModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
+            [replyContent appendFormat:@"%@-%@-%@\n", model.function, model.keyword, model.enable ? @"开启":@"关闭"];
+        }];
+        [replyContent appendString:@"\n"];
+    }];
+    return replyContent;
 }
 
 @end

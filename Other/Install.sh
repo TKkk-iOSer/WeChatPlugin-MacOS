@@ -12,7 +12,7 @@ framework_path="${app_bundle_path}/${framework_name}.framework"
 # 对 WeChat 赋予权限
 if [ ! -w "$wechat_path" ]
 then
-echo "更改微信的owner >>>"
+echo -e "\n\n为了将小助手写入微信, 请输入密码 ： "
 sudo chown -R $(whoami) "$wechat_path"
 fi
 
@@ -22,7 +22,7 @@ then
 cp "$app_executable_path" "$app_executable_backup_path"
 result="y"
 else
-read -t 10 -p "已安装微信小助手，是否覆盖？[y/n]:" result
+read -t 150 -p "已安装微信小助手，是否覆盖？[y/n]:" result
 fi
 
 if [[ "$result" == 'y' ]]; then
