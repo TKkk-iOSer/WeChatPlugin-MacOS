@@ -51,6 +51,18 @@
 
 ---
 
+### TODO
+- [ ] 增加`Alfred`搜索
+- [ ] 查看单向好友
+- [ ] 语音(视频转发)
+- [ ] 增加 brew 安装方式
+- [ ] 完善自动回复(指定好友回复、图灵机器人、)
+- [ ] 完善消息防撤回(显示撤回用户昵称)
+- [ ] 清除微信缓存
+- [ ] 优化小助手设置(更新后保留相关设置，更新提醒)
+- [ ] 群聊屏蔽某成员
+
+---
 
 ### Demo 演示
 
@@ -154,5 +166,5 @@
 
 #### 听说你想请我喝下午茶？😏
  
-<img src="http://upload-images.jianshu.io/upload_images/965383-8e2af8fe607eee62.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1024" height="300" hspace="7" style="display: inline-block">
+<img src="http://upload-images.jianshu.io/upload_images/965383-fca1af546f8596c4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" height="250" hspace="50" style="display: inline-block" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="http://upload-images.jianshu.io/upload_images/965383-6ca06d7d980dc100.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" height="250" hspace="50" style="display: inline-block" />
 
