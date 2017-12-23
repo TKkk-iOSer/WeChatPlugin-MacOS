@@ -9,7 +9,7 @@
 
 **iOS版本请戳→_→ [WeChatPlugin-iOS](https://github.com/TKkk-iOSer/WeChatPlugin-iOS)**
 
-~~主要实现 mac OS 版微信的<a>消息防撤回与自动回复</a>的功能，详细内容，请参考[我的博客](http://www.jianshu.com/p/7f65287a2e7a)~~
+~~如何制作 mac OS 插件，请参考[我的博客](http://www.tkkk.fun/2017/04/21/macOS%E9%80%86%E5%90%91-%E5%BE%AE%E4%BF%A1%E5%B0%8F%E5%8A%A9%E6%89%8B/)~~
 
 ---
 
@@ -149,7 +149,10 @@
 
 ### 卸载
 
-在`Terminal`(终端)打开该项目，运行 `./Other/Uninstall.sh` 即可
+在`Terminal`(终端)打开该项目，运行 `./Other/Uninstall.sh` 即可.
+
+
+~~或者在 `/Applications/WeChat.app/Contents/MacOS` 目录中，删除 `WeChat` 与 `WeChatPlugin.framework`，将`WeChat_backup` 重命名为 `WeChat` 即可。~~
 
 ---
 ### 依赖
