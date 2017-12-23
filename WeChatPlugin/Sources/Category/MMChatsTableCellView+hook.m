@@ -174,7 +174,7 @@
         NSMutableArray *selectSessions = [[TKWeChatPluginConfig sharedConfig] selectSessions];
         
         [selectSessions  enumerateObjectsUsingBlock:^(MMSessionInfo *sessionInfo, NSUInteger idx, BOOL * _Nonnull stop) {
-            NSString *sessionUserName = sessionInfo.m_contact.m_nsUsrName;
+            NSString *sessionUserName = sessionInfo.m_nsUserName;
             if (sessionUserName.length != 0) {
                 [sessionMgr deleteSessionWithoutSyncToServerWithUserName:sessionUserName];
             }
