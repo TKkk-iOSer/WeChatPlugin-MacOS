@@ -114,7 +114,6 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @property(retain, nonatomic) WCContactData *m_contact;
 @end
 
-
 @protocol MMChatsTableCellViewDelegate <NSObject>
 @optional
 - (void)cellViewReloadData:(MMSessionInfo *)arg1;
@@ -126,6 +125,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 - (void)menuWillOpen:(id)arg1;
 - (void)contextMenuSticky;
 - (void)contextMenuDelete;
+- (void)tableView:(NSTableView *)arg1 rowGotMouseDown:(long long)arg2;
 
 @end
 

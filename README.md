@@ -109,6 +109,7 @@
 * 下载 WeChatPlugin, 用Xcode打开，先进行 Build (`command + B`)，之后 Run (`command + R`)即可启动微信，此时插件注入完成。
  
 * 若 Error，提示找不到 Framework，先进行 Build。
+* 若Error, 需要配置环境，请参考[我的博客](http://www.tkkk.fun/2017/04/21/macOS%E9%80%86%E5%90%91-%E5%BE%AE%E4%BF%A1%E5%B0%8F%E5%8A%A9%E6%89%8B/)。
 
 **3. 安装完成**
 

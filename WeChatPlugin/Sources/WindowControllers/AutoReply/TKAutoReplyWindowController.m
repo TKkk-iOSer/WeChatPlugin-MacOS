@@ -186,7 +186,6 @@
 }
 
 #pragma mark - NSTableViewDataSource && NSTableViewDelegate
-
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
     return self.autoReplyModels.count;
 }

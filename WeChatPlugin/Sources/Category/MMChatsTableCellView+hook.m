@@ -87,7 +87,7 @@
     [self hook_menuWillOpen:arg1];
 }
 
--(void)contextMenuStickyBottom {
+- (void)contextMenuStickyBottom {
     MMChatsTableCellView *cellView = (MMChatsTableCellView *)self;
     MMSessionInfo *sessionInfo = [cellView sessionInfo];
     NSString *currentUserName = [objc_getClass("CUtility") GetCurrentUserName];
@@ -114,8 +114,7 @@
         }
         if (sessionInfo.m_bIsTop) {
             [sessionMgr UntopSessionByUserName:sessionInfo.m_nsUserName];
-        }
-        
+        } 
     } else {
         [ignoreSessions removeObjectAtIndex:index];
         if (sessionInfo.m_bShowUnReadAsRedDot) {

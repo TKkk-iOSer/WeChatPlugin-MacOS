@@ -126,7 +126,6 @@ static NSString * const kTKIgnoreSessionModelsFilePath = @"/Applications/WeChat.
 }
 
 #pragma mark - common
-
 - (NSMutableArray *)getArrayClass:(Class)class filePath:(NSString *)filePath {
     NSArray *originModels = [NSArray arrayWithContentsOfFile:filePath];
     NSMutableArray *newModels = [NSMutableArray array];
@@ -137,7 +136,6 @@ static NSString * const kTKIgnoreSessionModelsFilePath = @"/Applications/WeChat.
         [newModels addObject:model];
     }];
    return newModels;
-
 }
 
 - (void)saveArray:(NSMutableArray *)array filePath:(NSString *)filePath {

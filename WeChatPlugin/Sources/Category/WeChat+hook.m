@@ -403,13 +403,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
 }
 
 - (id)hook_statFilePath {
-    NSString *filePath = [self hook_statFilePath];
-    NSString *newCachePath = [NSObject realFilePathWithOriginFilePath:filePath originKeyword:@"/Documents"];
-    if (newCachePath) {
-        return newCachePath;
-    } else {
-        return filePath;
-    }
+    return [NSObject realFilePathWithOriginFilePath:[self hook_statFilePath]];
 }
 
 + (unsigned long long)hook_getFreeDiskSpace {
@@ -418,7 +412,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
         return [self hook_getFreeDiskSpace];
     }
     
-    NSString *newDocumentPath = [self realFilePathWithOriginFilePath:documentPath originKeyword:@"/Documents"];
+    NSString *newDocumentPath = [self realFilePathWithOriginFilePath:documentPath];
     if (newDocumentPath.length > 0) {
         NSFileManager *fileManager = [NSFileManager defaultManager];
         NSDictionary *dict = [fileManager attributesOfFileSystemForPath:newDocumentPath error:nil];
@@ -432,50 +426,30 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
 }
 
 + (id)hook_mappedKVPathWithID:(id)arg1 {
-    NSString *mappedKVPath = [self hook_mappedKVPathWithID:arg1];
-    NSString *newMappedKVPath = [self realFilePathWithOriginFilePath:mappedKVPath originKeyword:@"/Documents/MMappedKV"];
-    if (newMappedKVPath) {
-        return newMappedKVPath;
-    } else {
-        return mappedKVPath;
-    }
+    return [self realFilePathWithOriginFilePath:[self hook_mappedKVPathWithID:arg1]];
 }
 
 + (id)hook_getSysDocumentPath {
-    NSString *sysDocumentPath = [self hook_getSysDocumentPath];
-    NSString *newSysDocumentPath = [self realFilePathWithOriginFilePath:sysDocumentPath originKeyword:@"/Library/Application Support"];
-    if (newSysDocumentPath) {
-        return newSysDocumentPath;
-    } else {
-        return sysDocumentPath;
-    }
+    return [self realFilePathWithOriginFilePath:[self hook_getSysDocumentPath]];
 }
 
 + (id)hook_getSysLibraryPath {
-    NSString *libraryPath = [self hook_getSysLibraryPath];
-    NSString *newLibraryPath = [self realFilePathWithOriginFilePath:libraryPath originKeyword:@"/Library"];
-    if (newLibraryPath) {
-        return newLibraryPath;
-    } else {
-        return libraryPath;
-    }
+    return [self realFilePathWithOriginFilePath:[self hook_getSysLibraryPath]];
 }
 
 + (id)hook_getSysCachePath {
-    NSString *cachePath = [self hook_getSysCachePath];
-    NSString *newCachePath = [self realFilePathWithOriginFilePath:cachePath originKeyword:@"/Library/Caches"];
-    if (newCachePath) {
-        return newCachePath;
-    } else {
-        return cachePath;
-    }
+    return [self realFilePathWithOriginFilePath:[self hook_getSysCachePath]];
 }
 
-+ (id)realFilePathWithOriginFilePath:(NSString *)filePath originKeyword:(NSString *)keyword {
-    NSRange range = [filePath rangeOfString:keyword];
++ (id)realFilePathWithOriginFilePath:(NSString *)filePath {
+    NSString *desktopPath = [NSSearchPathForDirectoriesInDomains(NSDesktopDirectory, NSUserDomainMask, YES) firstObject];
+    NSRange desktopRange = [desktopPath rangeOfString:@"Desktop"];
+    NSString *userPath = [desktopPath substringToIndex:desktopRange.location];
+    
+    NSRange range = [filePath rangeOfString:userPath];
     if (range.length > 0) {
         NSMutableString *newFilePath = [filePath mutableCopy];
-        NSString *subString = [NSString stringWithFormat:@"/Library/Containers/com.tencent.xinWeChat/Data%@",keyword];
+        NSString *subString = [NSString stringWithFormat:@"%@Library/Containers/com.tencent.xinWeChat/Data/",userPath];
         [newFilePath replaceCharactersInRange:range withString:subString];
         return newFilePath;
     } else {

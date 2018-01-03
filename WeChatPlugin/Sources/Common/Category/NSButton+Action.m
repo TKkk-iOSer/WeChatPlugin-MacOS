@@ -18,10 +18,14 @@
 }
 
 + (instancetype)tk_buttonWithTitle:(NSString *)title target:(id)target action:(SEL)action {
-    NSButton *btn = [[NSButton alloc] init];
-    btn.title = title;
-    btn.target = target;
-    btn.action = action;
+    NSButton *btn = ({
+        NSButton *btn = [[NSButton alloc] init];
+        btn.title = title;
+        btn.target = target;
+        btn.action = action;
+        
+        btn;
+    });
     
     return btn;
 }

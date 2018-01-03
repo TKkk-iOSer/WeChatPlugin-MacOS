@@ -13,7 +13,7 @@
 
 @interface TKRemoteControlWindowController () <NSWindowDelegate, NSTabViewDelegate, NSTableViewDelegate, NSTableViewDataSource>
 
-@property (weak) IBOutlet NSTabView *tabView;
+@property (nonatomic, weak) IBOutlet NSTabView *tabView;
 @property (nonatomic, strong) NSTableView *tableView;
 @property (nonatomic, strong) NSArray *remoteControlModels;
 
@@ -66,7 +66,6 @@
 }
 
 #pragma mark - NSTableViewDataSource && NSTableViewDelegate
-
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView{
     return self.remoteControlModels.count;
 }
@@ -84,7 +83,6 @@
 }
 
 #pragma mark - NSTabViewDelegate
-
 - (void)tabView:(NSTabView *)tabView didSelectTabViewItem:(NSTabViewItem *)tabViewItem {
     NSInteger selectTabIndex = [tabViewItem.identifier integerValue];
     self.remoteControlModels = [[TKWeChatPluginConfig sharedConfig] remoteControlModels][selectTabIndex];
