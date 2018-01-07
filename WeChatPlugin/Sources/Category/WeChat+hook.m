@@ -29,6 +29,8 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     //      免认证登录
     tk_hookMethod(objc_getClass("MMLoginOneClickViewController"), @selector(onLoginButtonClicked:), [self class], @selector(hook_onLoginButtonClicked:));
     tk_hookMethod(objc_getClass("LogoutCGI"), @selector(sendLogoutCGIWithCompletion:), [self class], @selector(hook_sendLogoutCGIWithCompletion:));
+    //    自动登录
+    tk_hookMethod(objc_getClass("MMLoginOneClickViewController"), @selector(viewWillAppear), [self class], @selector(hook_viewWillAppear));
     //      置底
     tk_hookMethod(objc_getClass("MMSessionMgr"), @selector(sortSessions), [self class], @selector(hook_sortSessions));
     
@@ -161,6 +163,15 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     wechat.mainWindowController.window.level = item.state == NSControlStateValueOn ? NSStatusWindowLevel : NSNormalWindowLevel;
 }
 
+/**
+ 登录界面-自动登录
+
+ @param btn 自动登录按钮
+ */
+- (void)selectAutoLogin:(NSButton *)btn {
+    [[TKWeChatPluginConfig sharedConfig] setAutoLoginEnable:btn.state];
+}
+
 #pragma mark - hook 微信方法
 /**
  hook 微信是否已启动
@@ -267,7 +278,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
         WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
         MMLoginOneClickViewController *loginVC = wechat.mainWindowController.loginViewController.oneClickViewController;
         loginVC.loginButton.hidden = YES;
-        [wechat.mainWindowController onAuthOK];
+        ////        [wechat.mainWindowController onAuthOK];
         loginVC.descriptionLabel.stringValue = @"TK正在为你免认证登录~";
         loginVC.descriptionLabel.textColor = TK_RGB(0x88, 0x88, 0x88);
         loginVC.descriptionLabel.hidden = NO;
@@ -282,6 +293,36 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     if (autoAuthEnable && wechat.isAppTerminating) return;
     
     return [self hook_sendLogoutCGIWithCompletion:arg1];
+}
+
+- (void)hook_viewWillAppear {
+    [self hook_viewWillAppear];
+    
+    NSButton *autoLoginButton = ({
+        NSButton *btn = [NSButton tk_checkboxWithTitle:@"" target:self action:@selector(selectAutoLogin:)];
+        btn.frame = NSMakeRect(110, 60, 80, 30);
+        NSMutableParagraphStyle *pghStyle = [[NSMutableParagraphStyle alloc] init];
+        pghStyle.alignment = NSTextAlignmentCenter;
+        NSDictionary *dicAtt = @{NSForegroundColorAttributeName: kBG4, NSParagraphStyleAttributeName: pghStyle};
+        btn.attributedTitle = [[NSAttributedString alloc] initWithString:@"自动登录" attributes:dicAtt];
+        
+        btn;
+    });
+    
+    WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
+    MMLoginOneClickViewController *loginVC = wechat.mainWindowController.loginViewController.oneClickViewController;
+    [loginVC.view addSubview:autoLoginButton];
+    
+    BOOL autoLogin = [[TKWeChatPluginConfig sharedConfig] autoLoginEnable];
+    autoLoginButton.state = autoLogin;
+
+    NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+    NSArray *instances = [NSRunningApplication runningApplicationsWithBundleIdentifier:bundleIdentifier];
+    BOOL wechatHasRun = instances.count == 1;
+    
+    if (autoLogin && wechatHasRun) {
+        [loginVC onLoginButtonClicked:nil];
+    }
 }
 
 - (void)hook_sortSessions {
