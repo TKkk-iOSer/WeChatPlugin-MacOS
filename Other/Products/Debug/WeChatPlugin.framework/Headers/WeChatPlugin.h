@@ -123,8 +123,8 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @property(nonatomic) __weak id <MMChatsTableCellViewDelegate> delegate;
 @property(retain, nonatomic) MMSessionInfo *sessionInfo;
 - (void)menuWillOpen:(id)arg1;
-- (void)contextMenuSticky;
-- (void)contextMenuDelete;
+- (void)contextMenuSticky:(id)arg1;
+- (void)contextMenuDelete:(id)arg1;
 - (void)tableView:(NSTableView *)arg1 rowGotMouseDown:(long long)arg2;
 
 @end

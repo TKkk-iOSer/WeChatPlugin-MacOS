@@ -12,6 +12,6 @@
 @interface TKAutoReplyContentView : NSView
 
 @property (nonatomic, strong) TKAutoReplyModel *model;
-@property (nonatomic, copy) void (^endEdit)();
+@property (nonatomic, copy) void (^endEdit)(void);
 
 @end

@@ -15,8 +15,8 @@
 + (void)hookMMChatsTableCellView {
     tk_hookMethod(objc_getClass("MMChatsTableCellView"), @selector(menuWillOpen:), [self class], @selector(hook_menuWillOpen:));
     tk_hookMethod(objc_getClass("MMChatsTableCellView"), @selector(setSessionInfo:), [self class], @selector(hook_setSessionInfo:));
-    tk_hookMethod(objc_getClass("MMChatsTableCellView"), @selector(contextMenuSticky), [self class], @selector(hook_contextMenuSticky));
-    tk_hookMethod(objc_getClass("MMChatsTableCellView"), @selector(contextMenuDelete), [self class], @selector(hook_contextMenuDelete));
+    tk_hookMethod(objc_getClass("MMChatsTableCellView"), @selector(contextMenuSticky:), [self class], @selector(hook_contextMenuSticky:));
+    tk_hookMethod(objc_getClass("MMChatsTableCellView"), @selector(contextMenuDelete:), [self class], @selector(hook_contextMenuDelete:));
     tk_hookMethod(objc_getClass("MMChatsViewController"), @selector(tableView:rowGotMouseDown:), [self class], @selector(hooktableView:rowGotMouseDown:));
 }
 
@@ -136,8 +136,8 @@
     [[TKWeChatPluginConfig sharedConfig] setMultipleSelectionEnable:!multipleSelectionEnable];
 }
 
-- (void)hook_contextMenuSticky {
-    [self hook_contextMenuSticky];
+- (void)hook_contextMenuSticky:(id)arg1 {
+    [self hook_contextMenuSticky:arg1];
     
     MMChatsTableCellView *cellView = (MMChatsTableCellView *)self;
     MMSessionInfo *sessionInfo = [cellView sessionInfo];
@@ -165,7 +165,7 @@
     }
 }
 
-- (void)hook_contextMenuDelete {
+- (void)hook_contextMenuDelete:(id)arg1 {
     BOOL multipleSelection = [[TKWeChatPluginConfig sharedConfig] multipleSelectionEnable];
     
     if (multipleSelection) {
@@ -182,7 +182,7 @@
         WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
         [wechat.chatsViewController.tableView reloadData];
     } else {
-        [self hook_contextMenuDelete];
+        [self hook_contextMenuDelete:arg1];
     }
 }
 
