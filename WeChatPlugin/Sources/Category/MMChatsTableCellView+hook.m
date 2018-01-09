@@ -79,7 +79,7 @@
     NSMenuItem *preventRevokeItem = [[NSMenuItem alloc] initWithTitle:itemString action:@selector(contextMenuStickyBottom) keyEquivalent:@""];
     
     BOOL multipleSelectionEnable = [[TKWeChatPluginConfig sharedConfig] multipleSelectionEnable];
-    NSString *multipleSelectionString = multipleSelectionEnable ? @"取消多选" : @"多选";
+    NSString *multipleSelectionString = multipleSelectionEnable ? @"取消多選" : @"多選";
     NSMenuItem *multipleSelectionItem = [[NSMenuItem alloc] initWithTitle:multipleSelectionString action:@selector(contextMenuMutipleSelection) keyEquivalent:@""];
     
     [arg1 insertItem:preventRevokeItem atIndex:1];

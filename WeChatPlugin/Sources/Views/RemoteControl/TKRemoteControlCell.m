@@ -38,7 +38,7 @@
     self.textField = ({
         NSTextField *v = [[NSTextField alloc] init];
         v.frame = NSMakeRect(200, 10, 250, 30);
-        v.placeholderString = @"请输入匹配的关键词";
+        v.placeholderString = @"請輸入匹配的關鍵詞";
         v.layer.cornerRadius = 10;
         v.layer.masksToBounds = YES;
         [v.layer setNeedsDisplay];

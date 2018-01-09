@@ -14,8 +14,8 @@
 #import "TKRemoteControlWindowController.h"
 #import "TKIgnoreSessonModel.h"
 
-static char tkAutoReplyWindowControllerKey;         //  自动回复窗口的关联 key
-static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关联 key
+static char tkAutoReplyWindowControllerKey;         //  自動回覆窗口的关联 key
+static char tkRemoteControlWindowControllerKey;     //  遠端控制窗口的关联 key
 
 @implementation NSObject (WeChatHook)
 
@@ -26,10 +26,10 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     tk_hookMethod(objc_getClass("MessageService"), @selector(OnSyncBatchAddMsgs:isFirstSync:), [self class], @selector(hook_OnSyncBatchAddMsgs:isFirstSync:));
     //      微信多开
     tk_hookClassMethod(objc_getClass("CUtility"), @selector(HasWechatInstance), [self class], @selector(hook_HasWechatInstance));
-    //      免认证登录
+    //      免驗證登入
     tk_hookMethod(objc_getClass("MMLoginOneClickViewController"), @selector(onLoginButtonClicked:), [self class], @selector(hook_onLoginButtonClicked:));
     tk_hookMethod(objc_getClass("LogoutCGI"), @selector(sendLogoutCGIWithCompletion:), [self class], @selector(hook_sendLogoutCGIWithCompletion:));
-    //    自动登录
+    //    自動登入
     tk_hookMethod(objc_getClass("MMLoginOneClickViewController"), @selector(viewWillAppear), [self class], @selector(hook_viewWillAppear));
     //      置底
     tk_hookMethod(objc_getClass("MMSessionMgr"), @selector(sortSessions), [self class], @selector(hook_sortSessions));
@@ -53,19 +53,19 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
  */
 + (void)addAssistantMenuItem {
     //        消息防撤回
-    NSMenuItem *preventRevokeItem = [[NSMenuItem alloc] initWithTitle:@"开启消息防撤回" action:@selector(onPreventRevoke:) keyEquivalent:@"t"];
+    NSMenuItem *preventRevokeItem = [[NSMenuItem alloc] initWithTitle:@"開啟消息防撤回" action:@selector(onPreventRevoke:) keyEquivalent:@"t"];
     preventRevokeItem.state = [[TKWeChatPluginConfig sharedConfig] preventRevokeEnable];
-    //        自动回复
-    NSMenuItem *autoReplyItem = [[NSMenuItem alloc] initWithTitle:@"自动回复设置" action:@selector(onAutoReply:) keyEquivalent:@"k"];
-    //        登录新微信
-    NSMenuItem *newWeChatItem = [[NSMenuItem alloc] initWithTitle:@"登录新微信" action:@selector(onNewWechatInstance:) keyEquivalent:@"N"];
-    //        远程控制
-    NSMenuItem *commandItem = [[NSMenuItem alloc] initWithTitle:@"远程控制Mac OS" action:@selector(onRemoteControl:) keyEquivalent:@"C"];
+    //        自動回覆
+    NSMenuItem *autoReplyItem = [[NSMenuItem alloc] initWithTitle:@"自動回覆設置" action:@selector(onAutoReply:) keyEquivalent:@"k"];
+    //        登入新微信
+    NSMenuItem *newWeChatItem = [[NSMenuItem alloc] initWithTitle:@"登入新微信" action:@selector(onNewWechatInstance:) keyEquivalent:@"N"];
+    //        遠端控制
+    NSMenuItem *commandItem = [[NSMenuItem alloc] initWithTitle:@"遠端控制 Mac OS" action:@selector(onRemoteControl:) keyEquivalent:@"C"];
     //        微信窗口置顶
-    NSMenuItem *onTopItem = [[NSMenuItem alloc] initWithTitle:@"微信窗口置顶" action:@selector(onWechatOnTopControl:) keyEquivalent:@"d"];
+    NSMenuItem *onTopItem = [[NSMenuItem alloc] initWithTitle:@"微信窗口置頂" action:@selector(onWechatOnTopControl:) keyEquivalent:@"d"];
     onTopItem.state = [[TKWeChatPluginConfig sharedConfig] onTop];
-    //        免认证登录
-    NSMenuItem *autoAuthItem = [[NSMenuItem alloc] initWithTitle:@"免认证登录" action:@selector(onAutoAuthControl:) keyEquivalent:@"M"];
+    //        免驗證登入
+    NSMenuItem *autoAuthItem = [[NSMenuItem alloc] initWithTitle:@"免驗證登入" action:@selector(onAutoAuthControl:) keyEquivalent:@"M"];
     autoAuthItem.state = [[TKWeChatPluginConfig sharedConfig] autoAuthEnable];
     
     NSMenu *subMenu = [[NSMenu alloc] initWithTitle:@"微信小助手"];
@@ -85,7 +85,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
 
 #pragma mark - menuItem 的点击事件
 /**
- 菜单栏-微信小助手-消息防撤回 设置
+ 菜单栏-微信小助手-消息防撤回 設置
  
  @param item 消息防撤回的item
  */
@@ -95,9 +95,9 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
 }
 
 /**
- 菜单栏-微信小助手-自动回复 设置
+ 菜单栏-微信小助手-自動回覆 設置
  
- @param item 自动回复设置的item
+ @param item 自動回覆設置的item
  */
 - (void)onAutoReply:(NSMenuItem *)item {
     WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
@@ -116,16 +116,16 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
 /**
  打开新的微信
  
- @param item 登录新微信的item
+ @param item 登入新微信的item
  */
 - (void)onNewWechatInstance:(NSMenuItem *)item {
     [TKRemoteControlController executeShellCommand:@"open -n /Applications/WeChat.app"];
 }
 
 /**
- 菜单栏-帮助-远程控制 MAC OS 设置
+ 菜单栏-帮助-遠端控制 MAC OS 設置
  
- @param item 远程控制的item
+ @param item 遠端控制的item
  */
 - (void)onRemoteControl:(NSMenuItem *)item {
     WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
@@ -142,9 +142,9 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
 }
 
 /**
- 菜单栏-微信小助手-免认证登录 设置
+ 菜单栏-微信小助手-免驗證登入 設置
  
- @param item 免认证登录的 item
+ @param item 免驗證登入的 item
  */
 - (void)onAutoAuthControl:(NSMenuItem *)item {
     item.state = !item.state;
@@ -154,7 +154,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
 /**
  菜单栏-微信小助手-微信窗口置顶
  
- @param item 免认证登录的 item
+ @param item 免驗證登入的 item
  */
 - (void)onWechatOnTopControl:(NSMenuItem *)item {
     item.state = !item.state;
@@ -164,9 +164,9 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
 }
 
 /**
- 登录界面-自动登录
+ 登入界面-自動登入
 
- @param btn 自动登录按钮
+ @param btn 自動登入按钮
  */
 - (void)selectAutoLogin:(NSButton *)btn {
     [[TKWeChatPluginConfig sharedConfig] setAutoLoginEnable:btn.state];
@@ -210,20 +210,20 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
         //      获取自己的联系人信息
         NSString *currentUserName = [objc_getClass("CUtility") GetCurrentUserName];
         
-        NSString *newMsgContent = @"TK拦截到一条非文本撤回消息";
+        NSString *newMsgContent = @"TK 攔截到一則非文字撤回消息";
         //      判断是否是自己发起撤回
         if ([currentUserName isEqualToString:revokeMsgData.fromUsrName]) {
-            if (revokeMsgData.messageType == 1) {       // 判断是否为文本消息
-                newMsgContent = [NSString stringWithFormat:@"TK拦截到你撤回了一条消息：\n %@",revokeMsgData.msgContent];
+            if (revokeMsgData.messageType == 1) {       // 判断是否為文本消息
+                newMsgContent = [NSString stringWithFormat:@"TK攔截到你撤回了一則消息：\n %@",revokeMsgData.msgContent];
             }
         } else {
             if (![revokeMsgData.msgPushContent isEqualToString:@""]) {
-                newMsgContent = [NSString stringWithFormat:@"TK拦截到一条撤回消息：\n %@",revokeMsgData.msgPushContent];
+                newMsgContent = [NSString stringWithFormat:@"TK攔截到一則撤回消息：\n %@",revokeMsgData.msgPushContent];
             } else if (revokeMsgData.messageType == 1) {
                 NSRange range = [revokeMsgData.msgContent rangeOfString:@":\n"];
                 if (range.length > 0) {
                     NSString *content = [revokeMsgData.msgContent substringFromIndex:range.location + range.length];
-                    newMsgContent = [NSString stringWithFormat:@"TK拦截到一条撤回消息：\n %@",content];
+                    newMsgContent = [NSString stringWithFormat:@"TK攔截到一則撤回消息：\n %@",content];
                 }
             }
         }
@@ -254,7 +254,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     [msgs enumerateObjectsUsingBlock:^(AddMsg *addMsg, NSUInteger idx, BOOL * _Nonnull stop) {
         NSDate *now = [NSDate date];
         NSTimeInterval nowSecond = now.timeIntervalSince1970;
-        if (nowSecond - addMsg.createTime > 180) {      // 若是3分钟前的消息，则不进行自动回复与远程控制。
+        if (nowSecond - addMsg.createTime > 180) {      // 若是3分钟前的消息，则不进行自動回覆与遠端控制。
             return;
         }
         
@@ -279,7 +279,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
         MMLoginOneClickViewController *loginVC = wechat.mainWindowController.loginViewController.oneClickViewController;
         loginVC.loginButton.hidden = YES;
         ////        [wechat.mainWindowController onAuthOK];
-        loginVC.descriptionLabel.stringValue = @"TK正在为你免认证登录~";
+        loginVC.descriptionLabel.stringValue = @"TK 正在為你免驗證登入~";
         loginVC.descriptionLabel.textColor = TK_RGB(0x88, 0x88, 0x88);
         loginVC.descriptionLabel.hidden = NO;
     } else {
@@ -304,7 +304,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
         NSMutableParagraphStyle *pghStyle = [[NSMutableParagraphStyle alloc] init];
         pghStyle.alignment = NSTextAlignmentCenter;
         NSDictionary *dicAtt = @{NSForegroundColorAttributeName: kBG4, NSParagraphStyleAttributeName: pghStyle};
-        btn.attributedTitle = [[NSAttributedString alloc] initWithString:@"自动登录" attributes:dicAtt];
+        btn.attributedTitle = [[NSAttributedString alloc] initWithString:@"自動登入" attributes:dicAtt];
         
         btn;
     });
@@ -355,7 +355,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
 
 #pragma mark - Other
 /**
- 自动回复
+ 自動回覆
  
  @param addMsg 接收的消息
  */
@@ -365,7 +365,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     ContactStorage *contactStorage = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("ContactStorage")];
     WCContactData *msgContact = [contactStorage GetContact:addMsg.fromUserName.string];
     if (msgContact.m_uiFriendScene == 0 && ![addMsg.fromUserName.string containsString:@"@chatroom"]) {
-        //        该消息为公众号
+        //        该消息為公众号
         return;
     }
     MessageService *service = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
@@ -412,7 +412,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
 }
 
 /**
- 远程控制
+ 遠端控制
  
  @param addMsg 接收的消息
  */
@@ -424,8 +424,8 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
 
 - (void)replySelfWithMsg:(AddMsg *)addMsg {
     if (addMsg.msgType != 1 && addMsg.msgType != 3) return;
-    
-    if ([addMsg.content.string isEqualToString:@"获取指令"]) {
+    // 配合繁中 修改為繁體
+    if ([addMsg.content.string isEqualToString:@"獲取指令"]) {
         NSString *currentUserName = [objc_getClass("CUtility") GetCurrentUserName];
         NSString *callBack = [TKRemoteControlController remoteControlCommandsString];
         MessageService *service = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];

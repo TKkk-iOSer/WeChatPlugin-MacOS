@@ -37,7 +37,7 @@
     
     self.keywordLabel = ({
         NSTextField *label = [NSTextField tk_labelWithString:@""];
-        label.placeholderString = @"关键字";
+        label.placeholderString = @"關鍵字";
         [[label cell] setLineBreakMode:NSLineBreakByCharWrapping];
         [[label cell] setTruncatesLastVisibleLine:YES];
         label.font = [NSFont systemFontOfSize:10];
@@ -48,7 +48,7 @@
     
     self.replyContentLabel = ({
         NSTextField *label = [NSTextField tk_labelWithString:@""];
-        label.placeholderString = @"回复内容";
+        label.placeholderString = @"回覆内容";
         [[label cell] setLineBreakMode:NSLineBreakByCharWrapping];
         [[label cell] setTruncatesLastVisibleLine:YES];
         label.frame = NSMakeRect(30, 10, 160, 15);

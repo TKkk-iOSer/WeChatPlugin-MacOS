@@ -32,21 +32,21 @@
 
 - (void)initSubviews {
     self.enableRegexBtn = ({
-        NSButton *btn = [NSButton tk_checkboxWithTitle:@"开启正则匹配" target:self action:@selector(clickEnableRegexBtn:)];
+        NSButton *btn = [NSButton tk_checkboxWithTitle:@"開啟正規匹配" target:self action:@selector(clickEnableRegexBtn:)];
         btn.frame = NSMakeRect(20, 15, 400, 20);
         
         btn;
     });
     
     self.enableGroupReplyBtn = ({
-        NSButton *btn = [NSButton tk_checkboxWithTitle:@"开启群聊自动回复" target:self action:@selector(clickEnableGroupBtn:)];
+        NSButton *btn = [NSButton tk_checkboxWithTitle:@"開啟群聊自動回覆" target:self action:@selector(clickEnableGroupBtn:)];
         btn.frame = NSMakeRect(20, 40, 400, 20);
         
         btn;
     });
     
     self.enableSingleReplyBtn = ({
-        NSButton *btn = [NSButton tk_checkboxWithTitle:@"开启私聊自动回复" target:self action:@selector(clickEnableSingleBtn:)];
+        NSButton *btn = [NSButton tk_checkboxWithTitle:@"開啟私聊自動回覆" target:self action:@selector(clickEnableSingleBtn:)];
         btn.frame = NSMakeRect(200, 40, 400, 20);
         
         btn;
@@ -55,14 +55,14 @@
     self.autoReplyContentField = ({
         NSTextField *textField = [[NSTextField alloc] init];
         textField.frame = NSMakeRect(20, 70, 350, 175);
-        textField.placeholderString = @"请输入自动回复的内容（‘|’ 为随机回复其中任一内容）";
+        textField.placeholderString = @"請輸入自動回覆的内容（‘|’ 為隨機回覆其中任一内容）";
         textField.delegate = self;
         
         textField;
     });
     
     self.autoReplyLabel = ({
-        NSTextField *label = [NSTextField tk_labelWithString:@"自动回复："];
+        NSTextField *label = [NSTextField tk_labelWithString:@"自動回覆："];
         label.frame = NSMakeRect(20, 250, 350, 20);
         
         label;
@@ -71,14 +71,14 @@
     self.keywordTextField = ({
         NSTextField *textField = [[NSTextField alloc] init];
         textField.frame = NSMakeRect(20, 290, 350, 50);
-        textField.placeholderString = @"请输入关键字（ ‘*’ 为任何消息都回复，‘|’ 为匹配多个关键字）";
+        textField.placeholderString = @"請輸入關鍵字（ ‘*’ 為任何消息都回覆，‘|’ 為匹配多個關鍵字）";
         textField.delegate = self;
         
         textField;
     });
     
     self.keywordLabel = ({
-        NSTextField *label = [NSTextField tk_labelWithString:@"关键字："];
+        NSTextField *label = [NSTextField tk_labelWithString:@"關鍵字："];
         label.frame = NSMakeRect(20, 345, 350, 20);
         
         label;

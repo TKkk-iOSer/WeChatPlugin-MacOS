@@ -62,7 +62,7 @@
         tableView.delegate = self;
         tableView.dataSource = self;
         NSTableColumn *column = [[NSTableColumn alloc] init];
-        column.title = @"自动回复列表";
+        column.title = @"自動回覆列表";
         column.width = 200;
         [tableView addTableColumn:column];
         
@@ -96,9 +96,9 @@
     
     self.alert = ({
         NSAlert *alert = [[NSAlert alloc] init];
-        [alert addButtonWithTitle:@"确定"];
-        [alert setMessageText:@"您还有一条自动回复设置未完成"];
-        [alert setInformativeText:@"请完善未完成的自动回复设置"];
+        [alert addButtonWithTitle:@"確定"];
+        [alert setMessageText:@"您還有一則自動回覆設置未完成"];
+        [alert setInformativeText:@"請完善未完成的自動回覆設置"];
         
         alert;
     });
@@ -112,7 +112,7 @@
 }
 
 - (void)setup {
-    self.window.title = @"自动回复设置";
+    self.window.title = @"自動回覆設置";
     self.window.contentView.layer.backgroundColor = [kBG1 CGColor];
     [self.window.contentView.layer setNeedsDisplay];
     
