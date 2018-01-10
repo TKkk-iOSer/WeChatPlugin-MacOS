@@ -12,7 +12,7 @@ framework_path="${app_bundle_path}/${framework_name}.framework"
 # 对 WeChat 赋予权限
 if [ ! -w "$wechat_path" ]
 then
-echo -e "\n\n为了将小助手写入微信, 请输入密码 ： "
+echo -e "\n\n為了將小助手植入微信, 請輸入密碼 ： "
 sudo chown -R $(whoami) "$wechat_path"
 fi
 
