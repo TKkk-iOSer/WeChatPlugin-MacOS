@@ -9,7 +9,7 @@
 			<key>keyword</key>
 			<string>ScreenSave</string>
 			<key>function</key>
-			<string>屏幕保护</string>
+			<string>屏幕保護</string>
 			<key>enable</key>
 			<true/>
 		</dict>
@@ -19,7 +19,7 @@
 			<key>keyword</key>
 			<string>LockScreen</string>
 			<key>function</key>
-			<string>锁屏</string>
+			<string>鎖屏</string>
 			<key>enable</key>
 			<true/>
 		</dict>
@@ -111,7 +111,7 @@
 			<key>keyword</key>
 			<string>KillAll</string>
 			<key>function</key>
-			<string>退出所有程序</string>
+			<string>退出所有程式</string>
 			<key>enable</key>
 			<true/>
 		</dict>
