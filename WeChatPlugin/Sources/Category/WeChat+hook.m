@@ -13,6 +13,7 @@
 #import "TKAutoReplyWindowController.h"
 #import "TKRemoteControlWindowController.h"
 #import "TKIgnoreSessonModel.h"
+#import "fishhook.h"
 
 static char tkAutoReplyWindowControllerKey;         //  自动回复窗口的关联 key
 static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关联 key
@@ -33,9 +34,14 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     tk_hookMethod(objc_getClass("MMLoginOneClickViewController"), @selector(viewWillAppear), [self class], @selector(hook_viewWillAppear));
     //      置底
     tk_hookMethod(objc_getClass("MMSessionMgr"), @selector(sortSessions), [self class], @selector(hook_sortSessions));
-    
+    //      替换沙盒路径
+    rebind_symbols((struct rebinding[2]) {
+        { "NSSearchPathForDirectoriesInDomains", swizzled_NSSearchPathForDirectoriesInDomains, (void *)&original_NSSearchPathForDirectoriesInDomains },
+        { "NSHomeDirectory", swizzled_NSHomeDirectory, (void *)&original_NSHomeDirectory }
+    }, 2);
+
     [self setup];
-    [self replaceAboutFilePathMethod];
+
 }
 
 + (void)setup {
@@ -433,69 +439,29 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     }
 }
 
-#pragma mark -- 替换部分调用了 NSSearchPathForDirectoriesInDomains 的方法
-+ (void)replaceAboutFilePathMethod {
-    tk_hookMethod(objc_getClass("JTStatisticManager"), @selector(statFilePath), [self class], @selector(hook_statFilePath));
-    tk_hookClassMethod(objc_getClass("CUtility"), @selector(getFreeDiskSpace), [self class], @selector(hook_getFreeDiskSpace));
-    tk_hookClassMethod(objc_getClass("MemoryMappedKV"), @selector(mappedKVPathWithID:), [self class], @selector(hook_mappedKVPathWithID:));
-    tk_hookClassMethod(objc_getClass("PathUtility"), @selector(getSysDocumentPath), [self class], @selector(hook_getSysDocumentPath));
-    tk_hookClassMethod(objc_getClass("PathUtility"), @selector(getSysLibraryPath), [self class], @selector(hook_getSysLibraryPath));
-    tk_hookClassMethod(objc_getClass("PathUtility"), @selector(getSysCachePath), [self class], @selector(hook_getSysCachePath));
-}
+#pragma mark - 替换 NSSearchPathForDirectoriesInDomains & NSHomeDirectory
+static NSArray<NSString *> *(*original_NSSearchPathForDirectoriesInDomains)(NSSearchPathDirectory directory, NSSearchPathDomainMask domainMask, BOOL expandTilde);
 
-- (id)hook_statFilePath {
-    return [NSObject realFilePathWithOriginFilePath:[self hook_statFilePath]];
-}
+NSArray<NSString *> *swizzled_NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory directory, NSSearchPathDomainMask domainMask, BOOL expandTilde) {
+    NSMutableArray<NSString *> *paths = [original_NSSearchPathForDirectoriesInDomains(directory, domainMask, expandTilde) mutableCopy];
+    NSString *sandBoxPath = [NSString stringWithFormat:@"%@/Library/Containers/com.tencent.xinWeChat/Data",original_NSHomeDirectory()];
 
-+ (unsigned long long)hook_getFreeDiskSpace {
-    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(0x9, 0x1, 0x1) firstObject];
-    if (documentPath.length == 0) {
-        return [self hook_getFreeDiskSpace];
-    }
-    
-    NSString *newDocumentPath = [self realFilePathWithOriginFilePath:documentPath];
-    if (newDocumentPath.length > 0) {
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSDictionary *dict = [fileManager attributesOfFileSystemForPath:newDocumentPath error:nil];
-        if (dict) {
-            NSNumber *freeSize = [dict objectForKey:NSFileSystemFreeSize];
-            unsigned long long freeSieValue = [freeSize unsignedLongLongValue];
-            return freeSieValue;
+    [paths enumerateObjectsUsingBlock:^(NSString *filePath, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSRange range = [filePath rangeOfString:original_NSHomeDirectory()];
+        if (range.length > 0) {
+            NSMutableString *newFilePath = [filePath mutableCopy];
+            [newFilePath replaceCharactersInRange:range withString:sandBoxPath];
+            paths[idx] = newFilePath;
         }
-    }
-    return [self hook_getFreeDiskSpace];
-}
-
-+ (id)hook_mappedKVPathWithID:(id)arg1 {
-    return [self realFilePathWithOriginFilePath:[self hook_mappedKVPathWithID:arg1]];
-}
-
-+ (id)hook_getSysDocumentPath {
-    return [self realFilePathWithOriginFilePath:[self hook_getSysDocumentPath]];
-}
-
-+ (id)hook_getSysLibraryPath {
-    return [self realFilePathWithOriginFilePath:[self hook_getSysLibraryPath]];
-}
-
-+ (id)hook_getSysCachePath {
-    return [self realFilePathWithOriginFilePath:[self hook_getSysCachePath]];
-}
-
-+ (id)realFilePathWithOriginFilePath:(NSString *)filePath {
-    NSString *desktopPath = [NSSearchPathForDirectoriesInDomains(NSDesktopDirectory, NSUserDomainMask, YES) firstObject];
-    NSRange desktopRange = [desktopPath rangeOfString:@"Desktop"];
-    NSString *userPath = [desktopPath substringToIndex:desktopRange.location];
+    }];
     
-    NSRange range = [filePath rangeOfString:userPath];
-    if (range.length > 0) {
-        NSMutableString *newFilePath = [filePath mutableCopy];
-        NSString *subString = [NSString stringWithFormat:@"%@Library/Containers/com.tencent.xinWeChat/Data/",userPath];
-        [newFilePath replaceCharactersInRange:range withString:subString];
-        return newFilePath;
-    } else {
-        return nil;
-    }
+    return paths;
+}
+
+static NSString *(*original_NSHomeDirectory)(void);
+
+NSString *swizzled_NSHomeDirectory(void) {
+    return [NSString stringWithFormat:@"%@/Library/Containers/com.tencent.xinWeChat/Data",original_NSHomeDirectory()];
 }
 
 @end

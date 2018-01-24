@@ -161,6 +161,7 @@
 
 * [XMLReader](https://github.com/amarcadet/XMLReader)
 * [insert_dylib](https://github.com/Tyilo/insert_dylib)
+* [fishhook](https://github.com/facebook/fishhook)
 
 ---
 ### Other
