@@ -15,8 +15,8 @@
 + (void)hookMMChatsTableCellView {
     tk_hookMethod(objc_getClass("MMChatsTableCellView"), @selector(menuWillOpen:), [self class], @selector(hook_menuWillOpen:));
     tk_hookMethod(objc_getClass("MMChatsTableCellView"), @selector(setSessionInfo:), [self class], @selector(hook_setSessionInfo:));
-    tk_hookMethod(objc_getClass("MMChatsTableCellView"), @selector(contextMenuSticky), [self class], @selector(hook_contextMenuSticky));
-    tk_hookMethod(objc_getClass("MMChatsTableCellView"), @selector(contextMenuDelete), [self class], @selector(hook_contextMenuDelete));
+    tk_hookMethod(objc_getClass("MMChatsTableCellView"), @selector(contextMenuSticky:), [self class], @selector(hook_contextMenuSticky:));
+    tk_hookMethod(objc_getClass("MMChatsTableCellView"), @selector(contextMenuDelete:), [self class], @selector(hook_contextMenuDelete:));
     tk_hookMethod(objc_getClass("MMChatsViewController"), @selector(tableView:rowGotMouseDown:), [self class], @selector(hooktableView:rowGotMouseDown:));
 }
 
@@ -87,7 +87,7 @@
     [self hook_menuWillOpen:arg1];
 }
 
--(void)contextMenuStickyBottom {
+- (void)contextMenuStickyBottom {
     MMChatsTableCellView *cellView = (MMChatsTableCellView *)self;
     MMSessionInfo *sessionInfo = [cellView sessionInfo];
     NSString *currentUserName = [objc_getClass("CUtility") GetCurrentUserName];
@@ -114,8 +114,7 @@
         }
         if (sessionInfo.m_bIsTop) {
             [sessionMgr UntopSessionByUserName:sessionInfo.m_nsUserName];
-        }
-        
+        } 
     } else {
         [ignoreSessions removeObjectAtIndex:index];
         if (sessionInfo.m_bShowUnReadAsRedDot) {
@@ -137,8 +136,8 @@
     [[TKWeChatPluginConfig sharedConfig] setMultipleSelectionEnable:!multipleSelectionEnable];
 }
 
-- (void)hook_contextMenuSticky {
-    [self hook_contextMenuSticky];
+- (void)hook_contextMenuSticky:(id)arg1 {
+    [self hook_contextMenuSticky:arg1];
     
     MMChatsTableCellView *cellView = (MMChatsTableCellView *)self;
     MMSessionInfo *sessionInfo = [cellView sessionInfo];
@@ -166,7 +165,7 @@
     }
 }
 
-- (void)hook_contextMenuDelete {
+- (void)hook_contextMenuDelete:(id)arg1 {
     BOOL multipleSelection = [[TKWeChatPluginConfig sharedConfig] multipleSelectionEnable];
     
     if (multipleSelection) {
@@ -174,7 +173,7 @@
         NSMutableArray *selectSessions = [[TKWeChatPluginConfig sharedConfig] selectSessions];
         
         [selectSessions  enumerateObjectsUsingBlock:^(MMSessionInfo *sessionInfo, NSUInteger idx, BOOL * _Nonnull stop) {
-            NSString *sessionUserName = sessionInfo.m_contact.m_nsUsrName;
+            NSString *sessionUserName = sessionInfo.m_nsUserName;
             if (sessionUserName.length != 0) {
                 [sessionMgr deleteSessionWithoutSyncToServerWithUserName:sessionUserName];
             }
@@ -183,7 +182,7 @@
         WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
         [wechat.chatsViewController.tableView reloadData];
     } else {
-        [self hook_contextMenuDelete];
+        [self hook_contextMenuDelete:arg1];
     }
 }
 

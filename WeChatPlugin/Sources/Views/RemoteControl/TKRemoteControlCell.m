@@ -48,8 +48,7 @@
         v;
     });
     
-    [self addSubview:self.selectBtn];
-    [self addSubview:self.textField];
+    [self addSubviews:@[self.selectBtn, self.textField]];
 }
 
 - (void)clickSelectBtn:(NSButton *)btn {

@@ -15,7 +15,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 
 #pragma mark - 微信原始的部分类与方法
 
-@interface MMLoginOneClickViewController : NSObject
+@interface MMLoginOneClickViewController : NSViewController
 @property(nonatomic) NSTextField *descriptionLabel;
 - (void)onLoginButtonClicked:(id)arg1;
 @property(nonatomic) NSButton *loginButton;
@@ -114,7 +114,6 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @property(retain, nonatomic) WCContactData *m_contact;
 @end
 
-
 @protocol MMChatsTableCellViewDelegate <NSObject>
 @optional
 - (void)cellViewReloadData:(MMSessionInfo *)arg1;
@@ -124,9 +123,9 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @property(nonatomic) __weak id <MMChatsTableCellViewDelegate> delegate;
 @property(retain, nonatomic) MMSessionInfo *sessionInfo;
 - (void)menuWillOpen:(id)arg1;
-- (void)contextMenuSticky;
-- (void)contextMenuDelete;
-
+- (void)contextMenuSticky:(id)arg1;
+- (void)contextMenuDelete:(id)arg1;
+- (void)tableView:(NSTableView *)arg1 rowGotMouseDown:(long long)arg2;
 @end
 
 @interface MMSessionMgr : NSObject

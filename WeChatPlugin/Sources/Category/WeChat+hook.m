@@ -13,6 +13,7 @@
 #import "TKAutoReplyWindowController.h"
 #import "TKRemoteControlWindowController.h"
 #import "TKIgnoreSessonModel.h"
+#import "fishhook.h"
 
 static char tkAutoReplyWindowControllerKey;         //  自动回复窗口的关联 key
 static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关联 key
@@ -29,11 +30,18 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     //      免认证登录
     tk_hookMethod(objc_getClass("MMLoginOneClickViewController"), @selector(onLoginButtonClicked:), [self class], @selector(hook_onLoginButtonClicked:));
     tk_hookMethod(objc_getClass("LogoutCGI"), @selector(sendLogoutCGIWithCompletion:), [self class], @selector(hook_sendLogoutCGIWithCompletion:));
+    //    自动登录
+    tk_hookMethod(objc_getClass("MMLoginOneClickViewController"), @selector(viewWillAppear), [self class], @selector(hook_viewWillAppear));
     //      置底
     tk_hookMethod(objc_getClass("MMSessionMgr"), @selector(sortSessions), [self class], @selector(hook_sortSessions));
-    
+    //      替换沙盒路径
+    rebind_symbols((struct rebinding[2]) {
+        { "NSSearchPathForDirectoriesInDomains", swizzled_NSSearchPathForDirectoriesInDomains, (void *)&original_NSSearchPathForDirectoriesInDomains },
+        { "NSHomeDirectory", swizzled_NSHomeDirectory, (void *)&original_NSHomeDirectory }
+    }, 2);
+
     [self setup];
-    [self replaceAboutFilePathMethod];
+
 }
 
 + (void)setup {
@@ -161,6 +169,15 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     wechat.mainWindowController.window.level = item.state == NSControlStateValueOn ? NSStatusWindowLevel : NSNormalWindowLevel;
 }
 
+/**
+ 登录界面-自动登录
+
+ @param btn 自动登录按钮
+ */
+- (void)selectAutoLogin:(NSButton *)btn {
+    [[TKWeChatPluginConfig sharedConfig] setAutoLoginEnable:btn.state];
+}
+
 #pragma mark - hook 微信方法
 /**
  hook 微信是否已启动
@@ -267,7 +284,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
         WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
         MMLoginOneClickViewController *loginVC = wechat.mainWindowController.loginViewController.oneClickViewController;
         loginVC.loginButton.hidden = YES;
-        [wechat.mainWindowController onAuthOK];
+        ////        [wechat.mainWindowController onAuthOK];
         loginVC.descriptionLabel.stringValue = @"TK正在为你免认证登录~";
         loginVC.descriptionLabel.textColor = TK_RGB(0x88, 0x88, 0x88);
         loginVC.descriptionLabel.hidden = NO;
@@ -282,6 +299,36 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     if (autoAuthEnable && wechat.isAppTerminating) return;
     
     return [self hook_sendLogoutCGIWithCompletion:arg1];
+}
+
+- (void)hook_viewWillAppear {
+    [self hook_viewWillAppear];
+    
+    NSButton *autoLoginButton = ({
+        NSButton *btn = [NSButton tk_checkboxWithTitle:@"" target:self action:@selector(selectAutoLogin:)];
+        btn.frame = NSMakeRect(110, 60, 80, 30);
+        NSMutableParagraphStyle *pghStyle = [[NSMutableParagraphStyle alloc] init];
+        pghStyle.alignment = NSTextAlignmentCenter;
+        NSDictionary *dicAtt = @{NSForegroundColorAttributeName: kBG4, NSParagraphStyleAttributeName: pghStyle};
+        btn.attributedTitle = [[NSAttributedString alloc] initWithString:@"自动登录" attributes:dicAtt];
+        
+        btn;
+    });
+    
+    WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
+    MMLoginOneClickViewController *loginVC = wechat.mainWindowController.loginViewController.oneClickViewController;
+    [loginVC.view addSubview:autoLoginButton];
+    
+    BOOL autoLogin = [[TKWeChatPluginConfig sharedConfig] autoLoginEnable];
+    autoLoginButton.state = autoLogin;
+
+    NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+    NSArray *instances = [NSRunningApplication runningApplicationsWithBundleIdentifier:bundleIdentifier];
+    BOOL wechatHasRun = instances.count == 1;
+    
+    if (autoLogin && wechatHasRun) {
+        [loginVC onLoginButtonClicked:nil];
+    }
 }
 
 - (void)hook_sortSessions {
@@ -392,95 +439,29 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     }
 }
 
-#pragma mark -- 替换部分调用了 NSSearchPathForDirectoriesInDomains 的方法
-+ (void)replaceAboutFilePathMethod {
-    tk_hookMethod(objc_getClass("JTStatisticManager"), @selector(statFilePath), [self class], @selector(hook_statFilePath));
-    tk_hookClassMethod(objc_getClass("CUtility"), @selector(getFreeDiskSpace), [self class], @selector(hook_getFreeDiskSpace));
-    tk_hookClassMethod(objc_getClass("MemoryMappedKV"), @selector(mappedKVPathWithID:), [self class], @selector(hook_mappedKVPathWithID:));
-    tk_hookClassMethod(objc_getClass("PathUtility"), @selector(getSysDocumentPath), [self class], @selector(hook_getSysDocumentPath));
-    tk_hookClassMethod(objc_getClass("PathUtility"), @selector(getSysLibraryPath), [self class], @selector(hook_getSysLibraryPath));
-    tk_hookClassMethod(objc_getClass("PathUtility"), @selector(getSysCachePath), [self class], @selector(hook_getSysCachePath));
-}
+#pragma mark - 替换 NSSearchPathForDirectoriesInDomains & NSHomeDirectory
+static NSArray<NSString *> *(*original_NSSearchPathForDirectoriesInDomains)(NSSearchPathDirectory directory, NSSearchPathDomainMask domainMask, BOOL expandTilde);
 
-- (id)hook_statFilePath {
-    NSString *filePath = [self hook_statFilePath];
-    NSString *newCachePath = [NSObject realFilePathWithOriginFilePath:filePath originKeyword:@"/Documents"];
-    if (newCachePath) {
-        return newCachePath;
-    } else {
-        return filePath;
-    }
-}
+NSArray<NSString *> *swizzled_NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory directory, NSSearchPathDomainMask domainMask, BOOL expandTilde) {
+    NSMutableArray<NSString *> *paths = [original_NSSearchPathForDirectoriesInDomains(directory, domainMask, expandTilde) mutableCopy];
+    NSString *sandBoxPath = [NSString stringWithFormat:@"%@/Library/Containers/com.tencent.xinWeChat/Data",original_NSHomeDirectory()];
 
-+ (unsigned long long)hook_getFreeDiskSpace {
-    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(0x9, 0x1, 0x1) firstObject];
-    if (documentPath.length == 0) {
-        return [self hook_getFreeDiskSpace];
-    }
-    
-    NSString *newDocumentPath = [self realFilePathWithOriginFilePath:documentPath originKeyword:@"/Documents"];
-    if (newDocumentPath.length > 0) {
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSDictionary *dict = [fileManager attributesOfFileSystemForPath:newDocumentPath error:nil];
-        if (dict) {
-            NSNumber *freeSize = [dict objectForKey:NSFileSystemFreeSize];
-            unsigned long long freeSieValue = [freeSize unsignedLongLongValue];
-            return freeSieValue;
+    [paths enumerateObjectsUsingBlock:^(NSString *filePath, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSRange range = [filePath rangeOfString:original_NSHomeDirectory()];
+        if (range.length > 0) {
+            NSMutableString *newFilePath = [filePath mutableCopy];
+            [newFilePath replaceCharactersInRange:range withString:sandBoxPath];
+            paths[idx] = newFilePath;
         }
-    }
-    return [self hook_getFreeDiskSpace];
+    }];
+    
+    return paths;
 }
 
-+ (id)hook_mappedKVPathWithID:(id)arg1 {
-    NSString *mappedKVPath = [self hook_mappedKVPathWithID:arg1];
-    NSString *newMappedKVPath = [self realFilePathWithOriginFilePath:mappedKVPath originKeyword:@"/Documents/MMappedKV"];
-    if (newMappedKVPath) {
-        return newMappedKVPath;
-    } else {
-        return mappedKVPath;
-    }
-}
+static NSString *(*original_NSHomeDirectory)(void);
 
-+ (id)hook_getSysDocumentPath {
-    NSString *sysDocumentPath = [self hook_getSysDocumentPath];
-    NSString *newSysDocumentPath = [self realFilePathWithOriginFilePath:sysDocumentPath originKeyword:@"/Library/Application Support"];
-    if (newSysDocumentPath) {
-        return newSysDocumentPath;
-    } else {
-        return sysDocumentPath;
-    }
-}
-
-+ (id)hook_getSysLibraryPath {
-    NSString *libraryPath = [self hook_getSysLibraryPath];
-    NSString *newLibraryPath = [self realFilePathWithOriginFilePath:libraryPath originKeyword:@"/Library"];
-    if (newLibraryPath) {
-        return newLibraryPath;
-    } else {
-        return libraryPath;
-    }
-}
-
-+ (id)hook_getSysCachePath {
-    NSString *cachePath = [self hook_getSysCachePath];
-    NSString *newCachePath = [self realFilePathWithOriginFilePath:cachePath originKeyword:@"/Library/Caches"];
-    if (newCachePath) {
-        return newCachePath;
-    } else {
-        return cachePath;
-    }
-}
-
-+ (id)realFilePathWithOriginFilePath:(NSString *)filePath originKeyword:(NSString *)keyword {
-    NSRange range = [filePath rangeOfString:keyword];
-    if (range.length > 0) {
-        NSMutableString *newFilePath = [filePath mutableCopy];
-        NSString *subString = [NSString stringWithFormat:@"/Library/Containers/com.tencent.xinWeChat/Data%@",keyword];
-        [newFilePath replaceCharactersInRange:range withString:subString];
-        return newFilePath;
-    } else {
-        return nil;
-    }
+NSString *swizzled_NSHomeDirectory(void) {
+    return [NSString stringWithFormat:@"%@/Library/Containers/com.tencent.xinWeChat/Data",original_NSHomeDirectory()];
 }
 
 @end

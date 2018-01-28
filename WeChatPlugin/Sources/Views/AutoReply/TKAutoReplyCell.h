@@ -12,6 +12,6 @@
 @interface TKAutoReplyCell : NSControl
 
 @property (nonatomic, strong) TKAutoReplyModel *model;
-@property (nonatomic, copy) void (^updateModel)();
+@property (nonatomic, copy) void (^updateModel)(void);
 
 @end

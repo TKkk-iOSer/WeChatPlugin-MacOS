@@ -9,7 +9,7 @@
 
 **iOS版本请戳→_→ [WeChatPlugin-iOS](https://github.com/TKkk-iOSer/WeChatPlugin-iOS)**
 
-~~主要实现 mac OS 版微信的<a>消息防撤回与自动回复</a>的功能，详细内容，请参考[我的博客](http://www.jianshu.com/p/7f65287a2e7a)~~
+~~如何制作 mac OS 插件，请参考[我的博客](http://www.tkkk.fun/2017/04/21/macOS%E9%80%86%E5%90%91-%E5%BE%AE%E4%BF%A1%E5%B0%8F%E5%8A%A9%E6%89%8B/)~~
 
 ---
 
@@ -36,6 +36,7 @@
 * 聊天置底功能(~~类似置顶~~)
 * 微信窗口置顶
 * 会话多选删除
+* 自动登录开关
 
 远程控制：
 
@@ -51,6 +52,18 @@
 
 ---
 
+### TODO
+- [ ] 增加`Alfred`搜索
+- [ ] 查看单向好友
+- [ ] 语音(视频转发)
+- [ ] 增加 brew 安装方式
+- [ ] 完善自动回复(指定好友回复、图灵机器人、)
+- [ ] 完善消息防撤回(显示撤回用户昵称)
+- [ ] 清除微信缓存
+- [ ] 优化小助手设置(更新后保留相关设置，更新提醒)
+- [ ] 群聊屏蔽某成员
+
+---
 
 ### Demo 演示
 
@@ -97,6 +110,7 @@
 * 下载 WeChatPlugin, 用Xcode打开，先进行 Build (`command + B`)，之后 Run (`command + R`)即可启动微信，此时插件注入完成。
  
 * 若 Error，提示找不到 Framework，先进行 Build。
+* 若Error, 需要配置环境，请参考[我的博客](http://www.tkkk.fun/2017/04/21/macOS%E9%80%86%E5%90%91-%E5%BE%AE%E4%BF%A1%E5%B0%8F%E5%8A%A9%E6%89%8B/)。
 
 **3. 安装完成**
 
@@ -137,13 +151,17 @@
 
 ### 卸载
 
-在`Terminal`(终端)打开该项目，运行 `./Other/Uninstall.sh` 即可
+在`Terminal`(终端)打开该项目，运行 `./Other/Uninstall.sh` 即可.
+
+
+~~或者在 `/Applications/WeChat.app/Contents/MacOS` 目录中，删除 `WeChat` 与 `WeChatPlugin.framework`，将`WeChat_backup` 重命名为 `WeChat` 即可。~~
 
 ---
 ### 依赖
 
 * [XMLReader](https://github.com/amarcadet/XMLReader)
 * [insert_dylib](https://github.com/Tyilo/insert_dylib)
+* [fishhook](https://github.com/facebook/fishhook)
 
 ---
 ### Other
@@ -154,5 +172,5 @@
 
 #### 听说你想请我喝下午茶？😏
  
-<img src="http://upload-images.jianshu.io/upload_images/965383-8e2af8fe607eee62.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1024" height="300" hspace="7" style="display: inline-block">
+<img src="http://upload-images.jianshu.io/upload_images/965383-cbc86dc1d75a6242.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" height="250" hspace="50"/>&nbsp;&nbsp;&nbsp;<img src="http://upload-images.jianshu.io/upload_images/965383-76a1c7c91b987e1a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" height="250" hspace="50"  />
 
