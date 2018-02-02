@@ -83,8 +83,11 @@
 * 免认证 & 置底 & 多选删除
 ![免认证&置底&多选删除](http://upload-images.jianshu.io/upload_images/965383-170592b03781cbf4.gif?imageMogr2/auto-orient/strip)
 
+* 通知中心快捷回复   
+<img src="./Others/ScreenShots/notification_quick_reply.png" height="300">
 
 ---
+
 ### 安装
 
 ~~第一次安装需要输入密码，仅是为了获取写入微信文件夹的权限~~
