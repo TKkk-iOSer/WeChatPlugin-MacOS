@@ -34,14 +34,17 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     tk_hookMethod(objc_getClass("MMLoginOneClickViewController"), @selector(viewWillAppear), [self class], @selector(hook_viewWillAppear));
     //      置底
     tk_hookMethod(objc_getClass("MMSessionMgr"), @selector(sortSessions), [self class], @selector(hook_sortSessions));
+    //      快捷回复
+    tk_hookMethod(objc_getClass("_NSConcreteUserNotificationCenter"), @selector(deliverNotification:), [self class], @selector(hook_deliverNotification:));
+    tk_hookMethod(objc_getClass("MMNotificationService"), @selector(userNotificationCenter:didActivateNotification:), [self class], @selector(hook_userNotificationCenter:didActivateNotification:));
+    
     //      替换沙盒路径
     rebind_symbols((struct rebinding[2]) {
         { "NSSearchPathForDirectoriesInDomains", swizzled_NSSearchPathForDirectoriesInDomains, (void *)&original_NSSearchPathForDirectoriesInDomains },
         { "NSHomeDirectory", swizzled_NSHomeDirectory, (void *)&original_NSHomeDirectory }
     }, 2);
-
+    
     [self setup];
-
 }
 
 + (void)setup {
@@ -171,7 +174,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
 
 /**
  登录界面-自动登录
-
+ 
  @param btn 自动登录按钮
  */
 - (void)selectAutoLogin:(NSButton *)btn {
@@ -274,6 +277,25 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
         }
     }];
 }
+/**
+ hook 微信通知消息
+ 
+ */
+- (void)hook_deliverNotification:(NSUserNotification *)notification {
+    notification.hasReplyButton = YES;
+    [self hook_deliverNotification:notification];
+}
+
+- (void)hook_userNotificationCenter:(id)notificationCenter didActivateNotification:(NSUserNotification *)notification {
+    NSString *chatName = notification.userInfo[@"ChatName"];
+    if (chatName) {
+        NSString *currentUserName = [objc_getClass("CUtility") GetCurrentUserName];
+        MessageService *service = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
+        [service SendTextMessage:currentUserName toUsrName:chatName msgText:notification.response.string atUserList:nil];
+    } else {
+        [self hook_userNotificationCenter:notificationCenter didActivateNotification:notification];
+    }
+}
 
 - (void)hook_onLoginButtonClicked:(NSButton *)btn {
     AccountService *accountService = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("AccountService")];
@@ -321,7 +343,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     
     BOOL autoLogin = [[TKWeChatPluginConfig sharedConfig] autoLoginEnable];
     autoLoginButton.state = autoLogin;
-
+    
     NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
     NSArray *instances = [NSRunningApplication runningApplicationsWithBundleIdentifier:bundleIdentifier];
     BOOL wechatHasRun = instances.count == 1;
@@ -445,7 +467,7 @@ static NSArray<NSString *> *(*original_NSSearchPathForDirectoriesInDomains)(NSSe
 NSArray<NSString *> *swizzled_NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory directory, NSSearchPathDomainMask domainMask, BOOL expandTilde) {
     NSMutableArray<NSString *> *paths = [original_NSSearchPathForDirectoriesInDomains(directory, domainMask, expandTilde) mutableCopy];
     NSString *sandBoxPath = [NSString stringWithFormat:@"%@/Library/Containers/com.tencent.xinWeChat/Data",original_NSHomeDirectory()];
-
+    
     [paths enumerateObjectsUsingBlock:^(NSString *filePath, NSUInteger idx, BOOL * _Nonnull stop) {
         NSRange range = [filePath rangeOfString:original_NSHomeDirectory()];
         if (range.length > 0) {
