@@ -84,7 +84,7 @@
 ![免认证&置底&多选删除](http://upload-images.jianshu.io/upload_images/965383-170592b03781cbf4.gif?imageMogr2/auto-orient/strip)
 
 * 通知中心快捷回复   
-<img src="./Other/ScreenShots/notification_quick_reply.png" height="300" />
+![快捷回复](./Other/ScreenShots/notification_quick_reply.png)
 
 ---
 
@@ -134,7 +134,6 @@
 >若开启正则，请确认正则表达式书写正确，[在线正则表达式测试](http://tool.oschina.net/regex/)
 
 ![自动回复设置.png](http://upload-images.jianshu.io/upload_images/965383-5aa2fd8fadc545c4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
 
 * 微信多开：点击`登录新微信`或者快捷键`command + shift + n`,即可多开微信。
 
