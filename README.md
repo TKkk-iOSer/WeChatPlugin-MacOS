@@ -37,7 +37,7 @@
 * 微信窗口置顶
 * 会话多选删除
 * 自动登录开关
-* 通知快捷回复
+* 通知中心快捷回复
 
 远程控制：
 
@@ -84,7 +84,7 @@
 ![免认证&置底&多选删除](http://upload-images.jianshu.io/upload_images/965383-170592b03781cbf4.gif?imageMogr2/auto-orient/strip)
 
 * 通知中心快捷回复   
-<img src="./Others/ScreenShots/notification_quick_reply.png" height="300">
+<img src="./Other/ScreenShots/notification_quick_reply.png" height="300" />
 
 ---
 
