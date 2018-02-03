@@ -143,17 +143,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 - (void)sendLogoutCGIWithCompletion:(id)arg1;
 @end
 
-#pragma mark - 调用 NSSearchPathForDirectoriesInDomains 的一些方法
-@interface PathUtility : NSObject
-+ (id)getSysCachePath;
-+ (id)getSysDocumentPath;
-+ (id)getSysLibraryPath;
-@end
-
-@interface MemoryMappedKV : NSObject
-+ (id)mappedKVPathWithID:(id)arg1;
-@end
-
-@interface JTStatisticManager : NSObject
-@property(retain, nonatomic) NSString *statFilePath;
+@interface MMNotificationService : NSObject
+- (id)getNotificationContentWithMsgData:(id)arg1;
+- (void)userNotificationCenter:(id)arg1 didActivateNotification:(id)arg2;
 @end
