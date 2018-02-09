@@ -15,9 +15,15 @@ static NSString * const kTKPreventRevokeEnableKey = @"kTKPreventRevokeEnableKey"
 static NSString * const kTKAutoAuthEnableKey = @"kTKAutoAuthEnableKey";
 static NSString * const kTKAutoLoginEnableKey = @"kTKAutoLoginEnableKey";
 static NSString * const kTKOnTopKey = @"kTKOnTopKey";
-static NSString * const kTKAutoReplyModelsFilePath = @"/Applications/WeChat.app/Contents/MacOS/WeChatPlugin.framework/Resources/TKAutoReplyModels.plist";
-static NSString * const kTKRemoteControlModelsFilePath = @"/Applications/WeChat.app/Contents/MacOS/WeChatPlugin.framework/Resources/TKRemoteControlCommands.plist";
-static NSString * const kTKIgnoreSessionModelsFilePath = @"/Applications/WeChat.app/Contents/MacOS/WeChatPlugin.framework/Resources/TKIgnoreSessons.plist";
+static NSString * const kTKWeChatResourcesPath = @"/Applications/WeChat.app/Contents/MacOS/WeChatPlugin.framework/Resources/";
+
+@interface TKWeChatPluginConfig ()
+
+@property (nonatomic, copy) NSString *remoteControlPlistFilePath;
+@property (nonatomic, copy) NSString *autoReplyPlistFilePath;
+@property (nonatomic, copy) NSString *ignoreSessionPlistFilePath;
+
+@end
 
 @implementation TKWeChatPluginConfig
 
@@ -68,7 +74,7 @@ static NSString * const kTKIgnoreSessionModelsFilePath = @"/Applications/WeChat.
 #pragma mark - 自动回复
 - (NSArray *)autoReplyModels {
     if (!_autoReplyModels) {
-        _autoReplyModels = [self getArrayClass:[TKAutoReplyModel class] filePath:kTKAutoReplyModelsFilePath];
+        _autoReplyModels = [self getModelsWithClass:[TKAutoReplyModel class] filePath:self.autoReplyPlistFilePath];
     }
     return _autoReplyModels;
 }
@@ -84,14 +90,14 @@ static NSString * const kTKIgnoreSessionModelsFilePath = @"/Applications/WeChat.
         model.keyword = model.keyword == nil ? @"" : model.keyword;
         [needSaveModels addObject:model.dictionary];
     }];
-    [needSaveModels writeToFile:kTKAutoReplyModelsFilePath atomically:YES];
+    [needSaveModels writeToFile:self.autoReplyPlistFilePath atomically:YES];
 }
 
 #pragma mark - 远程控制
 - (NSArray *)remoteControlModels {
     if (!_remoteControlModels) {
         _remoteControlModels = ({
-            NSArray *originModels = [NSArray arrayWithContentsOfFile:kTKRemoteControlModelsFilePath];
+            NSArray *originModels = [NSArray arrayWithContentsOfFile:self.remoteControlPlistFilePath];
             NSMutableArray *newRemoteControlModels = [NSMutableArray array];
             [originModels enumerateObjectsUsingBlock:^(NSArray *subModels, NSUInteger idx, BOOL * _Nonnull stop) {
                 NSMutableArray *newSubModels = [NSMutableArray array];
@@ -101,7 +107,6 @@ static NSString * const kTKIgnoreSessionModelsFilePath = @"/Applications/WeChat.
                 }];
                 [newRemoteControlModels addObject:newSubModels];
             }];
-
             newRemoteControlModels;
         });
     }
@@ -117,49 +122,91 @@ static NSString * const kTKIgnoreSessionModelsFilePath = @"/Applications/WeChat.
         }];
         [needSaveModels addObject:newSubModels];
     }];
-    [needSaveModels writeToFile:kTKRemoteControlModelsFilePath atomically:YES];
+    [needSaveModels writeToFile:self.remoteControlPlistFilePath atomically:YES];
 }
 
 #pragma mark - 置底
 - (NSArray *)ignoreSessionModels {
     if (!_ignoreSessionModels) {
-        _ignoreSessionModels = [self getArrayClass:[TKIgnoreSessonModel class] filePath:kTKIgnoreSessionModelsFilePath];
-
+        _ignoreSessionModels = [self getModelsWithClass:[TKIgnoreSessonModel class] filePath:self.ignoreSessionPlistFilePath];
     }
     return _ignoreSessionModels;
 }
 
 - (void)saveIgnoreSessionModels {
-    [self saveArray:_ignoreSessionModels filePath:kTKIgnoreSessionModelsFilePath];
-}
-
-#pragma mark - common
-- (NSMutableArray *)getArrayClass:(Class)class filePath:(NSString *)filePath {
-    NSArray *originModels = [NSArray arrayWithContentsOfFile:filePath];
-    NSMutableArray *newModels = [NSMutableArray array];
-
-    __weak Class weakClass = class;
-    [originModels enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        TKIgnoreSessonModel *model = [[weakClass alloc] initWithDict:obj];
-        [newModels addObject:model];
-    }];
-   return newModels;
-}
-
-- (void)saveArray:(NSMutableArray *)array filePath:(NSString *)filePath {
     NSMutableArray *needSaveArray = [NSMutableArray array];
-    [array enumerateObjectsUsingBlock:^(TKBaseModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.ignoreSessionModels enumerateObjectsUsingBlock:^(TKBaseModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [needSaveArray addObject:obj.dictionary];
     }];
-
-    [needSaveArray writeToFile:filePath atomically:YES];
+    
+    [needSaveArray writeToFile:self.ignoreSessionPlistFilePath atomically:YES];
+    
 }
 
+#pragma mark - 选中的会话
 - (NSMutableArray *)selectSessions {
     if (!_selectSessions) {
         _selectSessions = [NSMutableArray array];
     }
     return _selectSessions;
+}
+
+#pragma mark - 获取沙盒上的 plist 文件，包括：远程控制，自动回复，置底列表。
+- (NSString *)remoteControlPlistFilePath {
+    if (!_remoteControlPlistFilePath) {
+        _remoteControlPlistFilePath = [self getSandboxFilePathWithPlistName:@"TKRemoteControlCommands.plist"];
+    }
+    return _remoteControlPlistFilePath;
+}
+
+- (NSString *)autoReplyPlistFilePath {
+    if (!_autoReplyPlistFilePath) {
+        _autoReplyPlistFilePath = [self getSandboxFilePathWithPlistName:@"TKAutoReplyModels.plist"];
+    }
+    return _autoReplyPlistFilePath;
+}
+
+- (NSString *)ignoreSessionPlistFilePath {
+    if (!_ignoreSessionPlistFilePath) {
+        _ignoreSessionPlistFilePath = [self getSandboxFilePathWithPlistName:@"TKIgnoreSessons.plist"];
+    }
+    return _ignoreSessionPlistFilePath;
+}
+
+#pragma mark - common
+- (NSMutableArray *)getModelsWithClass:(Class)class filePath:(NSString *)filePath {
+    NSArray *originModels = [NSArray arrayWithContentsOfFile:filePath];
+    NSMutableArray *newModels = [NSMutableArray array];
+    
+    __weak Class weakClass = class;
+    [originModels enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        TKIgnoreSessonModel *model = [[weakClass alloc] initWithDict:obj];
+        [newModels addObject:model];
+    }];
+    return newModels;
+}
+
+- (NSString *)getSandboxFilePathWithPlistName:(NSString *)plistName {
+    NSFileManager *manager = [NSFileManager defaultManager];
+    NSString *wechatPluginDirectory = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:@"TKWeChatPlugin"];
+    NSString *plistFilePath = [wechatPluginDirectory stringByAppendingPathComponent:plistName];
+    if ([manager fileExistsAtPath:plistFilePath]) {
+        return plistFilePath;
+    }
+    
+    [manager createDirectoryAtPath:wechatPluginDirectory withIntermediateDirectories:YES attributes:nil error:nil];
+    NSString *resourcesFilePath = [kTKWeChatResourcesPath stringByAppendingString:plistName];
+    if (![manager fileExistsAtPath:resourcesFilePath]) {
+        return plistFilePath;
+    }
+    
+    NSError *error = nil;
+    [manager copyItemAtPath:resourcesFilePath toPath:plistFilePath error:&error];
+    if (!error) {
+        return plistFilePath;
+    }
+    
+    return resourcesFilePath;
 }
 
 @end
