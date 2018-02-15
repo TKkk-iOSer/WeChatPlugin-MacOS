@@ -213,6 +213,13 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
         NSString *newmsgid = msgDict[@"sysmsg"][@"revokemsg"][@"newmsgid"][@"text"];
         NSString *session =  msgDict[@"sysmsg"][@"revokemsg"][@"session"][@"text"];
         
+        NSMutableSet *revokeMsgSet = [[TKWeChatPluginConfig sharedConfig] revokeMsgSet];
+        //      该消息已进行过防撤回处理
+        if ([revokeMsgSet containsObject:newmsgid]) {
+            return;
+        }
+        [revokeMsgSet addObject:newmsgid];
+        
         //      获取原始的撤回提示消息
         MessageService *msgService = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
         MessageData *revokeMsgData = [msgService GetMsgData:session svrId:[newmsgid integerValue]];
@@ -283,7 +290,6 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
  hook 微信通知消息
  
  */
-
 - (id)hook_getNotificationContentWithMsgData:(MessageData *)arg1 {
     [[TKWeChatPluginConfig sharedConfig] setCurrentUserName:arg1.toUsrName];
     return [self hook_getNotificationContentWithMsgData:arg1];;
