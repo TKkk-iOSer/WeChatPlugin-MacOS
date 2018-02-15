@@ -151,6 +151,14 @@ static NSString * const kTKWeChatResourcesPath = @"/Applications/WeChat.app/Cont
     return _selectSessions;
 }
 
+#pragma mark - 选中的会话
+- (NSMutableSet *)revokeMsgSet {
+    if (!_revokeMsgSet) {
+        _revokeMsgSet = [NSMutableSet set];
+    }
+    return _revokeMsgSet;
+}
+
 #pragma mark - 获取沙盒上的 plist 文件，包括：远程控制，自动回复，置底列表。
 - (NSString *)remoteControlPlistFilePath {
     if (!_remoteControlPlistFilePath) {
@@ -210,3 +218,4 @@ static NSString * const kTKWeChatResourcesPath = @"/Applications/WeChat.app/Cont
 }
 
 @end
+

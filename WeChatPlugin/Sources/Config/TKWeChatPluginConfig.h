@@ -20,6 +20,7 @@
 @property (nonatomic, copy) NSMutableArray *remoteControlModels;        /**<    远程控制的数组    */
 @property (nonatomic, copy) NSMutableArray *ignoreSessionModels;        /**<    聊天置底的数组    */
 @property (nonatomic, copy) NSMutableArray *selectSessions;             /**<    已经选中的会话    */
+@property (nonatomic, copy) NSMutableSet *revokeMsgSet;                 /**<    撤回的消息集合    */
 @property (nonatomic, copy) NSString *currentUserName;                  /**<    当前用户的id     */
 
 - (void)saveAutoReplyModels;
@@ -29,3 +30,4 @@
 + (instancetype)sharedConfig;
 
 @end
+
