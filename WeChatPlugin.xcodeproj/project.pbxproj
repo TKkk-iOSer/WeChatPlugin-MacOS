@@ -53,6 +53,8 @@
 		52B5CF1B1F3B4631000D9DD9 /* TKHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B5CF031F3B4631000D9DD9 /* TKHelper.m */; };
 		52B5CF1C1F3B4631000D9DD9 /* XMLReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 52B5CF041F3B4631000D9DD9 /* XMLReader.h */; };
 		52B5CF1D1F3B4631000D9DD9 /* XMLReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B5CF051F3B4631000D9DD9 /* XMLReader.m */; };
+		52EE9515203FE58500B76873 /* MMStickerMessageCellView+hook.m in Sources */ = {isa = PBXBuildFile; fileRef = 52EE9513203FE58500B76873 /* MMStickerMessageCellView+hook.m */; };
+		52EE9517203FE63300B76873 /* MMStickerMessageCellView+hook.h in Headers */ = {isa = PBXBuildFile; fileRef = 52EE9516203FE63300B76873 /* MMStickerMessageCellView+hook.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -104,6 +106,8 @@
 		52B5CF031F3B4631000D9DD9 /* TKHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKHelper.m; sourceTree = "<group>"; };
 		52B5CF041F3B4631000D9DD9 /* XMLReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLReader.h; sourceTree = "<group>"; };
 		52B5CF051F3B4631000D9DD9 /* XMLReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLReader.m; sourceTree = "<group>"; };
+		52EE9513203FE58500B76873 /* MMStickerMessageCellView+hook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MMStickerMessageCellView+hook.m"; sourceTree = "<group>"; };
+		52EE9516203FE63300B76873 /* MMStickerMessageCellView+hook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MMStickerMessageCellView+hook.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -255,6 +259,8 @@
 			children = (
 				52B5CEF61F3B4631000D9DD9 /* WeChat+hook.h */,
 				52B5CEF71F3B4631000D9DD9 /* WeChat+hook.m */,
+				52EE9516203FE63300B76873 /* MMStickerMessageCellView+hook.h */,
+				52EE9513203FE58500B76873 /* MMStickerMessageCellView+hook.m */,
 				52475C2C1F6B993E00760E3E /* MMChatsTableCellView+hook.h */,
 				52475C2D1F6B993E00760E3E /* MMChatsTableCellView+hook.m */,
 			);
@@ -340,6 +346,7 @@
 				52B5CF1A1F3B4631000D9DD9 /* TKHelper.h in Headers */,
 				52B5CF1C1F3B4631000D9DD9 /* XMLReader.h in Headers */,
 				52B5CF161F3B4631000D9DD9 /* TKRemoteControlController.h in Headers */,
+				52EE9517203FE63300B76873 /* MMStickerMessageCellView+hook.h in Headers */,
 				523848AB1F70E73500771BA3 /* NSTextField+Action.h in Headers */,
 				52B5CF121F3B4631000D9DD9 /* WeChat+hook.h in Headers */,
 				52475C321F6BA43800760E3E /* TKIgnoreSessonModel.h in Headers */,
@@ -461,6 +468,7 @@
 				522547DF1F4C312A00226A2A /* TKAutoReplyWindowController.m in Sources */,
 				52B5CF191F3B4631000D9DD9 /* TKRemoteControlModel.m in Sources */,
 				5228EABB1F70B59500D808CF /* NSButton+Action.m in Sources */,
+				52EE9515203FE58500B76873 /* MMStickerMessageCellView+hook.m in Sources */,
 				528B4FB41EA7386D00BC6A89 /* main.mm in Sources */,
 				52B5CF1D1F3B4631000D9DD9 /* XMLReader.m in Sources */,
 				52475C331F6BA43800760E3E /* TKIgnoreSessonModel.m in Sources */,

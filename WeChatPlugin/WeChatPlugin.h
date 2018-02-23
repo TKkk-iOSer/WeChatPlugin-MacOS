@@ -97,6 +97,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @property(nonatomic) int msgStatus;
 @property(nonatomic) int msgCreateTime;
 @property(nonatomic) int mesLocalID;
+@property(copy, nonatomic) NSString *m_nsEmoticonMD5;
 @end
 
 @interface CUtility : NSObject
@@ -147,3 +148,25 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 - (id)getNotificationContentWithMsgData:(id)arg1;
 - (void)userNotificationCenter:(id)arg1 didActivateNotification:(id)arg2;
 @end
+
+@interface MMChatMessageViewController : NSViewController
+@end
+
+@interface MMMessageTableItem : NSObject
+@property(retain, nonatomic) MessageData *message;
+@end
+
+@interface MMStickerMessageCellView : NSObject
+@property(retain, nonatomic) MMMessageTableItem *messageTableItem;
+@property(nonatomic) MMChatMessageViewController *delegate;
+- (BOOL)allowCopy;
+- (void)contextMenuCopy;
+- (id)contextMenu;
+@end
+
+@interface EmoticonMgr : NSObject
+@property(retain, nonatomic) MessageData *message;
+- (id)getEmotionDataWithMD5:(id)arg1;
+@end
+
+
