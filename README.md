@@ -1,11 +1,9 @@
 
 ## WeChatPlugin-MacOS
 
-![](https://img.shields.io/badge/platform-osx-lightgrey.svg) ![](https://img.shields.io/badge/support-wechat%202.2.8-green.svg)
-   
-微信小助手 v1.4.0   
+微信小助手 v1.5.0   
 
-![微信小助手.png](http://upload-images.jianshu.io/upload_images/965383-31708af611b55ca4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![微信小助手.png](./Other/ScreenShots/wechatplugin.png)
 
 **iOS版本请戳→_→ [WeChatPlugin-iOS](https://github.com/TKkk-iOSer/WeChatPlugin-iOS)**
 
@@ -14,6 +12,8 @@
 ---
 
 ### 更新日志
+
+[新增小助手检测更新&表情包复制存储等等 (2018-02-24)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.5.0)
 
 [新增窗口置顶&多选删除等等 (2017-10-11)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.4.0)
 
@@ -38,6 +38,8 @@
 * 会话多选删除
 * 自动登录开关
 * 通知中心快捷回复
+* 聊天窗口表情包复制 & 存储
+* 小助手检测更新提醒
 
 远程控制：
 
@@ -85,6 +87,9 @@
 
 * 通知中心快捷回复   
 ![快捷回复](./Other/ScreenShots/notification_quick_reply.gif)
+
+* 聊天窗口表情复制 & 存储  
+![表情复制存储](./Other/ScreenShots/emotion_copy_export.png)
 
 ---
 

@@ -15,6 +15,7 @@ static NSString * const kTKPreventRevokeEnableKey = @"kTKPreventRevokeEnableKey"
 static NSString * const kTKAutoAuthEnableKey = @"kTKAutoAuthEnableKey";
 static NSString * const kTKAutoLoginEnableKey = @"kTKAutoLoginEnableKey";
 static NSString * const kTKOnTopKey = @"kTKOnTopKey";
+static NSString * const kTKForbidCheckVersionKey = @"kTKForbidCheckVersionKey";
 static NSString * const kTKWeChatResourcesPath = @"/Applications/WeChat.app/Contents/MacOS/WeChatPlugin.framework/Resources/";
 
 @interface TKWeChatPluginConfig ()
@@ -22,6 +23,9 @@ static NSString * const kTKWeChatResourcesPath = @"/Applications/WeChat.app/Cont
 @property (nonatomic, copy) NSString *remoteControlPlistFilePath;
 @property (nonatomic, copy) NSString *autoReplyPlistFilePath;
 @property (nonatomic, copy) NSString *ignoreSessionPlistFilePath;
+
+@property (nonatomic, copy) NSDictionary *localInfoPlist;
+@property (nonatomic, copy) NSDictionary *romoteInfoPlist;
 
 @end
 
@@ -43,6 +47,7 @@ static NSString * const kTKWeChatResourcesPath = @"/Applications/WeChat.app/Cont
         _autoAuthEnable = [[NSUserDefaults standardUserDefaults] boolForKey:kTKAutoAuthEnableKey];
         _autoLoginEnable = [[NSUserDefaults standardUserDefaults] boolForKey:kTKAutoLoginEnableKey];
         _onTop = [[NSUserDefaults standardUserDefaults] boolForKey:kTKOnTopKey];
+        _forbidCheckVersion = [[NSUserDefaults standardUserDefaults] boolForKey:kTKForbidCheckVersionKey];
     }
     return self;
 }
@@ -68,6 +73,12 @@ static NSString * const kTKWeChatResourcesPath = @"/Applications/WeChat.app/Cont
 - (void)setOnTop:(BOOL)onTop {
     _onTop = onTop;
     [[NSUserDefaults standardUserDefaults] setBool:_onTop forKey:kTKOnTopKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)setForbidCheckVersion:(BOOL)forbidCheckVersion {
+    _forbidCheckVersion = forbidCheckVersion;
+    [[NSUserDefaults standardUserDefaults] setBool:_forbidCheckVersion forKey:kTKForbidCheckVersionKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -151,7 +162,7 @@ static NSString * const kTKWeChatResourcesPath = @"/Applications/WeChat.app/Cont
     return _selectSessions;
 }
 
-#pragma mark - 选中的会话
+#pragma mark - 撤回的消息集合
 - (NSMutableSet *)revokeMsgSet {
     if (!_revokeMsgSet) {
         _revokeMsgSet = [NSMutableSet set];
@@ -179,6 +190,23 @@ static NSString * const kTKWeChatResourcesPath = @"/Applications/WeChat.app/Cont
         _ignoreSessionPlistFilePath = [self getSandboxFilePathWithPlistName:@"TKIgnoreSessons.plist"];
     }
     return _ignoreSessionPlistFilePath;
+}
+
+#pragma mark - 获取本地 & github 上的小助手 info 信息
+- (NSDictionary *)localInfoPlist {
+    if (!_localInfoPlist) {
+        NSString *localInfoPath = [kTKWeChatResourcesPath stringByAppendingString:@"info.plist"];
+        _localInfoPlist = [NSDictionary dictionaryWithContentsOfFile:localInfoPath];
+    }
+    return _localInfoPlist;
+}
+
+- (NSDictionary *)romoteInfoPlist {
+    if (!_romoteInfoPlist) {
+        NSURL *url = [NSURL URLWithString:@"https://raw.githubusercontent.com/TKkk-iOSer/WeChatPlugin-MacOS/master/Other/Products/Debug/WeChatPlugin.framework/Resources/Info.plist"];
+        _romoteInfoPlist = [NSDictionary dictionaryWithContentsOfURL:url];
+    }
+    return _romoteInfoPlist;
 }
 
 #pragma mark - common
@@ -213,7 +241,6 @@ static NSString * const kTKWeChatResourcesPath = @"/Applications/WeChat.app/Cont
     if (!error) {
         return plistFilePath;
     }
-    
     return resourcesFilePath;
 }
 

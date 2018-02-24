@@ -1,5 +1,13 @@
 # 更新日志 
 
+### [v1.5.0 (2018-02-24)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.5.0)
+
+* 优化防撤回提醒
+* 新增自动登录开关
+* 新增小助手检测更新
+* 新增通知中心快捷回复
+* 新增表情包复制 & 存储
+* 自动回复 & 远程控制设置存储到本地
 
 ### [v1.4.0 (2017-10-11)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.4.0)
 

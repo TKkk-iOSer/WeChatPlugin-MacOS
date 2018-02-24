@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>FMWK</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.5.0</string>
 	<key>CFBundleSupportedPlatforms</key>
 	<array>
 		<string>MacOSX</string>
@@ -40,5 +40,7 @@
 	<string>9C40b</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2017年 tk. All rights reserved.</string>
+	<key>versionInfo</key>
+	<string>👉  优化防撤回提醒。 \n👉🏻  新增自动登录开关。 \n👉🏼  新增小助手检测更新。 \n👉🏽  新增通知中心快捷回复。\n👉🏾   新增表情包复制 &amp; 存储。\n👉🏿  自动回复 &amp; 远程控制设置存储到本地。\n\n</string>
 </dict>
 </plist>
