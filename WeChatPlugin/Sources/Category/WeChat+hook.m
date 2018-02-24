@@ -14,6 +14,7 @@
 #import "TKRemoteControlWindowController.h"
 #import "TKIgnoreSessonModel.h"
 #import "fishhook.h"
+#import "TKVersionManager.h"
 
 static char tkAutoReplyWindowControllerKey;         //  自动回复窗口的关联 key
 static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关联 key
@@ -46,6 +47,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     }, 2);
     
     [self setup];
+    [self checkPluginVersion];
 }
 
 + (void)setup {
@@ -56,6 +58,30 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
         WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
         wechat.mainWindowController.window.level = onTop == NSControlStateValueOn ? NSStatusWindowLevel : NSNormalWindowLevel;
     });
+}
+
++ (void)checkPluginVersion {
+    if ([[TKWeChatPluginConfig sharedConfig] forbidCheckVersion]) return;
+    
+    [[TKVersionManager shareManager] checkVersionFinish:^(TKVersionStatus status, NSString *message) {
+        if (status == TKVersionStatusNew) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                NSAlert *alert = [[NSAlert alloc] init];
+                [alert addButtonWithTitle:@"前往Github"];
+                [alert addButtonWithTitle:@"不再提示"];
+                [alert addButtonWithTitle:@"取消"];
+                [alert setMessageText:@"检测到新版本！主要内容：👇"];
+                [alert setInformativeText:message];
+                NSModalResponse respose = [alert runModal];
+                if (respose == NSAlertFirstButtonReturn) {
+                    NSURL *url = [NSURL URLWithString:@"https://github.com/TKkk-iOSer/WeChatPlugin-MacOS"];
+                    [[NSWorkspace sharedWorkspace] openURL:url];
+                } else if (respose == NSAlertSecondButtonReturn) {
+                    [[TKWeChatPluginConfig sharedConfig] setForbidCheckVersion:YES];
+                }
+            });
+        }
+    }];
 }
 
 /**
@@ -77,6 +103,8 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     //        免认证登录
     NSMenuItem *autoAuthItem = [[NSMenuItem alloc] initWithTitle:@"免认证登录" action:@selector(onAutoAuthControl:) keyEquivalent:@"M"];
     autoAuthItem.state = [[TKWeChatPluginConfig sharedConfig] autoAuthEnable];
+    //        更新小助手
+    NSMenuItem *updatePluginItem = [[NSMenuItem alloc] initWithTitle:@"更新小助手…" action:@selector(onUpdatePluginControl:) keyEquivalent:@""];
     
     NSMenu *subMenu = [[NSMenu alloc] initWithTitle:@"微信小助手"];
     [subMenu addItem:preventRevokeItem];
@@ -85,6 +113,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     [subMenu addItem:newWeChatItem];
     [subMenu addItem:onTopItem];
     [subMenu addItem:autoAuthItem];
+    [subMenu addItem:updatePluginItem];
     
     NSMenuItem *menuItem = [[NSMenuItem alloc] init];
     [menuItem setTitle:@"微信小助手"];
@@ -171,6 +200,34 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     [[TKWeChatPluginConfig sharedConfig] setOnTop:item.state];
     WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
     wechat.mainWindowController.window.level = item.state == NSControlStateValueOn ? NSStatusWindowLevel : NSNormalWindowLevel;
+}
+
+/**
+ 菜单栏-微信小助手-更新小助手
+ 
+ @param item 更新小助手的 item
+ */
+- (void)onUpdatePluginControl:(NSMenuItem *)item {
+    [[TKWeChatPluginConfig sharedConfig] setForbidCheckVersion:NO];
+    [[TKVersionManager shareManager] checkVersionFinish:^(TKVersionStatus status, NSString *message) {
+        if (status == TKVersionStatusNew) {
+            NSAlert *alert = [[NSAlert alloc] init];
+            [alert addButtonWithTitle:@"前往Github"];
+            [alert addButtonWithTitle:@"取消"];
+            [alert setMessageText:@"检测到新版本！主要内容：👇"];
+            [alert setInformativeText:message];
+            NSModalResponse respose = [alert runModal];
+            if (respose == NSAlertFirstButtonReturn) {
+                NSURL *url = [NSURL URLWithString:@"https://github.com/TKkk-iOSer/WeChatPlugin-MacOS"];
+                [[NSWorkspace sharedWorkspace] openURL:url];
+            }
+        } else {
+            NSAlert *alert = [[NSAlert alloc] init];
+            [alert setMessageText:@"当前为最新版本！主要内容：👇"];
+            [alert setInformativeText:message];
+            [alert runModal];
+        }
+    }];
 }
 
 /**

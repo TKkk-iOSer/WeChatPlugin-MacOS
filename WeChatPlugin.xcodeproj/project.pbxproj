@@ -15,6 +15,8 @@
 		522547E11F4C312A00226A2A /* TKRemoteControlWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 522547DB1F4C312A00226A2A /* TKRemoteControlWindowController.h */; };
 		522547E21F4C312A00226A2A /* TKRemoteControlWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 522547DC1F4C312A00226A2A /* TKRemoteControlWindowController.m */; };
 		522547E31F4C312A00226A2A /* TKRemoteControlWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 522547DD1F4C312A00226A2A /* TKRemoteControlWindowController.xib */; };
+		5226D5CA2040FC3E0013C048 /* TKVersionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 5226D5C82040FC3E0013C048 /* TKVersionManager.h */; };
+		5226D5CB2040FC3E0013C048 /* TKVersionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5226D5C92040FC3E0013C048 /* TKVersionManager.m */; };
 		5228EABA1F70B59500D808CF /* NSButton+Action.h in Headers */ = {isa = PBXBuildFile; fileRef = 5228EAB81F70B59500D808CF /* NSButton+Action.h */; };
 		5228EABB1F70B59500D808CF /* NSButton+Action.m in Sources */ = {isa = PBXBuildFile; fileRef = 5228EAB91F70B59500D808CF /* NSButton+Action.m */; };
 		523848AB1F70E73500771BA3 /* NSTextField+Action.h in Headers */ = {isa = PBXBuildFile; fileRef = 523848A91F70E73500771BA3 /* NSTextField+Action.h */; };
@@ -66,6 +68,8 @@
 		522547DB1F4C312A00226A2A /* TKRemoteControlWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKRemoteControlWindowController.h; sourceTree = "<group>"; };
 		522547DC1F4C312A00226A2A /* TKRemoteControlWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKRemoteControlWindowController.m; sourceTree = "<group>"; };
 		522547DD1F4C312A00226A2A /* TKRemoteControlWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TKRemoteControlWindowController.xib; sourceTree = "<group>"; };
+		5226D5C82040FC3E0013C048 /* TKVersionManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKVersionManager.h; sourceTree = "<group>"; };
+		5226D5C92040FC3E0013C048 /* TKVersionManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKVersionManager.m; sourceTree = "<group>"; };
 		5228EAB81F70B59500D808CF /* NSButton+Action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSButton+Action.h"; sourceTree = "<group>"; };
 		5228EAB91F70B59500D808CF /* NSButton+Action.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSButton+Action.m"; sourceTree = "<group>"; };
 		523848A91F70E73500771BA3 /* NSTextField+Action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTextField+Action.h"; sourceTree = "<group>"; };
@@ -307,6 +311,8 @@
 				52B5CF031F3B4631000D9DD9 /* TKHelper.m */,
 				52B5CF041F3B4631000D9DD9 /* XMLReader.h */,
 				52B5CF051F3B4631000D9DD9 /* XMLReader.m */,
+				5226D5C82040FC3E0013C048 /* TKVersionManager.h */,
+				5226D5C92040FC3E0013C048 /* TKVersionManager.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -352,6 +358,7 @@
 				52475C321F6BA43800760E3E /* TKIgnoreSessonModel.h in Headers */,
 				526F4D8D1F4AAC3800E46004 /* TKRemoteControlCell.h in Headers */,
 				52B5CF181F3B4631000D9DD9 /* TKRemoteControlModel.h in Headers */,
+				5226D5CA2040FC3E0013C048 /* TKVersionManager.h in Headers */,
 				522547CF1F4AE5A700226A2A /* NSView+Action.h in Headers */,
 				526F4D911F4AAE6F00E46004 /* TKAutoReplyCell.h in Headers */,
 				52475C2E1F6B993E00760E3E /* MMChatsTableCellView+hook.h in Headers */,
@@ -466,6 +473,7 @@
 				526F4D841F4AAC1900E46004 /* TKAutoReplyModel.m in Sources */,
 				526F4D8C1F4AAC3800E46004 /* TKAutoReplyContentView.m in Sources */,
 				522547DF1F4C312A00226A2A /* TKAutoReplyWindowController.m in Sources */,
+				5226D5CB2040FC3E0013C048 /* TKVersionManager.m in Sources */,
 				52B5CF191F3B4631000D9DD9 /* TKRemoteControlModel.m in Sources */,
 				5228EABB1F70B59500D808CF /* NSButton+Action.m in Sources */,
 				52EE9515203FE58500B76873 /* MMStickerMessageCellView+hook.m in Sources */,
