@@ -43,7 +43,7 @@
         NSSavePanel *panel = [NSSavePanel savePanel];
         [panel setDirectoryURL:[NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingPathComponent:@"Pictures"]]];
         [panel setNameFieldStringValue:item.message.m_nsEmoticonMD5];
-        [panel setAllowedFileTypes:@[@"jpg",@"png"]];
+        [panel setAllowedFileTypes:@[[NSObject getTypeForImageData:imageData]]];
         [panel setAllowsOtherFileTypes:YES];
         [panel setExtensionHidden:NO];
         [panel setCanCreateDirectories:YES];
@@ -62,7 +62,8 @@
         MMMessageTableItem *item = [self valueForKey:@"messageTableItem"];
         EmoticonMgr *emoticonMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("EmoticonMgr")];
         NSData *imageData = [emoticonMgr getEmotionDataWithMD5:item.message.m_nsEmoticonMD5];
-        NSString *imageName = [NSString stringWithFormat:@"temp_paste_image_%@.jpg",item.message.m_nsEmoticonMD5];
+        NSString *imageType = [NSObject getTypeForImageData:imageData];
+        NSString *imageName = [NSString stringWithFormat:@"temp_paste_image_%@.%@", item.message.m_nsEmoticonMD5, imageType];
         NSString *tempImageFilePath = [NSTemporaryDirectory() stringByAppendingString:imageName];
         NSURL *imageUrl = [NSURL fileURLWithPath:tempImageFilePath];
         [imageData writeToURL:imageUrl atomically:YES];
@@ -74,6 +75,20 @@
     } else {
         [self hook_contextMenuCopy];
     }
+}
+
++ (NSString *)getTypeForImageData:(NSData *)data {
+    uint8_t c;
+    [data getBytes:&c length:1];
+    switch (c) {
+        case 0x89:
+            return @"png";
+        case 0x47:
+            return @"gif";
+        default:
+            return @"jpg";
+    }
+    return nil;
 }
 
 @end
