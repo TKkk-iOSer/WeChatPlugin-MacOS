@@ -89,7 +89,7 @@
 ![快捷回复](./Other/ScreenShots/notification_quick_reply.gif)
 
 * 聊天窗口表情复制 & 存储  
-![表情复制存储](./Other/ScreenShots/emotion_copy_export.png)
+<img src="./Other/ScreenShots/emotion_copy_export.png" height="400" hspace="50" />
 
 ---
 
