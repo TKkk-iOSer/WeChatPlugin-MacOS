@@ -473,8 +473,8 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     
     ContactStorage *contactStorage = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("ContactStorage")];
     WCContactData *msgContact = [contactStorage GetContact:addMsg.fromUserName.string];
-    if (msgContact.m_uiFriendScene == 0 && ![addMsg.fromUserName.string containsString:@"@chatroom"]) {
-        //        该消息为公众号
+    if ([msgContact isBrandContact] || [msgContact isSelf]) {
+        //        该消息为公众号或者本人发送的消息
         return;
     }
     MessageService *service = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
