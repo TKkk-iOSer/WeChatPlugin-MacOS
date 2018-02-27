@@ -1,6 +1,11 @@
 
 ## WeChatPlugin-MacOS
 
+![platform](https://img.shields.io/badge/platform-macos-lightgrey.svg)[![release](https://img.shields.io/badge/release-v1.5.0-brightgreen.svg)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases)![support](https://img.shields.io/badge/support-wechat%202.3.10-blue.svg)
+[![GitHub license](https://img.shields.io/github/license/TKkk-iOSer/WeChatPlugin-MacOS.svg)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/blob/master/LICENSE)
+
+
+
 微信小助手 v1.5.0   
 
 ![微信小助手.png](./Other/ScreenShots/wechatplugin.png)
@@ -99,13 +104,13 @@
 
 **0. 懒癌版安装(适合非程序猿)**
 
-打开`应用程序-实用工具-Terminal(终端)`，执行以下命令并根据提示输入密码即可。~~(需要git支持)~~
+打开`应用程序-实用工具-Terminal(终端)`，执行以下命令并根据提示输入密码即可。**(需要git支持)**
 
 `cd ~/Downloads && git clone https://github.com/TKkk-iOSer/WeChatPlugin-MacOS.git && ./WeChatPlugin-MacOS/Other/Install.sh`
 
 **1. 普通安装**
 
-* 点击`clone or download`按钮下载 WeChatPlugin 至`下载`目录并解压，打开Termimal，执行 `~/Downloads/WeChatPlugin-MacOS-master/Other/Install.sh`即可。
+* 点击`clone or download`按钮下载 WeChatPlugin 至`下载`目录并解压到`下载`目录，打开Termimal，执行 `~/Downloads/WeChatPlugin-MacOS-master/Other/Install.sh`即可。
 
 
 **2. 若想修改源码&重编译**
