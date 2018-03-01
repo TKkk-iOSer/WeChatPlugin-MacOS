@@ -100,6 +100,14 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @property(nonatomic) int msgCreateTime;
 @property(nonatomic) int mesLocalID;
 @property(copy, nonatomic) NSString *m_nsEmoticonMD5;
+- (BOOL)isChatRoomMessage;
+- (id)groupChatSenderDisplayName;
+- (id)getRealMessageContent;
+- (BOOL)isSendFromSelf;
+- (BOOL)isCustomEmojiMsg;
+- (BOOL)isImgMsg;
+- (BOOL)isVideoMsg;
+- (BOOL)isVoiceMsg;
 @end
 
 @interface CUtility : NSObject

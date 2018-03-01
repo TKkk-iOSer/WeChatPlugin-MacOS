@@ -280,24 +280,42 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
         //      获取原始的撤回提示消息
         MessageService *msgService = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
         MessageData *revokeMsgData = [msgService GetMsgData:session svrId:[newmsgid integerValue]];
+        NSString *msgContent = [revokeMsgData getRealMessageContent];
+
+        NSString *msgType;
+        if (revokeMsgData.messageType == 1) {
+            msgType = @"";
+        } else if ([revokeMsgData isCustomEmojiMsg]) {
+            msgType = @"[表情]";
+        } else if ([revokeMsgData isImgMsg]) {
+            msgType = @"[图片]";
+        } else if ([revokeMsgData isVideoMsg]) {
+            msgType = @"[视频]";
+        } else if ([revokeMsgData isVoiceMsg]) {
+            msgType = @"[语音]";
+        } else {
+            msgType = @"[非文本]";
+        }
         
-        //      获取自己的联系人信息
-        NSString *currentUserName = [objc_getClass("CUtility") GetCurrentUserName];
-        
-        NSString *newMsgContent = @"TK拦截到一条非文本撤回消息";
+        NSString *newMsgContent = [NSString stringWithFormat:@"TK拦截到一条撤回消息: \n%@", msgType];
         //      判断是否是自己发起撤回
-        if ([currentUserName isEqualToString:revokeMsgData.fromUsrName]) {
+        if ([revokeMsgData isSendFromSelf]) {
             if (revokeMsgData.messageType == 1) {       // 判断是否为文本消息
-                newMsgContent = [NSString stringWithFormat:@"TK拦截到你撤回了一条消息：\n %@",revokeMsgData.msgContent];
+                newMsgContent = [NSString stringWithFormat:@"TK拦截到你撤回了一条消息：\n %@", msgContent];
+            } else {
+                newMsgContent = [NSString stringWithFormat:@"TK拦截到你撤回了一条消息：\n %@", msgType];
             }
         } else {
-            if (![revokeMsgData.msgPushContent isEqualToString:@""]) {
-                newMsgContent = [NSString stringWithFormat:@"TK拦截到一条撤回消息：\n %@",revokeMsgData.msgPushContent];
-            } else if (revokeMsgData.messageType == 1) {
-                NSRange range = [revokeMsgData.msgContent rangeOfString:@":\n"];
-                if (range.length > 0) {
-                    NSString *content = [revokeMsgData.msgContent substringFromIndex:range.location + range.length];
-                    newMsgContent = [NSString stringWithFormat:@"TK拦截到一条撤回消息：\n %@",content];
+            NSString *displayName = [revokeMsgData groupChatSenderDisplayName];
+            if (revokeMsgData.messageType == 1) {
+                if ([revokeMsgData isChatRoomMessage]) {
+                    newMsgContent = [NSString stringWithFormat:@"TK拦截到一条撤回消息：\n%@ : %@",displayName, msgContent];
+                } else {
+                    newMsgContent = [NSString stringWithFormat:@"TK拦截到一条撤回消息：\n%@", msgContent];
+                }
+            } else {
+                if ([revokeMsgData isChatRoomMessage]) {
+                    newMsgContent = [NSString stringWithFormat:@"TK拦截到一条撤回信息: \n %@ : %@", displayName, msgType];
                 }
             }
         }
@@ -308,14 +326,13 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
             [msg setMsgStatus:4];
             [msg setMsgContent:newMsgContent];
             [msg setMsgCreateTime:[revokeMsgData msgCreateTime]];
-            //                [msg setMesLocalID:[revokeMsgData mesLocalID]];
+            //   [msg setMesLocalID:[revokeMsgData mesLocalID]];
             
             msg;
         });
         
         [msgService AddLocalMsg:session msgData:newMsgData];
-    }
-    
+    } 
 }
 
 /**
