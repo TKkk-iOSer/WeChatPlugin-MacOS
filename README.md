@@ -15,7 +15,7 @@
 ---
 
 ### 更新日志
-* [新增语音远程控制mac & 优化撤回消息、快捷回复(2018-03-03)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.5.0)
+* [新增语音远程控制mac & 优化撤回消息、快捷回复(2018-03-03)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.5.1)
 
 * [新增小助手检测更新&表情包复制存储等等 (2018-02-24)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.5.0)
 
@@ -68,7 +68,7 @@
 - [x] 完善消息防撤回(显示撤回用户昵称)
 - [x] ~~清除微信缓存(官方已加)~~
 - [x] 优化小助手设置(更新后保留相关设置，更新提醒)
-- [x] 语音远程控制mac
+- [x] 语音远程控制 mac
 - [ ] 群聊屏蔽某成员
 
 ---
@@ -96,7 +96,7 @@
 * 聊天窗口表情复制 & 存储  
 <img src="./Other/ScreenShots/emotion_copy_export.png" height="400" hspace="50" />
 
-* 语音远程控制
+* 语音远程控制 mac
 ![语音远程控制](./Other/ScreenShots/voice_remote_control.gif)
 
 
