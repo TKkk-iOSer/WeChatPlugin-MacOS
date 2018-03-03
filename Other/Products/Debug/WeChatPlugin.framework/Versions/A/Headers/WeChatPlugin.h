@@ -47,6 +47,8 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 - (id)SendTextMessage:(id)arg1 toUsrName:(id)arg2 msgText:(id)arg3 atUserList:(id)arg4;
 - (id)GetMsgData:(id)arg1 svrId:(long)arg2;
 - (void)AddLocalMsg:(id)arg1 msgData:(id)arg2;
+- (void)TranscribeVoiceMessage:(id)arg1 completion:(void (^)(void))arg2;
+- (BOOL)ClearUnRead:(id)arg1 FromID:(unsigned int)arg2 ToID:(unsigned int)arg3;
 @end
 
 @interface MMServiceCenter : NSObject
@@ -64,6 +66,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @property(nonatomic, setter=SetMsgType:) int msgType; // @synthesize msgType;
 @property(retain, nonatomic, setter=SetToUserName:) SKBuiltinString_t *toUserName; // @synthesize toUserName;
 @property (nonatomic, assign) unsigned int createTime;
+@property(nonatomic, setter=SetNewMsgId:) long long newMsgId;
 @end
 
 @interface MMChatsViewController : NSViewController <NSTableViewDataSource, NSTableViewDelegate>
@@ -99,6 +102,8 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @property(nonatomic) int msgStatus;
 @property(nonatomic) int msgCreateTime;
 @property(nonatomic) int mesLocalID;
+@property(nonatomic) long long mesSvrID;
+@property(retain, nonatomic) NSString *msgVoiceText; 
 @property(copy, nonatomic) NSString *m_nsEmoticonMD5;
 - (BOOL)isChatRoomMessage;
 - (id)groupChatSenderDisplayName;

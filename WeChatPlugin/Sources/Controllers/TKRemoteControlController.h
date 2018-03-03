@@ -10,6 +10,7 @@
 
 @interface TKRemoteControlController : NSObject
 
++ (void)executeRemoteControlCommandWithVoiceMsg:(NSString *)msg;
 + (void)executeRemoteControlCommandWithMsg:(NSString *)msg;
 + (void)executeShellCommand:(NSString *)msg;
 + (NSString *)remoteControlCommandsString;
