@@ -96,7 +96,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     //        登录新微信
     NSMenuItem *newWeChatItem = [[NSMenuItem alloc] initWithTitle:@"登录新微信" action:@selector(onNewWechatInstance:) keyEquivalent:@"N"];
     //        远程控制
-    NSMenuItem *commandItem = [[NSMenuItem alloc] initWithTitle:@"远程控制Mac OS" action:@selector(onRemoteControl:) keyEquivalent:@"C"];
+    NSMenuItem *commandItem = [[NSMenuItem alloc] initWithTitle:@"远程控制mac" action:@selector(onRemoteControl:) keyEquivalent:@"C"];
     //        微信窗口置顶
     NSMenuItem *onTopItem = [[NSMenuItem alloc] initWithTitle:@"微信窗口置顶" action:@selector(onWechatOnTopControl:) keyEquivalent:@"d"];
     onTopItem.state = [[TKWeChatPluginConfig sharedConfig] onTop];
@@ -385,6 +385,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
         if ([instanceUserName isEqualToString:currentUserName]) {
             MessageService *service = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
             [service SendTextMessage:currentUserName toUsrName:chatName msgText:notification.response.string atUserList:nil];
+            [service ClearUnRead:chatName FromID:0 ToID:0];
         }
     } else {
         [self hook_userNotificationCenter:notificationCenter didActivateNotification:notification];
@@ -545,6 +546,18 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
 - (void)remoteControlWithMsg:(AddMsg *)addMsg {
     if (addMsg.msgType == 1 || addMsg.msgType == 3) {
         [TKRemoteControlController executeRemoteControlCommandWithMsg:addMsg.content.string];
+    } else if (addMsg.msgType == 34) {
+        //      此为语音消息
+        MessageService *msgService = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
+        MessageData *msgData = [msgService GetMsgData:addMsg.fromUserName.string svrId:addMsg.newMsgId];
+        long long mesSvrID = msgData.mesSvrID;
+        NSString *sessionName = msgData.fromUsrName;
+        [msgService TranscribeVoiceMessage:msgData completion:^ {
+            MessageData *callbackMsgData = [msgService GetMsgData:sessionName svrId:mesSvrID];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [TKRemoteControlController executeRemoteControlCommandWithVoiceMsg:callbackMsgData.msgVoiceText];
+            });
+        }];
     }
 }
 

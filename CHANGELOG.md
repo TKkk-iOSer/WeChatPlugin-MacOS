@@ -1,5 +1,11 @@
 # 更新日志 
 
+### [v1.5.1 (2018-03-03)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.5.1)
+
+* 新增语音远程控制 mac
+* 修复快捷回复后消息未读数未更新的问题
+* 优化防撤回提醒 (显示撤回人昵称 & 消息类型)
+
 ### [v1.5.0 (2018-02-24)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.5.0)
 
 * 优化防撤回提醒
