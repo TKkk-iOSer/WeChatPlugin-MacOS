@@ -58,6 +58,7 @@ static NSString * const kRemoteControlAppleScript = @"osascript /Applications/We
                 NSString *callBack = [NSString stringWithFormat:@"小助手收到一条指令：%@",model.function];
                 MessageService *service = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
                 [service SendTextMessage:currentUserName toUsrName:currentUserName msgText:callBack atUserList:nil];
+                [service ClearUnRead:currentUserName FromID:0 ToID:0];
                 *stop = YES;
                 *subStop = YES;
             }
