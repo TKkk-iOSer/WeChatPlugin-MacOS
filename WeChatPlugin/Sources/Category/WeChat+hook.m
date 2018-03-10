@@ -35,6 +35,8 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     tk_hookMethod(objc_getClass("MMLoginOneClickViewController"), @selector(viewWillAppear), [self class], @selector(hook_viewWillAppear));
     //      置底
     tk_hookMethod(objc_getClass("MMSessionMgr"), @selector(sortSessions), [self class], @selector(hook_sortSessions));
+    //    窗口置顶
+    tk_hookMethod(objc_getClass("NSWindow"), @selector(makeKeyAndOrderFront:), [self class], @selector(hook_makeKeyAndOrderFront:));
     //      快捷回复
     tk_hookMethod(objc_getClass("_NSConcreteUserNotificationCenter"), @selector(deliverNotification:), [self class], @selector(hook_deliverNotification:));
     tk_hookMethod(objc_getClass("MMNotificationService"), @selector(userNotificationCenter:didActivateNotification:), [self class], @selector(hook_userNotificationCenter:didActivateNotification:));
@@ -56,7 +58,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
         
         BOOL onTop = [[TKWeChatPluginConfig sharedConfig] onTop];
         WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
-        wechat.mainWindowController.window.level = onTop == NSControlStateValueOn ? NSStatusWindowLevel : NSNormalWindowLevel;
+        wechat.mainWindowController.window.level = onTop == NSControlStateValueOn ? NSNormalWindowLevel+2 : NSNormalWindowLevel;
     });
 }
 
@@ -198,8 +200,13 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
 - (void)onWechatOnTopControl:(NSMenuItem *)item {
     item.state = !item.state;
     [[TKWeChatPluginConfig sharedConfig] setOnTop:item.state];
-    WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
-    wechat.mainWindowController.window.level = item.state == NSControlStateValueOn ? NSStatusWindowLevel : NSNormalWindowLevel;
+
+    NSArray *windows = [[NSApplication sharedApplication] windows];
+    [windows enumerateObjectsUsingBlock:^(NSWindow *window, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (![window.className isEqualToString:@"NSStatusBarWindow"]) {
+            window.level = item.state == NSControlStateValueOn ? NSNormalWindowLevel+2 : NSNormalWindowLevel;
+        }
+    }];
 }
 
 /**
@@ -301,9 +308,9 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
         //      判断是否是自己发起撤回
         if ([revokeMsgData isSendFromSelf]) {
             if (revokeMsgData.messageType == 1) {       // 判断是否为文本消息
-                newMsgContent = [NSString stringWithFormat:@"TK拦截到你撤回了一条消息：\n %@", msgContent];
+                newMsgContent = [NSString stringWithFormat:@"你撤回了一条消息：\n %@", msgContent];
             } else {
-                newMsgContent = [NSString stringWithFormat:@"TK拦截到你撤回了一条消息：\n %@", msgType];
+                newMsgContent = [NSString stringWithFormat:@"你撤回了一条消息：\n %@", msgType];
             }
         } else {
             NSString *displayName = [revokeMsgData groupChatSenderDisplayName];
@@ -478,6 +485,14 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     
     WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
     [wechat.chatsViewController.tableView reloadData];
+}
+
+#pragma mark - hook 系统方法
+- (void)hook_makeKeyAndOrderFront:(nullable id)sender {
+    BOOL top = [[TKWeChatPluginConfig sharedConfig] onTop];
+    ((NSWindow *)self).level = top == NSControlStateValueOn ? NSNormalWindowLevel+2 : NSNormalWindowLevel;
+    
+    [self hook_makeKeyAndOrderFront:sender];
 }
 
 #pragma mark - Other
