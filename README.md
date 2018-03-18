@@ -1,10 +1,9 @@
 
 ## WeChatPlugin-MacOS
 
-![platform](https://img.shields.io/badge/platform-macos-lightgrey.svg)  [![release](https://img.shields.io/badge/release-v1.5.1-brightgreen.svg)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases)  ![support](https://img.shields.io/badge/support-wechat%202.3.10-blue.svg)  [![GitHub license](https://img.shields.io/github/license/TKkk-iOSer/WeChatPlugin-MacOS.svg)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/blob/master/LICENSE)
+![platform](https://img.shields.io/badge/platform-macos-lightgrey.svg)  [![release](https://img.shields.io/badge/release-v1.6-brightgreen.svg)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases)  ![support](https://img.shields.io/badge/support-wechat%202.3.10-blue.svg)  [![GitHub license](https://img.shields.io/github/license/TKkk-iOSer/WeChatPlugin-MacOS.svg)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/blob/master/LICENSE)
 
-
-微信小助手 v1.5.1  
+微信小助手 v1.6 
 
 ![微信小助手.png](./Other/ScreenShots/wechatplugin.png)
 
@@ -15,6 +14,8 @@
 ---
 
 ### 更新日志
+* [新增 Alfred 快捷发送消息 & 打开聊天窗口(2018-03-18)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.6)
+
 * [新增语音远程控制mac & 优化撤回消息、快捷回复(2018-03-03)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.5.1)
 
 * [新增小助手检测更新&表情包复制存储等等 (2018-02-24)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.5.0)
@@ -44,6 +45,7 @@
 * 通知中心快捷回复
 * 聊天窗口表情包复制 & 存储
 * 小助手检测更新提醒
+* alfred 快捷发送消息 & 打开窗口
 
 远程控制：
 
@@ -60,7 +62,7 @@
 ---
 
 ### TODO
-- [ ] 增加`Alfred`搜索
+- [x] 增加`Alfred`搜索
 - [ ] 查看单向好友
 - [ ] 语音(视频转发)
 - [ ] 增加 brew 安装方式
@@ -99,6 +101,8 @@
 * 语音远程控制 mac
 ![语音远程控制](./Other/ScreenShots/voice_remote_control.gif)
 
+* Alfred 快速搜索
+![alfred](./Other/ScreenShots/alfred_search.gif)
 
 ---
 
@@ -124,7 +128,7 @@
 
 ![Permission denied.png](http://upload-images.jianshu.io/upload_images/965383-11e4480553ba086e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-* 下载 WeChatPlugin, 用Xcode打开，先进行 Build (`command + B`)，之后 Run (`command + R`)即可启动微信，此时插件注入完成。
+* 下载 WeChatPlugin, 进行`Pod install`，用Xcode打开，先进行 Build (`command + B`)，之后 Run (`command + R`)即可启动微信，此时插件注入完成。
  
 * 若 Error，提示找不到 Framework，先进行 Build。
 * 若Error, 需要配置环境，请参考[我的博客](http://www.tkkk.fun/2017/04/21/macOS%E9%80%86%E5%90%91-%E5%BE%AE%E4%BF%A1%E5%B0%8F%E5%8A%A9%E6%89%8B/)。

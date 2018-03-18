@@ -78,6 +78,8 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @property(nonatomic) MMChatsViewController *chatsViewController;
 @property(retain, nonatomic) MMMainWindowController *mainWindowController;
 @property(nonatomic) BOOL isAppTerminating;
+- (void)startANewChatWithContact:(id)arg1;
+- (void)onAuthOK:(BOOL)arg1;
 @end
 
 @interface ContactStorage : NSObject
@@ -88,8 +90,12 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @interface WCContactData : NSObject
 @property(retain, nonatomic) NSString *m_nsUsrName; // @synthesize m_nsUsrName;
 @property(nonatomic) unsigned int m_uiFriendScene;  // @synthesize m_uiFriendScene;
+@property(retain, nonatomic) NSString *m_nsNickName;    // 用户昵称
+@property(retain, nonatomic) NSString *m_nsRemark;      // 备注
+@property(retain, nonatomic) NSString *m_nsHeadImgUrl;  // 头像
 - (BOOL)isBrandContact;
 - (BOOL)isSelf;
+- (id)getGroupDisplayName;
 @end
 
 @interface MessageData : NSObject
@@ -103,7 +109,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @property(nonatomic) int msgCreateTime;
 @property(nonatomic) int mesLocalID;
 @property(nonatomic) long long mesSvrID;
-@property(retain, nonatomic) NSString *msgVoiceText; 
+@property(retain, nonatomic) NSString *msgVoiceText;
 @property(copy, nonatomic) NSString *m_nsEmoticonMD5;
 - (BOOL)isChatRoomMessage;
 - (id)groupChatSenderDisplayName;
@@ -153,6 +159,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 - (void)UntopSessionByUserName:(id)arg1;
 - (void)deleteSessionWithoutSyncToServerWithUserName:(id)arg1;
 - (void)sortSessions;
+- (id)getContact:(id)arg1;
 @end
 
 @interface LogoutCGI : NSTableCellView
@@ -184,4 +191,31 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 - (id)getEmotionDataWithMD5:(id)arg1;
 @end
 
+@interface MMComplexContactSearchTaskMgr : NSObject
++ (id)sharedInstance;
+- (void)doComplexContactSearch:(id)arg1 searchScene:(unsigned long long)arg2 complete:(void (^)(NSArray *, NSArray *, NSArray *))arg3 cancelable:(BOOL)arg4;
+@end
 
+@interface MMComplexContactSearchResult : NSObject
+@property(retain, nonatomic) NSString *fieldValue;
+@property(retain, nonatomic) WCContactData *contact;
+@property(nonatomic) unsigned long long fieldType;  // 1：备注 3：昵称 4：微信号  8：省份  7：市  9：国家
+@end
+
+@interface MMComplexGroupContactMembersSearchResult : NSObject
+@property(retain, nonatomic) NSMutableArray<MMComplexContactSearchResult *> *membersSearchReults;
+@end
+
+@interface MMComplexGroupContactSearchResult : NSObject
+@property(nonatomic) unsigned long long searchType;     // 1 名称 2 群成员名称
+@property(retain) WCContactData *groupContact;
+@property(retain, nonatomic) MMComplexGroupContactMembersSearchResult *groupMembersResult;
+@end
+
+@interface MMAvatarService : NSObject
+- (NSString *)avatarCachePath;
+@end
+
+@interface NSString (MD5)
+- (id)md5String;
+@end
