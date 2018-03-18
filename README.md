@@ -45,7 +45,7 @@
 * 通知中心快捷回复
 * 聊天窗口表情包复制 & 存储
 * 小助手检测更新提醒
-* alfred 快捷发送消息 & 打开窗口
+* alfred 快捷发送消息 & 打开窗口 [wechat-alfred-workflow](https://github.com/TKkk-iOSer/wechat-alfred-workflow)
 
 远程控制：
 
@@ -98,10 +98,10 @@
 * 聊天窗口表情复制 & 存储  
 <img src="./Other/ScreenShots/emotion_copy_export.png" height="400" hspace="50" />
 
-* 语音远程控制 mac
+* 语音远程控制 mac   
 ![语音远程控制](./Other/ScreenShots/voice_remote_control.gif)
 
-* Alfred 快速搜索
+* Alfred 快速搜索 [wechat-alfred-workflow](https://github.com/TKkk-iOSer/wechat-alfred-workflow)   
 ![alfred](./Other/ScreenShots/alfred_search.gif)
 
 ---
@@ -166,6 +166,8 @@
 * 远程控制：发送`获取指令`，手机端可查看所有指令信息。
 
 ![远程控制.png](http://upload-images.jianshu.io/upload_images/965383-7c2a4b17e5a6867f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+* Alfred 使用：请查看 [wechat-alfred-workflow](https://github.com/TKkk-iOSer/wechat-alfred-workflow)
 
 ---
 
