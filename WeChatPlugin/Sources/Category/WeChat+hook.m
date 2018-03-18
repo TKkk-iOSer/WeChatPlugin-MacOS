@@ -15,6 +15,7 @@
 #import "TKIgnoreSessonModel.h"
 #import "fishhook.h"
 #import "TKVersionManager.h"
+#import "TKWebServerManager.h"
 
 static char tkAutoReplyWindowControllerKey;         //  自动回复窗口的关联 key
 static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关联 key
@@ -41,6 +42,9 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     tk_hookMethod(objc_getClass("_NSConcreteUserNotificationCenter"), @selector(deliverNotification:), [self class], @selector(hook_deliverNotification:));
     tk_hookMethod(objc_getClass("MMNotificationService"), @selector(userNotificationCenter:didActivateNotification:), [self class], @selector(hook_userNotificationCenter:didActivateNotification:));
     tk_hookMethod(objc_getClass("MMNotificationService"), @selector(getNotificationContentWithMsgData:), [self class], @selector(hook_getNotificationContentWithMsgData:));
+    
+    //      登录逻辑
+    tk_hookMethod(objc_getClass("WeChat"), @selector(onAuthOK:), [self class], @selector(hook_onAuthOK:));
     
     //      替换沙盒路径
     rebind_symbols((struct rebinding[2]) {
@@ -339,7 +343,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
         });
         
         [msgService AddLocalMsg:session msgData:newMsgData];
-    } 
+    }
 }
 
 /**
@@ -421,7 +425,17 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     }
 }
 
+- (void)hook_onAuthOK:(BOOL)arg1 {
+    [self hook_onAuthOK:arg1];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [[TKWebServerManager shareManager] startServer];
+    });
+}
+
 - (void)hook_sendLogoutCGIWithCompletion:(id)arg1 {
+    [[TKWebServerManager shareManager] endServer];
+    
     BOOL autoAuthEnable = [[TKWeChatPluginConfig sharedConfig] autoAuthEnable];
     WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
     if (autoAuthEnable && wechat.isAppTerminating) return;
@@ -504,8 +518,8 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
 - (void)autoReplyWithMsg:(AddMsg *)addMsg {
     if (addMsg.msgType != 1 && addMsg.msgType != 3) return;
     
-    ContactStorage *contactStorage = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("ContactStorage")];
-    WCContactData *msgContact = [contactStorage GetContact:addMsg.fromUserName.string];
+    MMSessionMgr *sessionMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMSessionMgr")];
+    WCContactData *msgContact = [sessionMgr getContact:addMsg.fromUserName.string];
     if ([msgContact isBrandContact] || [msgContact isSelf]) {
         //        该消息为公众号或者本人发送的消息
         return;

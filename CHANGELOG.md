@@ -1,5 +1,9 @@
 # 更新日志 
 
+### [v1.6 (2018-03-18)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.6)
+
+* 新增 Alfred 快捷发送消息 & 打开聊天窗口
+ 
 ### [v1.5.1 (2018-03-03)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.5.1)
 
 * 新增语音远程控制 mac
