@@ -7,6 +7,8 @@
 
 ![微信小助手.png](./Other/ScreenShots/wechatplugin.png)
 
+**相对应的 alfred workflow 请戳→_→ [wechat-alfred-workflow](https://github.com/TKkk-iOSer/wechat-alfred-workflow)**   
+
 **iOS版本请戳→_→ [WeChatPlugin-iOS](https://github.com/TKkk-iOSer/WeChatPlugin-iOS)**
 
 ~~如何制作 mac OS 插件，请参考[我的博客](http://www.tkkk.fun/2017/04/21/macOS%E9%80%86%E5%90%91-%E5%BE%AE%E4%BF%A1%E5%B0%8F%E5%8A%A9%E6%89%8B/)~~
