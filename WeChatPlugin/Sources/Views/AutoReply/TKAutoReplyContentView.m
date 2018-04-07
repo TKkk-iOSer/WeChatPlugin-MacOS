@@ -17,6 +17,8 @@
 @property (nonatomic, strong) NSButton *enableGroupReplyBtn;
 @property (nonatomic, strong) NSButton *enableSingleReplyBtn;
 @property (nonatomic, strong) NSButton *enableRegexBtn;
+@property (nonatomic, strong) NSTextField *delayField;
+@property (nonatomic, strong) NSButton *enableDelayBtn;
 
 @end
 
@@ -50,6 +52,28 @@
         btn.frame = NSMakeRect(200, 40, 400, 20);
         
         btn;
+    });
+    
+    self.enableDelayBtn = ({
+        NSButton *btn = [NSButton tk_checkboxWithTitle:@"延迟发送" target:self action:@selector(clickEnableDelayBtn:)];
+        btn.frame = NSMakeRect(200, 15, 72, 20);
+        
+        btn;
+    });
+    
+    self.delayField = ({
+        NSTextField *textField = [[NSTextField alloc] init];
+        textField.frame = NSMakeRect(CGRectGetMaxX(self.enableDelayBtn.frame), 15, 60, 20);
+        textField.placeholderString = @"秒";
+        textField.delegate = self;
+        textField.alignment = NSTextAlignmentRight;
+        NSNumberFormatter * formater = [[NSNumberFormatter alloc] init];
+        formater.numberStyle = NSNumberFormatterDecimalStyle;
+        formater.minimum = @(0);
+        formater.maximum = @(999);
+        textField.cell.formatter = formater;
+        
+        textField;
     });
     
     self.autoReplyContentField = ({
@@ -90,7 +114,9 @@
                         self.autoReplyContentField,
                         self.autoReplyLabel,
                         self.keywordTextField,
-                        self.keywordLabel]];
+                        self.keywordLabel,
+                        self.delayField,
+                        self.enableDelayBtn]];
 }
 
 - (void)clickEnableRegexBtn:(NSButton *)btn {
@@ -118,6 +144,10 @@
     if (self.endEdit) self.endEdit();
 }
 
+- (void)clickEnableDelayBtn:(NSButton *)btn {
+    self.model.enableDelay = btn.state;
+}
+
 - (void)viewDidMoveToSuperview {
     [super viewDidMoveToSuperview];
     self.layer.backgroundColor = [kBG2 CGColor];
@@ -135,6 +165,8 @@
     self.enableGroupReplyBtn.state = model.enableGroupReply;
     self.enableSingleReplyBtn.state = model.enableSingleReply;
     self.enableRegexBtn.state = model.enableRegex;
+    self.enableDelayBtn.state = model.enableDelay;
+    self.delayField.stringValue = [NSString stringWithFormat:@"%ld",model.delayTime];
 }
 
 - (void)controlTextDidEndEditing:(NSNotification *)notification {
@@ -147,6 +179,8 @@
         self.model.keyword = self.keywordTextField.stringValue;
     } else if (control == self.autoReplyContentField) {
         self.model.replyContent = self.autoReplyContentField.stringValue;
+    } else if (control == self.delayField) {
+        self.model.delayTime = [self.delayField.stringValue integerValue];
     }
 }
 

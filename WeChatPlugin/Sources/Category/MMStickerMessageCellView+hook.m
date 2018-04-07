@@ -36,8 +36,12 @@
 - (void)contextMenuExport {
     MMStickerMessageCellView *currentCellView = (MMStickerMessageCellView *)self;
     MMMessageTableItem *item = currentCellView.messageTableItem;
+    if (!item.message || !item.message.m_nsEmoticonMD5) {
+        return;
+    }
     EmoticonMgr *emoticonMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("EmoticonMgr")];
     NSData *imageData = [emoticonMgr getEmotionDataWithMD5:item.message.m_nsEmoticonMD5];
+    if (!imageData) return;
     
     NSSavePanel *savePanel = ({
         NSSavePanel *panel = [NSSavePanel savePanel];
@@ -60,8 +64,13 @@
 - (void)hook_contextMenuCopy {
     if ([self.className isEqualToString:@"MMStickerMessageCellView"]) {
         MMMessageTableItem *item = [self valueForKey:@"messageTableItem"];
+        if (!item.message || !item.message.m_nsEmoticonMD5) {
+            return;
+        }
         EmoticonMgr *emoticonMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("EmoticonMgr")];
         NSData *imageData = [emoticonMgr getEmotionDataWithMD5:item.message.m_nsEmoticonMD5];
+        if (!imageData) return;
+
         NSString *imageType = [NSObject getTypeForImageData:imageData];
         NSString *imageName = [NSString stringWithFormat:@"temp_paste_image_%@.%@", item.message.m_nsEmoticonMD5, imageType];
         NSString *tempImageFilePath = [NSTemporaryDirectory() stringByAppendingString:imageName];

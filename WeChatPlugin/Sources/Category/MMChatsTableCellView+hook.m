@@ -103,7 +103,7 @@
     
     MMSessionMgr *sessionMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMSessionMgr")];
     
-    if (index == -1) {
+    if (index == -1 && sessionInfo.m_nsUserName) {
         TKIgnoreSessonModel *model = [[TKIgnoreSessonModel alloc] init];
         model.userName = sessionInfo.m_nsUserName;
         model.selfContact = currentUserName;
@@ -117,7 +117,7 @@
         } 
     } else {
         [ignoreSessions removeObjectAtIndex:index];
-        if (sessionInfo.m_bShowUnReadAsRedDot) {
+        if (sessionInfo.m_bShowUnReadAsRedDot && sessionInfo.m_nsUserName) {
             [sessionMgr UnmuteSessionByUserName:sessionInfo.m_nsUserName];
         }
     }
@@ -157,7 +157,7 @@
         [ignoreSessions removeObjectAtIndex:index];
         MMSessionMgr *sessionMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMSessionMgr")];
         
-        if (sessionInfo.m_bShowUnReadAsRedDot) {
+        if (sessionInfo.m_bShowUnReadAsRedDot && sessionInfo.m_nsUserName) {
             [sessionMgr UnmuteSessionByUserName:sessionInfo.m_nsUserName];
         }
         [sessionMgr sortSessions];
@@ -178,7 +178,7 @@
                 [sessionMgr deleteSessionWithoutSyncToServerWithUserName:sessionUserName];
             }
         }];
-        
+        [[TKWeChatPluginConfig sharedConfig] setMultipleSelectionEnable:NO];
         WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
         [wechat.chatsViewController.tableView reloadData];
     } else {
