@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>FMWK</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.6</string>
+	<string>1.6.1</string>
 	<key>CFBundleSupportedPlatforms</key>
 	<array>
 		<string>MacOSX</string>
@@ -41,7 +41,7 @@
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2017年 tk. All rights reserved.</string>
 	<key>versionInfo</key>
-	<string>👉 v1.6 (2018-03-18)：\n新增 Alfred 快捷发消息 &amp; 打开聊天窗口\n\n之前版本更新内容:\n👉 (v1.5.1) ：\n👉🏻  新增语音远程控制 mac\n👉🏼  修复快捷回复后消息未读数未更新的问题\n👉🏽  优化防撤回提醒 (显示撤回人昵称 &amp; 消息类型) \n\n👉 (v1.5.0):\n👉🏻  新增自动登录开关 \n👉🏼  新增小助手检测更新 \n👉🏽  新增通知中心快捷回复 \n👉🏾  新增表情包复制 &amp; 存储 \n👉🏿  自动回复 &amp; 远程控制设置存储到本地 \n\n👉🏻  优化防撤回提醒。 \n👉🏼  新增自动登录开关。 \n👉🏽  新增表情复制 &amp; 存储。 \n👉🏾   新增通知中心快捷回复。\n👉🏿  自动回复 &amp; 远程控制设置存储到本地。\n\n
+	<string>v1.6.1 (2018-04-06)：\n👉🏻  自动回复新增延迟回复\n👉🏼  调整置顶模式快捷键\n👉🏽  修复bug &amp; 优化代码\n👉🏾  更新 README.md 文档 \n\n之前版本主要更新内容:\n👉 新增 Alfred 快捷发消息 &amp; 打开聊天窗口\n👉🏻  新增语音远程控制 mac\n👉🏼  优化防撤回提醒 (显示撤回人昵称 &amp; 消息类型)\n👉🏽  新增自动登录开关  \n👉🏾  新增通知中心快捷回复 \n👉🏿  新增表情包复制 &amp; 存储 \n
 </string>
 </dict>
 </plist>
