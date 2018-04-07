@@ -6,10 +6,10 @@
 
 # 微信小助手 v1.6.1 
 
-[ [功能](#功能) &bull; [更新日志](#更新日志) &bull; [Demo演示](#Demo演示) &bull; [使用](#使用) &bull; [安装](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/blob/master/Install.md) &bull; [卸载](#卸载) &bull; [TODO](#TODO) &bull; [Other](#Other) ]
+[ [功能](#功能) &bull; [更新日志](#更新日志) &bull; [Demo演示](#demo演示) &bull; [使用](#使用) &bull; [安装](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/blob/master/Install.md) &bull; [卸载](#卸载) &bull; [TODO](#todo) &bull; [Other](#other) ]
 
 其他插件：  
-[ [wechat-alfred-workflow](https://github.com/TKkk-iOSer/wechat-alfred-workflow) &bull; [QQ 版本](https://github.com/TKkk-iOSer/QQPlugin-macOS) &bull; [iOS 版本](https://github.com/TKkk-iOSer/WeChatPlugin-iOS)]
+[ [wechat-alfred-workflow](https://github.com/TKkk-iOSer/wechat-alfred-workflow) &bull; [QQ 版本](https://github.com/TKkk-iOSer/QQPlugin-macOS) &bull; [iOS 版本](https://github.com/TKkk-iOSer/WeChatPlugin-iOS) ]
 
 ---
 
@@ -132,7 +132,7 @@
 
 打开`应用程序-实用工具-Terminal(终端)`，执行以下命令并根据提示输入密码即可。
 
-`cd ~/Downloads && git clone https://github.com/TKkk-iOSer/WeChatPlugin-MacOS.git --depth=1 && ./WeChatPlugin-MacOS/Other/Install.sh`
+`cd ~/Downloads && rm -rf WeChatPlugin-MacOS && git clone https://github.com/TKkk-iOSer/WeChatPlugin-MacOS.git --depth=1 && ./WeChatPlugin-MacOS/Other/Install.sh`
 
 **1. 普通安装**
 
