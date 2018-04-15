@@ -23,7 +23,7 @@ static NSString * const kRemoteControlAppleScript = @"osascript /Applications/We
 
 + (void)executeRemoteControlCommandWithVoiceMsg:(NSString *)msg {
     NSString *currentUserName = [objc_getClass("CUtility") GetCurrentUserName];
-    NSString *callBack = [NSString stringWithFormat:@"小助手收到一条语音消息，转文字后👇👇👇：\n\n\n%@",msg];
+    NSString *callBack = [NSString stringWithFormat:@"%@\n\n\n%@", TKLocalizedString(@"assistant.remoteControl.voiceRecall"), msg];
     MessageService *service = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
     [service SendTextMessage:currentUserName toUsrName:currentUserName msgText:callBack atUserList:nil];
     
@@ -39,7 +39,7 @@ static NSString * const kRemoteControlAppleScript = @"osascript /Applications/We
     [remoteControlModels enumerateObjectsUsingBlock:^(NSArray *subModels, NSUInteger index, BOOL * _Nonnull stop) {
         [subModels enumerateObjectsUsingBlock:^(TKRemoteControlModel *model, NSUInteger idx, BOOL * _Nonnull subStop) {
             if ([self sholdExecuteRemoteControlWithModel:model msg:msg msgType:type]) {
-                if ([model.function isEqualToString:@"屏幕保护"] || [model.function isEqualToString:@"锁屏"]) {
+                if ([model.function isEqualToString:@"Assistant.Directive.ScreenSave"] || [model.function isEqualToString:@"Assistant.Directive.LockScreen"]) {
                     //      屏幕保护 & 锁屏 通过 Shell 命令来执行即可
                     [self executeShellCommand:model.executeCommand];
                 } else {
@@ -48,14 +48,14 @@ static NSString * const kRemoteControlAppleScript = @"osascript /Applications/We
                     [self executeShellCommand:command];
                     //      bug: 有些程序在第一次时会无法关闭，需要再次关闭
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                        if ([model.function isEqualToString:@"退出所有程序"]) {
+                        if ([model.function isEqualToString:@"Assistant.Directive.KillAll"]) {
                             NSString *command = [NSString stringWithFormat:@"%@ %@",kRemoteControlAppleScript, model.executeCommand];
                             [self executeShellCommand:command];
                         }
                     });
                 }
                 NSString *currentUserName = [objc_getClass("CUtility") GetCurrentUserName];
-                NSString *callBack = [NSString stringWithFormat:@"小助手收到一条指令：%@",model.function];
+                NSString *callBack = [NSString stringWithFormat:@"%@%@", TKLocalizedString(@"assistant.remoteControl.recall"), model.function];
                 MessageService *service = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
                 [service SendTextMessage:currentUserName toUsrName:currentUserName msgText:callBack atUserList:nil];
                 [service ClearUnRead:currentUserName FromID:0 ToID:0];
@@ -91,25 +91,25 @@ static NSString * const kRemoteControlAppleScript = @"osascript /Applications/We
 }
 
 + (NSString *)remoteControlCommandsString {
-    NSMutableString *replyContent = [NSMutableString stringWithFormat:@"远程控制指令：\n(功能-指令-是否开启)\n\n"];
+    NSMutableString *replyContent = [NSMutableString stringWithString:TKLocalizedString(@"assistant.remoteControl.listTip")];
 
     NSArray *remoteControlModels = [TKWeChatPluginConfig sharedConfig].remoteControlModels;
     [remoteControlModels enumerateObjectsUsingBlock:^(NSArray *subModels, NSUInteger index, BOOL * _Nonnull stop) {
         switch (index) {
             case 0:
-                [replyContent appendString:@"macbook控制:\n"];
+                [replyContent appendFormat:@"%@:\n",TKLocalizedString(@"assistant.remoteControl.mac")];
                 break;
             case 1:
-                [replyContent appendString:@"app控制:\n"];
+                [replyContent appendFormat:@"%@:\n",TKLocalizedString(@"assistant.remoteControl.app")];
                 break;
             case 2:
-                [replyContent appendString:@"网易云音乐控制:\n"];
+                [replyContent appendFormat:@"%@:\n",TKLocalizedString(@"assistant.remoteControl.neteaseMusic")];
                 break;
             default:
                 break;
         }
         [subModels enumerateObjectsUsingBlock:^(TKRemoteControlModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
-            [replyContent appendFormat:@"%@-%@-%@\n", model.function, model.keyword, model.enable ? @"开启":@"关闭"];
+            [replyContent appendFormat:@"%@-%@-%@\n", model.function, model.keyword, model.enable ? TKLocalizedString(@"assistant.remoteControl.open") : TKLocalizedString(@"assistant.remoteControl.close")];
         }];
         [replyContent appendString:@"\n"];
     }];

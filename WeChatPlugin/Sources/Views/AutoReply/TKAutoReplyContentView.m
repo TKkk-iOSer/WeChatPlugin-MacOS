@@ -7,6 +7,7 @@
 //
 
 #import "TKAutoReplyContentView.h"
+#import "WeChatPlugin.h"
 
 @interface TKAutoReplyContentView () <NSTextFieldDelegate>
 
@@ -19,6 +20,8 @@
 @property (nonatomic, strong) NSButton *enableRegexBtn;
 @property (nonatomic, strong) NSTextField *delayField;
 @property (nonatomic, strong) NSButton *enableDelayBtn;
+@property (nonatomic, strong) NSButton *enableSpecificReplyBtn;
+@property (nonatomic, strong) NSButton *selectSessionButton;
 
 @end
 
@@ -33,38 +36,53 @@
 }
 
 - (void)initSubviews {
+    self.enableSpecificReplyBtn = ({
+        NSButton *btn = [NSButton tk_checkboxWithTitle:TKLocalizedString(@"assistant.autoReply.enableSpecific") target:self action:@selector(clickEnableSpecificReplyBtn:)];
+        btn.frame = NSMakeRect(20, 0, 400, 20);
+        
+        btn;
+    });
+
+    self.selectSessionButton = ({
+        NSButton *btn = [NSButton tk_buttonWithTitle:TKLocalizedString(@"assistant.autoReply.selectSpecific") target:self action:@selector(clickSelectSessionButton:)];
+        btn.frame = NSMakeRect(200, 0, 150, 20);
+        btn.bezelStyle = NSBezelStyleTexturedRounded;
+
+        btn;
+    });
+
     self.enableRegexBtn = ({
-        NSButton *btn = [NSButton tk_checkboxWithTitle:@"开启正则匹配" target:self action:@selector(clickEnableRegexBtn:)];
-        btn.frame = NSMakeRect(20, 15, 400, 20);
+        NSButton *btn = [NSButton tk_checkboxWithTitle:TKLocalizedString(@"assistant.autoReply.enableRegEx") target:self action:@selector(clickEnableRegexBtn:)];
+        btn.frame = NSMakeRect(20, 25, 400, 20);
         
         btn;
     });
     
     self.enableGroupReplyBtn = ({
-        NSButton *btn = [NSButton tk_checkboxWithTitle:@"开启群聊自动回复" target:self action:@selector(clickEnableGroupBtn:)];
-        btn.frame = NSMakeRect(20, 40, 400, 20);
+        NSButton *btn = [NSButton tk_checkboxWithTitle:TKLocalizedString(@"assistant.autoReply.enableGroup") target:self action:@selector(clickEnableGroupBtn:)];
+        btn.frame = NSMakeRect(20, 50, 400, 20);
         
         btn;
     });
     
     self.enableSingleReplyBtn = ({
-        NSButton *btn = [NSButton tk_checkboxWithTitle:@"开启私聊自动回复" target:self action:@selector(clickEnableSingleBtn:)];
-        btn.frame = NSMakeRect(200, 40, 400, 20);
+        NSButton *btn = [NSButton tk_checkboxWithTitle:TKLocalizedString(@"assistant.autoReply.enableSingle") target:self action:@selector(clickEnableSingleBtn:)];
+        btn.frame = NSMakeRect(200, 50, 400, 20);
         
         btn;
     });
     
     self.enableDelayBtn = ({
-        NSButton *btn = [NSButton tk_checkboxWithTitle:@"延迟发送" target:self action:@selector(clickEnableDelayBtn:)];
-        btn.frame = NSMakeRect(200, 15, 72, 20);
+        NSButton *btn = [NSButton tk_checkboxWithTitle:TKLocalizedString(@"assistant.autoReply.delay") target:self action:@selector(clickEnableDelayBtn:)];
+        btn.frame = NSMakeRect(200, 25, 85, 20);
         
         btn;
     });
     
     self.delayField = ({
         NSTextField *textField = [[NSTextField alloc] init];
-        textField.frame = NSMakeRect(CGRectGetMaxX(self.enableDelayBtn.frame), 15, 60, 20);
-        textField.placeholderString = @"秒";
+        textField.frame = NSMakeRect(CGRectGetMaxX(self.enableDelayBtn.frame), 25, 60, 20);
+        textField.placeholderString = TKLocalizedString(@"assistant.autoReply.timeUnit");
         textField.delegate = self;
         textField.alignment = NSTextAlignmentRight;
         NSNumberFormatter * formater = [[NSNumberFormatter alloc] init];
@@ -75,35 +93,37 @@
         
         textField;
     });
-    
+
     self.autoReplyContentField = ({
         NSTextField *textField = [[NSTextField alloc] init];
-        textField.frame = NSMakeRect(20, 70, 350, 175);
-        textField.placeholderString = @"请输入自动回复的内容（‘|’ 为随机回复其中任一内容）";
+        textField.frame = NSMakeRect(20, 80, 350, 175);
+        textField.placeholderString = TKLocalizedString(@"assistant.autoReply.contentPlaceholder");
         textField.delegate = self;
         
         textField;
     });
     
     self.autoReplyLabel = ({
-        NSTextField *label = [NSTextField tk_labelWithString:@"自动回复："];
-        label.frame = NSMakeRect(20, 250, 350, 20);
+        NSString *text = [NSString stringWithFormat:@"%@: ",TKLocalizedString(@"assistant.autoReply.content")];
+        NSTextField *label = [NSTextField tk_labelWithString:text];
+        label.frame = NSMakeRect(20, 260, 350, 20);
         
         label;
     });
     
     self.keywordTextField = ({
         NSTextField *textField = [[NSTextField alloc] init];
-        textField.frame = NSMakeRect(20, 290, 350, 50);
-        textField.placeholderString = @"请输入关键字（ ‘*’ 为任何消息都回复，‘|’ 为匹配多个关键字）";
+        textField.frame = NSMakeRect(20, 300, 350, 50);
+        textField.placeholderString = TKLocalizedString(@"assistant.autoReply.keywordPlaceholder");
         textField.delegate = self;
         
         textField;
     });
     
     self.keywordLabel = ({
-        NSTextField *label = [NSTextField tk_labelWithString:@"关键字："];
-        label.frame = NSMakeRect(20, 345, 350, 20);
+         NSString *text = [NSString stringWithFormat:@"%@: ",TKLocalizedString(@"assistant.autoReply.keyword")];
+        NSTextField *label = [NSTextField tk_labelWithString:text];
+        label.frame = NSMakeRect(20, 355, 350, 20);
         
         label;
     });
@@ -116,7 +136,23 @@
                         self.keywordTextField,
                         self.keywordLabel,
                         self.delayField,
-                        self.enableDelayBtn]];
+                        self.enableDelayBtn,
+                        self.enableSpecificReplyBtn,
+                        self.selectSessionButton]];
+}
+
+- (void)clickEnableSpecificReplyBtn:(NSButton *)btn {
+    self.selectSessionButton.hidden = !btn.state;
+    self.enableGroupReplyBtn.hidden = btn.state;
+    self.enableSingleReplyBtn.hidden = btn.state;
+    if (btn.state) {
+        [self selectSessionAction];
+    }
+    self.model.enableSpecificReply = btn.state;
+}
+
+- (void)clickSelectSessionButton:(NSButton *)btn {
+    [self selectSessionAction];
 }
 
 - (void)clickEnableRegexBtn:(NSButton *)btn {
@@ -167,6 +203,31 @@
     self.enableRegexBtn.state = model.enableRegex;
     self.enableDelayBtn.state = model.enableDelay;
     self.delayField.stringValue = [NSString stringWithFormat:@"%ld",model.delayTime];
+    self.enableSpecificReplyBtn.state = model.enableSpecificReply;
+    
+    self.selectSessionButton.hidden = !model.enableSpecificReply;
+    self.enableGroupReplyBtn.hidden = model.enableSpecificReply;
+    self.enableSingleReplyBtn.hidden = model.enableSpecificReply;
+}
+
+- (void)selectSessionAction {
+    MMSessionPickerWindow *picker = [objc_getClass("MMSessionPickerWindow") shareInstance];
+    [picker setType:1];
+    [picker setShowsGroupChats:0x1];
+    [picker setShowsOtherNonhumanChats:0];
+    [picker setShowsOfficialAccounts:0];
+    MMSessionPickerLogic *logic = [picker.listViewController valueForKey:@"m_logic"];
+    NSMutableOrderedSet *orderSet = [logic valueForKey:@"_selectedUserNamesSet"];
+
+    [orderSet addObjectsFromArray:self.model.specificContacts];
+    [picker.choosenViewController setValue:self.model.specificContacts forKey:@"selectedUserNames"];
+    [picker beginSheetForWindow:self.window completionHandler:^(NSOrderedSet *a1) {
+        NSMutableArray *array = [NSMutableArray array];
+        [a1 enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [array addObject:obj];
+        }];
+        self.model.specificContacts = [array copy];
+    }];
 }
 
 - (void)controlTextDidEndEditing:(NSNotification *)notification {

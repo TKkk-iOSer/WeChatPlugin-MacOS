@@ -10,6 +10,7 @@
 #import "TKRemoteControlModel.h"
 #import "TKAutoReplyModel.h"
 #import "TKIgnoreSessonModel.h"
+#import "WeChatPlugin.h"
 
 static NSString * const kTKPreventRevokeEnableKey = @"kTKPreventRevokeEnableKey";
 static NSString * const kTKAutoAuthEnableKey = @"kTKAutoAuthEnableKey";
@@ -17,6 +18,7 @@ static NSString * const kTKAutoLoginEnableKey = @"kTKAutoLoginEnableKey";
 static NSString * const kTKOnTopKey = @"kTKOnTopKey";
 static NSString * const kTKForbidCheckVersionKey = @"kTKForbidCheckVersionKey";
 static NSString * const kTKWeChatResourcesPath = @"/Applications/WeChat.app/Contents/MacOS/WeChatPlugin.framework/Resources/";
+static NSString * const kTKWeChatRemotePlistPath = @"https://raw.githubusercontent.com/TKkk-iOSer/WeChatPlugin-MacOS/master/Other/Products/Debug/WeChatPlugin.framework/Resources/Info.plist";
 
 @interface TKWeChatPluginConfig ()
 
@@ -203,7 +205,7 @@ static NSString * const kTKWeChatResourcesPath = @"/Applications/WeChat.app/Cont
 
 - (NSDictionary *)romoteInfoPlist {
     if (!_romoteInfoPlist) {
-        NSURL *url = [NSURL URLWithString:@"https://raw.githubusercontent.com/TKkk-iOSer/WeChatPlugin-MacOS/master/Other/Products/Debug/WeChatPlugin.framework/Resources/Info.plist"];
+        NSURL *url = [NSURL URLWithString:kTKWeChatRemotePlistPath];
         _romoteInfoPlist = [NSDictionary dictionaryWithContentsOfURL:url];
     }
     return _romoteInfoPlist;
@@ -224,7 +226,10 @@ static NSString * const kTKWeChatResourcesPath = @"/Applications/WeChat.app/Cont
 
 - (NSString *)getSandboxFilePathWithPlistName:(NSString *)plistName {
     NSFileManager *manager = [NSFileManager defaultManager];
-    NSString *wechatPluginDirectory = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:@"TKWeChatPlugin"];
+    NSString *currentUserName = [objc_getClass("CUtility") GetCurrentUserName];
+    
+    NSString *documentDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+    NSString *wechatPluginDirectory = [documentDirectory stringByAppendingFormat:@"/TKWeChatPlugin/%@/",currentUserName];
     NSString *plistFilePath = [wechatPluginDirectory stringByAppendingPathComponent:plistName];
     if ([manager fileExistsAtPath:plistFilePath]) {
         return plistFilePath;

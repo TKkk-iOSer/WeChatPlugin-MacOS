@@ -125,13 +125,13 @@
     if (result.searchType == 2) {
         [result.groupMembersResult.membersSearchReults enumerateObjectsUsingBlock:^(MMComplexContactSearchResult * _Nonnull contact, NSUInteger idx, BOOL * _Nonnull stop) {
             NSString *matchStr =[self matchWithContactResult:contact];
-            subTitle = [NSString stringWithFormat:@"成员：%@(%@)", contact.contact.m_nsNickName, matchStr];
+            subTitle = [NSString stringWithFormat:@"%@%@(%@)", TKLocalizedString(@"assistant.search.member"), contact.contact.m_nsNickName, matchStr];
         }];
     }
     
     NSString *imgPath = [self cacheAvatarPathFromHeadImgUrl:groupContact.m_nsHeadImgUrl];
     
-    return @{@"title": [NSString stringWithFormat:@"[群聊]%@",groupContact.getGroupDisplayName],
+    return @{@"title": [NSString stringWithFormat:@"%@%@", TKLocalizedString(@"assistant.search.group"), groupContact.getGroupDisplayName],
              @"subTitle": subTitle,
              @"icon": imgPath,
              @"userId": groupContact.m_nsUsrName
@@ -144,28 +144,28 @@
     
     switch (type) {     //     1：备注 3：昵称 4：微信号 7：市 8：省份 9：国家
         case 1:
-            matchStr = [NSString stringWithFormat:@"备注：%@",result.fieldValue];
+            matchStr = WXLocalizedString(@"Search.Remark");
             break;
         case 3:
-            matchStr = [NSString stringWithFormat:@"昵称：%@",result.fieldValue];
+            matchStr = WXLocalizedString(@"Search.Nickname");
             break;
         case 4:
-            matchStr = [NSString stringWithFormat:@"微信号：%@",result.fieldValue];
+            matchStr = WXLocalizedString(@"Search.Username");
             break;
         case 7:
-            matchStr = [NSString stringWithFormat:@"城市：%@",result.fieldValue];
+            matchStr = WXLocalizedString(@"Search.City");
             break;
         case 8:
-            matchStr = [NSString stringWithFormat:@"省份：%@",result.fieldValue];
+            matchStr = WXLocalizedString(@"Search.Province");
             break;
         case 9:
-            matchStr = [NSString stringWithFormat:@"国家：%@",result.fieldValue];
+            matchStr = WXLocalizedString(@"Search.Country");
             break;
         default:
-            matchStr = [NSString stringWithFormat:@"包含：%@",result.fieldValue];
+            matchStr = WXLocalizedString(@"Search.Include");
             break;
     }
-    
+    matchStr = [matchStr stringByAppendingString:result.fieldValue];
     return matchStr;
 }
 
@@ -193,7 +193,7 @@
     if ([imgUrl respondsToSelector:@selector(md5String)]) {
         NSString *imgMd5Str = [imgUrl performSelector:@selector(md5String)];
         MMAvatarService *avatarService = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMAvatarService")];
-        imgPath = [NSString stringWithFormat:@"%@/%@",[avatarService avatarCachePath], imgMd5Str];
+        imgPath = [NSString stringWithFormat:@"%@%@",[avatarService avatarCachePath], imgMd5Str];
     }
     return imgPath;
 }

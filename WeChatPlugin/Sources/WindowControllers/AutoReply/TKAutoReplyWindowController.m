@@ -62,7 +62,7 @@
         tableView.delegate = self;
         tableView.dataSource = self;
         NSTableColumn *column = [[NSTableColumn alloc] init];
-        column.title = @"自动回复列表";
+        column.title = TKLocalizedString(@"assistant.autoReply.list");
         column.width = 200;
         [tableView addTableColumn:column];
         
@@ -96,9 +96,9 @@
     
     self.alert = ({
         NSAlert *alert = [[NSAlert alloc] init];
-        [alert addButtonWithTitle:@"确定"];
-        [alert setMessageText:@"您还有一条自动回复设置未完成"];
-        [alert setInformativeText:@"请完善未完成的自动回复设置"];
+        [alert addButtonWithTitle:TKLocalizedString(@"assistant.autoReply.alert.confirm")];
+        [alert setMessageText:TKLocalizedString(@"assistant.autoReply.alert.title")];
+        [alert setInformativeText:TKLocalizedString(@"assistant.autoReply.alert.content")];
         
         alert;
     });
@@ -112,7 +112,7 @@
 }
 
 - (void)setup {
-    self.window.title = @"自动回复设置";
+    self.window.title = TKLocalizedString(@"assistant.autoReply.title");
     self.window.contentView.layer.backgroundColor = [kBG1 CGColor];
     [self.window.contentView.layer setNeedsDisplay];
     
@@ -127,15 +127,23 @@
             [weakSelf.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:weakSelf.lastSelectIndex] byExtendingSelection:YES];
         }
     };
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowShouldClosed:) name:NSWindowWillCloseNotification object:nil];
 }
 
 /**
  关闭窗口事件
  
  */
-- (BOOL)windowShouldClose:(id)sender {
+- (void)windowShouldClosed:(NSNotification *)notification {
+    if (notification.object != self.window) {
+        return;
+    }
     [[TKWeChatPluginConfig sharedConfig] saveAutoReplyModels];
-    return YES;
+
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - addButton & reduceButton ClickAction

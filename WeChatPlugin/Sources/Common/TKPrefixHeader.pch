@@ -10,10 +10,12 @@
 #define TKPrefixHeader_pch
 
 #ifdef __OBJC__
-#import "Color.h"
+#import "ColorConstant.h"
+#import "DefineConstant.h"
 #import "NSView+Action.h"
 #import "NSButton+Action.h"
 #import "NSTextField+Action.h"
+#import "NSMenu+Action.h"
 #endif
 
 #endif /* TKPrefixHeader_pch */

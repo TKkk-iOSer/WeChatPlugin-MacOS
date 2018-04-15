@@ -9,7 +9,7 @@
 			<key>keyword</key>
 			<string>ScreenSave</string>
 			<key>function</key>
-			<string>屏幕保护</string>
+			<string>Assistant.Directive.ScreenSave</string>
 			<key>enable</key>
 			<true/>
 		</dict>
@@ -19,7 +19,7 @@
 			<key>keyword</key>
 			<string>LockScreen</string>
 			<key>function</key>
-			<string>锁屏</string>
+			<string>Assistant.Directive.LockScreen</string>
 			<key>enable</key>
 			<true/>
 		</dict>
@@ -29,7 +29,7 @@
 			<key>keyword</key>
 			<string>Sleep</string>
 			<key>function</key>
-			<string>休眠</string>
+			<string>Assistant.Directive.Sleep</string>
 			<key>enable</key>
 			<true/>
 		</dict>
@@ -39,7 +39,7 @@
 			<key>keyword</key>
 			<string>Shutdown</string>
 			<key>function</key>
-			<string>关机</string>
+			<string>Assistant.Directive.Shutdown</string>
 			<key>enable</key>
 			<true/>
 		</dict>
@@ -49,7 +49,7 @@
 			<key>keyword</key>
 			<string>Restart</string>
 			<key>function</key>
-			<string>重启</string>
+			<string>Assistant.Directive.Restart</string>
 			<key>enable</key>
 			<true/>
 		</dict>
@@ -59,7 +59,7 @@
 			<key>keyword</key>
 			<string>EmptyTrash</string>
 			<key>function</key>
-			<string>清空废纸篓</string>
+			<string>Assistant.Directive.EmptyTrash</string>
 			<key>enable</key>
 			<true/>
 		</dict>
@@ -71,7 +71,7 @@
 			<key>keyword</key>
 			<string>KillQQ</string>
 			<key>function</key>
-			<string>退出 QQ</string>
+			<string>Assistant.Directive.KillQQ</string>
 			<key>enable</key>
 			<true/>
 		</dict>
@@ -81,7 +81,7 @@
 			<key>keyword</key>
 			<string>KillWeChat</string>
 			<key>function</key>
-			<string>退出 WeChat</string>
+			<string>Assistant.Directive.KillWeChat</string>
 			<key>enable</key>
 			<true/>
 		</dict>
@@ -91,7 +91,7 @@
 			<key>keyword</key>
 			<string>KillChrome</string>
 			<key>function</key>
-			<string>退出 Chrome</string>
+			<string>Assistant.Directive.KillChrome</string>
 			<key>enable</key>
 			<true/>
 		</dict>
@@ -101,7 +101,17 @@
 			<key>keyword</key>
 			<string>KillSafari</string>
 			<key>function</key>
-			<string>退出 Safari</string>
+			<string>Assistant.Directive.KillSafari</string>
+			<key>enable</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>executeCommand</key>
+			<string>killFirefox</string>
+			<key>keyword</key>
+			<string>killFirefox</string>
+			<key>function</key>
+			<string>Assistant.Directive.KillFirefox</string>
 			<key>enable</key>
 			<true/>
 		</dict>
@@ -111,7 +121,7 @@
 			<key>keyword</key>
 			<string>KillAll</string>
 			<key>function</key>
-			<string>退出所有程序</string>
+			<string>Assistant.Directive.KillAll</string>
 			<key>enable</key>
 			<true/>
 		</dict>
@@ -123,7 +133,7 @@
 			<key>keyword</key>
 			<string>Toggle</string>
 			<key>function</key>
-			<string>播放/暂停</string>
+			<string>Assistant.Directive.Toggle</string>
 			<key>enable</key>
 			<true/>
 		</dict>
@@ -133,7 +143,7 @@
 			<key>keyword</key>
 			<string>Next</string>
 			<key>function</key>
-			<string>下一首</string>
+			<string>Assistant.Directive.Next</string>
 			<key>enable</key>
 			<true/>
 		</dict>
@@ -143,7 +153,7 @@
 			<key>keyword</key>
 			<string>Previous</string>
 			<key>function</key>
-			<string>上一首</string>
+			<string>Assistant.Directive.Previous</string>
 			<key>enable</key>
 			<true/>
 		</dict>
@@ -153,7 +163,7 @@
 			<key>keyword</key>
 			<string>VolumeUp</string>
 			<key>function</key>
-			<string>增大音量</string>
+			<string>Assistant.Directive.VolumeUp</string>
 			<key>enable</key>
 			<true/>
 		</dict>
@@ -163,7 +173,7 @@
 			<key>keyword</key>
 			<string>VolumeDown</string>
 			<key>function</key>
-			<string>减小音量</string>
+			<string>Assistant.Directive.VolumeDown</string>
 			<key>enable</key>
 			<true/>
 		</dict>
@@ -173,7 +183,7 @@
 			<key>keyword</key>
 			<string>LikeChange</string>
 			<key>function</key>
-			<string>喜欢/取消喜欢</string>
+			<string>Assistant.Directive.LikeChange</string>
 			<key>enable</key>
 			<true/>
 		</dict>

@@ -34,10 +34,10 @@
         
         btn;
     });
-    
+
     self.keywordLabel = ({
         NSTextField *label = [NSTextField tk_labelWithString:@""];
-        label.placeholderString = @"关键字";
+        label.placeholderString = TKLocalizedString(@"assistant.autoReply.keyword");
         [[label cell] setLineBreakMode:NSLineBreakByCharWrapping];
         [[label cell] setTruncatesLastVisibleLine:YES];
         label.font = [NSFont systemFontOfSize:10];
@@ -48,7 +48,7 @@
     
     self.replyContentLabel = ({
         NSTextField *label = [NSTextField tk_labelWithString:@""];
-        label.placeholderString = @"回复内容";
+        label.placeholderString = TKLocalizedString(@"assistant.autoReply.content");
         [[label cell] setLineBreakMode:NSLineBreakByCharWrapping];
         [[label cell] setTruncatesLastVisibleLine:YES];
         label.frame = NSMakeRect(30, 10, 160, 15);

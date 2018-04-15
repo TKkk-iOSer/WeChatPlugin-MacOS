@@ -9,8 +9,6 @@
 #import "TKVersionManager.h"
 #import "TKWeChatPluginConfig.h"
 
-static NSString * const kTKVersionStatusOldToast = @"当前小助手为最新版本，无需更新";
-
 @implementation TKVersionManager
 
 + (instancetype)shareManager {
