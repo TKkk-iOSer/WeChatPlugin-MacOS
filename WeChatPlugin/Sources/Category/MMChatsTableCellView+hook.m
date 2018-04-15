@@ -74,16 +74,23 @@
             *stop = YES;
         }
     }];
-    
-    NSString *itemString = isIgnore ? @"取消置底" : @"置底";
+
+    NSString *itemString = isIgnore ? TKLocalizedString(@"assistant.chat.unStickyBottom") : TKLocalizedString(@"assistant.chat.stickyBottom");
     NSMenuItem *preventRevokeItem = [[NSMenuItem alloc] initWithTitle:itemString action:@selector(contextMenuStickyBottom) keyEquivalent:@""];
     
     BOOL multipleSelectionEnable = [[TKWeChatPluginConfig sharedConfig] multipleSelectionEnable];
-    NSString *multipleSelectionString = multipleSelectionEnable ? @"取消多选" : @"多选";
+    NSString *multipleSelectionString = multipleSelectionEnable ? TKLocalizedString(@"assistant.chat.unMultiSelect") : TKLocalizedString(@"assistant.chat.multiSelect");
     NSMenuItem *multipleSelectionItem = [[NSMenuItem alloc] initWithTitle:multipleSelectionString action:@selector(contextMenuMutipleSelection) keyEquivalent:@""];
     
-    [arg1 insertItem:preventRevokeItem atIndex:1];
+    NSMenuItem *clearUnReadItem = [[NSMenuItem alloc] initWithTitle:TKLocalizedString(@"assistant.chat.readAll") action:@selector(contextMenuClearUnRead) keyEquivalent:@""];
+    
+    NSMenuItem *clearEmptySessionItem = [[NSMenuItem alloc] initWithTitle:TKLocalizedString(@"assistant.chat.clearEmpty") action:@selector(contextMenuClearEmptySession) keyEquivalent:@""];
+    
+    [arg1 addItem:[NSMenuItem separatorItem]];
+    [arg1 addItem:preventRevokeItem];
     [arg1 addItem:multipleSelectionItem];
+    [arg1 addItem:clearUnReadItem];
+    [arg1 addItem:clearEmptySessionItem];
     [self hook_menuWillOpen:arg1];
 }
 
@@ -134,6 +141,41 @@
     }
     
     [[TKWeChatPluginConfig sharedConfig] setMultipleSelectionEnable:!multipleSelectionEnable];
+}
+
+- (void)contextMenuClearUnRead {
+    MessageService *service = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
+    
+    MMSessionMgr *sessionMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMSessionMgr")];
+    NSMutableArray *arrSession = sessionMgr.m_arrSession;
+
+    [arrSession enumerateObjectsUsingBlock:^(MMSessionInfo *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [service ClearUnRead:obj.m_nsUserName FromID:0 ToID:0];
+        });
+    }];
+}
+
+- (void)contextMenuClearEmptySession {
+    MMSessionMgr *sessionMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMSessionMgr")];
+    NSMutableArray *arrSession = sessionMgr.m_arrSession;
+    MessageService *msgService = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
+    NSMutableArray *array = [NSMutableArray array];
+    
+    [arrSession enumerateObjectsUsingBlock:^(MMSessionInfo *sessionInfo, NSUInteger idx, BOOL * _Nonnull stop) {
+        BOOL hasEmplyMsgSession = ![msgService hasMsgInChat:sessionInfo.m_nsUserName];
+        WCContactData *contact = sessionInfo.m_packedInfo.m_contact;
+        if (![sessionInfo.m_nsUserName isEqualToString:@"brandsessionholder"] && ![contact isSelf] && hasEmplyMsgSession) {
+            [array addObject:sessionInfo];
+        }
+    }];
+    
+    while (array.count > 0) {
+        [array enumerateObjectsUsingBlock:^(MMSessionInfo *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [sessionMgr deleteSessionWithoutSyncToServerWithUserName:obj.m_nsUserName];
+            [array removeObject:obj];
+        }];
+    }
 }
 
 - (void)hook_contextMenuSticky:(id)arg1 {

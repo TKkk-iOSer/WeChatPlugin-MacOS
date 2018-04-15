@@ -12,25 +12,19 @@
 @implementation NSObject (MMStickerMessageCellView)
 
 + (void)hookMMStickerMessageCellView {
-    tk_hookMethod(objc_getClass("MMStickerMessageCellView"), @selector(allowCopy), [self class], @selector(hook_allowCopy));
-    tk_hookMethod(objc_getClass("MMStickerMessageCellView"), @selector(contextMenuCopy), [self class], @selector(hook_contextMenuCopy));
     tk_hookMethod(objc_getClass("MMStickerMessageCellView"), @selector(contextMenu), [self class], @selector(hook_contextMenu));
 }
 
 - (id)hook_contextMenu {
     NSMenu *menu = [self hook_contextMenu];
     if ([self.className isEqualToString:@"MMStickerMessageCellView"]) {
-        NSMenuItem *exportItem = [[NSMenuItem alloc] initWithTitle:@"存储…" action:@selector(contextMenuExport) keyEquivalent:@""];
-        [menu insertItem:exportItem atIndex:2];
+        NSMenuItem *copyItem = [[NSMenuItem alloc] initWithTitle:WXLocalizedString(@"Message.Menu.Copy") action:@selector(contextMenuCopyEmoji) keyEquivalent:@""];
+        NSMenuItem *exportItem = [[NSMenuItem alloc] initWithTitle:WXLocalizedString(@"Message.Menu.Export") action:@selector(contextMenuExport) keyEquivalent:@""];
+        [menu addItem:[NSMenuItem separatorItem]];
+        [menu addItem:copyItem];
+        [menu addItem:exportItem];
     }
     return menu;
-}
-
-- (BOOL)hook_allowCopy {
-    if ([self.className isEqualToString:@"MMStickerMessageCellView"]) {
-        return YES;
-    }
-    return [self hook_allowCopy];
 }
 
 - (void)contextMenuExport {
@@ -61,7 +55,7 @@
     }];
 }
 
-- (void)hook_contextMenuCopy {
+- (void)contextMenuCopyEmoji {
     if ([self.className isEqualToString:@"MMStickerMessageCellView"]) {
         MMMessageTableItem *item = [self valueForKey:@"messageTableItem"];
         if (!item.message || !item.message.m_nsEmoticonMD5) {
@@ -81,8 +75,6 @@
         [pasteboard clearContents];
         [pasteboard declareTypes:@[NSFilenamesPboardType] owner:nil];
         [pasteboard writeObjects:@[imageUrl]];
-    } else {
-        [self hook_contextMenuCopy];
     }
 }
 

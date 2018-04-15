@@ -1,0 +1,102 @@
+/*
+ Localizable.strings
+ WeChatPlugin
+ 
+ Created by TK on 2018/4/14.
+ Copyright © 2018年 tk. All rights reserved.
+ */
+
+
+//  MainMenu
+"assistant.menu.title" = "Assistant";
+"assistant.menu.revoke" = "Prevent Revoke";
+"assistant.menu.autoReply" = "Auto Reply";
+"assistant.menu.newWeChat" = "New WeChat";
+"assistant.menu.remoteControl" = "Remote Control";
+"assistant.menu.windowSticky" = "Sticky on Top";
+"assistant.menu.freeLogin" = "AutoAuth Login";
+"assistant.menu.updateAssistant" = "Update Assistant…";
+
+//  Prevent Revoke
+"assistant.revokeType.emoji" = "[Sticker]";
+"assistant.revokeType.image" = "[Photo]";
+"assistant.revokeType.video" = "[Video]";
+"assistant.revokeType.voice" = "[Voice]";
+"assistant.revokeType.other" = "[Unknown Message]";
+"assistant.revoke.otherMessage.tip" = "TK prevent a message recalled: ";
+"assistant.revoke.selfMessage.tip" = "You've recalled a message: ";
+
+//  AutoAuth
+"assistant.autoAuth.tip" = "AutoAuth Logging in…";
+"assistant.autoLogin.text" = "Auto Login";
+
+
+//  Context Menu
+"assistant.chat.stickyBottom" = "Sticky on Bottom";
+"assistant.chat.unStickyBottom" = "Unsticky on Bottom";
+"assistant.chat.multiSelect" = "Multiselect";
+"assistant.chat.unMultiSelect" = "UnMultiselect";
+"assistant.chat.readAll" = "Mark All As Read";
+"assistant.chat.clearEmpty" = "Clear All Empty Session";
+
+//  Remote Control
+"assistant.remoteControl.getList" = "Directive";
+"assistant.remoteControl.listTip" = "remote Control Directives: \n(function-directive-Switch)\n\n";
+"assistant.remoteControl.recall" = "Assistant got a directive: ";
+"assistant.remoteControl.voiceRecall" = "Assistant got a audio message, Convert to Text👇👇👇:";
+"assistant.remoteControl.mac" = "Macbook:";
+"assistant.remoteControl.app" = "APP:";
+"assistant.remoteControl.neteaseMusic" = "NeteaseMusic:";
+"assistant.remoteControl.open" = "On";
+"assistant.remoteControl.close" = "Off";
+"assistant.remoteControl.contentPlaceHodler" = "Please enter the keyword";
+
+//  Remote Control Directive
+"Assistant.Directive.ScreenSave" = "Screen Save";
+"Assistant.Directive.LockScreen" = "Lock Screen";
+"Assistant.Directive.Sleep" = "Sleep";
+"Assistant.Directive.Shutdown" = "Shut Down";
+"Assistant.Directive.Restart" = "Restart";
+"Assistant.Directive.EmptyTrash" = "Empty Trash";
+"Assistant.Directive.KillQQ" = "Kill QQ";
+"Assistant.Directive.KillWeChat" = "Kill WeChat";
+"Assistant.Directive.KillChrome" = "Kill Chrome";
+"Assistant.Directive.KillSafari" = "Kill Safari";
+"Assistant.Directive.KillFirefox" = "Kill Firefox";
+"Assistant.Directive.KillAll" = "Kill All App";
+"Assistant.Directive.Toggle" = "Play/Pause";
+"Assistant.Directive.Next" = "Next";
+"Assistant.Directive.Previous" = "Previous";
+"Assistant.Directive.VolumeUp" = "Increase Volume";
+"Assistant.Directive.VolumeDown" = "Decrease Volume";
+"Assistant.Directive.LikeChange" = "Like/Unlike";
+
+//  AutoAuth Setting
+"assistant.autoReply.title" = "Auto Reply Setting";
+"assistant.autoReply.enableSpecific" = "Enable Some Session Reply";
+"assistant.autoReply.selectSpecific" = "View Or Edit Session";
+"assistant.autoReply.enableRegEx" = "Enable RegEx";
+"assistant.autoReply.enableGroup" = "Enable Group Reply";
+"assistant.autoReply.enableSingle" = "Enable Single Reply";
+"assistant.autoReply.delay" = "Delay Send";
+"assistant.autoReply.timeUnit" = "Second";
+"assistant.autoReply.contentPlaceholder" = "Reply Content（‘|’ is random reply a content）";
+"assistant.autoReply.keywordPlaceholder" = "Keyword (‘*’ is All message can Reply，‘|’ is match multiple keyword）";
+"assistant.autoReply.keyword" = "Keyword";
+"assistant.autoReply.content" = "Reply Content";
+"assistant.autoReply.list" = "Auto Reply List";
+"assistant.autoReply.alert.confirm" = "OK";
+"assistant.autoReply.alert.title" = "Attention";   //
+"assistant.autoReply.alert.content" = "Please fill in keyword and reply content";
+
+//  Version Update
+"assistant.update.alret.cancle" = "Cancel";
+"assistant.update.alret.confirm" = "Github";
+"assistant.update.alret.title" = "Found a New Version！Main Contents:👇";
+"assistant.update.alret.latest" = "This is Latest Version！Main Contents:👇";
+"assistant.update.alret.forbid" = "Ignore";
+
+//  Alfred
+"assistant.search.member" = "Member: ";
+"assistant.search.group" = "[Group] ";
+

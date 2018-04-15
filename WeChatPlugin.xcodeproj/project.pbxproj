@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		520F2009205E1DF900A36B1E /* TKWebServerManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 520F2007205E1DF900A36B1E /* TKWebServerManager.h */; };
 		520F200A205E1DF900A36B1E /* TKWebServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 520F2008205E1DF900A36B1E /* TKWebServerManager.m */; };
+		521C49C320820662003902E7 /* TKRemoteControlWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 521C49C520820662003902E7 /* TKRemoteControlWindowController.xib */; };
+		521D75F92080E3670093C820 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 521D75FB2080E3670093C820 /* Localizable.strings */; };
+		52206B6A20836A230010C232 /* NSMenu+Action.h in Headers */ = {isa = PBXBuildFile; fileRef = 52206B6820836A230010C232 /* NSMenu+Action.h */; };
+		52206B6B20836A230010C232 /* NSMenu+Action.m in Sources */ = {isa = PBXBuildFile; fileRef = 52206B6920836A230010C232 /* NSMenu+Action.m */; };
 		522547CF1F4AE5A700226A2A /* NSView+Action.h in Headers */ = {isa = PBXBuildFile; fileRef = 522547CD1F4AE5A700226A2A /* NSView+Action.h */; };
 		522547D01F4AE5A700226A2A /* NSView+Action.m in Sources */ = {isa = PBXBuildFile; fileRef = 522547CE1F4AE5A700226A2A /* NSView+Action.m */; };
 		522547DE1F4C312A00226A2A /* TKAutoReplyWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 522547D71F4C312A00226A2A /* TKAutoReplyWindowController.h */; };
@@ -16,7 +20,6 @@
 		522547E01F4C312A00226A2A /* TKAutoReplyWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 522547D91F4C312A00226A2A /* TKAutoReplyWindowController.xib */; };
 		522547E11F4C312A00226A2A /* TKRemoteControlWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 522547DB1F4C312A00226A2A /* TKRemoteControlWindowController.h */; };
 		522547E21F4C312A00226A2A /* TKRemoteControlWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 522547DC1F4C312A00226A2A /* TKRemoteControlWindowController.m */; };
-		522547E31F4C312A00226A2A /* TKRemoteControlWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 522547DD1F4C312A00226A2A /* TKRemoteControlWindowController.xib */; };
 		5226D5CA2040FC3E0013C048 /* TKVersionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 5226D5C82040FC3E0013C048 /* TKVersionManager.h */; };
 		5226D5CB2040FC3E0013C048 /* TKVersionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5226D5C92040FC3E0013C048 /* TKVersionManager.m */; };
 		5228EABA1F70B59500D808CF /* NSButton+Action.h in Headers */ = {isa = PBXBuildFile; fileRef = 5228EAB81F70B59500D808CF /* NSButton+Action.h */; };
@@ -27,7 +30,7 @@
 		52475C2F1F6B993E00760E3E /* MMChatsTableCellView+hook.m in Sources */ = {isa = PBXBuildFile; fileRef = 52475C2D1F6B993E00760E3E /* MMChatsTableCellView+hook.m */; };
 		52475C321F6BA43800760E3E /* TKIgnoreSessonModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 52475C301F6BA43800760E3E /* TKIgnoreSessonModel.h */; };
 		52475C331F6BA43800760E3E /* TKIgnoreSessonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 52475C311F6BA43800760E3E /* TKIgnoreSessonModel.m */; };
-		526F4D7D1F4AAADA00E46004 /* Color.h in Headers */ = {isa = PBXBuildFile; fileRef = 526F4D791F4AAADA00E46004 /* Color.h */; };
+		526F4D7D1F4AAADA00E46004 /* ColorConstant.h in Headers */ = {isa = PBXBuildFile; fileRef = 526F4D791F4AAADA00E46004 /* ColorConstant.h */; };
 		526F4D801F4AAADA00E46004 /* TKPrefixHeader.pch in Headers */ = {isa = PBXBuildFile; fileRef = 526F4D7C1F4AAADA00E46004 /* TKPrefixHeader.pch */; };
 		526F4D831F4AAC1900E46004 /* TKAutoReplyModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 526F4D811F4AAC1900E46004 /* TKAutoReplyModel.h */; };
 		526F4D841F4AAC1900E46004 /* TKAutoReplyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 526F4D821F4AAC1900E46004 /* TKAutoReplyModel.m */; };
@@ -67,6 +70,12 @@
 		17F7A08DC0E3A0626801414D /* libPods-WeChatPlugin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WeChatPlugin.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		520F2007205E1DF900A36B1E /* TKWebServerManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKWebServerManager.h; sourceTree = "<group>"; };
 		520F2008205E1DF900A36B1E /* TKWebServerManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKWebServerManager.m; sourceTree = "<group>"; };
+		521C49C420820662003902E7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/TKRemoteControlWindowController.xib; sourceTree = "<group>"; };
+		521C49C620820663003902E7 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/TKRemoteControlWindowController.xib"; sourceTree = "<group>"; };
+		521D75FA2080E3670093C820 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		521D75FC2080E3780093C820 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		52206B6820836A230010C232 /* NSMenu+Action.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMenu+Action.h"; sourceTree = "<group>"; };
+		52206B6920836A230010C232 /* NSMenu+Action.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMenu+Action.m"; sourceTree = "<group>"; };
 		522547CD1F4AE5A700226A2A /* NSView+Action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+Action.h"; sourceTree = "<group>"; };
 		522547CE1F4AE5A700226A2A /* NSView+Action.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+Action.m"; sourceTree = "<group>"; };
 		522547D71F4C312A00226A2A /* TKAutoReplyWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKAutoReplyWindowController.h; sourceTree = "<group>"; };
@@ -74,7 +83,6 @@
 		522547D91F4C312A00226A2A /* TKAutoReplyWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TKAutoReplyWindowController.xib; sourceTree = "<group>"; };
 		522547DB1F4C312A00226A2A /* TKRemoteControlWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKRemoteControlWindowController.h; sourceTree = "<group>"; };
 		522547DC1F4C312A00226A2A /* TKRemoteControlWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKRemoteControlWindowController.m; sourceTree = "<group>"; };
-		522547DD1F4C312A00226A2A /* TKRemoteControlWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TKRemoteControlWindowController.xib; sourceTree = "<group>"; };
 		5226D5C82040FC3E0013C048 /* TKVersionManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKVersionManager.h; sourceTree = "<group>"; };
 		5226D5C92040FC3E0013C048 /* TKVersionManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKVersionManager.m; sourceTree = "<group>"; };
 		5228EAB81F70B59500D808CF /* NSButton+Action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSButton+Action.h"; sourceTree = "<group>"; };
@@ -85,7 +93,8 @@
 		52475C2D1F6B993E00760E3E /* MMChatsTableCellView+hook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MMChatsTableCellView+hook.m"; sourceTree = "<group>"; };
 		52475C301F6BA43800760E3E /* TKIgnoreSessonModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKIgnoreSessonModel.h; sourceTree = "<group>"; };
 		52475C311F6BA43800760E3E /* TKIgnoreSessonModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKIgnoreSessonModel.m; sourceTree = "<group>"; };
-		526F4D791F4AAADA00E46004 /* Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Color.h; sourceTree = "<group>"; };
+		526A26702081AC03005B3E3C /* DefineConstant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineConstant.h; sourceTree = "<group>"; };
+		526F4D791F4AAADA00E46004 /* ColorConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorConstant.h; sourceTree = "<group>"; };
 		526F4D7C1F4AAADA00E46004 /* TKPrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKPrefixHeader.pch; sourceTree = "<group>"; };
 		526F4D811F4AAC1900E46004 /* TKAutoReplyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKAutoReplyModel.h; sourceTree = "<group>"; };
 		526F4D821F4AAC1900E46004 /* TKAutoReplyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKAutoReplyModel.m; sourceTree = "<group>"; };
@@ -160,6 +169,8 @@
 				5228EAB91F70B59500D808CF /* NSButton+Action.m */,
 				523848A91F70E73500771BA3 /* NSTextField+Action.h */,
 				523848AA1F70E73500771BA3 /* NSTextField+Action.m */,
+				52206B6820836A230010C232 /* NSMenu+Action.h */,
+				52206B6920836A230010C232 /* NSMenu+Action.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -186,17 +197,26 @@
 			children = (
 				522547DB1F4C312A00226A2A /* TKRemoteControlWindowController.h */,
 				522547DC1F4C312A00226A2A /* TKRemoteControlWindowController.m */,
-				522547DD1F4C312A00226A2A /* TKRemoteControlWindowController.xib */,
+				521C49C520820662003902E7 /* TKRemoteControlWindowController.xib */,
 			);
 			path = RemoteControl;
+			sourceTree = "<group>";
+		};
+		526A266F2081A8DC005B3E3C /* Macro */ = {
+			isa = PBXGroup;
+			children = (
+				526F4D791F4AAADA00E46004 /* ColorConstant.h */,
+				526A26702081AC03005B3E3C /* DefineConstant.h */,
+			);
+			path = Macro;
 			sourceTree = "<group>";
 		};
 		526F4D781F4AAADA00E46004 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				526A266F2081A8DC005B3E3C /* Macro */,
 				522547D11F4AE5AE00226A2A /* View */,
 				522547CC1F4AE5A700226A2A /* Category */,
-				526F4D791F4AAADA00E46004 /* Color.h */,
 				526F4D7C1F4AAADA00E46004 /* TKPrefixHeader.pch */,
 			);
 			path = Common;
@@ -266,6 +286,7 @@
 				528B4F961EA7383800BC6A89 /* Info.plist */,
 				52B5CEF01F3B4623000D9DD9 /* TKRemoteControlCommands.plist */,
 				52B5CEF11F3B4623000D9DD9 /* TKRemoteControlScript.scpt */,
+				521D75FB2080E3670093C820 /* Localizable.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -374,7 +395,7 @@
 			files = (
 				522547DE1F4C312A00226A2A /* TKAutoReplyWindowController.h in Headers */,
 				5228EABA1F70B59500D808CF /* NSButton+Action.h in Headers */,
-				526F4D7D1F4AAADA00E46004 /* Color.h in Headers */,
+				526F4D7D1F4AAADA00E46004 /* ColorConstant.h in Headers */,
 				527E7F632018711800358D26 /* fishhook.h in Headers */,
 				528B4F971EA7383800BC6A89 /* WeChatPlugin.h in Headers */,
 				526F4D801F4AAADA00E46004 /* TKPrefixHeader.pch in Headers */,
@@ -387,6 +408,7 @@
 				52B5CF121F3B4631000D9DD9 /* WeChat+hook.h in Headers */,
 				52475C321F6BA43800760E3E /* TKIgnoreSessonModel.h in Headers */,
 				526F4D8D1F4AAC3800E46004 /* TKRemoteControlCell.h in Headers */,
+				52206B6A20836A230010C232 /* NSMenu+Action.h in Headers */,
 				52B5CF181F3B4631000D9DD9 /* TKRemoteControlModel.h in Headers */,
 				5226D5CA2040FC3E0013C048 /* TKVersionManager.h in Headers */,
 				520F2009205E1DF900A36B1E /* TKWebServerManager.h in Headers */,
@@ -445,6 +467,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				"zh-Hans",
 			);
 			mainGroup = 528B4F881EA7383800BC6A89;
 			productRefGroup = 528B4F931EA7383800BC6A89 /* Products */;
@@ -461,10 +484,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				521D75F92080E3670093C820 /* Localizable.strings in Resources */,
 				522547E01F4C312A00226A2A /* TKAutoReplyWindowController.xib in Resources */,
 				52B5CEF21F3B4623000D9DD9 /* TKRemoteControlCommands.plist in Resources */,
 				52B5CEF31F3B4623000D9DD9 /* TKRemoteControlScript.scpt in Resources */,
-				522547E31F4C312A00226A2A /* TKRemoteControlWindowController.xib in Resources */,
+				521C49C320820662003902E7 /* TKRemoteControlWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -533,6 +557,7 @@
 				529CDDFF1F6E6A060056DC1A /* TKBaseModel.m in Sources */,
 				527E7F622018711800358D26 /* fishhook.c in Sources */,
 				52B5CF1B1F3B4631000D9DD9 /* TKHelper.m in Sources */,
+				52206B6B20836A230010C232 /* NSMenu+Action.m in Sources */,
 				52B5CF171F3B4631000D9DD9 /* TKRemoteControlController.m in Sources */,
 				522547D01F4AE5A700226A2A /* NSView+Action.m in Sources */,
 				523848AC1F70E73500771BA3 /* NSTextField+Action.m in Sources */,
@@ -552,11 +577,33 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXVariantGroup section */
+		521C49C520820662003902E7 /* TKRemoteControlWindowController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				521C49C420820662003902E7 /* en */,
+				521C49C620820663003902E7 /* zh-Hans */,
+			);
+			name = TKRemoteControlWindowController.xib;
+			sourceTree = "<group>";
+		};
+		521D75FB2080E3670093C820 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				521D75FA2080E3670093C820 /* en */,
+				521D75FC2080E3780093C820 /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		528B4F981EA7383800BC6A89 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -613,6 +660,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";

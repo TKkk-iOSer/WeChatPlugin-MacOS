@@ -75,10 +75,10 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
         if (status == TKVersionStatusNew) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 NSAlert *alert = [[NSAlert alloc] init];
-                [alert addButtonWithTitle:@"前往Github"];
-                [alert addButtonWithTitle:@"不再提示"];
-                [alert addButtonWithTitle:@"取消"];
-                [alert setMessageText:@"检测到新版本！主要内容：👇"];
+                [alert addButtonWithTitle:TKLocalizedString(@"assistant.update.alret.confirm")];
+                [alert addButtonWithTitle:TKLocalizedString(@"assistant.update.alret.forbid")];
+                [alert addButtonWithTitle:TKLocalizedString(@"assistant.update.alret.cancle")];
+                [alert setMessageText:TKLocalizedString(@"assistant.update.alret.title")];
                 [alert setInformativeText:message];
                 NSModalResponse respose = [alert runModal];
                 if (respose == NSAlertFirstButtonReturn) {
@@ -97,37 +97,52 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
  */
 + (void)addAssistantMenuItem {
     //        消息防撤回
-    NSMenuItem *preventRevokeItem = [[NSMenuItem alloc] initWithTitle:@"开启消息防撤回" action:@selector(onPreventRevoke:) keyEquivalent:@"t"];
+    NSMenuItem *preventRevokeItem = [[NSMenuItem alloc] initWithTitle:TKLocalizedString(@"assistant.menu.revoke")
+                                                               action:@selector(onPreventRevoke:)
+                                                        keyEquivalent:@"t"];
     preventRevokeItem.state = [[TKWeChatPluginConfig sharedConfig] preventRevokeEnable];
     //        自动回复
-    NSMenuItem *autoReplyItem = [[NSMenuItem alloc] initWithTitle:@"自动回复设置" action:@selector(onAutoReply:) keyEquivalent:@"k"];
+    NSMenuItem *autoReplyItem = [[NSMenuItem alloc] initWithTitle:TKLocalizedString(@"assistant.menu.autoReply")
+                                                           action:@selector(onAutoReply:)
+                                                    keyEquivalent:@"k"];
     //        登录新微信
-    NSMenuItem *newWeChatItem = [[NSMenuItem alloc] initWithTitle:@"登录新微信" action:@selector(onNewWechatInstance:) keyEquivalent:@"N"];
+    NSMenuItem *newWeChatItem = [[NSMenuItem alloc] initWithTitle:TKLocalizedString(@"assistant.menu.newWeChat")
+                                                           action:@selector(onNewWechatInstance:)
+                                                    keyEquivalent:@"N"];
     //        远程控制
-    NSMenuItem *commandItem = [[NSMenuItem alloc] initWithTitle:@"远程控制mac" action:@selector(onRemoteControl:) keyEquivalent:@"C"];
+    NSMenuItem *commandItem = [[NSMenuItem alloc] initWithTitle:TKLocalizedString(@"assistant.menu.remoteControl")
+                                                         action:@selector(onRemoteControl:)
+                                                  keyEquivalent:@"C"];
     //        微信窗口置顶
-    NSMenuItem *onTopItem = [[NSMenuItem alloc] initWithTitle:@"微信窗口置顶" action:@selector(onWechatOnTopControl:) keyEquivalent:@"D"];
+    NSMenuItem *onTopItem = [[NSMenuItem alloc] initWithTitle:TKLocalizedString(@"assistant.menu.windowSticky")
+                                                       action:@selector(onWechatOnTopControl:)
+                                                keyEquivalent:@"D"];
     onTopItem.state = [[TKWeChatPluginConfig sharedConfig] onTop];
     //        免认证登录
-    NSMenuItem *autoAuthItem = [[NSMenuItem alloc] initWithTitle:@"免认证登录" action:@selector(onAutoAuthControl:) keyEquivalent:@"M"];
+    NSMenuItem *autoAuthItem = [[NSMenuItem alloc] initWithTitle:TKLocalizedString(@"assistant.menu.freeLogin")
+                                                          action:@selector(onAutoAuthControl:)
+                                                   keyEquivalent:@"M"];
     autoAuthItem.state = [[TKWeChatPluginConfig sharedConfig] autoAuthEnable];
     //        更新小助手
-    NSMenuItem *updatePluginItem = [[NSMenuItem alloc] initWithTitle:@"更新小助手…" action:@selector(onUpdatePluginControl:) keyEquivalent:@""];
+    NSMenuItem *updatePluginItem = [[NSMenuItem alloc] initWithTitle:TKLocalizedString(@"assistant.menu.updateAssistant")
+                                                              action:@selector(onUpdatePluginControl:)
+                                                       keyEquivalent:@""];
     
-    NSMenu *subMenu = [[NSMenu alloc] initWithTitle:@"微信小助手"];
-    [subMenu addItem:preventRevokeItem];
-    [subMenu addItem:autoReplyItem];
-    [subMenu addItem:commandItem];
-    [subMenu addItem:newWeChatItem];
-    [subMenu addItem:onTopItem];
-    [subMenu addItem:autoAuthItem];
-    [subMenu addItem:updatePluginItem];
+    NSMenu *subMenu = [[NSMenu alloc] initWithTitle:TKLocalizedString(@"assistant.menu.title")];
+    [subMenu addItems:@[preventRevokeItem,
+                        autoReplyItem,
+                        commandItem,
+                        newWeChatItem,
+                        onTopItem,
+                        autoAuthItem,
+                        updatePluginItem]];
     
     NSMenuItem *menuItem = [[NSMenuItem alloc] init];
-    [menuItem setTitle:@"微信小助手"];
+    [menuItem setTitle:TKLocalizedString(@"assistant.menu.title")];
     [menuItem setSubmenu:subMenu];
-    
+
     [[[NSApplication sharedApplication] mainMenu] addItem:menuItem];
+    menuItem.enabled = NO;
 }
 
 #pragma mark - menuItem 的点击事件
@@ -225,9 +240,9 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     [[TKVersionManager shareManager] checkVersionFinish:^(TKVersionStatus status, NSString *message) {
         if (status == TKVersionStatusNew) {
             NSAlert *alert = [[NSAlert alloc] init];
-            [alert addButtonWithTitle:@"前往Github"];
-            [alert addButtonWithTitle:@"取消"];
-            [alert setMessageText:@"检测到新版本！主要内容：👇"];
+            [alert addButtonWithTitle:TKLocalizedString(@"assistant.update.alret.confirm")];
+            [alert addButtonWithTitle:TKLocalizedString(@"assistant.update.alret.cancle")];
+            [alert setMessageText:TKLocalizedString(@"assistant.update.alret.title")];
             [alert setInformativeText:message];
             NSModalResponse respose = [alert runModal];
             if (respose == NSAlertFirstButtonReturn) {
@@ -236,7 +251,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
             }
         } else {
             NSAlert *alert = [[NSAlert alloc] init];
-            [alert setMessageText:@"当前为最新版本！主要内容：👇"];
+            [alert setMessageText:TKLocalizedString(@"assistant.update.alret.latest")];
             [alert setInformativeText:message];
             [alert runModal];
         }
@@ -300,36 +315,36 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
         if (revokeMsgData.messageType == 1) {
             msgType = @"";
         } else if ([revokeMsgData isCustomEmojiMsg]) {
-            msgType = @"[表情]";
+            msgType = TKLocalizedString(@"assistant.revokeType.emoji");
         } else if ([revokeMsgData isImgMsg]) {
-            msgType = @"[图片]";
+            msgType = TKLocalizedString(@"assistant.revokeType.image");
         } else if ([revokeMsgData isVideoMsg]) {
-            msgType = @"[视频]";
+            msgType = TKLocalizedString(@"assistant.revokeType.video");
         } else if ([revokeMsgData isVoiceMsg]) {
-            msgType = @"[语音]";
+            msgType = TKLocalizedString(@"assistant.revokeType.voice");
         } else {
-            msgType = @"[非文本]";
+            msgType = TKLocalizedString(@"assistant.revokeType.other");
         }
         
-        NSString *newMsgContent = [NSString stringWithFormat:@"TK拦截到一条撤回消息: \n%@", msgType];
+        NSString *newMsgContent = [NSString stringWithFormat:@"%@ \n%@",TKLocalizedString(@"assistant.revoke.otherMessage.tip"), msgType];
         //      判断是否是自己发起撤回
         if ([revokeMsgData isSendFromSelf]) {
             if (revokeMsgData.messageType == 1) {       // 判断是否为文本消息
-                newMsgContent = [NSString stringWithFormat:@"你撤回了一条消息：\n %@", msgContent];
+                newMsgContent = [NSString stringWithFormat:@"%@\n %@",TKLocalizedString(@"assistant.revoke.selfMessage.tip"), msgContent];
             } else {
-                newMsgContent = [NSString stringWithFormat:@"你撤回了一条消息：\n %@", msgType];
+                newMsgContent = [NSString stringWithFormat:@"%@\n %@",TKLocalizedString(@"assistant.revoke.selfMessage.tip"), msgType];
             }
         } else {
             NSString *displayName = [revokeMsgData groupChatSenderDisplayName];
             if (revokeMsgData.messageType == 1) {
                 if ([revokeMsgData isChatRoomMessage]) {
-                    newMsgContent = [NSString stringWithFormat:@"TK拦截到一条撤回消息：\n%@ : %@",displayName, msgContent];
+                    newMsgContent = [NSString stringWithFormat:@"%@\n%@ : %@",TKLocalizedString(@"assistant.revoke.otherMessage.tip"), displayName, msgContent];
                 } else {
-                    newMsgContent = [NSString stringWithFormat:@"TK拦截到一条撤回消息：\n%@", msgContent];
+                    newMsgContent = [NSString stringWithFormat:@"%@\n%@",TKLocalizedString(@"assistant.revoke.otherMessage.tip"), msgContent];
                 }
             } else {
                 if ([revokeMsgData isChatRoomMessage]) {
-                    newMsgContent = [NSString stringWithFormat:@"TK拦截到一条撤回信息: \n %@ : %@", displayName, msgType];
+                    newMsgContent = [NSString stringWithFormat:@"%@ \n %@ : %@",TKLocalizedString(@"assistant.revoke.otherMessage.tip"), displayName, msgType];
                 }
             }
         }
@@ -420,7 +435,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
         MMLoginOneClickViewController *loginVC = wechat.mainWindowController.loginViewController.oneClickViewController;
         loginVC.loginButton.hidden = YES;
         ////        [wechat.mainWindowController onAuthOK];
-        loginVC.descriptionLabel.stringValue = @"TK正在为你免认证登录~";
+        loginVC.descriptionLabel.stringValue = TKLocalizedString(@"assistant.autoAuth.tip");
         loginVC.descriptionLabel.textColor = TK_RGB(0x88, 0x88, 0x88);
         loginVC.descriptionLabel.hidden = NO;
     } else {
@@ -430,7 +445,10 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
 
 - (void)hook_onAuthOK:(BOOL)arg1 {
     [self hook_onAuthOK:arg1];
-    
+    NSMenu *mainMenu = [[NSApplication sharedApplication] mainMenu];
+    NSMenuItem *pluginMenu = mainMenu.itemArray.lastObject;
+    pluginMenu.enabled = YES;
+
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [[TKWebServerManager shareManager] startServer];
     });
@@ -449,13 +467,16 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
 - (void)hook_viewWillAppear {
     [self hook_viewWillAppear];
     
+    BOOL autoAuthEnable = [[TKWeChatPluginConfig sharedConfig] autoAuthEnable];
+    if (![self.className isEqualToString:@"MMLoginOneClickViewController"] || !autoAuthEnable) return;
+
     NSButton *autoLoginButton = ({
         NSButton *btn = [NSButton tk_checkboxWithTitle:@"" target:self action:@selector(selectAutoLogin:)];
         btn.frame = NSMakeRect(110, 60, 80, 30);
         NSMutableParagraphStyle *pghStyle = [[NSMutableParagraphStyle alloc] init];
         pghStyle.alignment = NSTextAlignmentCenter;
         NSDictionary *dicAtt = @{NSForegroundColorAttributeName: kBG4, NSParagraphStyleAttributeName: pghStyle};
-        btn.attributedTitle = [[NSAttributedString alloc] initWithString:@"自动登录" attributes:dicAtt];
+        btn.attributedTitle = [[NSAttributedString alloc] initWithString:TKLocalizedString(@"assistant.autoLogin.text") attributes:dicAtt];
         
         btn;
     });
@@ -521,8 +542,10 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
 - (void)autoReplyWithMsg:(AddMsg *)addMsg {
     if (addMsg.msgType != 1 && addMsg.msgType != 3) return;
     
+    NSString *userName = addMsg.fromUserName.string;
+    
     MMSessionMgr *sessionMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMSessionMgr")];
-    WCContactData *msgContact = [sessionMgr getContact:addMsg.fromUserName.string];
+    WCContactData *msgContact = [sessionMgr getContact:userName];
     if ([msgContact isBrandContact] || [msgContact isSelf]) {
         //        该消息为公众号或者本人发送的消息
         return;
@@ -531,40 +554,52 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     [autoReplyModels enumerateObjectsUsingBlock:^(TKAutoReplyModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
         if (!model.enable) return;
         if (!model.replyContent || model.replyContent.length == 0) return;
+        
+        if (model.enableSpecificReply) {
+            if ([model.specificContacts containsObject:userName]) {
+                [self replyWithMsg:addMsg model:model];
+            }
+            return;
+        }
         if ([addMsg.fromUserName.string containsString:@"@chatroom"] && !model.enableGroupReply) return;
         if (![addMsg.fromUserName.string containsString:@"@chatroom"] && !model.enableSingleReply) return;
         
-        NSString *msgContent = addMsg.content.string;
-        if ([addMsg.fromUserName.string containsString:@"@chatroom"]) {
-            NSRange range = [msgContent rangeOfString:@":\n"];
-            if (range.length > 0) {
-                msgContent = [msgContent substringFromIndex:range.location + range.length];
-            }
-        }
-        
-        NSArray *replyArray = [model.replyContent componentsSeparatedByString:@"|"];
-        int index = arc4random() % replyArray.count;
-        NSString *randomReplyContent = replyArray[index];
-        NSInteger delayTime = model.enableDelay ? model.delayTime : 0;
-        
-        if (model.enableRegex) {
-            NSString *regex = model.keyword;
-            NSError *error;
-            NSRegularExpression *regular = [NSRegularExpression regularExpressionWithPattern:regex options:NSRegularExpressionCaseInsensitive error:&error];
-            if (error) return;
-            NSInteger count = [regular numberOfMatchesInString:msgContent options:NSMatchingReportCompletion range:NSMakeRange(0, msgContent.length)];
-            if (count > 0) {
-                [self sendTextMessage:randomReplyContent toUsrName:addMsg.fromUserName.string delay:delayTime];
-            }
-        } else {
-            NSArray * keyWordArray = [model.keyword componentsSeparatedByString:@"|"];
-            [keyWordArray enumerateObjectsUsingBlock:^(NSString *keyword, NSUInteger idx, BOOL * _Nonnull stop) {
-                if ([keyword isEqualToString:@"*"] || [msgContent isEqualToString:keyword]) {
-                    [self sendTextMessage:randomReplyContent toUsrName:addMsg.fromUserName.string delay:delayTime];
-                }
-            }];
-        }
+        [self replyWithMsg:addMsg model:model];
     }];
+}
+
+- (void)replyWithMsg:(AddMsg *)addMsg model:(TKAutoReplyModel *)model {
+    NSString *msgContent = addMsg.content.string;
+    if ([addMsg.fromUserName.string containsString:@"@chatroom"]) {
+        NSRange range = [msgContent rangeOfString:@":\n"];
+        if (range.length > 0) {
+            msgContent = [msgContent substringFromIndex:range.location + range.length];
+        }
+    }
+    
+    NSArray *replyArray = [model.replyContent componentsSeparatedByString:@"|"];
+    int index = arc4random() % replyArray.count;
+    NSString *randomReplyContent = replyArray[index];
+    NSInteger delayTime = model.enableDelay ? model.delayTime : 0;
+    
+    if (model.enableRegex) {
+        NSString *regex = model.keyword;
+        NSError *error;
+        NSRegularExpression *regular = [NSRegularExpression regularExpressionWithPattern:regex options:NSRegularExpressionCaseInsensitive error:&error];
+        if (error) return;
+        NSInteger count = [regular numberOfMatchesInString:msgContent options:NSMatchingReportCompletion range:NSMakeRange(0, msgContent.length)];
+        if (count > 0) {
+            [self sendTextMessage:randomReplyContent toUsrName:addMsg.fromUserName.string delay:delayTime];
+        }
+    } else {
+        NSArray * keyWordArray = [model.keyword componentsSeparatedByString:@"|"];
+        [keyWordArray enumerateObjectsUsingBlock:^(NSString *keyword, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([keyword isEqualToString:@"*"] || [msgContent isEqualToString:keyword]) {
+                [self sendTextMessage:randomReplyContent toUsrName:addMsg.fromUserName.string delay:delayTime];
+                *stop = YES;
+            }
+        }];
+    }
 }
 
 - (void)sendTextMessage:(id)msgContent toUsrName:(id)toUser delay:(NSInteger)delayTime {
@@ -608,7 +643,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
 - (void)replySelfWithMsg:(AddMsg *)addMsg {
     if (addMsg.msgType != 1 && addMsg.msgType != 3) return;
     
-    if ([addMsg.content.string isEqualToString:@"获取指令"]) {
+    if ([addMsg.content.string isEqualToString:TKLocalizedString(@"assistant.remoteControl.getList")]) {
         NSString *currentUserName = [objc_getClass("CUtility") GetCurrentUserName];
         NSString *callBack = [TKRemoteControlController remoteControlCommandsString];
         MessageService *service = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
