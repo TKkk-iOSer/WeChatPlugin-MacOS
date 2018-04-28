@@ -47,6 +47,7 @@
 "assistant.remoteControl.mac" = "Macbook:";
 "assistant.remoteControl.app" = "APP:";
 "assistant.remoteControl.neteaseMusic" = "NeteaseMusic:";
+"assistant.remoteControl.assistant" = "Assistant:";
 "assistant.remoteControl.open" = "On";
 "assistant.remoteControl.close" = "Off";
 "assistant.remoteControl.contentPlaceHodler" = "Please enter the keyword";
@@ -70,6 +71,12 @@
 "Assistant.Directive.VolumeUp" = "Increase Volume";
 "Assistant.Directive.VolumeDown" = "Decrease Volume";
 "Assistant.Directive.LikeChange" = "Like/Unlike";
+"Assistant.Directive.GetList" = "Get Directive";
+"Assistant.Directive.AutoReplySwitch" = "AutoReply Switch";
+"Assistant.Directive.PreventRevokeSwitch" = "PreventRecall Switch";
+"Assistant.Directive.AutoAuthSwitch" = "AutoAuth Switch";
+"Assistant.Directive.SwitchOn" = "On";
+"Assistant.Directive.SwitchOff" = "Off";
 
 //  AutoAuth Setting
 "assistant.autoReply.title" = "Auto Reply Setting";

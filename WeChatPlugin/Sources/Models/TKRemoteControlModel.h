@@ -8,11 +8,17 @@
 
 #import "TKBaseModel.h"
 
+typedef NS_ENUM(NSUInteger, TKRemoteControlType) {
+    TKRemoteControlTypeShell = 1,
+    TKRemoteControlTypeScript,
+    TKRemoteControlTypePlugin,
+};
+
 @interface TKRemoteControlModel : TKBaseModel
 
 @property (nonatomic, assign) BOOL enable;
 @property (nonatomic, copy) NSString *keyword;
 @property (nonatomic, copy) NSString *function;
 @property (nonatomic, copy) NSString *executeCommand;
-
+@property (nonatomic, assign) TKRemoteControlType type;
 @end

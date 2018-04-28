@@ -85,12 +85,12 @@
     NSMenuItem *clearUnReadItem = [[NSMenuItem alloc] initWithTitle:TKLocalizedString(@"assistant.chat.readAll") action:@selector(contextMenuClearUnRead) keyEquivalent:@""];
     
     NSMenuItem *clearEmptySessionItem = [[NSMenuItem alloc] initWithTitle:TKLocalizedString(@"assistant.chat.clearEmpty") action:@selector(contextMenuClearEmptySession) keyEquivalent:@""];
-    
-    [arg1 addItem:[NSMenuItem separatorItem]];
-    [arg1 addItem:preventRevokeItem];
-    [arg1 addItem:multipleSelectionItem];
-    [arg1 addItem:clearUnReadItem];
-    [arg1 addItem:clearEmptySessionItem];
+    [arg1 addItems:@[[NSMenuItem separatorItem],
+                     preventRevokeItem,
+                     multipleSelectionItem,
+                     clearUnReadItem,
+                     clearEmptySessionItem
+                     ]];
     [self hook_menuWillOpen:arg1];
 }
 

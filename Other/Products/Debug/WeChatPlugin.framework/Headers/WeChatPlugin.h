@@ -259,3 +259,27 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 - (void)setType:(unsigned long long)arg1;
 
 @end
+
+@interface AFHTTPResponseSerializer : NSObject
+@end
+
+@interface AFURLSessionManager : NSObject
+- (NSURLSessionDownloadTask *)downloadTaskWithRequest:(NSURLRequest *)request
+                                             progress:(void (^)(NSProgress *downloadProgress))downloadProgressBlock
+                                          destination:(NSURL * (^)(NSURL *targetPath, NSURLResponse *response))destination
+                                    completionHandler:(void (^)(NSURLResponse *response, NSURL * filePath, NSError * error))completionHandler;
+- (id)initWithSessionConfiguration:(id)arg1;
+@end
+
+@interface AFHTTPRequestSerializer : NSObject
++ (id)serializer;
+@property(nonatomic) unsigned long long cachePolicy;
+@end
+
+@interface AFHTTPSessionManager : NSObject
++ (AFHTTPSessionManager *)manager;
+@property(retain, nonatomic) AFHTTPRequestSerializer *requestSerializer;
+@property(retain, nonatomic) AFHTTPResponseSerializer *responseSerializer;
+@end
+
+

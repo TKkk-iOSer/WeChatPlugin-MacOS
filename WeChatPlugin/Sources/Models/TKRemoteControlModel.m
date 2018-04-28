@@ -17,6 +17,7 @@
         self.keyword = dict[@"keyword"];
         self.function = dict[@"function"];
         self.executeCommand = dict[@"executeCommand"];
+        self.type = [dict[@"type"] integerValue];
     }
     return self;
 }
@@ -25,7 +26,8 @@
     return @{@"enable": @(self.enable),
              @"keyword": self.keyword,
              @"function": self.function,
-             @"executeCommand": self.executeCommand};
+             @"executeCommand": self.executeCommand,
+             @"type": @(self.type)};
 }
 
 @end

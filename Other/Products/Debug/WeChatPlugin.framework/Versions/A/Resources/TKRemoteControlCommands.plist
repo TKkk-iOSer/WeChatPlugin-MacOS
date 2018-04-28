@@ -12,6 +12,8 @@
 			<string>Assistant.Directive.ScreenSave</string>
 			<key>enable</key>
 			<true/>
+			<key>type</key>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>executeCommand</key>
@@ -22,6 +24,8 @@
 			<string>Assistant.Directive.LockScreen</string>
 			<key>enable</key>
 			<true/>
+			<key>type</key>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>executeCommand</key>
@@ -32,6 +36,8 @@
 			<string>Assistant.Directive.Sleep</string>
 			<key>enable</key>
 			<true/>
+			<key>type</key>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>executeCommand</key>
@@ -42,6 +48,8 @@
 			<string>Assistant.Directive.Shutdown</string>
 			<key>enable</key>
 			<true/>
+			<key>type</key>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>executeCommand</key>
@@ -52,6 +60,8 @@
 			<string>Assistant.Directive.Restart</string>
 			<key>enable</key>
 			<true/>
+			<key>type</key>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>executeCommand</key>
@@ -62,6 +72,8 @@
 			<string>Assistant.Directive.EmptyTrash</string>
 			<key>enable</key>
 			<true/>
+			<key>type</key>
+			<integer>2</integer>
 		</dict>
 	</array>
 	<array>
@@ -74,16 +86,20 @@
 			<string>Assistant.Directive.KillQQ</string>
 			<key>enable</key>
 			<true/>
+			<key>type</key>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>executeCommand</key>
-			<string>killWeChat</string>
+			<string>restartWeChat</string>
 			<key>keyword</key>
-			<string>KillWeChat</string>
+			<string>killWeChat</string>
 			<key>function</key>
 			<string>Assistant.Directive.KillWeChat</string>
 			<key>enable</key>
 			<true/>
+			<key>type</key>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>executeCommand</key>
@@ -94,6 +110,8 @@
 			<string>Assistant.Directive.KillChrome</string>
 			<key>enable</key>
 			<true/>
+			<key>type</key>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>executeCommand</key>
@@ -104,6 +122,8 @@
 			<string>Assistant.Directive.KillSafari</string>
 			<key>enable</key>
 			<true/>
+			<key>type</key>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>executeCommand</key>
@@ -114,6 +134,8 @@
 			<string>Assistant.Directive.KillFirefox</string>
 			<key>enable</key>
 			<true/>
+			<key>type</key>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>executeCommand</key>
@@ -124,6 +146,8 @@
 			<string>Assistant.Directive.KillAll</string>
 			<key>enable</key>
 			<true/>
+			<key>type</key>
+			<integer>2</integer>
 		</dict>
 	</array>
 	<array>
@@ -136,6 +160,8 @@
 			<string>Assistant.Directive.Toggle</string>
 			<key>enable</key>
 			<true/>
+			<key>type</key>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>executeCommand</key>
@@ -146,6 +172,8 @@
 			<string>Assistant.Directive.Next</string>
 			<key>enable</key>
 			<true/>
+			<key>type</key>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>executeCommand</key>
@@ -156,6 +184,8 @@
 			<string>Assistant.Directive.Previous</string>
 			<key>enable</key>
 			<true/>
+			<key>type</key>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>executeCommand</key>
@@ -166,6 +196,8 @@
 			<string>Assistant.Directive.VolumeUp</string>
 			<key>enable</key>
 			<true/>
+			<key>type</key>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>executeCommand</key>
@@ -176,6 +208,8 @@
 			<string>Assistant.Directive.VolumeDown</string>
 			<key>enable</key>
 			<true/>
+			<key>type</key>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>executeCommand</key>
@@ -186,6 +220,58 @@
 			<string>Assistant.Directive.LikeChange</string>
 			<key>enable</key>
 			<true/>
+			<key>type</key>
+			<integer>2</integer>
+		</dict>
+	</array>
+	<array>
+		<dict>
+			<key>executeCommand</key>
+			<string>getDirectiveList</string>
+			<key>keyword</key>
+			<string>getDirective</string>
+			<key>function</key>
+			<string>Assistant.Directive.GetList</string>
+			<key>enable</key>
+			<true/>
+			<key>type</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>executeCommand</key>
+			<string>PreventRevokeSwitch</string>
+			<key>keyword</key>
+			<string>PreventRevokeSwitch</string>
+			<key>function</key>
+			<string>Assistant.Directive.PreventRevokeSwitch</string>
+			<key>enable</key>
+			<true/>
+			<key>type</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>executeCommand</key>
+			<string>AutoReplySwitch</string>
+			<key>keyword</key>
+			<string>AutoReplySwitch</string>
+			<key>function</key>
+			<string>Assistant.Directive.AutoReplySwitch</string>
+			<key>enable</key>
+			<true/>
+			<key>type</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>executeCommand</key>
+			<string>AutoAuthSwitch</string>
+			<key>keyword</key>
+			<string>AutoAuthSwitch</string>
+			<key>function</key>
+			<string>Assistant.Directive.AutoAuthSwitch</string>
+			<key>enable</key>
+			<true/>
+			<key>type</key>
+			<integer>3</integer>
 		</dict>
 	</array>
 </array>
