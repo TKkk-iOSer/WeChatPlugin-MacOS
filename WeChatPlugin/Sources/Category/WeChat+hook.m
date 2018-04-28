@@ -11,14 +11,12 @@
 #import "XMLReader.h"
 #import "fishhook.h"
 #import "TKIgnoreSessonModel.h"
-#import "TKRemoteControlController.h"
-#import "TKAutoReplyWindowController.h"
-#import "TKRemoteControlWindowController.h"
-#import "TKVersionManager.h"
 #import "TKWebServerManager.h"
-
-static char tkAutoReplyWindowControllerKey;         //  自动回复窗口的关联 key
-static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关联 key
+#import "TKMessageManager.h"
+#import "TKAssistantMenuManager.h"
+#import "TKAutoReplyModel.h"
+#import "TKVersionManager.h"
+#import "TKRemoteControlManager.h"
 
 @implementation NSObject (WeChatHook)
 
@@ -58,7 +56,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
 
 + (void)setup {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self addAssistantMenuItem];
+         [[TKAssistantMenuManager shareManager] initAssistantMenuItems];
         
         BOOL onTop = [[TKWeChatPluginConfig sharedConfig] onTop];
         WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
@@ -70,7 +68,16 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
 
 + (void)checkPluginVersion {
     if ([[TKWeChatPluginConfig sharedConfig] forbidCheckVersion]) return;
-    
+//    [[TKVersionManager shareManager] downloadPluginProgress:^(NSProgress *downloadProgress) {
+//
+//    } completionHandler:^(NSString *filePath, NSError * _Nullable error) {
+//        NSString *fileName = [filePath lastPathComponent];
+//        NSString *realFileName = [fileName stringByDeletingPathExtension];
+//        NSString *cmdString = [NSString stringWithFormat:@"cd %@ && unzip -n %@ && ./%@/Other/Update.sh",cachesPath,fileName,realFileName];
+//        NSString *result = [TKRemoteControlManager executeShellCommand:cmdString];
+//        [TKRemoteControlManager executeAppleScriptCommand:@"restartWeChat"];
+//
+//    }];
     [[TKVersionManager shareManager] checkVersionFinish:^(TKVersionStatus status, NSString *message) {
         if (status == TKVersionStatusNew) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -88,172 +95,6 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
                     [[TKWeChatPluginConfig sharedConfig] setForbidCheckVersion:YES];
                 }
             });
-        }
-    }];
-}
-
-/**
- 菜单栏添加 menuItem
- */
-+ (void)addAssistantMenuItem {
-    //        消息防撤回
-    NSMenuItem *preventRevokeItem = [[NSMenuItem alloc] initWithTitle:TKLocalizedString(@"assistant.menu.revoke")
-                                                               action:@selector(onPreventRevoke:)
-                                                        keyEquivalent:@"t"];
-    preventRevokeItem.state = [[TKWeChatPluginConfig sharedConfig] preventRevokeEnable];
-    //        自动回复
-    NSMenuItem *autoReplyItem = [[NSMenuItem alloc] initWithTitle:TKLocalizedString(@"assistant.menu.autoReply")
-                                                           action:@selector(onAutoReply:)
-                                                    keyEquivalent:@"k"];
-    //        登录新微信
-    NSMenuItem *newWeChatItem = [[NSMenuItem alloc] initWithTitle:TKLocalizedString(@"assistant.menu.newWeChat")
-                                                           action:@selector(onNewWechatInstance:)
-                                                    keyEquivalent:@"N"];
-    //        远程控制
-    NSMenuItem *commandItem = [[NSMenuItem alloc] initWithTitle:TKLocalizedString(@"assistant.menu.remoteControl")
-                                                         action:@selector(onRemoteControl:)
-                                                  keyEquivalent:@"C"];
-    //        微信窗口置顶
-    NSMenuItem *onTopItem = [[NSMenuItem alloc] initWithTitle:TKLocalizedString(@"assistant.menu.windowSticky")
-                                                       action:@selector(onWechatOnTopControl:)
-                                                keyEquivalent:@"D"];
-    onTopItem.state = [[TKWeChatPluginConfig sharedConfig] onTop];
-    //        免认证登录
-    NSMenuItem *autoAuthItem = [[NSMenuItem alloc] initWithTitle:TKLocalizedString(@"assistant.menu.freeLogin")
-                                                          action:@selector(onAutoAuthControl:)
-                                                   keyEquivalent:@"M"];
-    autoAuthItem.state = [[TKWeChatPluginConfig sharedConfig] autoAuthEnable];
-    //        更新小助手
-    NSMenuItem *updatePluginItem = [[NSMenuItem alloc] initWithTitle:TKLocalizedString(@"assistant.menu.updateAssistant")
-                                                              action:@selector(onUpdatePluginControl:)
-                                                       keyEquivalent:@""];
-    
-    NSMenu *subMenu = [[NSMenu alloc] initWithTitle:TKLocalizedString(@"assistant.menu.title")];
-    [subMenu addItems:@[preventRevokeItem,
-                        autoReplyItem,
-                        commandItem,
-                        newWeChatItem,
-                        onTopItem,
-                        autoAuthItem,
-                        updatePluginItem]];
-    
-    NSMenuItem *menuItem = [[NSMenuItem alloc] init];
-    [menuItem setTitle:TKLocalizedString(@"assistant.menu.title")];
-    [menuItem setSubmenu:subMenu];
-
-    [[[NSApplication sharedApplication] mainMenu] addItem:menuItem];
-    menuItem.enabled = NO;
-}
-
-#pragma mark - menuItem 的点击事件
-/**
- 菜单栏-微信小助手-消息防撤回 设置
- 
- @param item 消息防撤回的item
- */
-- (void)onPreventRevoke:(NSMenuItem *)item {
-    item.state = !item.state;
-    [[TKWeChatPluginConfig sharedConfig] setPreventRevokeEnable:item.state];
-}
-
-/**
- 菜单栏-微信小助手-自动回复 设置
- 
- @param item 自动回复设置的item
- */
-- (void)onAutoReply:(NSMenuItem *)item {
-    WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
-    TKAutoReplyWindowController *autoReplyWC = objc_getAssociatedObject(wechat, &tkAutoReplyWindowControllerKey);
-    
-    if (!autoReplyWC) {
-        autoReplyWC = [[TKAutoReplyWindowController alloc] initWithWindowNibName:@"TKAutoReplyWindowController"];
-        objc_setAssociatedObject(wechat, &tkAutoReplyWindowControllerKey, autoReplyWC, OBJC_ASSOCIATION_RETAIN);
-    }
-    
-    [autoReplyWC showWindow:autoReplyWC];
-    [autoReplyWC.window center];
-    [autoReplyWC.window makeKeyWindow];
-}
-
-/**
- 打开新的微信
- 
- @param item 登录新微信的item
- */
-- (void)onNewWechatInstance:(NSMenuItem *)item {
-    [TKRemoteControlController executeShellCommand:@"open -n /Applications/WeChat.app"];
-}
-
-/**
- 菜单栏-帮助-远程控制 MAC OS 设置
- 
- @param item 远程控制的item
- */
-- (void)onRemoteControl:(NSMenuItem *)item {
-    WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
-    TKRemoteControlWindowController *remoteControlWC = objc_getAssociatedObject(wechat, &tkRemoteControlWindowControllerKey);
-    
-    if (!remoteControlWC) {
-        remoteControlWC = [[TKRemoteControlWindowController alloc] initWithWindowNibName:@"TKRemoteControlWindowController"];
-        objc_setAssociatedObject(wechat, &tkRemoteControlWindowControllerKey, remoteControlWC, OBJC_ASSOCIATION_RETAIN);
-    }
-    
-    [remoteControlWC showWindow:remoteControlWC];
-    [remoteControlWC.window center];
-    [remoteControlWC.window makeKeyWindow];
-}
-
-/**
- 菜单栏-微信小助手-免认证登录 设置
- 
- @param item 免认证登录的 item
- */
-- (void)onAutoAuthControl:(NSMenuItem *)item {
-    item.state = !item.state;
-    [[TKWeChatPluginConfig sharedConfig] setAutoAuthEnable:item.state];
-}
-
-/**
- 菜单栏-微信小助手-微信窗口置顶
- 
- @param item 免认证登录的 item
- */
-- (void)onWechatOnTopControl:(NSMenuItem *)item {
-    item.state = !item.state;
-    [[TKWeChatPluginConfig sharedConfig] setOnTop:item.state];
-
-    NSArray *windows = [[NSApplication sharedApplication] windows];
-    [windows enumerateObjectsUsingBlock:^(NSWindow *window, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (![window.className isEqualToString:@"NSStatusBarWindow"]) {
-            window.level = item.state == NSControlStateValueOn ? NSNormalWindowLevel+2 : NSNormalWindowLevel;
-        }
-    }];
-}
-
-/**
- 菜单栏-微信小助手-更新小助手
- 
- @param item 更新小助手的 item
- */
-- (void)onUpdatePluginControl:(NSMenuItem *)item {
-    [[TKWeChatPluginConfig sharedConfig] setForbidCheckVersion:NO];
-    [[TKVersionManager shareManager] checkVersionFinish:^(TKVersionStatus status, NSString *message) {
-        if (status == TKVersionStatusNew) {
-            NSAlert *alert = [[NSAlert alloc] init];
-            [alert addButtonWithTitle:TKLocalizedString(@"assistant.update.alret.confirm")];
-            [alert addButtonWithTitle:TKLocalizedString(@"assistant.update.alret.cancle")];
-            [alert setMessageText:TKLocalizedString(@"assistant.update.alret.title")];
-            [alert setInformativeText:message];
-            NSModalResponse respose = [alert runModal];
-            if (respose == NSAlertFirstButtonReturn) {
-                NSURL *url = [NSURL URLWithString:@"https://github.com/TKkk-iOSer/WeChatPlugin-MacOS"];
-                [[NSWorkspace sharedWorkspace] openURL:url];
-            }
-        } else {
-            NSAlert *alert = [[NSAlert alloc] init];
-            [alert setMessageText:TKLocalizedString(@"assistant.update.alret.latest")];
-            [alert setInformativeText:message];
-            [alert runModal];
         }
     }];
 }
@@ -540,7 +381,8 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
  @param addMsg 接收的消息
  */
 - (void)autoReplyWithMsg:(AddMsg *)addMsg {
-    if (addMsg.msgType != 1 && addMsg.msgType != 3) return;
+//    addMsg.msgType != 49
+    if (addMsg.msgType != 1 && addMsg.msgType != 3 ) return;
     
     NSString *userName = addMsg.fromUserName.string;
     
@@ -589,32 +431,17 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
         if (error) return;
         NSInteger count = [regular numberOfMatchesInString:msgContent options:NSMatchingReportCompletion range:NSMakeRange(0, msgContent.length)];
         if (count > 0) {
-            [self sendTextMessage:randomReplyContent toUsrName:addMsg.fromUserName.string delay:delayTime];
+            [[TKMessageManager shareManager] sendTextMessage:randomReplyContent toUsrName:addMsg.fromUserName.string delay:delayTime];
         }
     } else {
         NSArray * keyWordArray = [model.keyword componentsSeparatedByString:@"|"];
         [keyWordArray enumerateObjectsUsingBlock:^(NSString *keyword, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([keyword isEqualToString:@"*"] || [msgContent isEqualToString:keyword]) {
-                [self sendTextMessage:randomReplyContent toUsrName:addMsg.fromUserName.string delay:delayTime];
+                [[TKMessageManager shareManager] sendTextMessage:randomReplyContent toUsrName:addMsg.fromUserName.string delay:delayTime];
                 *stop = YES;
             }
         }];
     }
-}
-
-- (void)sendTextMessage:(id)msgContent toUsrName:(id)toUser delay:(NSInteger)delayTime {
-    MessageService *service = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
-    NSString *currentUserName = [objc_getClass("CUtility") GetCurrentUserName];
-    
-    if (delayTime == 0) {
-        [service SendTextMessage:currentUserName toUsrName:toUser msgText:msgContent atUserList:nil];
-        return;
-    }
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        dispatch_async(dispatch_get_main_queue(), ^{
-             [service SendTextMessage:currentUserName toUsrName:toUser msgText:msgContent atUserList:nil];
-        });
-    });
 }
 
 /**
@@ -624,7 +451,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
  */
 - (void)remoteControlWithMsg:(AddMsg *)addMsg {
     if (addMsg.msgType == 1 || addMsg.msgType == 3) {
-        [TKRemoteControlController executeRemoteControlCommandWithMsg:addMsg.content.string];
+        [TKRemoteControlManager executeRemoteControlCommandWithMsg:addMsg.content.string];
     } else if (addMsg.msgType == 34) {
         //      此为语音消息
         MessageService *msgService = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
@@ -634,7 +461,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
         [msgService TranscribeVoiceMessage:msgData completion:^ {
             MessageData *callbackMsgData = [msgService GetMsgData:sessionName svrId:mesSvrID];
             dispatch_async(dispatch_get_main_queue(), ^{
-                [TKRemoteControlController executeRemoteControlCommandWithVoiceMsg:callbackMsgData.msgVoiceText];
+                [TKRemoteControlManager executeRemoteControlCommandWithVoiceMsg:callbackMsgData.msgVoiceText];
             });
         }];
     }
@@ -645,7 +472,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     
     if ([addMsg.content.string isEqualToString:TKLocalizedString(@"assistant.remoteControl.getList")]) {
         NSString *currentUserName = [objc_getClass("CUtility") GetCurrentUserName];
-        NSString *callBack = [TKRemoteControlController remoteControlCommandsString];
+        NSString *callBack = [TKRemoteControlManager remoteControlCommandsString];
         MessageService *service = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
         [service SendTextMessage:currentUserName toUsrName:currentUserName msgText:callBack atUserList:nil];
     }

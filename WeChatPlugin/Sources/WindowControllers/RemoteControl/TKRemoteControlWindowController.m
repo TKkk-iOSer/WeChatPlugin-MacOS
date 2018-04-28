@@ -30,24 +30,35 @@
 
 - (void)initSubviews {
 
-    CGFloat tabViewWidth = self.tabView.frame.size.width;
-    CGFloat tabViewHeight = self.tabView.frame.size.height;
-
+    CGFloat scrollViewWidth = self.tabView.frame.size.width -100;
+    CGFloat scrollViewHeight = self.tabView.frame.size.height -110;
+    
     self.tableView = ({
         NSTableView *tableView = [[NSTableView alloc] init];
-        tableView.frame = NSMakeRect(50, 50, tabViewWidth, tabViewHeight);
+        tableView.frame = NSMakeRect(0, 0, scrollViewWidth, scrollViewHeight);
+        tableView.headerView = nil;
         tableView.delegate = self;
         tableView.dataSource = self;
         NSTableColumn *column = [[NSTableColumn alloc] init];
-        column.width = tabViewWidth - 100;
+        column.width = scrollViewWidth - 50;
         [tableView addTableColumn:column];
         tableView.selectionHighlightStyle = NSTableViewSelectionHighlightStyleNone;
         tableView.backgroundColor = [NSColor clearColor];
 
         tableView;
     });
+    
+    NSScrollView *scrollView = ({
+        NSScrollView *view = [[NSScrollView alloc] initWithFrame:NSMakeRect(50, 50, scrollViewWidth, scrollViewHeight)];
+        view.documentView = self.tableView;
+        view.hasVerticalScroller = YES;
+        view.autohidesScrollers = YES;
+        view.drawsBackground = NO;
 
-    [self.tabView addSubview:self.tableView];
+        view;
+    });
+
+    [self.tabView addSubview:scrollView];
 }
 
 - (void)setup {

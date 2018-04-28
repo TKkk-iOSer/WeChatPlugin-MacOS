@@ -47,6 +47,7 @@
 "assistant.remoteControl.mac" = "macbook控制:";
 "assistant.remoteControl.app" = "app控制:";
 "assistant.remoteControl.neteaseMusic" = "网易云音乐控制:";
+"assistant.remoteControl.assistant" = "小助手控制:";
 "assistant.remoteControl.open" = "开启";
 "assistant.remoteControl.close" = "关闭";
 "assistant.remoteControl.contentPlaceHodler" = "请输入匹配的关键词";
@@ -70,6 +71,12 @@
 "Assistant.Directive.VolumeUp" = "增大音量";
 "Assistant.Directive.VolumeDown" = "VolumeDown";
 "Assistant.Directive.LikeChange" = "喜欢/取消喜欢";
+"Assistant.Directive.GetList" = "获取指令";
+"Assistant.Directive.AutoReplySwitch" = "自动回复开关";
+"Assistant.Directive.PreventRevokeSwitch" = "防撤回开关";
+"Assistant.Directive.AutoAuthSwitch" = "免认证登录开关";
+"Assistant.Directive.SwitchOn" = "开启";
+"Assistant.Directive.SwitchOff" = "关闭";
 
 //  自动回复
 "assistant.autoReply.title" = "自动回复设置";

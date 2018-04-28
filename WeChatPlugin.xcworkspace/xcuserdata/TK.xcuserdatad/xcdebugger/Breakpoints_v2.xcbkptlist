@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "WeChatPlugin/Sources/Category/WeChat+hook.m"
-            timestampString = "545485894.860063"
+            filePath = "WeChatPlugin/Sources/Views/TKDownloadProgressView.m"
+            timestampString = "546270194.206432"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "464"
-            endingLineNumber = "464"
-            landmarkName = "-hook_sendLogoutCGIWithCompletion:"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "-initSubviews"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,13 +25,45 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "WeChatPlugin/Sources/Category/WeChat+hook.m"
-            timestampString = "545485894.860154"
+            filePath = "WeChatPlugin/Sources/Controllers/TKRemoteControlController.m"
+            timestampString = "546267980.49235"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "462"
-            endingLineNumber = "462"
-            landmarkName = "-hook_sendLogoutCGIWithCompletion:"
+            startingLineNumber = "134"
+            endingLineNumber = "134"
+            landmarkName = "+executePluginCommand:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WeChatPlugin/Sources/Managers/TKBaseManager.m"
+            timestampString = "546323920.843691"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "15"
+            endingLineNumber = "15"
+            landmarkName = "+shareManager"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WeChatPlugin/Sources/Managers/TKBaseManager.m"
+            timestampString = "546323962.887336"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "17"
+            endingLineNumber = "17"
+            landmarkName = "+shareManager"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
