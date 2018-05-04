@@ -18,6 +18,8 @@
 		520AE6F8208F632700BADE47 /* TKRemoteControlManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 520AE6F6208F632700BADE47 /* TKRemoteControlManager.m */; };
 		520F2009205E1DF900A36B1E /* TKWebServerManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 520F2007205E1DF900A36B1E /* TKWebServerManager.h */; };
 		520F200A205E1DF900A36B1E /* TKWebServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 520F2008205E1DF900A36B1E /* TKWebServerManager.m */; };
+		52176DD9209809CE0035FA50 /* NSString+Action.h in Headers */ = {isa = PBXBuildFile; fileRef = 52176DD7209809CE0035FA50 /* NSString+Action.h */; };
+		52176DDA209809CE0035FA50 /* NSString+Action.m in Sources */ = {isa = PBXBuildFile; fileRef = 52176DD8209809CE0035FA50 /* NSString+Action.m */; };
 		521C49C320820662003902E7 /* TKRemoteControlWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 521C49C520820662003902E7 /* TKRemoteControlWindowController.xib */; };
 		521D75F92080E3670093C820 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 521D75FB2080E3670093C820 /* Localizable.strings */; };
 		52206B6A20836A230010C232 /* NSMenu+Action.h in Headers */ = {isa = PBXBuildFile; fileRef = 52206B6820836A230010C232 /* NSMenu+Action.h */; };
@@ -93,6 +95,8 @@
 		520AE6F6208F632700BADE47 /* TKRemoteControlManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKRemoteControlManager.m; sourceTree = "<group>"; };
 		520F2007205E1DF900A36B1E /* TKWebServerManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKWebServerManager.h; sourceTree = "<group>"; };
 		520F2008205E1DF900A36B1E /* TKWebServerManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKWebServerManager.m; sourceTree = "<group>"; };
+		52176DD7209809CE0035FA50 /* NSString+Action.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Action.h"; sourceTree = "<group>"; };
+		52176DD8209809CE0035FA50 /* NSString+Action.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Action.m"; sourceTree = "<group>"; };
 		521C49C420820662003902E7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/TKRemoteControlWindowController.xib; sourceTree = "<group>"; };
 		521C49C620820663003902E7 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/TKRemoteControlWindowController.xib"; sourceTree = "<group>"; };
 		521D75FA2080E3670093C820 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -212,6 +216,8 @@
 				52206B6920836A230010C232 /* NSMenu+Action.m */,
 				527D017120903C1B007155C9 /* NSMenuItem+Action.h */,
 				527D017220903C1B007155C9 /* NSMenuItem+Action.m */,
+				52176DD7209809CE0035FA50 /* NSString+Action.h */,
+				52176DD8209809CE0035FA50 /* NSString+Action.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -475,6 +481,7 @@
 				520AE6F3208F62EF00BADE47 /* TKAssistantMenuManager.h in Headers */,
 				526F4D831F4AAC1900E46004 /* TKAutoReplyModel.h in Headers */,
 				520AE6E8208E1DA300BADE47 /* TKMessageManager.h in Headers */,
+				52176DD9209809CE0035FA50 /* NSString+Action.h in Headers */,
 				52B5CF141F3B4631000D9DD9 /* TKWeChatPluginConfig.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -615,6 +622,7 @@
 				529CDDFF1F6E6A060056DC1A /* TKBaseModel.m in Sources */,
 				52DA3E0E2094790900C618BB /* TKDownloadWindowController.m in Sources */,
 				527E7F622018711800358D26 /* fishhook.c in Sources */,
+				52176DDA209809CE0035FA50 /* NSString+Action.m in Sources */,
 				52EA235A20862D19008E6329 /* TKHTTPManager.m in Sources */,
 				527D017420903C1B007155C9 /* NSMenuItem+Action.m in Sources */,
 				52B5CF1B1F3B4631000D9DD9 /* TKHelper.m in Sources */,

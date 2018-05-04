@@ -10,4 +10,6 @@
 
 @interface TKDownloadWindowController : NSWindowController
 
++ (instancetype)downloadWindowController;
+
 @end

@@ -17,6 +17,7 @@
 #import "TKAutoReplyModel.h"
 #import "TKVersionManager.h"
 #import "TKRemoteControlManager.h"
+#import "TKDownloadWindowController.h"
 
 @implementation NSObject (WeChatHook)
 
@@ -68,18 +69,8 @@
 
 + (void)checkPluginVersion {
     if ([[TKWeChatPluginConfig sharedConfig] forbidCheckVersion]) return;
-//    [[TKVersionManager shareManager] downloadPluginProgress:^(NSProgress *downloadProgress) {
-//
-//    } completionHandler:^(NSString *filePath, NSError * _Nullable error) {
-//        NSString *fileName = [filePath lastPathComponent];
-//        NSString *realFileName = [fileName stringByDeletingPathExtension];
-//        NSString *cmdString = [NSString stringWithFormat:@"cd %@ && unzip -n %@ && ./%@/Other/Update.sh",cachesPath,fileName,realFileName];
-//        NSString *result = [TKRemoteControlManager executeShellCommand:cmdString];
-//        [TKRemoteControlManager executeAppleScriptCommand:@"restartWeChat"];
-//
-//    }];
     [[TKVersionManager shareManager] checkVersionFinish:^(TKVersionStatus status, NSString *message) {
-        if (status == TKVersionStatusNew) {
+        if (status != TKVersionStatusNew) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 NSAlert *alert = [[NSAlert alloc] init];
                 [alert addButtonWithTitle:TKLocalizedString(@"assistant.update.alret.confirm")];
@@ -89,8 +80,11 @@
                 [alert setInformativeText:message];
                 NSModalResponse respose = [alert runModal];
                 if (respose == NSAlertFirstButtonReturn) {
-                    NSURL *url = [NSURL URLWithString:@"https://github.com/TKkk-iOSer/WeChatPlugin-MacOS"];
-                    [[NSWorkspace sharedWorkspace] openURL:url];
+                    TKDownloadWindowController *downloadWC = [TKDownloadWindowController downloadWindowController];
+                    
+                    [downloadWC showWindow:downloadWC];
+                    [downloadWC.window center];
+                    [downloadWC.window makeKeyWindow];
                 } else if (respose == NSAlertSecondButtonReturn) {
                     [[TKWeChatPluginConfig sharedConfig] setForbidCheckVersion:YES];
                 }

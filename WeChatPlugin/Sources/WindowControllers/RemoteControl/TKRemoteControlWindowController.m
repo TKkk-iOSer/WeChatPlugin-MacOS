@@ -29,7 +29,6 @@
 }
 
 - (void)initSubviews {
-
     CGFloat scrollViewWidth = self.tabView.frame.size.width -100;
     CGFloat scrollViewHeight = self.tabView.frame.size.height -110;
     

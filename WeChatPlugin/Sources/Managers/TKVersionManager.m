@@ -54,15 +54,13 @@
     
     NSString *urlString = @"https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/archive/master.zip";
     [[TKHTTPManager shareManager] downloadWithUrlString:urlString toDirectoryPah:cachesPath progress:^(NSProgress *downloadProgress) {
-        downloadProgressBlock(downloadProgress);
+        if (downloadProgressBlock) downloadProgressBlock(downloadProgress);
     } completionHandler:^(NSString *filePath, NSError * _Nullable error) {
-//        NSString *fileName = [filePath lastPathComponent];
-//        NSString *realFileName = [fileName stringByDeletingPathExtension];
-//        NSString *cmdString = [NSString stringWithFormat:@"cd %@ && unzip -n %@ && ./%@/Other/Update.sh",cachesPath,fileName,realFileName];
-//        NSString *result = [TKRemoteControlManager executeShellCommand:cmdString];
-        completionHandler(filePath,error);
-//        [TKRemoteControlManager executeAppleScriptCommand:@"restartWeChat"];
+        if (completionHandler) completionHandler(filePath,error);
     }];
 }
 
+- (void)cancelDownload {
+    [[TKHTTPManager shareManager] cancelDownload];
+}
 @end
