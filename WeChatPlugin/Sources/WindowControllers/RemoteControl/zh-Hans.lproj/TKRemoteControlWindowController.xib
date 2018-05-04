@@ -29,14 +29,14 @@
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="macbook" identifier="0" id="sNP-nR-n56">
-                                <view key="view" id="IAk-5N-FY9">
+                                <view key="view" ambiguous="YES" id="IAk-5N-FY9">
                                     <rect key="frame" x="10" y="33" width="610" height="399"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lv9-ri-gWd">
-                                            <rect key="frame" x="143" y="17" width="325" height="17"/>
+                                            <rect key="frame" x="143" y="17" width="164" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="手机端发送“获取指令”，获取所有远程控制指令信息。" id="JDf-Rp-jEj">
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="小助手已支持语音远程控制" id="JDf-Rp-jEj">
                                                 <font key="font" size="13" name=".PingFangSC-Medium"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -69,7 +69,7 @@
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="小助手" identifier="3" id="lza-eI-NvH">
-                                <view key="view" ambiguous="YES" id="gO3-SA-WEm">
+                                <view key="view" id="gO3-SA-WEm">
                                     <rect key="frame" x="10" y="33" width="610" height="399"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>

@@ -16,6 +16,7 @@
 "assistant.menu.windowSticky" = "微信窗口置顶";
 "assistant.menu.freeLogin" = "免认证登录";
 "assistant.menu.updateAssistant" = "更新小助手…";
+"assistant.menu.aboutAssistant" = "关于小助手";
 
 //  撤回相关
 "assistant.revokeType.emoji" = "[表情]";
@@ -98,10 +99,22 @@
 
 //  版本更新
 "assistant.update.alret.cancle" = "取消";
-"assistant.update.alret.confirm" = "前往Github";
+"assistant.update.alret.confirm" = "安装更新";
 "assistant.update.alret.title" = "检测到新版本！主要内容：👇";
 "assistant.update.alret.latest" = "当前为最新版本！主要内容：👇";
 "assistant.update.alret.forbid" = "不再提示";
+
+//  下载
+"assistant.download.title" = "正在更新小助手";
+"assistant.download.cancelTitle" = "已取消";
+"assistant.download.install" = "可以开始安装了";
+"assistant.download.error" = "更新错误！";
+"assistant.download.update" = "正在下载更新…";
+"assistant.download.relaunch" = "安装并重启应用";
+"assistant.download.cancel" = "取消";
+"assistant.download.reInstall" = "重试";
+"assistant.download.reDownload" = "重新下载";
+
 
 //  alfred 搜索
 "assistant.search.member" = "成员：";

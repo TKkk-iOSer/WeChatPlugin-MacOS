@@ -72,6 +72,12 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
                                                           target:self
                                                    keyEquivalent:@""
                                                            state:0];
+    //        关于小助手
+    NSMenuItem *abountPluginItem = [NSMenuItem menuItemWithTitle:TKLocalizedString(@"assistant.menu.aboutAssistant")
+                                                          action:@selector(onAboutPluginControl:)
+                                                          target:self
+                                                   keyEquivalent:@""
+                                                           state:0];
     
     NSMenu *subMenu = [[NSMenu alloc] initWithTitle:TKLocalizedString(@"assistant.menu.title")];
     [subMenu addItems:@[preventRevokeItem,
@@ -80,14 +86,15 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
                         newWeChatItem,
                         onTopItem,
                         autoAuthItem,
-                        updatePluginItem]];
+                        updatePluginItem,
+                        abountPluginItem]];
     
     NSMenuItem *menuItem = [[NSMenuItem alloc] init];
     [menuItem setTitle:TKLocalizedString(@"assistant.menu.title")];
     [menuItem setSubmenu:subMenu];
     menuItem.target = self;
     [[[NSApplication sharedApplication] mainMenu] addItem:menuItem];
-    menuItem.enabled = NO;
+//    menuItem.enabled = NO;
     
     [self addObserverWeChatConfig];
 }
@@ -233,8 +240,10 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
             [alert setInformativeText:message];
             NSModalResponse respose = [alert runModal];
             if (respose == NSAlertFirstButtonReturn) {
-                NSURL *url = [NSURL URLWithString:@"https://github.com/TKkk-iOSer/WeChatPlugin-MacOS"];
-                [[NSWorkspace sharedWorkspace] openURL:url];
+                TKDownloadWindowController *downloadWC = [TKDownloadWindowController downloadWindowController];
+                [downloadWC showWindow:downloadWC];
+                [downloadWC.window center];
+                [downloadWC.window makeKeyWindow];
             }
         } else {
             NSAlert *alert = [[NSAlert alloc] init];
@@ -243,6 +252,10 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
             [alert runModal];
         }
     }];
+}
+
+- (void)onAboutPluginControl:(NSMenuItem *)item {
+    
 }
 
 @end

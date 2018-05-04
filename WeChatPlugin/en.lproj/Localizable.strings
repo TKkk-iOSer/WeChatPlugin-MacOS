@@ -16,6 +16,7 @@
 "assistant.menu.windowSticky" = "Sticky on Top";
 "assistant.menu.freeLogin" = "AutoAuth Login";
 "assistant.menu.updateAssistant" = "Update Assistant…";
+"assistant.menu.aboutAssistant" = "About Assistant";
 
 //  Prevent Revoke
 "assistant.revokeType.emoji" = "[Sticker]";
@@ -98,10 +99,21 @@
 
 //  Version Update
 "assistant.update.alret.cancle" = "Cancel";
-"assistant.update.alret.confirm" = "Github";
+"assistant.update.alret.confirm" = "Update";
 "assistant.update.alret.title" = "Found a New Version！Main Contents:👇";
 "assistant.update.alret.latest" = "This is Latest Version！Main Contents:👇";
 "assistant.update.alret.forbid" = "Ignore";
+
+//  Download
+"assistant.download.title" = "Updating Assistant";
+"assistant.download.cancelTitle" = "Cancelled";
+"assistant.download.install" = "Ready to Install";
+"assistant.download.error" = "Update Error!";
+"assistant.download.update" = "Downloading update...";
+"assistant.download.relaunch" = "Install and Relaunch";
+"assistant.download.cancel" = "Cancel";
+"assistant.download.reInstall" = "Try Again";
+"assistant.download.reDownload" = "Redownload";
 
 //  Alfred
 "assistant.search.member" = "Member: ";

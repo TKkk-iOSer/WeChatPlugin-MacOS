@@ -17,4 +17,6 @@
                      progress:(nullable void (^)(NSProgress *downloadProgress))downloadProgressBlock
             completionHandler:(nullable void (^)(NSString * filePath, NSError * _Nullable error))completionHandler;
 
+- (void)cancelDownload;
+
 @end

@@ -55,15 +55,22 @@
     self.sessionManager = [[objc_getClass("AFURLSessionManager") alloc] initWithSessionConfiguration:configuration];
 
     self.downloadTask = [self.sessionManager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
-        downloadProgressBlock(downloadProgress);
+        if (downloadProgressBlock) downloadProgressBlock(downloadProgress);
+        
     } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
         NSString *path = [directory stringByAppendingPathComponent:response.suggestedFilename];
         return [NSURL fileURLWithPath:path];
     } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable urlPath, NSError * _Nullable error) {
         NSString *filePath = [[urlPath absoluteString] substringFromIndex:7];
-        completionHandler(filePath, error);
+        if (completionHandler) completionHandler(filePath, error);
     }];
     [self.downloadTask resume];
+}
+
+- (void)cancelDownload {
+    if (!self.downloadTask) return;
+    [self.downloadTask cancel];
+    self.downloadTask = nil;
 }
 
 @end
