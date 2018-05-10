@@ -34,6 +34,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     tk_hookMethod(objc_getClass("LogoutCGI"), @selector(sendLogoutCGIWithCompletion:), [self class], @selector(hook_sendLogoutCGIWithCompletion:));
     //      自动登录
     tk_hookMethod(objc_getClass("MMLoginOneClickViewController"), @selector(viewWillAppear), [self class], @selector(hook_viewWillAppear));
+    tk_hookMethod(objc_getClass("AccountService"), @selector(ManualLogout), [self class], @selector(hook_manualLogout));
     //      置底
     tk_hookMethod(objc_getClass("MMSessionMgr"), @selector(sortSessions), [self class], @selector(hook_sortSessions));
     //      窗口置顶
@@ -445,6 +446,14 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
     
     return [self hook_sendLogoutCGIWithCompletion:arg1];
 }
+
+- (void)hook_manualLogout {
+    BOOL enabledAutoAuth = [[TKWeChatPluginConfig sharedConfig] autoAuthEnable];
+    if (!enabledAutoAuth) {
+        [self hook_manualLogout];
+    }
+}
+
 
 - (void)hook_viewWillAppear {
     [self hook_viewWillAppear];
