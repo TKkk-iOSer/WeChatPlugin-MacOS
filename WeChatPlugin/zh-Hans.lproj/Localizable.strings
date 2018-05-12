@@ -15,6 +15,7 @@
 "assistant.menu.remoteControl" = "远程控制mac";
 "assistant.menu.windowSticky" = "微信窗口置顶";
 "assistant.menu.freeLogin" = "免认证登录";
+"assistant.menu.other" = "小助手🌚";
 "assistant.menu.updateAssistant" = "更新小助手…";
 "assistant.menu.aboutAssistant" = "关于小助手";
 
@@ -81,6 +82,7 @@
 
 //  自动回复
 "assistant.autoReply.title" = "自动回复设置";
+"assistant.autoReply.enable" = "开启自动回复";
 "assistant.autoReply.enableSpecific" = "开启特定回复";
 "assistant.autoReply.selectSpecific" = "查看(修改)选中联系人";
 "assistant.autoReply.enableRegEx" = "开启正则匹配";
@@ -105,7 +107,7 @@
 "assistant.update.alret.forbid" = "不再提示";
 
 //  下载
-"assistant.download.title" = "正在更新小助手";
+"assistant.download.title" = "更新小助手";
 "assistant.download.cancelTitle" = "已取消";
 "assistant.download.install" = "可以开始安装了";
 "assistant.download.error" = "更新错误！";

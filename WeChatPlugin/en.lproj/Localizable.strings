@@ -15,6 +15,7 @@
 "assistant.menu.remoteControl" = "Remote Control";
 "assistant.menu.windowSticky" = "Sticky on Top";
 "assistant.menu.freeLogin" = "AutoAuth Login";
+"assistant.menu.other" = "Others";
 "assistant.menu.updateAssistant" = "Update Assistant…";
 "assistant.menu.aboutAssistant" = "About Assistant";
 
@@ -36,7 +37,7 @@
 "assistant.chat.stickyBottom" = "Sticky on Bottom";
 "assistant.chat.unStickyBottom" = "Unsticky on Bottom";
 "assistant.chat.multiSelect" = "Multiselect";
-"assistant.chat.unMultiSelect" = "UnMultiselect";
+"assistant.chat.unMultiSelect" = "Unmultiselect";
 "assistant.chat.readAll" = "Mark All As Read";
 "assistant.chat.clearEmpty" = "Clear All Empty Session";
 
@@ -81,6 +82,7 @@
 
 //  AutoAuth Setting
 "assistant.autoReply.title" = "Auto Reply Setting";
+"assistant.autoReply.enable" = "Enable Auto Reply";
 "assistant.autoReply.enableSpecific" = "Enable Some Session Reply";
 "assistant.autoReply.selectSpecific" = "View Or Edit Session";
 "assistant.autoReply.enableRegEx" = "Enable RegEx";
@@ -105,7 +107,7 @@
 "assistant.update.alret.forbid" = "Ignore";
 
 //  Download
-"assistant.download.title" = "Updating Assistant";
+"assistant.download.title" = "Update Assistant";
 "assistant.download.cancelTitle" = "Cancelled";
 "assistant.download.install" = "Ready to Install";
 "assistant.download.error" = "Update Error!";

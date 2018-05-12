@@ -13,9 +13,11 @@
 #import "TKVersionManager.h"
 #import "NSMenuItem+Action.h"
 #import "TKDownloadWindowController.h"
+#import "TKAboutWindowController.h"
 
 static char tkAutoReplyWindowControllerKey;         //  自动回复窗口的关联 key
 static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关联 key
+static char tkAboutWindowControllerKey;             //  关于窗口的关联 key
 
 @implementation TKAssistantMenuManager
 
@@ -79,22 +81,33 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
                                                    keyEquivalent:@""
                                                            state:0];
     
+    //        关于小助手
+    NSMenuItem *pluginItem = [NSMenuItem menuItemWithTitle:TKLocalizedString(@"assistant.menu.other")
+                                                          action:@selector(onAboutPluginControl:)
+                                                          target:self
+                                                   keyEquivalent:@""
+                                                           state:0];
+    NSMenu *subPluginMenu = [[NSMenu alloc] initWithTitle:TKLocalizedString(@"assistant.menu.other")];
+    [subPluginMenu addItems:@[updatePluginItem,
+                             abountPluginItem]];
+    
     NSMenu *subMenu = [[NSMenu alloc] initWithTitle:TKLocalizedString(@"assistant.menu.title")];
+
     [subMenu addItems:@[preventRevokeItem,
                         autoReplyItem,
                         commandItem,
                         newWeChatItem,
                         onTopItem,
                         autoAuthItem,
-                        updatePluginItem,
-                        abountPluginItem]];
-    
+                        pluginItem
+                        ]];
+    [subMenu setSubmenu:subPluginMenu forItem:pluginItem];
     NSMenuItem *menuItem = [[NSMenuItem alloc] init];
     [menuItem setTitle:TKLocalizedString(@"assistant.menu.title")];
     [menuItem setSubmenu:subMenu];
     menuItem.target = self;
     [[[NSApplication sharedApplication] mainMenu] addItem:menuItem];
-//    menuItem.enabled = NO;
+    menuItem.enabled = NO;
     
     [self addObserverWeChatConfig];
 }
@@ -104,7 +117,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
 - (void)addObserverWeChatConfig {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(weChatPluginConfigAutoReplyChange) name:NOTIFY_AUTO_REPLY_CHANGE object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(weChatPluginConfigPreventRevokeChange) name:NOTIFY_PREVENT_REVOKE_CHANGE object:nil];
-     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(weChatPluginConfigAutoAuthChange) name:NOTIFY_AUTO_AUTH_CHANGE object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(weChatPluginConfigAutoAuthChange) name:NOTIFY_AUTO_AUTH_CHANGE object:nil];
 }
 
 - (void)weChatPluginConfigAutoReplyChange {
@@ -148,25 +161,14 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
  @param item 自动回复设置的item
  */
 - (void)onAutoReply:(NSMenuItem *)item {
-    item.state = !item.state;
-    [[TKWeChatPluginConfig sharedConfig] setAutoReplyEnable:item.state];
-    
     WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
     TKAutoReplyWindowController *autoReplyWC = objc_getAssociatedObject(wechat, &tkAutoReplyWindowControllerKey);
-    
-    if (!item.state && autoReplyWC) {
-        [autoReplyWC close];
-        return;
-    }
 
     if (!autoReplyWC) {
         autoReplyWC = [[TKAutoReplyWindowController alloc] initWithWindowNibName:@"TKAutoReplyWindowController"];
         objc_setAssociatedObject(wechat, &tkAutoReplyWindowControllerKey, autoReplyWC, OBJC_ASSOCIATION_RETAIN);
     }
-    
-    [autoReplyWC showWindow:autoReplyWC];
-    [autoReplyWC.window center];
-    [autoReplyWC.window makeKeyWindow];
+    [autoReplyWC show];
 }
 
 /**
@@ -192,9 +194,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
         objc_setAssociatedObject(wechat, &tkRemoteControlWindowControllerKey, remoteControlWC, OBJC_ASSOCIATION_RETAIN);
     }
     
-    [remoteControlWC showWindow:remoteControlWC];
-    [remoteControlWC.window center];
-    [remoteControlWC.window makeKeyWindow];
+    [remoteControlWC show];
 }
 
 /**
@@ -210,7 +210,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
 /**
  菜单栏-微信小助手-微信窗口置顶
  
- @param item 免认证登录的 item
+ @param item 窗口置顶的 item
  */
 - (void)onWechatOnTopControl:(NSMenuItem *)item {
     item.state = !item.state;
@@ -240,10 +240,7 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
             [alert setInformativeText:message];
             NSModalResponse respose = [alert runModal];
             if (respose == NSAlertFirstButtonReturn) {
-                TKDownloadWindowController *downloadWC = [TKDownloadWindowController downloadWindowController];
-                [downloadWC showWindow:downloadWC];
-                [downloadWC.window center];
-                [downloadWC.window makeKeyWindow];
+                [[TKDownloadWindowController downloadWindowController] show];
             }
         } else {
             NSAlert *alert = [[NSAlert alloc] init];
@@ -255,7 +252,15 @@ static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关
 }
 
 - (void)onAboutPluginControl:(NSMenuItem *)item {
+    WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
+    TKAboutWindowController *remoteControlWC = objc_getAssociatedObject(wechat, &tkAboutWindowControllerKey);
     
+    if (!remoteControlWC) {
+        remoteControlWC = [[TKAboutWindowController alloc] initWithWindowNibName:@"TKAboutWindowController"];
+        objc_setAssociatedObject(wechat, &tkAboutWindowControllerKey, remoteControlWC, OBJC_ASSOCIATION_RETAIN);
+    }
+    
+    [remoteControlWC show];
 }
 
 @end

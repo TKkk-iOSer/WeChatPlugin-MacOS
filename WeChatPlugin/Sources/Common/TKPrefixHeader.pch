@@ -18,6 +18,7 @@
 #import "NSTextField+Action.h"
 #import "NSMenu+Action.h"
 #import "NSString+Action.h"
+#import "NSWindowController+Action.h"
 #import "WeChatPlugin.h"
 #endif
 
