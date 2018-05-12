@@ -1,0 +1,124 @@
+/*
+ Localizable.strings
+ WeChatPlugin
+ 
+ Created by TK on 2018/4/14.
+ Copyright © 2018年 tk. All rights reserved.
+ */
+
+
+//  菜單欄
+"assistant.menu.title" = "微信小助手";
+"assistant.menu.revoke" = "開啟消息防撤回";
+"assistant.menu.autoReply" = "自動回復設置";
+"assistant.menu.newWeChat" = "登錄新微信";
+"assistant.menu.remoteControl" = "遠程控制mac";
+"assistant.menu.windowSticky" = "微信窗口置頂";
+"assistant.menu.freeLogin" = "免認證登錄";
+"assistant.menu.other" = "小助手🌚";
+"assistant.menu.updateAssistant" = "更新小助手…";
+"assistant.menu.aboutAssistant" = "關於小助手";
+
+//  撤回相關
+"assistant.revokeType.emoji" = "[表情]";
+"assistant.revokeType.image" = "[圖片]";
+"assistant.revokeType.video" = "[視頻]";
+"assistant.revokeType.voice" = "[語音]";
+"assistant.revokeType.other" = "[非文本]";
+"assistant.revoke.otherMessage.tip" = "TK攔截到一條撤回消息: ";
+"assistant.revoke.selfMessage.tip" = "你撤回了一條消息: ";
+
+//  免認證相關
+"assistant.autoAuth.tip" = "TK正在為你免認證登錄~";
+"assistant.autoLogin.text" = "自動登錄";
+
+
+//  回話選擇
+"assistant.chat.stickyBottom" = "置底";
+"assistant.chat.unStickyBottom" = "取消置底";
+"assistant.chat.multiSelect" = "多選";
+"assistant.chat.unMultiSelect" = "取消多選";
+"assistant.chat.readAll" = "一鍵已讀";
+"assistant.chat.clearEmpty" = "清除空會話";
+
+//  遠程控制相關
+"assistant.remoteControl.getList" = "獲取指令";
+"assistant.remoteControl.listTip" = "遠程控制指令：\n(功能-指令-是否開啟)\n\n";
+"assistant.remoteControl.recall" = "小助手收到一條指令：";
+"assistant.remoteControl.voiceRecall" = "小助手收到一條語音消息，轉文字後👇👇👇：";
+"assistant.remoteControl.mac" = "macbook控制:";
+"assistant.remoteControl.app" = "app控制:";
+"assistant.remoteControl.neteaseMusic" = "網易雲音樂控制:";
+"assistant.remoteControl.assistant" = "小助手控制:";
+"assistant.remoteControl.open" = "開啟";
+"assistant.remoteControl.close" = "關閉";
+"assistant.remoteControl.contentPlaceHodler" = "請輸入匹配的關鍵詞";
+
+//  遠程控制指令
+"Assistant.Directive.ScreenSave" = "屏幕保護";
+"Assistant.Directive.LockScreen" = "鎖屏";
+"Assistant.Directive.Sleep" = "休眠";
+"Assistant.Directive.Shutdown" = "關機";
+"Assistant.Directive.Restart" = "重啟";
+"Assistant.Directive.EmptyTrash" = "清空廢紙簍";
+"Assistant.Directive.KillQQ" = "退出 QQ";
+"Assistant.Directive.KillWeChat" = "退出 WeChat";
+"Assistant.Directive.KillChrome" = "退出 Chrome";
+"Assistant.Directive.KillSafari" = "退出 Safari";
+"Assistant.Directive.KillFirefox" = "退出 Firefox";
+"Assistant.Directive.KillAll" = "退出所有程序";
+"Assistant.Directive.Toggle" = "播放/暫停";
+"Assistant.Directive.Next" = "下一首";
+"Assistant.Directive.Previous" = "上一首";
+"Assistant.Directive.VolumeUp" = "增大音量";
+"Assistant.Directive.VolumeDown" = "VolumeDown";
+"Assistant.Directive.LikeChange" = "喜歡/取消喜歡";
+"Assistant.Directive.GetList" = "獲取指令";
+"Assistant.Directive.AutoReplySwitch" = "自動回復開關";
+"Assistant.Directive.PreventRevokeSwitch" = "防撤回開關";
+"Assistant.Directive.AutoAuthSwitch" = "免認證登錄開關";
+"Assistant.Directive.SwitchOn" = "開啟";
+"Assistant.Directive.SwitchOff" = "關閉";
+
+//  自動回復
+"assistant.autoReply.title" = "自動回復設置";
+"assistant.autoReply.enable" = "開啟自動回復";
+"assistant.autoReply.enableSpecific" = "開啟特定回復";
+"assistant.autoReply.selectSpecific" = "查看(修改)選中聯系人";
+"assistant.autoReply.enableRegEx" = "開啟正則匹配";
+"assistant.autoReply.enableGroup" = "開啟群聊自動回復";
+"assistant.autoReply.enableSingle" = "開啟私聊自動回復";
+"assistant.autoReply.delay" = "延遲發送";
+"assistant.autoReply.timeUnit" = "秒";
+"assistant.autoReply.contentPlaceholder" = "請輸入自動回復的內容（‘|’ 為隨機回復其中任一內容）";
+"assistant.autoReply.keywordPlaceholder" = "請輸入關鍵字（ ‘*’ 為任何消息都回復，‘|’ 為匹配多個關鍵字）";
+"assistant.autoReply.keyword" = "關鍵字";
+"assistant.autoReply.content" = "回復內容";
+"assistant.autoReply.list" = "自動回復列表";
+"assistant.autoReply.alert.confirm" = "確定";
+"assistant.autoReply.alert.title" = "您還有一條自動回復設置未完成";
+"assistant.autoReply.alert.content" = "請完善未完成的自動回復設置";
+
+//  版本更新
+"assistant.update.alret.cancle" = "取消";
+"assistant.update.alret.confirm" = "安裝更新";
+"assistant.update.alret.title" = "檢測到新版本！主要內容：👇";
+"assistant.update.alret.latest" = "當前為最新版本！主要內容：👇";
+"assistant.update.alret.forbid" = "不再提示";
+
+//  下載
+"assistant.download.title" = "更新小助手";
+"assistant.download.cancelTitle" = "已取消";
+"assistant.download.install" = "可以開始安裝了";
+"assistant.download.error" = "更新錯誤！";
+"assistant.download.update" = "正在下載更新…";
+"assistant.download.relaunch" = "安裝並重啟應用";
+"assistant.download.cancel" = "取消";
+"assistant.download.reInstall" = "重試";
+"assistant.download.reDownload" = "重新下載";
+
+
+//  alfred 搜索
+"assistant.search.member" = "成員：";
+"assistant.search.group" = "[群聊]";
+

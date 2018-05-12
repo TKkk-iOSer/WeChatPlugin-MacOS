@@ -144,36 +144,37 @@
 }
 
 - (void)contextMenuClearUnRead {
-    MessageService *service = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
+    MessageService *msgService = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
     
     MMSessionMgr *sessionMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMSessionMgr")];
     NSMutableArray *arrSession = sessionMgr.m_arrSession;
 
     [arrSession enumerateObjectsUsingBlock:^(MMSessionInfo *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [service ClearUnRead:obj.m_nsUserName FromID:0 ToID:0];
+            [msgService ClearUnRead:obj.m_nsUserName FromID:0 ToID:0];
         });
     }];
 }
 
 - (void)contextMenuClearEmptySession {
     MMSessionMgr *sessionMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMSessionMgr")];
-    NSMutableArray *arrSession = sessionMgr.m_arrSession;
     MessageService *msgService = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
-    NSMutableArray *array = [NSMutableArray array];
+    
+    NSMutableArray *arrSession = sessionMgr.m_arrSession;
+    NSMutableArray *emptyArrSession = [NSMutableArray array];
     
     [arrSession enumerateObjectsUsingBlock:^(MMSessionInfo *sessionInfo, NSUInteger idx, BOOL * _Nonnull stop) {
         BOOL hasEmplyMsgSession = ![msgService hasMsgInChat:sessionInfo.m_nsUserName];
         WCContactData *contact = sessionInfo.m_packedInfo.m_contact;
         if (![sessionInfo.m_nsUserName isEqualToString:@"brandsessionholder"] && ![contact isSelf] && hasEmplyMsgSession) {
-            [array addObject:sessionInfo];
+            [emptyArrSession addObject:sessionInfo];
         }
     }];
     
-    while (array.count > 0) {
-        [array enumerateObjectsUsingBlock:^(MMSessionInfo *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    while (emptyArrSession.count > 0) {
+        [emptyArrSession enumerateObjectsUsingBlock:^(MMSessionInfo *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             [sessionMgr deleteSessionWithoutSyncToServerWithUserName:obj.m_nsUserName];
-            [array removeObject:obj];
+            [emptyArrSession removeObject:obj];
         }];
     }
 }

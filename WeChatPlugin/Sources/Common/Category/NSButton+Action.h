@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 @interface NSButton (Action)
+
 + (instancetype)tk_buttonWithTitle:(NSString *)title target:(id)target action:(SEL)action;
 + (instancetype)tk_checkboxWithTitle:(NSString *)title target:(id)target action:(SEL)action;
 

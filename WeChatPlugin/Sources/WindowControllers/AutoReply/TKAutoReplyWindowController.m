@@ -8,7 +8,6 @@
 
 #import "TKAutoReplyWindowController.h"
 #import "TKAutoReplyContentView.h"
-#import "WeChatPlugin.h"
 #import "TKAutoReplyCell.h"
 
 @interface TKAutoReplyWindowController () <NSWindowDelegate, NSTableViewDelegate, NSTableViewDataSource>
@@ -17,6 +16,7 @@
 @property (nonatomic, strong) TKAutoReplyContentView *contentView;
 @property (nonatomic, strong) NSButton *addButton;
 @property (nonatomic, strong) NSButton *reduceButton;
+@property (nonatomic, strong) NSButton *enableButton;
 @property (nonatomic, strong) NSAlert *alert;
 
 @property (nonatomic, strong) NSMutableArray *autoReplyModels;
@@ -94,6 +94,14 @@
         btn;
     });
     
+    self.enableButton = ({
+        NSButton *btn = [NSButton tk_checkboxWithTitle:TKLocalizedString(@"assistant.autoReply.enable") target:self action:@selector(clickEnableBtn:)];
+        btn.frame = NSMakeRect(130, 20, 130, 20);
+        btn.state = [[TKWeChatPluginConfig sharedConfig] autoReplyEnable];
+        
+        btn;
+    });
+    
     self.alert = ({
         NSAlert *alert = [[NSAlert alloc] init];
         [alert addButtonWithTitle:TKLocalizedString(@"assistant.autoReply.alert.confirm")];
@@ -108,7 +116,8 @@
     [self.window.contentView addSubviews:@[scrollView,
                                            self.contentView,
                                            self.addButton,
-                                           self.reduceButton]];
+                                           self.reduceButton,
+                                           self.enableButton]];
 }
 
 - (void)setup {
@@ -191,6 +200,10 @@
             [self.tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:self.autoReplyModels.count - 1] byExtendingSelection:YES];
         }
     }
+}
+
+- (void)clickEnableBtn:(NSButton *)btn {
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_AUTO_REPLY_CHANGE object:nil];
 }
 
 #pragma mark - NSTableViewDataSource && NSTableViewDelegate

@@ -31,6 +31,8 @@
     //      免认证登录
     tk_hookMethod(objc_getClass("MMLoginOneClickViewController"), @selector(onLoginButtonClicked:), [self class], @selector(hook_onLoginButtonClicked:));
     tk_hookMethod(objc_getClass("LogoutCGI"), @selector(sendLogoutCGIWithCompletion:), [self class], @selector(hook_sendLogoutCGIWithCompletion:));
+    tk_hookMethod(objc_getClass("AccountService"), @selector(ManualLogout), [self class], @selector(hook_ManualLogout));
+    
     //      自动登录
     tk_hookMethod(objc_getClass("MMLoginOneClickViewController"), @selector(viewWillAppear), [self class], @selector(hook_viewWillAppear));
     //      置底
@@ -41,36 +43,44 @@
     tk_hookMethod(objc_getClass("_NSConcreteUserNotificationCenter"), @selector(deliverNotification:), [self class], @selector(hook_deliverNotification:));
     tk_hookMethod(objc_getClass("MMNotificationService"), @selector(userNotificationCenter:didActivateNotification:), [self class], @selector(hook_userNotificationCenter:didActivateNotification:));
     tk_hookMethod(objc_getClass("MMNotificationService"), @selector(getNotificationContentWithMsgData:), [self class], @selector(hook_getNotificationContentWithMsgData:));
-    
     //      登录逻辑
     tk_hookMethod(objc_getClass("WeChat"), @selector(onAuthOK:), [self class], @selector(hook_onAuthOK:));
     
+    tk_hookMethod(objc_getClass("MMURLHandler"), @selector(startGetA8KeyWithURL:), [self class], @selector(hook_startGetA8KeyWithURL:));
+    tk_hookMethod(objc_getClass("WeChat"), @selector(applicationDidFinishLaunching:), [self class], @selector(hook_applicationDidFinishLaunching:));
+
     //      替换沙盒路径
     rebind_symbols((struct rebinding[2]) {
         { "NSSearchPathForDirectoriesInDomains", swizzled_NSSearchPathForDirectoriesInDomains, (void *)&original_NSSearchPathForDirectoriesInDomains },
         { "NSHomeDirectory", swizzled_NSHomeDirectory, (void *)&original_NSHomeDirectory }
     }, 2);
-    
+
     [self setup];
-    [self checkPluginVersion];
 }
 
 + (void)setup {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-         [[TKAssistantMenuManager shareManager] initAssistantMenuItems];
+        [[TKAssistantMenuManager shareManager] initAssistantMenuItems];
         
-        BOOL onTop = [[TKWeChatPluginConfig sharedConfig] onTop];
-        WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
-        wechat.mainWindowController.window.level = onTop == NSControlStateValueOn ? NSNormalWindowLevel+2 : NSNormalWindowLevel;
+        //        窗口置顶初始化
+        [self setupWindowSticky];
     });
+    [self checkPluginVersion];
     //    监听 NSWindow 最小化通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowsWillMiniaturize:) name:NSWindowWillMiniaturizeNotification object:nil];
 }
 
++ (void)setupWindowSticky {
+    BOOL onTop = [[TKWeChatPluginConfig sharedConfig] onTop];
+    WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
+    wechat.mainWindowController.window.level = onTop == NSControlStateValueOn ? NSNormalWindowLevel+2 : NSNormalWindowLevel;
+}
+
 + (void)checkPluginVersion {
     if ([[TKWeChatPluginConfig sharedConfig] forbidCheckVersion]) return;
+    
     [[TKVersionManager shareManager] checkVersionFinish:^(TKVersionStatus status, NSString *message) {
-        if (status != TKVersionStatusNew) {
+        if (status == TKVersionStatusNew) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 NSAlert *alert = [[NSAlert alloc] init];
                 [alert addButtonWithTitle:TKLocalizedString(@"assistant.update.alret.confirm")];
@@ -80,11 +90,7 @@
                 [alert setInformativeText:message];
                 NSModalResponse respose = [alert runModal];
                 if (respose == NSAlertFirstButtonReturn) {
-                    TKDownloadWindowController *downloadWC = [TKDownloadWindowController downloadWindowController];
-                    
-                    [downloadWC showWindow:downloadWC];
-                    [downloadWC.window center];
-                    [downloadWC.window makeKeyWindow];
+                    [[TKDownloadWindowController downloadWindowController] show];
                 } else if (respose == NSAlertSecondButtonReturn) {
                     [[TKWeChatPluginConfig sharedConfig] setForbidCheckVersion:YES];
                 }
@@ -299,6 +305,13 @@
     return [self hook_sendLogoutCGIWithCompletion:arg1];
 }
 
+- (void)hook_ManualLogout {
+    BOOL autoAuthEnable = [[TKWeChatPluginConfig sharedConfig] autoAuthEnable];
+    if (autoAuthEnable) return;
+    
+    [self hook_ManualLogout];
+}
+
 - (void)hook_viewWillAppear {
     [self hook_viewWillAppear];
     
@@ -360,6 +373,20 @@
     [wechat.chatsViewController.tableView reloadData];
 }
 
+
+- (void)hook_startGetA8KeyWithURL:(id)arg1 {
+    MMURLHandler *urlHandler = (MMURLHandler *)self;
+    [urlHandler openURLWithDefault:arg1];
+}
+
+- (void)hook_applicationDidFinishLaunching:(id)arg1 {
+    if ([NSObject hook_HasWechatInstance]) {
+        WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
+        wechat.hasAuthOK = YES;
+    }
+    [self hook_applicationDidFinishLaunching:arg1];
+}
+
 #pragma mark - hook 系统方法
 - (void)hook_makeKeyAndOrderFront:(nullable id)sender {
     BOOL top = [[TKWeChatPluginConfig sharedConfig] onTop];
@@ -376,7 +403,7 @@
  */
 - (void)autoReplyWithMsg:(AddMsg *)addMsg {
 //    addMsg.msgType != 49
-    if (addMsg.msgType != 1 && addMsg.msgType != 3 ) return;
+    if (addMsg.msgType != 1 && addMsg.msgType != 3 && addMsg.msgType != 49) return;
     
     NSString *userName = addMsg.fromUserName.string;
     
@@ -465,10 +492,8 @@
     if (addMsg.msgType != 1 && addMsg.msgType != 3) return;
     
     if ([addMsg.content.string isEqualToString:TKLocalizedString(@"assistant.remoteControl.getList")]) {
-        NSString *currentUserName = [objc_getClass("CUtility") GetCurrentUserName];
         NSString *callBack = [TKRemoteControlManager remoteControlCommandsString];
-        MessageService *service = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
-        [service SendTextMessage:currentUserName toUsrName:currentUserName msgText:callBack atUserList:nil];
+        [[TKMessageManager shareManager] sendTextMessageToSelf:callBack];
     }
 }
 

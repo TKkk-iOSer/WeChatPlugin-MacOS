@@ -82,6 +82,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 - (void)startANewChatWithContact:(id)arg1;
 - (void)_clearAllUnreadMessages:(id)arg1;
 - (void)onAuthOK:(BOOL)arg1;
+@property(nonatomic) BOOL hasAuthOK;
 @end
 
 @interface ContactStorage : NSObject
@@ -133,6 +134,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 - (BOOL)isImgMsg;
 - (BOOL)isVideoMsg;
 - (BOOL)isVoiceMsg;
+- (BOOL)canForward;
 @end
 
 @interface CUtility : NSObject
@@ -282,4 +284,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @property(retain, nonatomic) AFHTTPResponseSerializer *responseSerializer;
 @end
 
-
+@interface MMURLHandler : NSObject
+- (void)startGetA8KeyWithURL:(id)arg1;
+- (BOOL)openURLWithDefault:(id)arg1;
+@end

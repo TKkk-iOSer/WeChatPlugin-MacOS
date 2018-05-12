@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>FMWK</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.6.1</string>
+	<string>1.7</string>
 	<key>CFBundleSupportedPlatforms</key>
 	<array>
 		<string>MacOSX</string>
@@ -41,7 +41,7 @@
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2017年 tk. All rights reserved.</string>
 	<key>versionInfo</key>
-	<string>v1.6.1 (2018-04-06)：\n👉🏻  自动回复新增延迟回复\n👉🏼  调整置顶模式快捷键\n👉🏽  修复bug &amp; 优化代码\n👉🏾  更新 README.md 文档 \n\n之前版本主要更新内容:\n👉 新增 Alfred 快捷发消息 &amp; 打开聊天窗口\n👉🏻  新增语音远程控制 mac\n👉🏼  优化防撤回提醒 (显示撤回人昵称 &amp; 消息类型)\n👉🏽  新增自动登录开关  \n👉🏾  新增通知中心快捷回复 \n👉🏿  新增表情包复制 &amp; 存储 \n
+	<string>v1.7 (2018-05-12)：\n(更新前请务必备份自动回复&amp;远程控制！！) \n👉🏻  新增不同账户设置不同的自动回复&amp;远程控制\n👉🏼  自动回复新增总开关&amp;指定联系人\n👉🏽  远程控制新增控制小助手配置\n👉🏾  新增一键已读\n👉 新增一键清除空回话\n👉🏻  新增国际化(支持英、简、繁)\n👉🏼  新增关于小助手\n👉🏽  新增在线更新小助手  \n👉🏾  去除微信url转链处理(从此直接打开抖音链接🌝 \n👉🏿  修复无法免认证登录&amp;多开等bug \n
 </string>
 </dict>
 </plist>

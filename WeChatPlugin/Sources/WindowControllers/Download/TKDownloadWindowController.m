@@ -58,7 +58,7 @@ typedef NS_ENUM(NSUInteger, TKDownloadState) {
 
 - (void)downloadPlugin {
     self.downloadState = TKDownloadStateProgress;
-    self.window.title = TKLocalizedString(@"assistant.download.title");;
+    self.window.title = TKLocalizedString(@"assistant.download.title");
     self.titleLabel.stringValue = TKLocalizedString(@"assistant.download.update");
     self.progressView.doubleValue = 0;
     [self setupInstallBtnTitle:TKLocalizedString(@"assistant.download.cancel")];
@@ -73,22 +73,24 @@ typedef NS_ENUM(NSUInteger, TKDownloadState) {
             self.progressLabel.stringValue = [NSString stringWithFormat:@"%.2lf MB / %.2lf MB", currentCount, totalCount];
         });
     } completionHandler:^(NSString *filePath, NSError * _Nullable error) {
-        if (error) {
-            self.downloadState = TKDownloadStateError;
-            if (error.code == NSURLErrorCancelled) {
-                self.titleLabel.stringValue = TKLocalizedString(@"assistant.download.cancelTitle");
-                [self setupInstallBtnTitle:TKLocalizedString(@"assistant.download.reDownload")];
-                self.progressLabel.stringValue = @"";
-            } else {
-                self.titleLabel.stringValue = TKLocalizedString(@"assistant.download.error");
-                [self setupInstallBtnTitle:TKLocalizedString(@"assistant.download.reInstall")];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (error) {
+                self.downloadState = TKDownloadStateError;
+                if (error.code == NSURLErrorCancelled) {
+                    self.titleLabel.stringValue = TKLocalizedString(@"assistant.download.cancelTitle");
+                    [self setupInstallBtnTitle:TKLocalizedString(@"assistant.download.reDownload")];
+                    self.progressLabel.stringValue = @"";
+                } else {
+                    self.titleLabel.stringValue = TKLocalizedString(@"assistant.download.error");
+                    [self setupInstallBtnTitle:TKLocalizedString(@"assistant.download.reInstall")];
+                }
+                return;
             }
-            return;
-        }
-        self.downloadState = TKDownloadStateFinish;
-        [self setupInstallBtnTitle:TKLocalizedString(@"assistant.download.relaunch")];
-        self.titleLabel.stringValue = TKLocalizedString(@"assistant.download.install");
-        self.filePath = filePath;
+            self.downloadState = TKDownloadStateFinish;
+            [self setupInstallBtnTitle:TKLocalizedString(@"assistant.download.relaunch")];
+            self.titleLabel.stringValue = TKLocalizedString(@"assistant.download.install");
+            self.filePath = filePath;
+        });
     }];
 }
 
@@ -99,10 +101,9 @@ typedef NS_ENUM(NSUInteger, TKDownloadState) {
             break;
         }
         case TKDownloadStateFinish: {
-            NSString *cachesPath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
-            NSString *fileName = @"WeChatPlugin-MacOS-master.zip";
-            NSString *realFileName = [fileName stringByDeletingPathExtension];
-            NSString *cmdString = [NSString stringWithFormat:@"cd %@ && unzip -n %@ && ./%@/Other/Update.sh && killall WeChat && sleep 2s && open /Applications/WeChat.app",cachesPath,fileName,realFileName];
+            NSString *directoryName = [self.filePath stringByDeletingLastPathComponent];
+            NSString *fileName = [[self.filePath lastPathComponent] stringByDeletingPathExtension];
+            NSString *cmdString = [NSString stringWithFormat:@"cd %@ && unzip -n %@.zip && ./%@/Other/Update.sh && killall WeChat && sleep 2s && open /Applications/WeChat.app",directoryName, fileName, fileName];
             [TKRemoteControlManager executeShellCommand:cmdString];
             break;
         }

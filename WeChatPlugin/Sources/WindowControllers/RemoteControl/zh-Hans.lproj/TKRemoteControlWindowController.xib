@@ -29,7 +29,7 @@
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="macbook" identifier="0" id="sNP-nR-n56">
-                                <view key="view" ambiguous="YES" id="IAk-5N-FY9">
+                                <view key="view" id="IAk-5N-FY9">
                                     <rect key="frame" x="10" y="33" width="610" height="399"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -69,7 +69,7 @@
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="小助手" identifier="3" id="lza-eI-NvH">
-                                <view key="view" id="gO3-SA-WEm">
+                                <view key="view" ambiguous="YES" id="gO3-SA-WEm">
                                     <rect key="frame" x="10" y="33" width="610" height="399"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>

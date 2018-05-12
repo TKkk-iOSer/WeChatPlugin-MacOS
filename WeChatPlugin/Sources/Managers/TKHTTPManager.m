@@ -30,8 +30,6 @@
             
             session;
         });
-//        self.manager = [AFHTTPRequestOperationManager manager];
-//        self.manager.requestSerializer.cachePolicy = NSURLRequestReloadIgnoringCacheData;
     }
     return self;
 }

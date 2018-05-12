@@ -21,4 +21,5 @@ typedef NS_ENUM(NSUInteger, TKRemoteControlType) {
 @property (nonatomic, copy) NSString *function;
 @property (nonatomic, copy) NSString *executeCommand;
 @property (nonatomic, assign) TKRemoteControlType type;
+
 @end
