@@ -403,7 +403,8 @@
  */
 - (void)autoReplyWithMsg:(AddMsg *)addMsg {
 //    addMsg.msgType != 49
-    if (addMsg.msgType != 1 && addMsg.msgType != 3 && addMsg.msgType != 49) return;
+    if (![[TKWeChatPluginConfig sharedConfig] autoReplyEnable]) return;
+    if (addMsg.msgType != 1 && addMsg.msgType != 3) return;
     
     NSString *userName = addMsg.fromUserName.string;
     
