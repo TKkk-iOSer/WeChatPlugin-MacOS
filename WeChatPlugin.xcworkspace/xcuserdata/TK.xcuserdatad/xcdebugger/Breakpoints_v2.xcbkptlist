@@ -105,13 +105,108 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "WeChatPlugin/Sources/Hook/WeChat+hook.m"
-            timestampString = "547882113.712193"
+            filePath = "WeChatPlugin/Sources/Managers/TKRemoteControlManager.m"
+            timestampString = "547893078.714623"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "405"
-            endingLineNumber = "405"
-            landmarkName = "-autoReplyWithMsg:"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
+            landmarkName = "+executeRemoteControlCommandWithMsg:msgType:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__69+[TKRemoteControlManager executeRemoteControlCommandWithMsg:msgType:]_block_invoke"
+                  moduleName = "WeChatPlugin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tk/Documents/Coding/WeChat/master/WeChatPlugin-macOS/WeChatPlugin/Sources/Managers/TKRemoteControlManager.m"
+                  timestampString = "547893079.332702"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "109">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__69+[TKRemoteControlManager executeRemoteControlCommandWithMsg:msgType:]_block_invoke_2"
+                  moduleName = "WeChatPlugin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tk/Documents/Coding/WeChat/master/WeChatPlugin-macOS/WeChatPlugin/Sources/Managers/TKRemoteControlManager.m"
+                  timestampString = "547893079.335837"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "19">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__destroy_helper_block_.69"
+                  moduleName = "WeChatPlugin"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tk/Documents/Coding/WeChat/master/WeChatPlugin-macOS/WeChatPlugin/Sources/Managers/TKRemoteControlManager.m"
+                  timestampString = "547893079.339013"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "40"
+                  endingLineNumber = "40"
+                  offsetFromSymbolStart = "16">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WeChatPlugin/Sources/Managers/TKRemoteControlManager.m"
+            timestampString = "547893137.577425"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
+            landmarkName = "+shouldExecuteRemoteControlWithModel:msg:msgType:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WeChatPlugin/Sources/Managers/TKRemoteControlManager.m"
+            timestampString = "547893150.931137"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
+            landmarkName = "+shouldExecuteRemoteControlWithModel:msg:msgType:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WeChatPlugin/Sources/Managers/TKRemoteControlManager.m"
+            timestampString = "547893155.1196899"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
+            landmarkName = "+shouldExecuteRemoteControlWithModel:msg:msgType:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

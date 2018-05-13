@@ -1,12 +1,14 @@
 
 
-![微信小助手.png](./Other/ScreenShots/wechatplugin.png)
+![wechat assistant.png](./Other/ScreenShots/en/wechatplugin.png)
 
-![platform](https://img.shields.io/badge/platform-macos-lightgrey.svg)  [![release](https://img.shields.io/badge/release-v1.6.1-brightgreen.svg)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases)  ![support](https://img.shields.io/badge/support-wechat%202.3.10-blue.svg)  [![GitHub license](https://img.shields.io/github/license/TKkk-iOSer/WeChatPlugin-MacOS.svg)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/blob/master/LICENSE)
+![platform](https://img.shields.io/badge/platform-macos-lightgrey.svg)  [![release](https://img.shields.io/badge/release-v1.7-brightgreen.svg)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases)  ![support](https://img.shields.io/badge/support-wechat%202.3.10-blue.svg)  [![Readme](https://img.shields.io/badge/readme-中文-yellow.svg)](./README.md)  [![GitHub license](https://img.shields.io/github/license/TKkk-iOSer/WeChatPlugin-MacOS.svg)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/blob/master/LICENSE)
 
-# WeChatPlugin-macOS v1.6.1 
+# WeChatPlugin-macOS v1.7
 
-[ [Feature](#feature) &bull; [Install](#install) &bull; [Uninstall](#uninstall) &bull; [Usage](#usage) &bull; [Other](#i hear somebody want to buy me a cup of coffee) ]
+**English | [中文](./README.md)**
+
+[ [Feature](#feature) &bull; [Install](#install) &bull; [Uninstall](#uninstall) &bull; [Usage](#usage)]
 
 Other plugin：  
 [ [wechat-alfred-workflow](https://github.com/TKkk-iOSer/wechat-alfred-workflow) &bull; [QQPlugin-macOS](https://github.com/TKkk-iOSer/QQPlugin-macOS) &bull; [WeChatPlugin-iOS](https://github.com/TKkk-iOSer/WeChatPlugin-iOS) ]
@@ -28,6 +30,9 @@ Other plugin：
 * Copy or Export Sticker
 * Update plugin
 * Reply or Open session by Alfred  (dependency：[wechat-alfred-workflow](https://github.com/TKkk-iOSer/wechat-alfred-workflow))
+* Make all session As Read
+* Clear all empty session
+* Remove url redirect
 
 Remote Control：
 
@@ -36,6 +41,7 @@ Remote Control：
 - [x] Lock Screen & Sleep  & Shut Down & Restart
 - [x] Quit some app, include QQ、WeChat、Chrome、Safari。
 - [x] NeteaseMusic(play、pause、next song、previous song、like song、unlike song)
+- [x] Assistant(get all directive、prevent recall switch、auto reply switch、auto auth switch)
 
 **If you want to control NeteaseMusic, please allow WeChat Control in "System Preferences-Security & Privacy-Privacy-Accessibility"**
 
@@ -53,7 +59,7 @@ open `/Applications/Utilities/Terminal.app`，run command
 
 * click `clone or download` button to download project and unzip it，open Terminal.app，Drag the `Install.sh` file(in `Other` Folder) to Terminal.
 
---- 
+---
 
 ## Uninstall
 open `/Applications/Utilities/Terminal.app`,Drag the `Uninstall.sh` file(in `Other` Folder) to Terminal.
@@ -65,31 +71,31 @@ open `/Applications/Utilities/Terminal.app`,Drag the `Uninstall.sh` file(in `Oth
 > A few examples of how to use WeChatPlugin-macOS.
 
 * Prevent message recall   
-![消息防撤回.gif](http://upload-images.jianshu.io/upload_images/965383-30cbea645661e627.gif?imageMogr2/auto-orient/strip)
+  ![Prevent message recall](./Other/ScreenShots/en/prevent_recall.gif)
 
 * Message auto reply
-![自动回复.gif](http://upload-images.jianshu.io/upload_images/965383-d488dce3696ba1b3.gif?imageMogr2/auto-orient/strip)
+  ![Message auto reply](./Other/ScreenShots/en/auto_reply.gif)
 
-* Multiple WeChat
-![微信多开.gif](http://upload-images.jianshu.io/upload_images/965383-51d8eae02d48fda9.gif?imageMogr2/auto-orient/strip)
+* Auto Login & Multiple WeChat
+  ![Auto Auth & Multiple WeChat](./Other/ScreenShots/en/auto_auth_and_new.gif)
 
-* Remote control (quit Chrome and QQ,Save Screen)
-![远程控制.gif](http://upload-images.jianshu.io/upload_images/965383-0cf50d9b22b02f2f.gif?imageMogr2/auto-orient/strip)
+* Remote control (quit Chrome and Save Screen)
+  ![remote_control.gif](./Other/ScreenShots/en/remote_control.gif)
 
-* Auto Auth Login & Session Sticky Bottom & Session multiple delete
-![免认证&置底&多选删除](http://upload-images.jianshu.io/upload_images/965383-170592b03781cbf4.gif?imageMogr2/auto-orient/strip)
+* Session multiple delete & session sticky bottom &  delete empty session
+  ![wechat assistant.png](./Other/ScreenShots/en/multiselect_and_stick_bottom_and_clear_empty.gif)
 
-* Quick reply to notifications   
-![快捷回复](./Other/ScreenShots/notification_quick_reply.gif)
 
-* Copy or Export Sticker  
-<img src="./Other/ScreenShots/emotion_copy_export.png" height="400" hspace="50" />
+* Quick reply to notifications &  make all as Read  
+  ![wechat assistant.png](./Other/ScreenShots/en/quick_reply_and_make_read.gif)
 
-* Remote control with Voice   
-![语音远程控制](./Other/ScreenShots/voice_remote_control.gif)
+
+* Copy or export sticker  
+  <img src="./Other/ScreenShots/en/emotion_copy_export.png" height="400" hspace="50" />
 
 * Reply or Open session by Alfred  [wechat-alfred-workflow](https://github.com/TKkk-iOSer/wechat-alfred-workflow)   
-![alfred](./Other/ScreenShots/alfred_search.gif)
+  ![Alfred](./Other/ScreenShots/en/alfred.gif)
+
 
 ---
 
@@ -103,6 +109,6 @@ open `/Applications/Utilities/Terminal.app`,Drag the `Uninstall.sh` file(in `Oth
 ---
 
 ### I hear somebody want to buy me a cup of coffee😏
- 
+
 <img src="http://upload-images.jianshu.io/upload_images/965383-cbc86dc1d75a6242.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" height="250" hspace="50"/>&nbsp;&nbsp;&nbsp;<img src="http://upload-images.jianshu.io/upload_images/965383-76a1c7c91b987e1a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" height="250" hspace="50"  />
 
