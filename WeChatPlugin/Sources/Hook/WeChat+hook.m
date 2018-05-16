@@ -60,7 +60,6 @@
 
 + (void)setup {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [[TKAssistantMenuManager shareManager] initAssistantMenuItems];
         
         //        窗口置顶初始化
         [self setupWindowSticky];
@@ -286,12 +285,12 @@
 
 - (void)hook_onAuthOK:(BOOL)arg1 {
     [self hook_onAuthOK:arg1];
-    NSMenu *mainMenu = [[NSApplication sharedApplication] mainMenu];
-    NSMenuItem *pluginMenu = mainMenu.itemArray.lastObject;
-    pluginMenu.enabled = YES;
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [[TKWebServerManager shareManager] startServer];
+        NSMenu *mainMenu = [[NSApplication sharedApplication] mainMenu];
+        NSMenuItem *pluginMenu = mainMenu.itemArray.lastObject;
+        pluginMenu.enabled = YES;
     });
 }
 
@@ -384,6 +383,7 @@
         WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
         wechat.hasAuthOK = YES;
     }
+    [[TKAssistantMenuManager shareManager] initAssistantMenuItems];
     [self hook_applicationDidFinishLaunching:arg1];
 }
 
