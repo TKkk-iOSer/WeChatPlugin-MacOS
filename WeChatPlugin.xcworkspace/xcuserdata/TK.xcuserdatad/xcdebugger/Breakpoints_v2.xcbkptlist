@@ -74,28 +74,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WeChatPlugin/Sources/Hook/WeChat+hook.m"
-            timestampString = "547882078.99458"
+            timestampString = "548172495.583905"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "304"
             endingLineNumber = "304"
             landmarkName = "-hook_sendLogoutCGIWithCompletion:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "WeChatPlugin/Sources/Hook/WeChat+hook.m"
-            timestampString = "547882078.994628"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "379"
-            endingLineNumber = "379"
-            landmarkName = "-hook_startGetA8KeyWithURL:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -122,7 +106,7 @@
                   moduleName = "WeChatPlugin"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/tk/Documents/Coding/WeChat/master/WeChatPlugin-macOS/WeChatPlugin/Sources/Managers/TKRemoteControlManager.m"
-                  timestampString = "547893079.332702"
+                  timestampString = "548172496.396419"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "40"
@@ -137,7 +121,7 @@
                   moduleName = "WeChatPlugin"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/tk/Documents/Coding/WeChat/master/WeChatPlugin-macOS/WeChatPlugin/Sources/Managers/TKRemoteControlManager.m"
-                  timestampString = "547893079.335837"
+                  timestampString = "548172496.402559"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "40"
@@ -152,7 +136,7 @@
                   moduleName = "WeChatPlugin"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/tk/Documents/Coding/WeChat/master/WeChatPlugin-macOS/WeChatPlugin/Sources/Managers/TKRemoteControlManager.m"
-                  timestampString = "547893079.339013"
+                  timestampString = "548172496.405215"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "40"
