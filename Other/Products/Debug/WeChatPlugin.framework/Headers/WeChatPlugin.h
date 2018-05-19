@@ -288,3 +288,8 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 - (void)startGetA8KeyWithURL:(id)arg1;
 - (BOOL)openURLWithDefault:(id)arg1;
 @end
+
+@interface UserDefaultsService : NSObject
+- (void)setString:(id)arg1 forKey:(id)arg2;
+- (id)stringForKey:(id)arg1;
+@end
