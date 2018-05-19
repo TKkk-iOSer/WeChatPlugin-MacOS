@@ -48,7 +48,9 @@
     
     tk_hookMethod(objc_getClass("MMURLHandler"), @selector(startGetA8KeyWithURL:), [self class], @selector(hook_startGetA8KeyWithURL:));
     tk_hookMethod(objc_getClass("WeChat"), @selector(applicationDidFinishLaunching:), [self class], @selector(hook_applicationDidFinishLaunching:));
-
+    
+    tk_hookMethod(objc_getClass("UserDefaultsService"), @selector(stringForKey:), [self class], @selector(hook_stringForKey:));
+    
     //      替换沙盒路径
     rebind_symbols((struct rebinding[2]) {
         { "NSSearchPathForDirectoriesInDomains", swizzled_NSSearchPathForDirectoriesInDomains, (void *)&original_NSSearchPathForDirectoriesInDomains },
@@ -385,6 +387,14 @@
     }
     [[TKAssistantMenuManager shareManager] initAssistantMenuItems];
     [self hook_applicationDidFinishLaunching:arg1];
+}
+
+//  强制用户退出时保存聊天记录
+- (id)hook_stringForKey:(NSString *)key {
+    if ([key isEqualToString:@"kMMUserDefaultsKey_SaveChatHistory"]) {
+        return @"1";
+    }
+    return [self hook_stringForKey:key];
 }
 
 #pragma mark - hook 系统方法
