@@ -4,14 +4,14 @@
 
 ![platform](https://img.shields.io/badge/platform-macos-lightgrey.svg)  [![release](https://img.shields.io/badge/release-v1.7-brightgreen.svg)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases)  ![support](https://img.shields.io/badge/support-wechat%202.3.10-blue.svg)  [![Readme](https://img.shields.io/badge/readme-english-yellow.svg)](./README_EN.md)   [![GitHub license](https://img.shields.io/github/license/TKkk-iOSer/WeChatPlugin-MacOS.svg)](./LICENSE)
 
-# 微信小助手 v1.7 
+# 微信小助手 v1.7
 
  **[English](./README_EN.md) | 中文**
 
 
 [ [功能](#功能) &bull; [更新日志](#更新日志) &bull; [Demo演示](#demo演示) &bull; [使用](#使用) &bull; [安装](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/blob/master/Install.md) &bull; [卸载](#卸载) &bull; [TODO](#todo) ]
 
-其他插件：  
+其他插件：
 [ [wechat-alfred-workflow](https://github.com/TKkk-iOSer/wechat-alfred-workflow) &bull; [QQ 版本](https://github.com/TKkk-iOSer/QQPlugin-macOS) &bull; [iOS 版本](https://github.com/TKkk-iOSer/WeChatPlugin-iOS) ]
 
 ---
@@ -31,7 +31,7 @@
 * 小助手检测更新提醒
 * alfred 快捷发送消息 & 打开窗口 (需安装：[wechat-alfred-workflow](https://github.com/TKkk-iOSer/wechat-alfred-workflow))
 * 会话一键已读(v1.7)
-* 一键清除空会话(v1.7) 
+* 一键清除空会话(v1.7)
 * 支持国际化 (v1.7)
 * 新增一键更新 (v1.7)
 * 新增关于小助手 (v1.7)
@@ -75,7 +75,7 @@
 
 ## Demo演示
 
-* 消息防撤回   
+* 消息防撤回
 ![消息防撤回.gif](http://upload-images.jianshu.io/upload_images/965383-30cbea645661e627.gif?imageMogr2/auto-orient/strip)
 
 * 自动回复
@@ -90,16 +90,16 @@
 * 免认证 & 置底 & 多选删除
 ![免认证&置底&多选删除](http://upload-images.jianshu.io/upload_images/965383-170592b03781cbf4.gif?imageMogr2/auto-orient/strip)
 
-* 通知中心快捷回复   
+* 通知中心快捷回复
 ![快捷回复](./Other/ScreenShots/notification_quick_reply.gif)
 
-* 聊天窗口表情复制 & 存储  
+* 聊天窗口表情复制 & 存储
 <img src="./Other/ScreenShots/emotion_copy_export.png" height="400" hspace="50" />
 
-* 语音远程控制 mac   
+* 语音远程控制 mac
 ![语音远程控制](./Other/ScreenShots/voice_remote_control.gif)
 
-* Alfred 快速搜索 [wechat-alfred-workflow](https://github.com/TKkk-iOSer/wechat-alfred-workflow)   
+* Alfred 快速搜索 [wechat-alfred-workflow](https://github.com/TKkk-iOSer/wechat-alfred-workflow)
 ![alfred](./Other/ScreenShots/alfred_search.gif)
 
 * 一键已读 & 一键清除空回话
@@ -111,13 +111,13 @@
 ## 使用
 
 * 消息防撤回：点击`开启消息防撤回`或者快捷键`command + t`,即可开启、关闭。
-* 自动回复：点击`开启自动回复`或者快捷键`conmand + k`，将弹出自动回复设置的窗口，点击红色箭头的按钮设置开关。    
+* 自动回复：点击`开启自动回复`或者快捷键`conmand + k`，将弹出自动回复设置的窗口，点击红色箭头的按钮设置开关。
 
->若关键字为 `*`，则任何信息都回复；  
->若关键字为`x|y`,则 x 和 y 都回复；   
->若关键字**或者**自动回复为空，则不开启该条自动回复；   
->可设置延迟回复，单位：秒；   
->若开启正则，请确认正则表达式书写正确，[在线正则表达式测试](http://tool.oschina.net/regex/)   
+>若关键字为 `*`，则任何信息都回复；
+>若关键字为`x|y`,则 x 和 y 都回复；
+>若关键字**或者**自动回复为空，则不开启该条自动回复；
+>可设置延迟回复，单位：秒；
+>若开启正则，请确认正则表达式书写正确，[在线正则表达式测试](http://tool.oschina.net/regex/)
 **若开启特定联系人回复，则原先的群聊&私聊回复无效**
 
 ![自动回复设置.png](./Other/ScreenShots/auto_reply.png)
@@ -139,11 +139,17 @@
 
 详细安装方法请查阅 [Install.md](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/blob/master/Install.md)
 
-**0. 懒癌版安装(需要git支持)**
+**0. 懒癌版安装**
 
-打开`应用程序-实用工具-Terminal(终端)`，执行以下命令并根据提示输入密码即可。
+打开`应用程序-实用工具-Terminal(终端)`，执行下面的命令安装 [Oh My WeChat](https://github.com/lmk123/oh-my-wechat)：
 
-`cd ~/Downloads && rm -rf WeChatPlugin-MacOS && git clone https://github.com/TKkk-iOSer/WeChatPlugin-MacOS.git --depth=1 && ./WeChatPlugin-MacOS/Other/Install.sh`
+```sh
+curl -o- -L https://raw.githubusercontent.com/lmk123/oh-my-wechat/master/install.sh | bash -s
+```
+
+然后运行 `omw` 即可。
+
+> 可以访问 [Oh My WeChat 的项目主页](https://github.com/lmk123/oh-my-wechat#oh-my-wechat)查看更多用法。
 
 **1. 普通安装**
 
@@ -152,11 +158,11 @@
 
 **2. 安装完成**
 
-* 重启微信，在**菜单栏**中看到**微信小助手**即安装成功。 
+* 重启微信，在**菜单栏**中看到**微信小助手**即安装成功。
 
 ![微信小助手.png](./Other/ScreenShots/wechatplugin.png)
 
---- 
+---
 
 ## 卸载
 
@@ -189,6 +195,6 @@
 
 
 ### 听说你想请我喝下午茶？😏
- 
+
 <img src="http://upload-images.jianshu.io/upload_images/965383-cbc86dc1d75a6242.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" height="250" hspace="50"/>&nbsp;&nbsp;&nbsp;<img src="http://upload-images.jianshu.io/upload_images/965383-76a1c7c91b987e1a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" height="250" hspace="50"  />
 
