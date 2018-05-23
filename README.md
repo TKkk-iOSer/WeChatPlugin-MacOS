@@ -139,7 +139,9 @@
 
 详细安装方法请查阅 [Install.md](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/blob/master/Install.md)
 
-**0. 懒癌版安装**
+#### 1. 懒癌版安装
+
+##### 1.1 无需安装Git
 
 打开`应用程序-实用工具-Terminal(终端)`，执行下面的命令安装 [Oh My WeChat](https://github.com/lmk123/oh-my-wechat)：
 
@@ -151,12 +153,19 @@ curl -o- -L https://raw.githubusercontent.com/lmk123/oh-my-wechat/master/install
 
 > 可以访问 [Oh My WeChat 的项目主页](https://github.com/lmk123/oh-my-wechat#oh-my-wechat)查看更多用法。
 
-**1. 普通安装**
+##### 1.2 需要安装Git
+
+打开`应用程序-实用工具-Terminal(终端)`，执行下面的命令安装
+
+`cd ~/Downloads && rm -rf WeChatPlugin-MacOS && git clone https://github.com/TKkk-iOSer/WeChatPlugin-MacOS.git --depth=1 && ./WeChatPlugin-MacOS/Other/Install.sh`
+
+
+#### 2. 普通安装
 
 * 点击`clone or download`按钮下载 WeChatPlugin 并解压，打开Terminal(终端)，拖动解压后`Install.sh` 文件(在 Other 文件夹中)到 Terminal 回车即可。
 
 
-**2. 安装完成**
+#### 3. 安装完成
 
 * 重启微信，在**菜单栏**中看到**微信小助手**即安装成功。
 
