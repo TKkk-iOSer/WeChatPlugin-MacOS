@@ -120,4 +120,5 @@
 //  Alfred
 "assistant.search.member" = "Member: ";
 "assistant.search.group" = "[Group] ";
+"assistant.search.official" = "[Official]";
 

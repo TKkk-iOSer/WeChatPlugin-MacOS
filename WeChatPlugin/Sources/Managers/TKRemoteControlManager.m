@@ -46,13 +46,17 @@ static NSString * const kRemoteControlAppleScript = @"osascript /Applications/We
                         break;
                     }
                     case TKRemoteControlTypeScript: {
-                        [self executeAppleScriptCommand:model.executeCommand];
+                        NSString *errorMsg = [self executeAppleScriptCommand:model.executeCommand];
+                        if ([errorMsg containsString:@"TKRemoteControlScript.scpt:"]) {
+                            NSString *result = [errorMsg substringFromString:@"TKRemoteControlScript.scpt:"];
+                            [[TKMessageManager shareManager] sendTextMessageToSelf:result];
+                        }
                         //      bug: 有些程序在第一次时会无法关闭，需要再次关闭
-                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                            if ([model.function isEqualToString:@"Assistant.Directive.KillAll"]) {
+                        if ([model.function isEqualToString:@"Assistant.Directive.KillAll"]) {
+                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                                 [self executeAppleScriptCommand:model.executeCommand];
-                            }
-                        });
+                            });
+                        }
                         break;
                     }
                     case TKRemoteControlTypePlugin: {
@@ -102,17 +106,15 @@ static NSString * const kRemoteControlAppleScript = @"osascript /Applications/We
     NSTask *task = [[NSTask alloc] init];
     [task setLaunchPath:@"/bin/bash"];
     [task setArguments:@[@"-c", cmd]];
-    // 新建输出管道作为Task的输出
-    NSPipe *pipe = [NSPipe pipe];
-    [task setStandardOutput: pipe];
-    // 开始task
-    NSFileHandle *file = [pipe fileHandleForReading];
-    
-    [task launch];
+    // 新建输出管道作为Task的错误输出
+    NSPipe *errorPipe = [NSPipe pipe];
+    [task setStandardError:errorPipe];
+    NSFileHandle *file = [errorPipe fileHandleForReading];
     // 获取运行结果
+    [task launch];
     NSData *data = [file readDataToEndOfFile];
     
-    return [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
+    return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 }
 
 + (void)executePluginCommand:(NSString *)cmd {

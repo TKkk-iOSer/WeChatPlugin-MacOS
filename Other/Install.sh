@@ -9,6 +9,17 @@ app_executable_path="${app_bundle_path}/${app_name}"
 app_executable_backup_path="${app_executable_path}_backup"
 framework_path="${app_bundle_path}/${framework_name}.framework"
 
+
+if [ ! -d "$wechat_path" ]
+then
+wechat_path="/Applications/微信.app"
+if [ ! -d "$wechat_path" ]
+then
+echo -e "\n\n应用程序文件夹中未发现微信，请检查微信是否有重命名或者移动路径位置"
+exit
+fi
+fi
+
 # 对 WeChat 赋予权限
 if [ ! -w "$wechat_path" ]
 then

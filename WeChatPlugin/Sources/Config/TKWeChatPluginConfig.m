@@ -117,6 +117,7 @@ static NSString * const kTKWeChatRemotePlistPath = @"https://raw.githubuserconte
 #pragma mark - 远程控制
 - (NSArray *)remoteControlModels {
     if (!_remoteControlModels) {
+        __block BOOL needSaveRemoteControlModels = NO;
         _remoteControlModels = ({
             NSArray *originModels = [NSArray arrayWithContentsOfFile:self.remoteControlPlistFilePath];
             NSMutableArray *newRemoteControlModels = [NSMutableArray array];
@@ -124,12 +125,19 @@ static NSString * const kTKWeChatRemotePlistPath = @"https://raw.githubuserconte
                 NSMutableArray *newSubModels = [NSMutableArray array];
                 [subModels enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                     TKRemoteControlModel *model = [[TKRemoteControlModel alloc] initWithDict:obj];
+                    if ([model.executeCommand isEqualToString:@"restartWeChat"]) {
+                        model.executeCommand = @"killWeChat";
+                        needSaveRemoteControlModels = YES;
+                    }
                     [newSubModels addObject:model];
                 }];
                 [newRemoteControlModels addObject:newSubModels];
             }];
             newRemoteControlModels;
         });
+        if (needSaveRemoteControlModels) {
+            [self saveRemoteControlModels];
+        }
     }
     return _remoteControlModels;
 }

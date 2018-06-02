@@ -91,7 +91,7 @@
 		</dict>
 		<dict>
 			<key>executeCommand</key>
-			<string>restartWeChat</string>
+			<string>killWeChat</string>
 			<key>keyword</key>
 			<string>killWeChat</string>
 			<key>function</key>

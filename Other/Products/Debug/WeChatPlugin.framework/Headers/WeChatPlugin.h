@@ -15,6 +15,10 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 
 #pragma mark - 微信原始的部分类与方法
 
+@interface MMBrandChatsViewController : NSObject
+- (void)startChatWithContact:(id)arg1;
+@end
+
 @interface MMLoginOneClickViewController : NSViewController
 @property(nonatomic) NSTextField *descriptionLabel;
 - (void)onLoginButtonClicked:(id)arg1;
@@ -72,6 +76,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 
 @interface MMChatsViewController : NSViewController <NSTableViewDataSource, NSTableViewDelegate>
 @property(nonatomic) __weak NSTableView *tableView;
+@property(retain, nonatomic) MMBrandChatsViewController *brandChatsViewController;
 @end
 
 @interface WeChat : NSObject

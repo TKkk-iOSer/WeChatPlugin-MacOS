@@ -61,7 +61,7 @@
         __block NSMutableArray *sessionList = [NSMutableArray array];
         __block BOOL hasResult = NO;
         MMComplexContactSearchTaskMgr *searchMgr = [objc_getClass("MMComplexContactSearchTaskMgr") sharedInstance];
-        [searchMgr doComplexContactSearch:keyword searchScene:31 complete:^(NSArray<MMComplexContactSearchResult *> *contactResult, NSArray *brandSult, NSArray<MMComplexGroupContactSearchResult *> *groupResult) {
+        [searchMgr doComplexContactSearch:keyword searchScene:31 complete:^(NSArray<MMComplexContactSearchResult *> *contactResult, NSArray<MMComplexContactSearchResult *> *brandSult, NSArray<MMComplexGroupContactSearchResult *> *groupResult) {
             [contactResult enumerateObjectsUsingBlock:^(MMComplexContactSearchResult * _Nonnull contact, NSUInteger idx, BOOL * _Nonnull stop) {
                 [sessionList addObject:[weakSelf dictFromContactSearchResult:contact]];
             }];
@@ -70,6 +70,10 @@
                 [sessionList addObject:[weakSelf dictFromGroupSearchResult:group]];
             }];
             
+            [brandSult enumerateObjectsUsingBlock:^(MMComplexContactSearchResult * _Nonnull contact, NSUInteger idx, BOOL * _Nonnull stop) {
+                [sessionList addObject:[weakSelf dictFromContactSearchResult:contact]];
+            }];
+
             hasResult = YES;
         } cancelable:YES];
         
@@ -89,7 +93,18 @@
                 WCContactData *selectContact = [sessionMgr getContact:requestBody[@"userId"]];
                 
                 WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
-                [wechat startANewChatWithContact:selectContact];
+                if ([selectContact isBrandContact]) {
+                    WCContactData *brandsessionholder  = [sessionMgr getContact:@"brandsessionholder"];
+                    if (brandsessionholder) {
+                        [wechat startANewChatWithContact:brandsessionholder];
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            MMBrandChatsViewController *brandChats = wechat.chatsViewController.brandChatsViewController;
+                            [brandChats startChatWithContact:selectContact];
+                        });
+                    }
+                } else {
+                    [wechat startANewChatWithContact:selectContact];
+                }
                 [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
             });
             return [GCDWebServerResponse responseWithStatusCode:200];
@@ -172,7 +187,7 @@
 - (NSDictionary *)dictFromContactSearchResult:(MMComplexContactSearchResult *)result {
     WCContactData *contact = result.contact;
     
-    NSString *title = contact.m_nsNickName;
+    NSString *title = [contact isBrandContact] ? [NSString stringWithFormat:@"%@%@",TKLocalizedString(@"assistant.search.official"), contact.m_nsNickName] : contact.m_nsNickName;
     if(contact.m_nsRemark && ![contact.m_nsRemark isEqualToString:@""]) {
         title = [NSString stringWithFormat:@"%@(%@)",contact.m_nsRemark, contact.m_nsNickName];
     }
