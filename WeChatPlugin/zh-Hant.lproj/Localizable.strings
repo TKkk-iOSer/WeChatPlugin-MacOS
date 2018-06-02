@@ -121,4 +121,4 @@
 //  alfred 搜索
 "assistant.search.member" = "成員：";
 "assistant.search.group" = "[群聊]";
-
+"assistant.search.official" = "[公衆號]";
