@@ -151,8 +151,12 @@
         //      获取原始的撤回提示消息
         MessageService *msgService = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
         MessageData *revokeMsgData = [msgService GetMsgData:session svrId:[newmsgid integerValue]];
+        if ([revokeMsgData isSendFromSelf]) {   //  自己发送的消息，不拦截
+            [self hook_onRevokeMsg:msg];
+            return;
+        }
+        
         NSString *msgContent = [revokeMsgData getRealMessageContent];
-
         NSString *msgType;
         if (revokeMsgData.messageType == 1) {
             msgType = @"";
@@ -169,25 +173,16 @@
         }
         
         NSString *newMsgContent = [NSString stringWithFormat:@"%@ \n%@",TKLocalizedString(@"assistant.revoke.otherMessage.tip"), msgType];
-        //      判断是否是自己发起撤回
-        if ([revokeMsgData isSendFromSelf]) {
-            if (revokeMsgData.messageType == 1) {       // 判断是否为文本消息
-                newMsgContent = [NSString stringWithFormat:@"%@\n %@",TKLocalizedString(@"assistant.revoke.selfMessage.tip"), msgContent];
+        NSString *displayName = [revokeMsgData groupChatSenderDisplayName];
+        if (revokeMsgData.messageType == 1) {
+            if ([revokeMsgData isChatRoomMessage]) {
+                newMsgContent = [NSString stringWithFormat:@"%@\n%@ : %@",TKLocalizedString(@"assistant.revoke.otherMessage.tip"), displayName, msgContent];
             } else {
-                newMsgContent = [NSString stringWithFormat:@"%@\n %@",TKLocalizedString(@"assistant.revoke.selfMessage.tip"), msgType];
+                newMsgContent = [NSString stringWithFormat:@"%@\n%@",TKLocalizedString(@"assistant.revoke.otherMessage.tip"), msgContent];
             }
         } else {
-            NSString *displayName = [revokeMsgData groupChatSenderDisplayName];
-            if (revokeMsgData.messageType == 1) {
-                if ([revokeMsgData isChatRoomMessage]) {
-                    newMsgContent = [NSString stringWithFormat:@"%@\n%@ : %@",TKLocalizedString(@"assistant.revoke.otherMessage.tip"), displayName, msgContent];
-                } else {
-                    newMsgContent = [NSString stringWithFormat:@"%@\n%@",TKLocalizedString(@"assistant.revoke.otherMessage.tip"), msgContent];
-                }
-            } else {
-                if ([revokeMsgData isChatRoomMessage]) {
-                    newMsgContent = [NSString stringWithFormat:@"%@ \n %@ : %@",TKLocalizedString(@"assistant.revoke.otherMessage.tip"), displayName, msgType];
-                }
+            if ([revokeMsgData isChatRoomMessage]) {
+                newMsgContent = [NSString stringWithFormat:@"%@ \n %@ : %@",TKLocalizedString(@"assistant.revoke.otherMessage.tip"), displayName, msgType];
             }
         }
         MessageData *newMsgData = ({
