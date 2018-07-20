@@ -7,6 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		277BBD1120FF43ED002B0869 /* gifs in Resources */ = {isa = PBXBuildFile; fileRef = 277BBD1020FF43ED002B0869 /* gifs */; };
+		277BBD202101CF53002B0869 /* TKEmojiCollectionViewItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 277BBD1F2101CF53002B0869 /* TKEmojiCollectionViewItem.h */; };
+		277BBD222101CF5D002B0869 /* TKEmojiCollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 277BBD212101CF5D002B0869 /* TKEmojiCollectionViewItem.m */; };
+		277BBD252101E3DA002B0869 /* 178229b2c6d882ce6ccdda75e4145b7c.gif in Resources */ = {isa = PBXBuildFile; fileRef = 277BBD232101E3D9002B0869 /* 178229b2c6d882ce6ccdda75e4145b7c.gif */; };
+		277BBD262101E3DA002B0869 /* c4d9630a8f632f2139ab02db67211376.gif in Resources */ = {isa = PBXBuildFile; fileRef = 277BBD242101E3D9002B0869 /* c4d9630a8f632f2139ab02db67211376.gif */; };
+		277BBD292101E3ED002B0869 /* 178229b2c6d882ce6ccdda75e4145b7c.gif in Resources */ = {isa = PBXBuildFile; fileRef = 277BBD272101E3ED002B0869 /* 178229b2c6d882ce6ccdda75e4145b7c.gif */; };
+		277BBD2A2101E3ED002B0869 /* c4d9630a8f632f2139ab02db67211376.gif in Resources */ = {isa = PBXBuildFile; fileRef = 277BBD282101E3ED002B0869 /* c4d9630a8f632f2139ab02db67211376.gif */; };
+		277BBD2C2101E612002B0869 /* TKEmojiWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 277BBD2B2101E612002B0869 /* TKEmojiWindowController.xib */; };
+		277BBD2E2101F0A1002B0869 /* TKEmojiItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 277BBD2D2101F0A1002B0869 /* TKEmojiItem.h */; };
+		277BBD302101F0AE002B0869 /* TKEmojiItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 277BBD2F2101F0AE002B0869 /* TKEmojiItem.m */; };
+		277BBD322101F17A002B0869 /* TKEmojiCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 277BBD312101F17A002B0869 /* TKEmojiCollectionViewItem.xib */; };
+		279ED49120FEE68E00282CFE /* TKEmojiWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 279ED49020FEE68E00282CFE /* TKEmojiWindowController.h */; };
+		279ED49320FEE69700282CFE /* TKEmojiWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 279ED49220FEE69700282CFE /* TKEmojiWindowController.m */; };
 		520AE6E8208E1DA300BADE47 /* TKMessageManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 520AE6E6208E1DA300BADE47 /* TKMessageManager.h */; };
 		520AE6E9208E1DA300BADE47 /* TKMessageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 520AE6E7208E1DA300BADE47 /* TKMessageManager.m */; };
 		520AE6F0208E231F00BADE47 /* NotifyConstant.h in Headers */ = {isa = PBXBuildFile; fileRef = 520AE6EF208E231F00BADE47 /* NotifyConstant.h */; };
@@ -88,6 +101,19 @@
 /* Begin PBXFileReference section */
 		13B308B4A92CE38341762A48 /* Pods-WeChatPlugin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeChatPlugin.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeChatPlugin/Pods-WeChatPlugin.release.xcconfig"; sourceTree = "<group>"; };
 		17F7A08DC0E3A0626801414D /* libPods-WeChatPlugin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WeChatPlugin.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		277BBD1020FF43ED002B0869 /* gifs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = gifs; sourceTree = "<group>"; };
+		277BBD1F2101CF53002B0869 /* TKEmojiCollectionViewItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKEmojiCollectionViewItem.h; sourceTree = "<group>"; };
+		277BBD212101CF5D002B0869 /* TKEmojiCollectionViewItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKEmojiCollectionViewItem.m; sourceTree = "<group>"; };
+		277BBD232101E3D9002B0869 /* 178229b2c6d882ce6ccdda75e4145b7c.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 178229b2c6d882ce6ccdda75e4145b7c.gif; sourceTree = "<group>"; };
+		277BBD242101E3D9002B0869 /* c4d9630a8f632f2139ab02db67211376.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = c4d9630a8f632f2139ab02db67211376.gif; sourceTree = "<group>"; };
+		277BBD272101E3ED002B0869 /* 178229b2c6d882ce6ccdda75e4145b7c.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 178229b2c6d882ce6ccdda75e4145b7c.gif; sourceTree = "<group>"; };
+		277BBD282101E3ED002B0869 /* c4d9630a8f632f2139ab02db67211376.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = c4d9630a8f632f2139ab02db67211376.gif; sourceTree = "<group>"; };
+		277BBD2B2101E612002B0869 /* TKEmojiWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TKEmojiWindowController.xib; sourceTree = "<group>"; };
+		277BBD2D2101F0A1002B0869 /* TKEmojiItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKEmojiItem.h; sourceTree = "<group>"; };
+		277BBD2F2101F0AE002B0869 /* TKEmojiItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKEmojiItem.m; sourceTree = "<group>"; };
+		277BBD312101F17A002B0869 /* TKEmojiCollectionViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TKEmojiCollectionViewItem.xib; sourceTree = "<group>"; };
+		279ED49020FEE68E00282CFE /* TKEmojiWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKEmojiWindowController.h; sourceTree = "<group>"; };
+		279ED49220FEE69700282CFE /* TKEmojiWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKEmojiWindowController.m; sourceTree = "<group>"; };
 		520AE6E6208E1DA300BADE47 /* TKMessageManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKMessageManager.h; sourceTree = "<group>"; };
 		520AE6E7208E1DA300BADE47 /* TKMessageManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKMessageManager.m; sourceTree = "<group>"; };
 		520AE6EF208E231F00BADE47 /* NotifyConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotifyConstant.h; sourceTree = "<group>"; };
@@ -195,6 +221,28 @@
 				17F7A08DC0E3A0626801414D /* libPods-WeChatPlugin.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		277BBD1C2101CED3002B0869 /* Emoji */ = {
+			isa = PBXGroup;
+			children = (
+				277BBD2D2101F0A1002B0869 /* TKEmojiItem.h */,
+				277BBD2F2101F0AE002B0869 /* TKEmojiItem.m */,
+				277BBD1F2101CF53002B0869 /* TKEmojiCollectionViewItem.h */,
+				277BBD212101CF5D002B0869 /* TKEmojiCollectionViewItem.m */,
+				277BBD312101F17A002B0869 /* TKEmojiCollectionViewItem.xib */,
+			);
+			path = Emoji;
+			sourceTree = "<group>";
+		};
+		279ED48F20FEE67C00282CFE /* Emoji */ = {
+			isa = PBXGroup;
+			children = (
+				279ED49020FEE68E00282CFE /* TKEmojiWindowController.h */,
+				279ED49220FEE69700282CFE /* TKEmojiWindowController.m */,
+				277BBD2B2101E612002B0869 /* TKEmojiWindowController.xib */,
+			);
+			path = Emoji;
 			sourceTree = "<group>";
 		};
 		3C138513A2C7760B47317A95 /* Pods */ = {
@@ -308,6 +356,9 @@
 		528B4F881EA7383800BC6A89 = {
 			isa = PBXGroup;
 			children = (
+				277BBD232101E3D9002B0869 /* 178229b2c6d882ce6ccdda75e4145b7c.gif */,
+				277BBD242101E3D9002B0869 /* c4d9630a8f632f2139ab02db67211376.gif */,
+				277BBD1020FF43ED002B0869 /* gifs */,
 				528B4F941EA7383800BC6A89 /* WeChatPlugin */,
 				528B4F931EA7383800BC6A89 /* Products */,
 				3C138513A2C7760B47317A95 /* Pods */,
@@ -326,6 +377,8 @@
 		528B4F941EA7383800BC6A89 /* WeChatPlugin */ = {
 			isa = PBXGroup;
 			children = (
+				277BBD272101E3ED002B0869 /* 178229b2c6d882ce6ccdda75e4145b7c.gif */,
+				277BBD282101E3ED002B0869 /* c4d9630a8f632f2139ab02db67211376.gif */,
 				52B5CEF41F3B4631000D9DD9 /* Sources */,
 				52B5CEEF1F3B45ED000D9DD9 /* Supporting Files */,
 			);
@@ -408,6 +461,7 @@
 		52B5CF091F3B4631000D9DD9 /* WindowControllers */ = {
 			isa = PBXGroup;
 			children = (
+				279ED48F20FEE67C00282CFE /* Emoji */,
 				52CD4C5A209CA0380061A5D6 /* About */,
 				5268C514209199690090BE40 /* Download */,
 				522547D61F4C312A00226A2A /* AutoReply */,
@@ -429,6 +483,7 @@
 		52CD4C75209ED2160061A5D6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				277BBD1C2101CED3002B0869 /* Emoji */,
 				52CD4C76209ED2160061A5D6 /* AutoReply */,
 				52CD4C77209ED2160061A5D6 /* RemoteControl */,
 			);
@@ -484,17 +539,20 @@
 				52EA235920862D19008E6329 /* TKHTTPManager.h in Headers */,
 				529CDDFE1F6E6A060056DC1A /* TKBaseModel.h in Headers */,
 				52CD4C58209C5CA10061A5D6 /* NSWindowController+Action.h in Headers */,
+				277BBD2E2101F0A1002B0869 /* TKEmojiItem.h in Headers */,
 				52B5CF1A1F3B4631000D9DD9 /* TKHelper.h in Headers */,
 				52CD4C83209ED23B0061A5D6 /* TKRemoteControlCell.h in Headers */,
 				527D017320903C1B007155C9 /* NSMenuItem+Action.h in Headers */,
 				52B5CF1C1F3B4631000D9DD9 /* XMLReader.h in Headers */,
 				523848AB1F70E73500771BA3 /* NSTextField+Action.h in Headers */,
+				279ED49120FEE68E00282CFE /* TKEmojiWindowController.h in Headers */,
 				52CD4C7C209ED2300061A5D6 /* TKAutoReplyCell.h in Headers */,
 				52CD4C9820A0885A0061A5D6 /* WeChat+hook.h in Headers */,
 				52CD4C9720A0885A0061A5D6 /* MMChatsTableCellView+hook.h in Headers */,
 				52DA3E0D2094790900C618BB /* TKDownloadWindowController.h in Headers */,
 				52475C321F6BA43800760E3E /* TKIgnoreSessonModel.h in Headers */,
 				52206B6A20836A230010C232 /* NSMenu+Action.h in Headers */,
+				277BBD202101CF53002B0869 /* TKEmojiCollectionViewItem.h in Headers */,
 				52B5CF181F3B4631000D9DD9 /* TKRemoteControlModel.h in Headers */,
 				52CD4C7D209ED2300061A5D6 /* TKAutoReplyContentView.h in Headers */,
 				5226D5CA2040FC3E0013C048 /* TKVersionManager.h in Headers */,
@@ -526,7 +584,6 @@
 				528B4F8F1EA7383800BC6A89 /* Headers */,
 				528B4F901EA7383800BC6A89 /* Resources */,
 				528B4FB51EA738B100BC6A89 /* ShellScript */,
-				165746E0A28B760DEA538E0D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -548,6 +605,7 @@
 				TargetAttributes = {
 					528B4F911EA7383800BC6A89 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 7SEW6FHMJQ;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -576,11 +634,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				277BBD2A2101E3ED002B0869 /* c4d9630a8f632f2139ab02db67211376.gif in Resources */,
+				277BBD322101F17A002B0869 /* TKEmojiCollectionViewItem.xib in Resources */,
 				52DA3E0F2094790900C618BB /* TKDownloadWindowController.xib in Resources */,
+				277BBD1120FF43ED002B0869 /* gifs in Resources */,
 				521D75F92080E3670093C820 /* Localizable.strings in Resources */,
+				277BBD262101E3DA002B0869 /* c4d9630a8f632f2139ab02db67211376.gif in Resources */,
 				522547E01F4C312A00226A2A /* TKAutoReplyWindowController.xib in Resources */,
 				52B5CEF21F3B4623000D9DD9 /* TKRemoteControlCommands.plist in Resources */,
 				52CD4C8420A01CDC0061A5D6 /* TKAboutWindowController.xib in Resources */,
+				277BBD252101E3DA002B0869 /* 178229b2c6d882ce6ccdda75e4145b7c.gif in Resources */,
+				277BBD2C2101E612002B0869 /* TKEmojiWindowController.xib in Resources */,
+				277BBD292101E3ED002B0869 /* 178229b2c6d882ce6ccdda75e4145b7c.gif in Resources */,
 				52B5CEF31F3B4623000D9DD9 /* TKRemoteControlScript.scpt in Resources */,
 				52CD4C8B20A07D420061A5D6 /* about.rtfd in Resources */,
 				521C49C320820662003902E7 /* TKRemoteControlWindowController.xib in Resources */,
@@ -590,21 +655,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		165746E0A28B760DEA538E0D /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WeChatPlugin/Pods-WeChatPlugin-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		528B4FB51EA738B100BC6A89 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -645,11 +695,13 @@
 			files = (
 				52CD4C5F209CA0510061A5D6 /* TKAboutWindowController.m in Sources */,
 				520F200A205E1DF900A36B1E /* TKWebServerManager.m in Sources */,
+				279ED49320FEE69700282CFE /* TKEmojiWindowController.m in Sources */,
 				52CD4C9C20A0885A0061A5D6 /* MMChatsTableCellView+hook.m in Sources */,
 				52B5CF151F3B4631000D9DD9 /* TKWeChatPluginConfig.m in Sources */,
 				52CD4C7F209ED2300061A5D6 /* TKAutoReplyCell.m in Sources */,
 				52CD4C9B20A0885A0061A5D6 /* WeChat+hook.m in Sources */,
 				522547E21F4C312A00226A2A /* TKRemoteControlWindowController.m in Sources */,
+				277BBD222101CF5D002B0869 /* TKEmojiCollectionViewItem.m in Sources */,
 				529CDDFF1F6E6A060056DC1A /* TKBaseModel.m in Sources */,
 				52DA3E0E2094790900C618BB /* TKDownloadWindowController.m in Sources */,
 				527E7F622018711800358D26 /* fishhook.c in Sources */,
@@ -675,6 +727,7 @@
 				52CD4C9A20A0885A0061A5D6 /* MMStickerMessageCellView+hook.m in Sources */,
 				52B5CF1D1F3B4631000D9DD9 /* XMLReader.m in Sources */,
 				52475C331F6BA43800760E3E /* TKIgnoreSessonModel.m in Sources */,
+				277BBD302101F0AE002B0869 /* TKEmojiItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -839,12 +892,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 888B2791FA0BBCC192BADA47 /* Pods-WeChatPlugin.debug.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 7SEW6FHMJQ;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "";
 				FRAMEWORK_VERSION = A;
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/WeChatPlugin/Sources/Common/TKPrefixHeader.pch";
@@ -864,9 +919,11 @@
 				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 7SEW6FHMJQ;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "";
 				FRAMEWORK_VERSION = A;
 				GCC_INPUT_FILETYPE = automatic;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/WeChatPlugin/Sources/Common/TKPrefixHeader.pch";

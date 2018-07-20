@@ -9,6 +9,7 @@
 
 //  MainMenu
 "assistant.menu.title" = "Assistant";
+"assistant.menu.emoji" = "Custome Emoji";
 "assistant.menu.revoke" = "Prevent Revoke";
 "assistant.menu.autoReply" = "Auto Reply";
 "assistant.menu.newWeChat" = "New WeChat";
@@ -18,6 +19,9 @@
 "assistant.menu.other" = "Others";
 "assistant.menu.updateAssistant" = "Update Assistant…";
 "assistant.menu.aboutAssistant" = "About Assistant";
+
+// Sync Emoji
+"assistant.emoji.syncemoji" = "Sync Emoji";
 
 //  Prevent Revoke
 "assistant.revokeType.emoji" = "[Sticker]";

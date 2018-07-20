@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:WeChatPlugin.xcodeproj">
+      location = "group:../178229b2c6d882ce6ccdda75e4145b7c.gif">
+   </FileRef>
+   <FileRef
+      location = "group:../c4d9630a8f632f2139ab02db67211376.gif">
+   </FileRef>
+   <FileRef
+      location = "self:">
    </FileRef>
 </Workspace>

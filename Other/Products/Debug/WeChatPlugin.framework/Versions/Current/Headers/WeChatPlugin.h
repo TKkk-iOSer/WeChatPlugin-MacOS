@@ -207,6 +207,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @property(nonatomic) MMChatMessageViewController *delegate;
 - (BOOL)allowCopy;
 - (void)contextMenuCopy;
+- (void)contextMenuSyncEmoji;
 - (id)contextMenu;
 @end
 

@@ -18,11 +18,13 @@
 - (id)hook_contextMenu {
     NSMenu *menu = [self hook_contextMenu];
     if ([self.className isEqualToString:@"MMStickerMessageCellView"]) {
+        NSMenuItem *syncItem = [[NSMenuItem alloc] initWithTitle:TKLocalizedString(@"assistant.emoji.syncemoji") action:@selector(contextMenuSyncEmoji) keyEquivalent:@""];
         NSMenuItem *copyItem = [[NSMenuItem alloc] initWithTitle:WXLocalizedString(@"Message.Menu.Copy") action:@selector(contextMenuCopyEmoji) keyEquivalent:@""];
         NSMenuItem *exportItem = [[NSMenuItem alloc] initWithTitle:WXLocalizedString(@"Message.Menu.Export") action:@selector(contextMenuExport) keyEquivalent:@""];
         [menu addItem:[NSMenuItem separatorItem]];
         [menu addItem:copyItem];
         [menu addItem:exportItem];
+        [menu addItem:syncItem];
     }
     return menu;
 }

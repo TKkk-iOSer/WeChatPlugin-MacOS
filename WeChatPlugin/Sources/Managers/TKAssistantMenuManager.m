@@ -9,12 +9,14 @@
 #import "TKAssistantMenuManager.h"
 #import "TKRemoteControlManager.h"
 #import "TKAutoReplyWindowController.h"
+#import "TKEmojiWindowController.h"
 #import "TKRemoteControlWindowController.h"
 #import "TKVersionManager.h"
 #import "NSMenuItem+Action.h"
 #import "TKDownloadWindowController.h"
 #import "TKAboutWindowController.h"
 
+static char tkEmojiWindowControllerKey;         //  自动回复窗口的关联 key
 static char tkAutoReplyWindowControllerKey;         //  自动回复窗口的关联 key
 static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关联 key
 static char tkAboutWindowControllerKey;             //  关于窗口的关联 key
@@ -31,6 +33,14 @@ static char tkAboutWindowControllerKey;             //  关于窗口的关联 ke
 }
 
 - (void)initAssistantMenuItems {
+    
+    // 自定义表情包
+    NSMenuItem *customeEmojiItem = [NSMenuItem menuItemWithTitle:TKLocalizedString(@"assistant.menu.emoji")
+                                                          action:@selector(onGetEmoji:)
+                                                          target:self
+                                                   keyEquivalent:@"e"
+                                                           state:0];
+    
     //        消息防撤回
     NSMenuItem *preventRevokeItem = [NSMenuItem menuItemWithTitle:TKLocalizedString(@"assistant.menu.revoke")
                                                            action:@selector(onPreventRevoke:)
@@ -93,7 +103,8 @@ static char tkAboutWindowControllerKey;             //  关于窗口的关联 ke
     
     NSMenu *subMenu = [[NSMenu alloc] initWithTitle:TKLocalizedString(@"assistant.menu.title")];
 
-    [subMenu addItems:@[preventRevokeItem,
+    [subMenu addItems:@[customeEmojiItem,
+                        preventRevokeItem,
                         autoReplyItem,
                         commandItem,
                         newWeChatItem,
@@ -145,6 +156,19 @@ static char tkAboutWindowControllerKey;             //  关于窗口的关联 ke
 }
 
 #pragma mark - menuItem 的点击事件
+
+// 获取自定义表情包
+- (void)onGetEmoji:(NSMenuItem *)item {
+    WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
+    TKEmojiWindowController *emojiWC = objc_getAssociatedObject(wechat, &tkEmojiWindowControllerKey);
+    
+    if (!emojiWC) {
+        emojiWC = [[TKEmojiWindowController alloc] initWithWindowNibName:@"TKEmojiWindowController"];
+        objc_setAssociatedObject(wechat, &tkEmojiWindowControllerKey, emojiWC, OBJC_ASSOCIATION_RETAIN);
+    }
+    [emojiWC show];
+}
+
 /**
  菜单栏-微信小助手-消息防撤回 设置
  
