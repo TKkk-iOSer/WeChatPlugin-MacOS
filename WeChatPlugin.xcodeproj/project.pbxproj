@@ -7,11 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		277BBD1120FF43ED002B0869 /* gifs in Resources */ = {isa = PBXBuildFile; fileRef = 277BBD1020FF43ED002B0869 /* gifs */; };
 		277BBD202101CF53002B0869 /* TKEmojiCollectionViewItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 277BBD1F2101CF53002B0869 /* TKEmojiCollectionViewItem.h */; };
 		277BBD222101CF5D002B0869 /* TKEmojiCollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 277BBD212101CF5D002B0869 /* TKEmojiCollectionViewItem.m */; };
-		277BBD252101E3DA002B0869 /* 178229b2c6d882ce6ccdda75e4145b7c.gif in Resources */ = {isa = PBXBuildFile; fileRef = 277BBD232101E3D9002B0869 /* 178229b2c6d882ce6ccdda75e4145b7c.gif */; };
-		277BBD262101E3DA002B0869 /* c4d9630a8f632f2139ab02db67211376.gif in Resources */ = {isa = PBXBuildFile; fileRef = 277BBD242101E3D9002B0869 /* c4d9630a8f632f2139ab02db67211376.gif */; };
 		277BBD292101E3ED002B0869 /* 178229b2c6d882ce6ccdda75e4145b7c.gif in Resources */ = {isa = PBXBuildFile; fileRef = 277BBD272101E3ED002B0869 /* 178229b2c6d882ce6ccdda75e4145b7c.gif */; };
 		277BBD2A2101E3ED002B0869 /* c4d9630a8f632f2139ab02db67211376.gif in Resources */ = {isa = PBXBuildFile; fileRef = 277BBD282101E3ED002B0869 /* c4d9630a8f632f2139ab02db67211376.gif */; };
 		277BBD2C2101E612002B0869 /* TKEmojiWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 277BBD2B2101E612002B0869 /* TKEmojiWindowController.xib */; };
@@ -100,11 +97,8 @@
 /* Begin PBXFileReference section */
 		13B308B4A92CE38341762A48 /* Pods-WeChatPlugin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeChatPlugin.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeChatPlugin/Pods-WeChatPlugin.release.xcconfig"; sourceTree = "<group>"; };
 		17F7A08DC0E3A0626801414D /* libPods-WeChatPlugin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WeChatPlugin.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		277BBD1020FF43ED002B0869 /* gifs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = gifs; sourceTree = "<group>"; };
 		277BBD1F2101CF53002B0869 /* TKEmojiCollectionViewItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKEmojiCollectionViewItem.h; sourceTree = "<group>"; };
 		277BBD212101CF5D002B0869 /* TKEmojiCollectionViewItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKEmojiCollectionViewItem.m; sourceTree = "<group>"; };
-		277BBD232101E3D9002B0869 /* 178229b2c6d882ce6ccdda75e4145b7c.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 178229b2c6d882ce6ccdda75e4145b7c.gif; sourceTree = "<group>"; };
-		277BBD242101E3D9002B0869 /* c4d9630a8f632f2139ab02db67211376.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = c4d9630a8f632f2139ab02db67211376.gif; sourceTree = "<group>"; };
 		277BBD272101E3ED002B0869 /* 178229b2c6d882ce6ccdda75e4145b7c.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 178229b2c6d882ce6ccdda75e4145b7c.gif; sourceTree = "<group>"; };
 		277BBD282101E3ED002B0869 /* c4d9630a8f632f2139ab02db67211376.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = c4d9630a8f632f2139ab02db67211376.gif; sourceTree = "<group>"; };
 		277BBD2B2101E612002B0869 /* TKEmojiWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TKEmojiWindowController.xib; sourceTree = "<group>"; };
@@ -353,9 +347,6 @@
 		528B4F881EA7383800BC6A89 = {
 			isa = PBXGroup;
 			children = (
-				277BBD232101E3D9002B0869 /* 178229b2c6d882ce6ccdda75e4145b7c.gif */,
-				277BBD242101E3D9002B0869 /* c4d9630a8f632f2139ab02db67211376.gif */,
-				277BBD1020FF43ED002B0869 /* gifs */,
 				528B4F941EA7383800BC6A89 /* WeChatPlugin */,
 				528B4F931EA7383800BC6A89 /* Products */,
 				3C138513A2C7760B47317A95 /* Pods */,
@@ -633,13 +624,10 @@
 			files = (
 				277BBD2A2101E3ED002B0869 /* c4d9630a8f632f2139ab02db67211376.gif in Resources */,
 				52DA3E0F2094790900C618BB /* TKDownloadWindowController.xib in Resources */,
-				277BBD1120FF43ED002B0869 /* gifs in Resources */,
 				521D75F92080E3670093C820 /* Localizable.strings in Resources */,
-				277BBD262101E3DA002B0869 /* c4d9630a8f632f2139ab02db67211376.gif in Resources */,
 				522547E01F4C312A00226A2A /* TKAutoReplyWindowController.xib in Resources */,
 				52B5CEF21F3B4623000D9DD9 /* TKRemoteControlCommands.plist in Resources */,
 				52CD4C8420A01CDC0061A5D6 /* TKAboutWindowController.xib in Resources */,
-				277BBD252101E3DA002B0869 /* 178229b2c6d882ce6ccdda75e4145b7c.gif in Resources */,
 				277BBD2C2101E612002B0869 /* TKEmojiWindowController.xib in Resources */,
 				277BBD292101E3ED002B0869 /* 178229b2c6d882ce6ccdda75e4145b7c.gif in Resources */,
 				52B5CEF31F3B4623000D9DD9 /* TKRemoteControlScript.scpt in Resources */,
