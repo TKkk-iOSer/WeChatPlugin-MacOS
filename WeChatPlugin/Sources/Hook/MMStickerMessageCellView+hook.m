@@ -40,7 +40,7 @@
         if (!imageData) return;
         
         NSString *imageType = [NSObject getTypeForImageData:imageData];
-        NSString *imageFilePath = [NSString stringWithFormat:@"/Users/kenhan/Pictures/gifs/%@.%@", item.message.m_nsEmoticonMD5, imageType];
+        NSString *imageFilePath = [NSString stringWithFormat:@"/Users/kenhan/Dropbox/gifs/%@.%@", item.message.m_nsEmoticonMD5, imageType];
         
         NSURL *imageUrl = [NSURL fileURLWithPath:imageFilePath];
         [imageData writeToURL:imageUrl atomically:YES];

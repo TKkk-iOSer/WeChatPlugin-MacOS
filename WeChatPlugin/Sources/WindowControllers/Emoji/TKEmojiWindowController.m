@@ -99,7 +99,7 @@
     NSLog(@"----%lu", (unsigned long)collectionView.selectionIndexes.firstIndex);
     NSString *imageName = [self.imageNames objectAtIndex:(unsigned long)collectionView.selectionIndexes.firstIndex];
     
-    NSString *strpath1 = @"/Users/kenhan/Pictures/gifs";
+    NSString *strpath1 = @"/Users/kenhan/Dropbox/gifs";
     NSString *filePath = [NSString stringWithFormat:@"%@/%@", strpath1, imageName];
     NSURL *imageUrl = [NSURL fileURLWithPath:filePath];
     
@@ -115,7 +115,7 @@
     self.images = [NSMutableArray arrayWithCapacity:0];
     self.imageNames = [NSMutableArray arrayWithCapacity:0];
     NSFileManager *fm = [NSFileManager defaultManager];
-    NSString *strpath1 = @"/Users/kenhan/Pictures/gifs";
+    NSString *strpath1 = @"/Users/kenhan/Dropbox/gifs";
     NSArray *dirs = [fm contentsOfDirectoryAtPath:strpath1 error:nil];
 
     NSString *dir;
