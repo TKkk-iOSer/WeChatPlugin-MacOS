@@ -11,10 +11,11 @@
 
 @interface TKEmojiWindowController ()<NSCollectionViewDataSource, NSCollectionViewDelegate, NSCollectionViewDelegateFlowLayout>
 
-@property (nonatomic, strong) NSArray *content;
 @property (nonatomic, strong) NSCollectionView *collectionView;
 @property (nonatomic, strong) NSScrollView *scrollView;
 @property (nonatomic, strong) NSMutableArray *images;
+@property (nonatomic, strong) NSMutableArray *imageNames;
+
 @end
 
 
@@ -88,16 +89,31 @@
 
 - (NSCollectionViewItem *)collectionView:(NSCollectionView *)collectionView itemForRepresentedObjectAtIndexPath:(NSIndexPath *)indexPath {
     TKEmojiCollectionViewItem *item = [collectionView makeItemWithIdentifier:@"Emoji" forIndexPath:indexPath];
+    
     item.collImageView.image = [self.images objectAtIndex:indexPath.item];
+    item.imageName = [self.imageNames objectAtIndex:indexPath.item];
     return item;
 }
 
 - (void)collectionView:(NSCollectionView *)collectionView didSelectItemsAtIndexPaths:(NSSet<NSIndexPath *> *)indexPaths {
     NSLog(@"----%lu", (unsigned long)collectionView.selectionIndexes.firstIndex);
+    NSString *imageName = [self.imageNames objectAtIndex:(unsigned long)collectionView.selectionIndexes.firstIndex];
+    
+    NSString *strpath1 = @"/Users/kenhan/Pictures/gifs";
+    NSString *filePath = [NSString stringWithFormat:@"%@/%@", strpath1, imageName];
+    NSURL *imageUrl = [NSURL fileURLWithPath:filePath];
+    
+    NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
+    [pasteboard clearContents];
+    [pasteboard declareTypes:@[NSFilenamesPboardType] owner:nil];
+    [pasteboard writeObjects:@[imageUrl]];
+    
+    [self.window close];
 }
 
 - (void)setup {
     self.images = [NSMutableArray arrayWithCapacity:0];
+    self.imageNames = [NSMutableArray arrayWithCapacity:0];
     NSFileManager *fm = [NSFileManager defaultManager];
     NSString *strpath1 = @"/Users/kenhan/Pictures/gifs";
     NSArray *dirs = [fm contentsOfDirectoryAtPath:strpath1 error:nil];
@@ -106,10 +122,11 @@
 
     for (dir in dirs)
     {
-        NSString *filePath = [NSString stringWithFormat:@"%@/%@", strpath1, dir ];
+        NSString *filePath = [NSString stringWithFormat:@"%@/%@", strpath1, dir];
         NSImage *image = [self getImage:filePath];
         if (image) {
             [self.images addObject:image];
+            [self.imageNames addObject:dir];
         }
     }
 

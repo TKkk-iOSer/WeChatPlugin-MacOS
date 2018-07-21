@@ -10,4 +10,5 @@
 
 @interface TKEmojiCollectionViewItem : NSCollectionViewItem
 @property (nonatomic, strong) NSImageView *collImageView;
+@property (nonatomic, strong) NSString *imageName;
 @end
