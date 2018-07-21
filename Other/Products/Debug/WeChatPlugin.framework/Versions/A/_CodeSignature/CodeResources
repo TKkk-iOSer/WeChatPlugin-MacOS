@@ -4,10 +4,6 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>Resources/178229b2c6d882ce6ccdda75e4145b7c.gif</key>
-		<data>
-		2q4Bol+gGeRQPGrOR9Tu2N0KrUo=
-		</data>
 		<key>Resources/Info.plist</key>
 		<data>
 		1jEplV1qbIq1f+wwJNe2wplX4zM=
@@ -22,7 +18,7 @@
 		</data>
 		<key>Resources/TKEmojiWindowController.nib</key>
 		<data>
-		rT4BCyPPokXY+IrNBloBxDwVG0E=
+		wNOv6v7fnWNhu2xDnM1ckgzZbZ8=
 		</data>
 		<key>Resources/TKRemoteControlCommands.plist</key>
 		<data>
@@ -31,10 +27,6 @@
 		<key>Resources/TKRemoteControlScript.scpt</key>
 		<data>
 		hcwfvSySfZq+cef2+mIqQ/QJg6A=
-		</data>
-		<key>Resources/c4d9630a8f632f2139ab02db67211376.gif</key>
-		<data>
-		5kRfq0xpGHew751ZfSNx2d1fLG8=
 		</data>
 		<key>Resources/en.lproj/Localizable.strings</key>
 		<dict>
@@ -81,14 +73,6 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Resources/gifs/178229b2c6d882ce6ccdda75e4145b7c.gif</key>
-		<data>
-		2q4Bol+gGeRQPGrOR9Tu2N0KrUo=
-		</data>
-		<key>Resources/gifs/c4d9630a8f632f2139ab02db67211376.gif</key>
-		<data>
-		5kRfq0xpGHew751ZfSNx2d1fLG8=
-		</data>
 		<key>Resources/zh-Hans.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
@@ -196,13 +180,6 @@
 			d/As0fQ5/LGmRSeFp1i6yVMaKqXXBoaR3GB/Mf5SoPI=
 			</data>
 		</dict>
-		<key>Resources/178229b2c6d882ce6ccdda75e4145b7c.gif</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			qU5wuJCMTKwLGshcb4F8tSi/k1IMJBasvsGR7Fo9VDg=
-			</data>
-		</dict>
 		<key>Resources/Info.plist</key>
 		<dict>
 			<key>hash2</key>
@@ -228,7 +205,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			+GVZ6Z4Tv0jNcrYnwD6lk/DqhKs/7/DmoTBxfvQyRWU=
+			rEiD6Mx1Ev3yY/MmdTbd4Ms5cGzbdEq+nU8JBYJLW7Y=
 			</data>
 		</dict>
 		<key>Resources/TKRemoteControlCommands.plist</key>
@@ -243,13 +220,6 @@
 			<key>hash2</key>
 			<data>
 			ppUmJWM2egerP8xkyq6EEzs8Zg/0lMtteJTM+BTauEw=
-			</data>
-		</dict>
-		<key>Resources/c4d9630a8f632f2139ab02db67211376.gif</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			qAfb9E6hvx/AoWMV3sRZL60xu/o+SafkYj98Z+IVLU4=
 			</data>
 		</dict>
 		<key>Resources/en.lproj/Localizable.strings</key>
@@ -296,20 +266,6 @@
 			</data>
 			<key>optional</key>
 			<true/>
-		</dict>
-		<key>Resources/gifs/178229b2c6d882ce6ccdda75e4145b7c.gif</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			qU5wuJCMTKwLGshcb4F8tSi/k1IMJBasvsGR7Fo9VDg=
-			</data>
-		</dict>
-		<key>Resources/gifs/c4d9630a8f632f2139ab02db67211376.gif</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			qAfb9E6hvx/AoWMV3sRZL60xu/o+SafkYj98Z+IVLU4=
-			</data>
 		</dict>
 		<key>Resources/zh-Hans.lproj/Localizable.strings</key>
 		<dict>

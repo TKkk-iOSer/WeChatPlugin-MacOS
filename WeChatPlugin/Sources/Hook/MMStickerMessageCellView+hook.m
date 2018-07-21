@@ -29,6 +29,25 @@
     return menu;
 }
 
+- (void)contextMenuSyncEmoji {
+    if ([self.className isEqualToString:@"MMStickerMessageCellView"]) {
+        MMMessageTableItem *item = [self valueForKey:@"messageTableItem"];
+        if (!item.message || !item.message.m_nsEmoticonMD5) {
+            return;
+        }
+        EmoticonMgr *emoticonMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("EmoticonMgr")];
+        NSData *imageData = [emoticonMgr getEmotionDataWithMD5:item.message.m_nsEmoticonMD5];
+        if (!imageData) return;
+        
+        NSString *imageType = [NSObject getTypeForImageData:imageData];
+        NSString *imageFilePath = [NSString stringWithFormat:@"/Users/kenhan/Pictures/gifs/%@.%@", item.message.m_nsEmoticonMD5, imageType];
+        
+        NSURL *imageUrl = [NSURL fileURLWithPath:imageFilePath];
+        [imageData writeToURL:imageUrl atomically:YES];
+
+    }
+}
+
 - (void)contextMenuExport {
     MMStickerMessageCellView *currentCellView = (MMStickerMessageCellView *)self;
     MMMessageTableItem *item = currentCellView.messageTableItem;
