@@ -17,7 +17,6 @@
 		277BBD2C2101E612002B0869 /* TKEmojiWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 277BBD2B2101E612002B0869 /* TKEmojiWindowController.xib */; };
 		277BBD2E2101F0A1002B0869 /* TKEmojiItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 277BBD2D2101F0A1002B0869 /* TKEmojiItem.h */; };
 		277BBD302101F0AE002B0869 /* TKEmojiItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 277BBD2F2101F0AE002B0869 /* TKEmojiItem.m */; };
-		277BBD322101F17A002B0869 /* TKEmojiCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 277BBD312101F17A002B0869 /* TKEmojiCollectionViewItem.xib */; };
 		279ED49120FEE68E00282CFE /* TKEmojiWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 279ED49020FEE68E00282CFE /* TKEmojiWindowController.h */; };
 		279ED49320FEE69700282CFE /* TKEmojiWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 279ED49220FEE69700282CFE /* TKEmojiWindowController.m */; };
 		520AE6E8208E1DA300BADE47 /* TKMessageManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 520AE6E6208E1DA300BADE47 /* TKMessageManager.h */; };
@@ -111,7 +110,6 @@
 		277BBD2B2101E612002B0869 /* TKEmojiWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TKEmojiWindowController.xib; sourceTree = "<group>"; };
 		277BBD2D2101F0A1002B0869 /* TKEmojiItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKEmojiItem.h; sourceTree = "<group>"; };
 		277BBD2F2101F0AE002B0869 /* TKEmojiItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKEmojiItem.m; sourceTree = "<group>"; };
-		277BBD312101F17A002B0869 /* TKEmojiCollectionViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TKEmojiCollectionViewItem.xib; sourceTree = "<group>"; };
 		279ED49020FEE68E00282CFE /* TKEmojiWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKEmojiWindowController.h; sourceTree = "<group>"; };
 		279ED49220FEE69700282CFE /* TKEmojiWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKEmojiWindowController.m; sourceTree = "<group>"; };
 		520AE6E6208E1DA300BADE47 /* TKMessageManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKMessageManager.h; sourceTree = "<group>"; };
@@ -230,7 +228,6 @@
 				277BBD2F2101F0AE002B0869 /* TKEmojiItem.m */,
 				277BBD1F2101CF53002B0869 /* TKEmojiCollectionViewItem.h */,
 				277BBD212101CF5D002B0869 /* TKEmojiCollectionViewItem.m */,
-				277BBD312101F17A002B0869 /* TKEmojiCollectionViewItem.xib */,
 			);
 			path = Emoji;
 			sourceTree = "<group>";
@@ -635,7 +632,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				277BBD2A2101E3ED002B0869 /* c4d9630a8f632f2139ab02db67211376.gif in Resources */,
-				277BBD322101F17A002B0869 /* TKEmojiCollectionViewItem.xib in Resources */,
 				52DA3E0F2094790900C618BB /* TKDownloadWindowController.xib in Resources */,
 				277BBD1120FF43ED002B0869 /* gifs in Resources */,
 				521D75F92080E3670093C820 /* Localizable.strings in Resources */,

@@ -12,10 +12,6 @@
 
 @interface TKEmojiCollectionViewItem ()
 
-//@property (weak) IBOutlet NSImageView *collImageView;
-@property (weak) IBOutlet NSImageView *collImageView;
-@property (weak) IBOutlet NSTextField *titleField;
-
 @end
 
 
@@ -26,15 +22,12 @@
     
 }
 
-- (void)viewWillAppear {
-    if(!self.representedObject){
-        return;
-    }
-    self.collImageView.image = [self.representedObject objectForKey:@"image"];
-    self.titleField.stringValue = [self.representedObject objectForKey:@"title"];
-    
+- (void)loadView {
+    self.view = [[TKEmojiItem alloc] init];
+    self.collImageView = [[NSImageView alloc] initWithFrame:self.view.bounds];
+    self.collImageView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+    [self.view addSubview:self.collImageView];
 }
-
 
 
 // 重写选中方法

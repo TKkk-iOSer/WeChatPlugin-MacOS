@@ -9,5 +9,5 @@
 #import <Cocoa/Cocoa.h>
 
 @interface TKEmojiCollectionViewItem : NSCollectionViewItem
-
+@property (nonatomic, strong) NSImageView *collImageView;
 @end

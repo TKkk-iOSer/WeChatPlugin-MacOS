@@ -10,7 +10,7 @@
 		</data>
 		<key>Resources/Info.plist</key>
 		<data>
-		sKe6XJJ4wM+cD5se+zyfwJwZOVY=
+		1jEplV1qbIq1f+wwJNe2wplX4zM=
 		</data>
 		<key>Resources/TKAutoReplyWindowController.nib</key>
 		<data>
@@ -20,13 +20,9 @@
 		<data>
 		VKAsHccVWM+5rxwMXYNJ/YsdUiM=
 		</data>
-		<key>Resources/TKEmojiCollectionViewItem.nib</key>
-		<data>
-		QJaFZt1+DANi01Ub1Y76VyKHZHk=
-		</data>
 		<key>Resources/TKEmojiWindowController.nib</key>
 		<data>
-		/K/YODZSUTsA0jNSkHiXbNQOJWc=
+		rT4BCyPPokXY+IrNBloBxDwVG0E=
 		</data>
 		<key>Resources/TKRemoteControlCommands.plist</key>
 		<data>
@@ -211,7 +207,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			DUBgCoWD2foC4DsyFLH6ia/lEj1Lv6AUVFpXVZYA3OI=
+			NWZCdisu3qBL6qseLJ0VBxVncqEt9Zekwbftj7aN1RE=
 			</data>
 		</dict>
 		<key>Resources/TKAutoReplyWindowController.nib</key>
@@ -228,18 +224,11 @@
 			k6KL7V+3lFrtNlZzd2wXZh8MRdljEa0tNgb6YIB3RRo=
 			</data>
 		</dict>
-		<key>Resources/TKEmojiCollectionViewItem.nib</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			uY12o1I7dU41AqHF8uxNw9y9EB4yZHzdD1iftPFnIQM=
-			</data>
-		</dict>
 		<key>Resources/TKEmojiWindowController.nib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			YG+js/e8pyn0OwdG5TS/hshUjlmb9Y07sqNUt05BZVA=
+			+GVZ6Z4Tv0jNcrYnwD6lk/DqhKs/7/DmoTBxfvQyRWU=
 			</data>
 		</dict>
 		<key>Resources/TKRemoteControlCommands.plist</key>
