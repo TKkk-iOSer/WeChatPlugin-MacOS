@@ -70,8 +70,7 @@ static NSString * const kRemoteControlAppleScript = @"osascript /Applications/We
                 if (model.type != TKRemoteControlTypePlugin) {
                     NSString *callBack = [NSString stringWithFormat:@"%@%@", TKLocalizedString(@"assistant.remoteControl.recall"), TKLocalizedString(model.function)];
                     [[TKMessageManager shareManager] sendTextMessageToSelf:callBack];
-                    MessageService *service = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
-                    [service ClearUnRead:[objc_getClass("CUtility") GetCurrentUserName] FromID:0 ToID:0];
+                    [[TKMessageManager shareManager] clearUnRead:[objc_getClass("CUtility") GetCurrentUserName]];
                 }
                 *stop = YES;
                 *subStop = YES;

@@ -14,5 +14,6 @@
 
 - (void)sendTextMessageToSelf:(id)msgContent;
 - (void)sendTextMessage:(id)msgContent toUsrName:(id)toUser delay:(NSInteger)delayTime;
+- (void)clearUnRead:(id)arg1;
 
 @end

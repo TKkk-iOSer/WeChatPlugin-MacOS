@@ -15,6 +15,8 @@
 @interface TKWebServerManager ()
 
 @property (nonatomic, strong) GCDWebServer *webServer;
+@property (nonatomic, strong) MMContactSearchLogic *searchLogic;
+
 @end
 
 @implementation TKWebServerManager
@@ -26,6 +28,14 @@
         manager = [[TKWebServerManager alloc] init];
     });
     return manager;
+}
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.searchLogic = [[objc_getClass("MMContactSearchLogic") alloc] init];
+    }
+    return self;
 }
 
 - (void)startServer {
@@ -57,27 +67,51 @@
     
     [self.webServer addHandlerForMethod:@"GET" path:@"/wechat-plugin/user" requestClass:[GCDWebServerRequest class] processBlock:^GCDWebServerResponse * _Nullable(__kindof GCDWebServerRequest * _Nonnull request) {
         
-        NSDictionary *keyword = request.query ? request.query[@"keyword"] ? request.query[@"keyword"] : @"" : @"";
+        NSString *keyword = request.query ? request.query[@"keyword"] ? request.query[@"keyword"] : @"" : @"";
         __block NSMutableArray *sessionList = [NSMutableArray array];
-        __block BOOL hasResult = NO;
-        MMComplexContactSearchTaskMgr *searchMgr = [objc_getClass("MMComplexContactSearchTaskMgr") sharedInstance];
-        [searchMgr doComplexContactSearch:keyword searchScene:31 complete:^(NSArray<MMComplexContactSearchResult *> *contactResult, NSArray<MMComplexContactSearchResult *> *brandSult, NSArray<MMComplexGroupContactSearchResult *> *groupResult) {
-            [contactResult enumerateObjectsUsingBlock:^(MMComplexContactSearchResult * _Nonnull contact, NSUInteger idx, BOOL * _Nonnull stop) {
-                [sessionList addObject:[weakSelf dictFromContactSearchResult:contact]];
-            }];
-            
-            [groupResult enumerateObjectsUsingBlock:^(MMComplexGroupContactSearchResult * _Nonnull group, NSUInteger idx, BOOL * _Nonnull stop) {
-                [sessionList addObject:[weakSelf dictFromGroupSearchResult:group]];
-            }];
-            
-            [brandSult enumerateObjectsUsingBlock:^(MMComplexContactSearchResult * _Nonnull contact, NSUInteger idx, BOOL * _Nonnull stop) {
-                [sessionList addObject:[weakSelf dictFromContactSearchResult:contact]];
-            }];
-
-            hasResult = YES;
-        } cancelable:YES];
         
-        while (!hasResult) {}
+//        返回最近聊天
+        if ([keyword isEqualToString:@""]) {
+            MMSessionMgr *sessionMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMSessionMgr")];
+            NSMutableArray <MMSessionInfo *> *arrSession = sessionMgr.m_arrSession;
+            [arrSession enumerateObjectsUsingBlock:^(MMSessionInfo * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([obj.m_packedInfo.m_contact.m_nsUsrName isEqualToString:@"brandsessionholder"]) {
+                    return ;
+                }
+                [sessionList addObject:[weakSelf dictFromSessionInfo:obj]];
+            }];
+            return [GCDWebServerDataResponse responseWithJSONObject:sessionList];
+        }
+        
+//        返回搜索结果
+        MMContactSearchLogic *logic = weakSelf.searchLogic;
+        __block BOOL hasResult = NO;
+        
+        [logic doSearchWithKeyword:keyword searchScene:31 resultIsShownBlock:nil completion:^ {
+            if ([logic respondsToSelector:@selector(reloadSearchResultDataWithKeyword:completionBlock:)]) {
+                [logic reloadSearchResultDataWithKeyword:keyword completionBlock:^ {
+                    hasResult = YES;
+                }];
+            } else if ([logic respondsToSelector:@selector(reloadSearchResultDataWithCompletionBlock:)]) {
+                [logic reloadSearchResultDataWithCompletionBlock:^ {
+                    hasResult = YES;
+                }];
+            }
+        }];
+        
+        while (!(hasResult)) {};
+
+        [logic.contactResults enumerateObjectsUsingBlock:^(MMSearchResultItem * _Nonnull contact, NSUInteger idx, BOOL * _Nonnull stop) {
+            [sessionList addObject:[weakSelf dictFromContactSearchResult:(MMComplexContactSearchResult *)contact.result]];
+        }];
+        [logic.groupResults enumerateObjectsUsingBlock:^(MMSearchResultItem * _Nonnull group, NSUInteger idx, BOOL * _Nonnull stop) {
+            [sessionList addObject:[weakSelf dictFromGroupSearchResult:(MMComplexGroupContactSearchResult *)group.result]];
+        }];
+        [logic.oaResults enumerateObjectsUsingBlock:^(MMSearchResultItem * _Nonnull contact, NSUInteger idx, BOOL * _Nonnull stop) {
+            [sessionList addObject:[weakSelf dictFromContactSearchResult:(MMComplexContactSearchResult *)contact.result]];
+        }];
+        
+        [logic clearAllResults];
         
         return [GCDWebServerDataResponse responseWithJSONObject:sessionList];
     }];
@@ -131,6 +165,22 @@
         
         return [GCDWebServerResponse responseWithStatusCode:404];
     }];
+}
+
+- (NSDictionary *)dictFromSessionInfo:(MMSessionInfo *)sessionInfo {
+    WCContactData *contact = sessionInfo.m_packedInfo.m_contact;
+    NSString *title = [contact isBrandContact] ? [NSString stringWithFormat:@"%@%@",TKLocalizedString(@"assistant.search.official"), contact.m_nsNickName] : contact.m_nsNickName;
+    
+    if(contact.m_nsRemark && ![contact.m_nsRemark isEqualToString:@""]) {
+        title = [NSString stringWithFormat:@"%@(%@)",contact.m_nsRemark, contact.m_nsNickName];
+    }
+    NSString *imgPath = [self cacheAvatarPathFromHeadImgUrl:contact.m_nsHeadImgUrl];
+    
+    return @{@"title": title,
+             @"subTitle": @"",
+             @"icon": imgPath,
+             @"userId": contact.m_nsUsrName
+             };
 }
 
 - (NSDictionary *)dictFromGroupSearchResult:(MMComplexGroupContactSearchResult *)result {

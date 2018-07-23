@@ -13,6 +13,7 @@
 #import "WeChatPlugin.h"
 
 static NSString * const kTKPreventRevokeEnableKey = @"kTKPreventRevokeEnableKey";
+static NSString * const kTKPreventSelfRevokeEnableKey = @"kTKPreventSelfRevokeEnableKey";
 static NSString * const kTKAutoReplyEnableKey = @"kTKAutoReplyEnableKey";
 static NSString * const kTKAutoAuthEnableKey = @"kTKAutoAuthEnableKey";
 static NSString * const kTKAutoLoginEnableKey = @"kTKAutoLoginEnableKey";
@@ -47,6 +48,7 @@ static NSString * const kTKWeChatRemotePlistPath = @"https://raw.githubuserconte
     self = [super init];
     if (self) {
         _preventRevokeEnable = [[NSUserDefaults standardUserDefaults] boolForKey:kTKPreventRevokeEnableKey];
+        _preventSelfRevokeEnable = [[NSUserDefaults standardUserDefaults] boolForKey:kTKPreventSelfRevokeEnableKey];
         _autoReplyEnable = [[NSUserDefaults standardUserDefaults] boolForKey:kTKAutoReplyEnableKey];
         _autoAuthEnable = [[NSUserDefaults standardUserDefaults] boolForKey:kTKAutoAuthEnableKey];
         _autoLoginEnable = [[NSUserDefaults standardUserDefaults] boolForKey:kTKAutoLoginEnableKey];
@@ -59,6 +61,12 @@ static NSString * const kTKWeChatRemotePlistPath = @"https://raw.githubuserconte
 - (void)setPreventRevokeEnable:(BOOL)preventRevokeEnable {
     _preventRevokeEnable = preventRevokeEnable;
     [[NSUserDefaults standardUserDefaults] setBool:preventRevokeEnable forKey:kTKPreventRevokeEnableKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)setPreventSelfRevokeEnable:(BOOL)preventSelfRevokeEnable {
+    _preventSelfRevokeEnable = preventSelfRevokeEnable;
+    [[NSUserDefaults standardUserDefaults] setBool:preventSelfRevokeEnable forKey:kTKPreventSelfRevokeEnableKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
