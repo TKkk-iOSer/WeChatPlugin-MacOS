@@ -39,4 +39,13 @@
     });
 }
 
+- (void)clearUnRead:(id)arg1 {
+    MessageService *service = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
+    if ([service respondsToSelector:@selector(ClearUnRead:FromCreateTime:ToCreateTime:)]) {
+        [service ClearUnRead:arg1 FromCreateTime:0 ToCreateTime:0];
+    } else if ([service respondsToSelector:@selector(ClearUnRead:FromID:ToID:)]) {
+        [service ClearUnRead:arg1 FromID:0 ToID:0];
+    }
+}
+
 @end

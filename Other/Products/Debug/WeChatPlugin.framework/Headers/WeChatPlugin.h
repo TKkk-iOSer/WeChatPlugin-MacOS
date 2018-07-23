@@ -53,6 +53,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 - (void)AddLocalMsg:(id)arg1 msgData:(id)arg2;
 - (void)TranscribeVoiceMessage:(id)arg1 completion:(void (^)(void))arg2;
 - (BOOL)ClearUnRead:(id)arg1 FromID:(unsigned int)arg2 ToID:(unsigned int)arg3;
+- (BOOL)ClearUnRead:(id)arg1 FromCreateTime:(unsigned int)arg2 ToCreateTime:(unsigned int)arg3;
 - (BOOL)hasMsgInChat:(id)arg1;
 @end
 
@@ -111,11 +112,14 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @property(retain, nonatomic) NSString *m_nsNickName;    // 用户昵称
 @property(retain, nonatomic) NSString *m_nsRemark;      // 备注
 @property(retain, nonatomic) NSString *m_nsHeadImgUrl;  // 头像
+@property(retain, nonatomic) NSString *m_nsHeadHDMd5;
 @property(nonatomic) BOOL m_isShowRedDot; 
 - (BOOL)isBrandContact;
 - (BOOL)isSelf;
 - (id)getGroupDisplayName;
-
+- (BOOL)isGroupChat;
+- (BOOL)isMMChat;
+- (BOOL)isMMContact;
 @end
 
 @interface MessageData : NSObject
@@ -217,20 +221,41 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 
 @interface MMComplexContactSearchTaskMgr : NSObject
 + (id)sharedInstance;
-- (void)doComplexContactSearch:(id)arg1 searchScene:(unsigned long long)arg2 complete:(void (^)(NSArray *, NSArray *, NSArray *))arg3 cancelable:(BOOL)arg4;
+- (void)doComplexContactSearch:(id)arg1 searchScene:(unsigned long long)arg2 complete:(void (^)(NSString *,NSArray *, NSArray *, NSArray *,id))arg3 cancelable:(BOOL)arg4;
 @end
 
-@interface MMComplexContactSearchResult : NSObject
+@interface MMBasicSearchResult : NSObject
+@end
+
+@interface MMSearchResultItem : NSObject
+@property(retain, nonatomic) MMBasicSearchResult *result;
+@end
+
+@interface MMContactSearchLogic : NSObject
+@property(retain, nonatomic) NSMutableArray *contactResults;
+- (void)doSearchWithKeyword:(id)arg1 searchScene:(unsigned long long)arg2 resultIsShownBlock:(id)arg3 completion:(id)arg4;
+@property(retain, nonatomic) NSMutableArray *groupResults;
+@property(nonatomic) BOOL isBrandContactSearched;
+@property(nonatomic) BOOL isChatLogSearched;
+@property(nonatomic) BOOL isContactSearched;
+@property(nonatomic) BOOL isGroupContactSearched;
+@property(retain, nonatomic) NSMutableArray *oaResults;
+- (void)clearAllResults;
+- (void)reloadSearchResultDataWithKeyword:(id)arg1 completionBlock:(id)arg2;    //  2.3.17
+- (void)reloadSearchResultDataWithCompletionBlock:(id)arg1;                     //  2.3.13
+@end
+
+@interface MMComplexContactSearchResult : MMBasicSearchResult
 @property(retain, nonatomic) NSString *fieldValue;
 @property(retain, nonatomic) WCContactData *contact;
 @property(nonatomic) unsigned long long fieldType;  // 1：备注 3：昵称 4：微信号  8：省份  7：市  9：国家
 @end
 
-@interface MMComplexGroupContactMembersSearchResult : NSObject
+@interface MMComplexGroupContactMembersSearchResult : MMBasicSearchResult
 @property(retain, nonatomic) NSMutableArray<MMComplexContactSearchResult *> *membersSearchReults;
 @end
 
-@interface MMComplexGroupContactSearchResult : NSObject
+@interface MMComplexGroupContactSearchResult : MMBasicSearchResult
 @property(nonatomic) unsigned long long searchType;     // 1 名称 2 群成员名称
 @property(retain) WCContactData *groupContact;
 @property(retain, nonatomic) MMComplexGroupContactMembersSearchResult *groupMembersResult;

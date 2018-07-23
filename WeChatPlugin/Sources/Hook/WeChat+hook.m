@@ -151,7 +151,7 @@
         //      获取原始的撤回提示消息
         MessageService *msgService = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
         MessageData *revokeMsgData = [msgService GetMsgData:session svrId:[newmsgid integerValue]];
-        if ([revokeMsgData isSendFromSelf]) {   //  自己发送的消息，不拦截
+        if ([revokeMsgData isSendFromSelf] && ![[TKWeChatPluginConfig sharedConfig] preventSelfRevokeEnable]) { 
             [self hook_onRevokeMsg:msg];
             return;
         }
@@ -251,7 +251,7 @@
         if ([instanceUserName isEqualToString:currentUserName]) {
             MessageService *service = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
             [service SendTextMessage:currentUserName toUsrName:chatName msgText:notification.response.string atUserList:nil];
-            [service ClearUnRead:chatName FromID:0 ToID:0];
+            [[TKMessageManager shareManager] clearUnRead:chatName];
         }
     } else {
         [self hook_userNotificationCenter:notificationCenter didActivateNotification:notification];
@@ -288,6 +288,8 @@
         NSMenu *mainMenu = [[NSApplication sharedApplication] mainMenu];
         NSMenuItem *pluginMenu = mainMenu.itemArray.lastObject;
         pluginMenu.enabled = YES;
+        NSMenuItem *preventMenu = pluginMenu.submenu.itemArray.firstObject;
+        preventMenu.enabled = YES;
     });
 }
 

@@ -10,6 +10,7 @@
 //  MainMenu
 "assistant.menu.title" = "Assistant";
 "assistant.menu.revoke" = "Prevent Revoke";
+"assistant.menu.revokeSelf" = "Prevent Self Message";
 "assistant.menu.autoReply" = "Auto Reply";
 "assistant.menu.newWeChat" = "New WeChat";
 "assistant.menu.remoteControl" = "Remote Control";

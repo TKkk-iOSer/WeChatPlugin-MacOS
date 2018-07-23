@@ -10,6 +10,7 @@
 //  菜單欄
 "assistant.menu.title" = "微信小助手";
 "assistant.menu.revoke" = "開啟消息防撤回";
+"assistant.menu.revokeSelf" = "攔截自己撤回消息";
 "assistant.menu.autoReply" = "自動回復設置";
 "assistant.menu.newWeChat" = "登錄新微信";
 "assistant.menu.remoteControl" = "遠程控制mac";
