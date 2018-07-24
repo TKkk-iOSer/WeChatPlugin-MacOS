@@ -54,7 +54,7 @@
 ## 更新日志
 
 * [适配2.3.17 & 加强 alfred 搜索(2018-07-24)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.7.1)
-* 
+
 * [新增好多功能…(2018-05-12)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.7)
 
 * [新增自动回复延迟 & 修改置顶窗口快捷(2018-04-07)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.6.1)
@@ -110,7 +110,6 @@
 ![alfred](./Other/ScreenShots/alfred_chat_log.gif)
 
 * 一键已读 & 一键清除空回话
-
 ![基本操作](./Other/ScreenShots/session_empty_and_clean.gif)
 
 ---
