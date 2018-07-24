@@ -1,5 +1,11 @@
 # 更新日志 
 
+### [v1.7.1 (2018-07-24)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.7.1)
+
+* 适配微信 Version. 2.3.17
+* 新增 alfred 搜索最近聊天列表
+* 新增 alfred 查看用户聊天记录
+
 ### [v1.7 (2018-05-12)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.7)
 
 * 新增不同账户设置不同的自动回复&远程控制
