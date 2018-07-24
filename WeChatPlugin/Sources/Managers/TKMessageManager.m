@@ -48,4 +48,39 @@
     }
 }
 
+- (NSString *)getMessageContentWithData:(MessageData *)msgData {
+    NSString *msgContent;
+    if (msgData.messageType == 1) {
+        msgContent = [msgData getRealMessageContent];
+    } else if ([msgData isCustomEmojiMsg]) {
+        msgContent = TKLocalizedString(@"assistant.revokeType.emoji");
+    } else if ([msgData isImgMsg]) {
+        msgContent = TKLocalizedString(@"assistant.revokeType.image");
+    } else if ([msgData isVideoMsg]) {
+        msgContent = TKLocalizedString(@"assistant.revokeType.video");
+    } else if ([msgData isVoiceMsg]) {
+        msgContent = TKLocalizedString(@"assistant.revokeType.voice");
+    } else if (msgData.m_nsTitle){
+        msgContent = msgData.m_nsTitle;
+    } else {
+        msgContent = TKLocalizedString(@"assistant.revokeType.other");
+    }
+
+    if (msgData.isChatRoomMessage) {
+        if (msgData.groupChatSenderDisplayName.length > 0) {
+            msgContent = [NSString stringWithFormat:@"%@：%@",msgData.groupChatSenderDisplayName, msgContent];
+        }
+    }
+    
+    return msgContent;
+}
+
+- (NSArray <MessageData *> *)getMsgListWithChatName:(id)arg1 minMesLocalId:(unsigned int)arg2 limitCnt:(unsigned int)arg3 {
+    MessageService *service = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
+    char hasMore = '1';
+    NSArray *array = [service GetMsgListWithChatName:arg1 fromLocalId:arg2 limitCnt:arg3 hasMore:&hasMore sortAscend:YES];
+    
+    return [[array reverseObjectEnumerator] allObjects];
+}
+
 @end

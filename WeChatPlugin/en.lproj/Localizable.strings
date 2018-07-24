@@ -120,6 +120,7 @@
 
 //  Alfred
 "assistant.search.member" = "Member: ";
+"assistant.search.friend" = "[Friend]";
 "assistant.search.group" = "[Group] ";
 "assistant.search.official" = "[Official]";
 

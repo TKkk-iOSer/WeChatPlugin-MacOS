@@ -55,6 +55,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 - (BOOL)ClearUnRead:(id)arg1 FromID:(unsigned int)arg2 ToID:(unsigned int)arg3;
 - (BOOL)ClearUnRead:(id)arg1 FromCreateTime:(unsigned int)arg2 ToCreateTime:(unsigned int)arg3;
 - (BOOL)hasMsgInChat:(id)arg1;
+- (id)GetMsgListWithChatName:(id)arg1 fromLocalId:(unsigned int)arg2 limitCnt:(unsigned int)arg3 hasMore:(char *)arg4 sortAscend:(BOOL)arg5;
 @end
 
 @interface MMServiceCenter : NSObject
@@ -136,7 +137,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @property(retain, nonatomic) NSString *msgVoiceText;
 @property(copy, nonatomic) NSString *m_nsEmoticonMD5;
 - (BOOL)isChatRoomMessage;
-- (id)groupChatSenderDisplayName;
+- (NSString *)groupChatSenderDisplayName;
 - (id)getRealMessageContent;
 - (BOOL)isSendFromSelf;
 - (BOOL)isCustomEmojiMsg;
@@ -144,6 +145,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 - (BOOL)isVideoMsg;
 - (BOOL)isVoiceMsg;
 - (BOOL)canForward;
+@property(retain, nonatomic) NSString *m_nsTitle;
 @end
 
 @interface CUtility : NSObject
@@ -154,6 +156,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @end
 @interface MMSessionInfoPackedInfo: NSObject
 @property(retain, nonatomic) WCContactData *m_contact;
+@property(retain, nonatomic) MessageData *m_msgData;
 @end
 
 @interface MMSessionInfo : NSObject
@@ -214,9 +217,16 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 - (id)contextMenu;
 @end
 
+@interface MMImageMessageCellView: NSObject
+@property(retain, nonatomic) MMMessageTableItem *messageTableItem;
+@end
+
 @interface EmoticonMgr : NSObject
 @property(retain, nonatomic) MessageData *message;
 - (id)getEmotionDataWithMD5:(id)arg1;
+- (void)addFavEmoticon:(id)arg1;
+- (void)addEmoticonToUploadQueueWithMD5:(id)arg1;
+- (void)setAppStickerToastViewDelegate:(id)arg1;
 @end
 
 @interface MMComplexContactSearchTaskMgr : NSObject
