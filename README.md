@@ -30,13 +30,13 @@
 * 聊天窗口表情包复制 & 存储
 * 小助手检测更新提醒
 * alfred 快捷发送消息 & 打开窗口 (需安装：[wechat-alfred-workflow](https://github.com/TKkk-iOSer/wechat-alfred-workflow))
-* 会话一键已读(v1.7)
-* 一键清除空会话(v1.7)
-* 支持国际化 (v1.7)
-* 新增一键更新 (v1.7)
-* 新增关于小助手 (v1.7)
+* 会话一键已读
+* 一键清除空会话
+* 支持国际化
+* 新增一键更新
+* 新增关于小助手
 * 去除微信url转链（从此直接打开抖音链接🌝
-* alfred 搜索最近聊天(输入wx 空格即可)
+* alfred 搜索最近聊天、聊天记录(输入wx 空格即可)
 
 远程控制：
 
@@ -52,6 +52,9 @@
 ---
 
 ## 更新日志
+
+* [适配2.3.17 & 加强 alfred 搜索(2018-07-24)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.7.1)
+* 
 * [新增好多功能…(2018-05-12)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.7)
 
 * [新增自动回复延迟 & 修改置顶窗口快捷(2018-04-07)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.6.1)
@@ -100,8 +103,11 @@
 * 语音远程控制 mac
 ![语音远程控制](./Other/ScreenShots/voice_remote_control.gif)
 
-* Alfred 快速搜索 [wechat-alfred-workflow](https://github.com/TKkk-iOSer/wechat-alfred-workflow)
+* Alfred 快速搜索 [wechat-alfred-workflow](https://github.com/TKkk-iOSer/wechat-alfred-workflow)   
 ![alfred](./Other/ScreenShots/alfred_search.gif)
+
+* Alfred 搜索最近聊天列表 & 查看聊天记录   
+![alfred](./Other/ScreenShots/alfred_chat_log.gif)
 
 * 一键已读 & 一键清除空回话
 
@@ -130,7 +136,6 @@
 **注意：仅向自己账号发送指令有效**
 
 ![远程控制设置.png](./Other/ScreenShots/remote_control.png)
-
 
 * Alfred 使用：请查看 [wechat-alfred-workflow](https://github.com/TKkk-iOSer/wechat-alfred-workflow)
 

@@ -11,6 +11,7 @@
 #import <GCDWebServer.h>
 #import <GCDWebServerDataResponse.h>
 #import <GCDWebServerURLEncodedFormRequest.h>
+#import "TKMessageManager.h"
 
 @interface TKWebServerManager ()
 
@@ -51,6 +52,7 @@
     [self addHandleForSearchUser];
     [self addHandleForOpenSession];
     [self addHandleForSendMsg];
+    [self addHandleForSearchUserChatLog];
     [self.webServer startWithOptions:options error:nil];
 }
 
@@ -117,6 +119,25 @@
     }];
 }
 
+- (void)addHandleForSearchUserChatLog {
+    __weak typeof(self) weakSelf = self;
+    [self.webServer addHandlerForMethod:@"GET" path:@"/wechat-plugin/chatlog" requestClass:[GCDWebServerRequest class] processBlock:^GCDWebServerResponse * _Nullable(__kindof GCDWebServerRequest * _Nonnull request) {
+        NSString *userId = request.query ? request.query[@"userId"] ? request.query[@"userId"] : nil : nil;
+        
+        if (userId) {
+            NSMutableArray *charLogList = [NSMutableArray array];
+            
+            NSArray *msgDataList = [[TKMessageManager shareManager] getMsgListWithChatName:userId minMesLocalId:0 limitCnt:30];
+            [msgDataList enumerateObjectsUsingBlock:^(MessageData * _Nonnull msgData, NSUInteger idx, BOOL * _Nonnull stop) {
+                [charLogList addObject:[weakSelf dictFromMessageData:msgData]];
+            }];
+            return [GCDWebServerDataResponse responseWithJSONObject:charLogList];
+        }
+        
+        return [GCDWebServerResponse responseWithStatusCode:404];
+    }];
+}
+
 - (void)addHandleForOpenSession {
     [self.webServer addHandlerForMethod:@"POST" path:@"/wechat-plugin/open-session" requestClass:[GCDWebServerURLEncodedFormRequest class] processBlock:^GCDWebServerResponse * _Nullable(__kindof GCDWebServerURLEncodedFormRequest * _Nonnull request) {
         NSDictionary *requestBody = [request arguments];
@@ -165,22 +186,6 @@
         
         return [GCDWebServerResponse responseWithStatusCode:404];
     }];
-}
-
-- (NSDictionary *)dictFromSessionInfo:(MMSessionInfo *)sessionInfo {
-    WCContactData *contact = sessionInfo.m_packedInfo.m_contact;
-    NSString *title = [contact isBrandContact] ? [NSString stringWithFormat:@"%@%@",TKLocalizedString(@"assistant.search.official"), contact.m_nsNickName] : contact.m_nsNickName;
-    
-    if(contact.m_nsRemark && ![contact.m_nsRemark isEqualToString:@""]) {
-        title = [NSString stringWithFormat:@"%@(%@)",contact.m_nsRemark, contact.m_nsNickName];
-    }
-    NSString *imgPath = [self cacheAvatarPathFromHeadImgUrl:contact.m_nsHeadImgUrl];
-    
-    return @{@"title": title,
-             @"subTitle": @"",
-             @"icon": imgPath,
-             @"userId": contact.m_nsUsrName
-             };
 }
 
 - (NSDictionary *)dictFromGroupSearchResult:(MMComplexGroupContactSearchResult *)result {
@@ -252,6 +257,36 @@
              };
 }
 
+- (NSDictionary *)dictFromSessionInfo:(MMSessionInfo *)sessionInfo {
+    WCContactData *contact = sessionInfo.m_packedInfo.m_contact;
+    MessageData *msgData = sessionInfo.m_packedInfo.m_msgData;
+    
+    NSString *title = [self getUserNameWithContactData:contact];
+    NSString *msgContent = [[TKMessageManager shareManager] getMessageContentWithData:msgData];
+    NSString *imgPath = [self cacheAvatarPathFromHeadImgUrl:contact.m_nsHeadImgUrl];
+    
+    return @{@"title": title,
+             @"subTitle": msgContent,
+             @"icon": imgPath,
+             @"userId": contact.m_nsUsrName
+             };
+}
+
+- (NSDictionary *)dictFromMessageData:(MessageData *)msgData {
+    MMSessionMgr *sessionMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMSessionMgr")];
+    WCContactData *msgContact = [sessionMgr getContact:msgData.fromUsrName];
+    
+    NSString *title = [[TKMessageManager shareManager] getMessageContentWithData:msgData];
+    NSString *subTitle = [self getUserNameWithContactData:msgContact];
+    NSString *imgPath = [self cacheAvatarPathFromHeadImgUrl:msgContact.m_nsHeadImgUrl];
+    
+    return @{@"title": title,
+             @"subTitle": subTitle,
+             @"icon": imgPath,
+             @"userId": msgContact.m_nsUsrName
+             };
+}
+
 //  获取本地图片缓存路径
 - (NSString *)cacheAvatarPathFromHeadImgUrl:(NSString *)imgUrl {
     NSString *imgPath = @"";
@@ -261,6 +296,19 @@
         imgPath = [NSString stringWithFormat:@"%@%@",[avatarService avatarCachePath], imgMd5Str];
     }
     return imgPath;
+}
+
+- (NSString *)getUserNameWithContactData:(WCContactData *)contact {
+    NSString *userName;
+    if (contact.isGroupChat) {
+        userName = [NSString stringWithFormat:@"%@%@", TKLocalizedString(@"assistant.search.group"), contact.getGroupDisplayName];
+    } else {
+        userName = contact.isBrandContact ? [NSString stringWithFormat:@"%@%@",TKLocalizedString(@"assistant.search.official"), contact.m_nsNickName] : contact.m_nsNickName;
+        if(contact.m_nsRemark && ![contact.m_nsRemark isEqualToString:@""]) {
+            userName = [NSString stringWithFormat:@"%@(%@)",contact.m_nsRemark, contact.m_nsNickName];
+        }
+    }
+    return userName;
 }
 
 @end

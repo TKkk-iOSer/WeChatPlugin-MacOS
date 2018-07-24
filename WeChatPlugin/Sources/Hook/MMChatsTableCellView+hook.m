@@ -145,8 +145,6 @@
 }
 
 - (void)contextMenuClearUnRead {
-    MessageService *msgService = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
-    
     MMSessionMgr *sessionMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMSessionMgr")];
     NSMutableArray *arrSession = sessionMgr.m_arrSession;
 
