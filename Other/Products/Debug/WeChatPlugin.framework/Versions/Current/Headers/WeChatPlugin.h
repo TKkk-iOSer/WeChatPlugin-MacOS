@@ -56,6 +56,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 - (BOOL)ClearUnRead:(id)arg1 FromCreateTime:(unsigned int)arg2 ToCreateTime:(unsigned int)arg3;
 - (BOOL)hasMsgInChat:(id)arg1;
 - (id)GetMsgListWithChatName:(id)arg1 fromLocalId:(unsigned int)arg2 limitCnt:(unsigned int)arg3 hasMore:(char *)arg4 sortAscend:(BOOL)arg5;
+- (id)GetMsgListWithChatName:(id)arg1 fromCreateTime:(unsigned int)arg2 limitCnt:(unsigned int)arg3 hasMore:(char *)arg4 sortAscend:(BOOL)arg5;
 @end
 
 @interface MMServiceCenter : NSObject

@@ -124,3 +124,5 @@
 "assistant.search.friend" = "[好友]";
 "assistant.search.group" = "[群聊]";
 "assistant.search.official" = "[公衆號]";
+"assistant.search.chatlog" = "以下為聊天記錄👇🏻";
+
