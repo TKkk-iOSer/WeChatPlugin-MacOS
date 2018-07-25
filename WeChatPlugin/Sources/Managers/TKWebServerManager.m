@@ -131,6 +131,19 @@
             [msgDataList enumerateObjectsUsingBlock:^(MessageData * _Nonnull msgData, NSUInteger idx, BOOL * _Nonnull stop) {
                 [charLogList addObject:[weakSelf dictFromMessageData:msgData]];
             }];
+            
+            MMSessionMgr *sessionMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMSessionMgr")];
+            WCContactData *contact = [sessionMgr getContact:userId];
+            NSString *title = [weakSelf getUserNameWithContactData:contact];
+            NSString *imgPath = [weakSelf cacheAvatarPathFromHeadImgUrl:contact.m_nsHeadImgUrl];
+            
+            NSDictionary *dict = @{@"title": [NSString stringWithFormat:@"To: %@", title],
+                                   @"subTitle": TKLocalizedString(@"assistant.search.chatlog"),
+                                   @"icon": imgPath,
+                                   @"userId": userId
+                                   };
+            [charLogList insertObject:dict atIndex:0];
+            
             return [GCDWebServerDataResponse responseWithJSONObject:charLogList];
         }
         
@@ -281,7 +294,7 @@
     NSString *imgPath = [self cacheAvatarPathFromHeadImgUrl:msgContact.m_nsHeadImgUrl];
     
     return @{@"title": title,
-             @"subTitle": subTitle,
+             @"subTitle": [NSString stringWithFormat:@"from：%@", subTitle],
              @"icon": imgPath,
              @"userId": msgContact.m_nsUsrName
              };
