@@ -41,6 +41,7 @@
 "assistant.chat.unMultiSelect" = "取消多選";
 "assistant.chat.readAll" = "一鍵已讀";
 "assistant.chat.clearEmpty" = "清除空會話";
+"assistant.chat.remove" = "移除";
 
 //  遠程控制相關
 "assistant.remoteControl.getList" = "獲取指令";
@@ -125,4 +126,5 @@
 "assistant.search.group" = "[群聊]";
 "assistant.search.official" = "[公衆號]";
 "assistant.search.chatlog" = "以下為聊天記錄👇🏻";
-
+"assistant.search.message.unread" = "未读";
+"assistant.search.yesterday" = "昨天";
