@@ -49,25 +49,18 @@
 }
 
 - (NSString *)getMessageContentWithData:(MessageData *)msgData {
-    NSString *msgContent;
-    if (msgData.messageType == 1) {
-        msgContent = [msgData getRealMessageContent];
-    } else if ([msgData isCustomEmojiMsg]) {
-        msgContent = TKLocalizedString(@"assistant.revokeType.emoji");
-    } else if ([msgData isImgMsg]) {
-        msgContent = TKLocalizedString(@"assistant.revokeType.image");
-    } else if ([msgData isVideoMsg]) {
-        msgContent = TKLocalizedString(@"assistant.revokeType.video");
-    } else if ([msgData isVoiceMsg]) {
-        msgContent = TKLocalizedString(@"assistant.revokeType.voice");
-    } else if (msgData.m_nsTitle){
-        msgContent = msgData.m_nsTitle;
-    } else {
-        msgContent = TKLocalizedString(@"assistant.revokeType.other");
+    if (!msgData) return @"";
+    
+    NSString *msgContent = [msgData summaryString:NO] ?: @"";
+    if (msgData.m_nsTitle && (msgData.isAppBrandMsg || [msgContent isEqualToString:WXLocalizedString(@"Message_type_unsupport")])){
+        NSString *content = msgData.m_nsTitle ?:@"";
+        if (msgContent) {
+            msgContent = [msgContent stringByAppendingString:content];
+        }
     }
-
-    if (msgData.isChatRoomMessage) {
-        if (msgData.groupChatSenderDisplayName.length > 0) {
+    
+    if ([msgData respondsToSelector:@selector(isChatRoomMessage)] && msgData.isChatRoomMessage && msgData.groupChatSenderDisplayName) {
+         if (msgData.groupChatSenderDisplayName.length > 0 && msgContent) {
             msgContent = [NSString stringWithFormat:@"%@：%@",msgData.groupChatSenderDisplayName, msgContent];
         }
     }
@@ -75,7 +68,7 @@
     return msgContent;
 }
 
-- (NSArray <MessageData *> *)getMsgListWithChatName:(id)arg1 minMesLocalId:(unsigned int)arg2 limitCnt:(unsigned int)arg3 {
+- (NSArray <MessageData *> *)getMsgListWithChatName:(id)arg1 minMesLocalId:(unsigned int)arg2 limitCnt:(NSInteger)arg3 {
     MessageService *service = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
     char hasMore = '1';
     NSArray *array = @[];
@@ -86,6 +79,31 @@
     }
     
     return [[array reverseObjectEnumerator] allObjects];
+}
+
+- (void)playVoiceWithMessageData:(MessageData *)msgData {
+    if (!msgData.isVoiceMsg) return;
+    
+    if (msgData.IsUnPlayed) {
+        msgData.msgStatus = 4;
+        MultiPlatformStatusSyncMgr *syncMgr = [[objc_getClass("MMServiceCenter") defaultCenter]
+                                               getService:objc_getClass("MultiPlatformStatusSyncMgr")];
+        if ([syncMgr respondsToSelector:@selector(markVoiceMessageAsRead:)]) {
+            [syncMgr markVoiceMessageAsRead:msgData];
+        }
+    }
+    MMVoiceMessagePlayer *voicePlayer = [objc_getClass("MMVoiceMessagePlayer") defaultPlayer];
+    
+    if (msgData.IsPlayingSound) {
+        [msgData SetPlayingSoundStatus:NO];
+        [voicePlayer stop];
+    } else {
+        [msgData SetPlayed];
+        MessageData *refMsgData = [msgData m_refMessageData];
+        [refMsgData setM_uiDownloadStatus:refMsgData.m_uiDownloadStatus|0x4];
+        [msgData SetPlayingSoundStatus:1];
+        [voicePlayer playWithVoiceMessage:msgData isUnplayedBeforePlay:msgData.IsUnPlayed];
+    }
 }
 
 @end

@@ -55,8 +55,8 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 - (BOOL)ClearUnRead:(id)arg1 FromID:(unsigned int)arg2 ToID:(unsigned int)arg3;
 - (BOOL)ClearUnRead:(id)arg1 FromCreateTime:(unsigned int)arg2 ToCreateTime:(unsigned int)arg3;
 - (BOOL)hasMsgInChat:(id)arg1;
-- (id)GetMsgListWithChatName:(id)arg1 fromLocalId:(unsigned int)arg2 limitCnt:(unsigned int)arg3 hasMore:(char *)arg4 sortAscend:(BOOL)arg5;
-- (id)GetMsgListWithChatName:(id)arg1 fromCreateTime:(unsigned int)arg2 limitCnt:(unsigned int)arg3 hasMore:(char *)arg4 sortAscend:(BOOL)arg5;
+- (id)GetMsgListWithChatName:(id)arg1 fromLocalId:(unsigned int)arg2 limitCnt:(NSInteger)arg3 hasMore:(char *)arg4 sortAscend:(BOOL)arg5;
+- (id)GetMsgListWithChatName:(id)arg1 fromCreateTime:(unsigned int)arg2 limitCnt:(NSInteger)arg3 hasMore:(char *)arg4 sortAscend:(BOOL)arg5;
 @end
 
 @interface MMServiceCenter : NSObject
@@ -114,11 +114,14 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @property(retain, nonatomic) NSString *m_nsNickName;    // 用户昵称
 @property(retain, nonatomic) NSString *m_nsRemark;      // 备注
 @property(retain, nonatomic) NSString *m_nsHeadImgUrl;  // 头像
+@property(retain, nonatomic) NSString *m_nsHeadHDImgUrl;
 @property(retain, nonatomic) NSString *m_nsHeadHDMd5;
+@property(retain, nonatomic) NSString *m_nsAliasName;
 @property(nonatomic) BOOL m_isShowRedDot; 
 - (BOOL)isBrandContact;
 - (BOOL)isSelf;
 - (id)getGroupDisplayName;
+- (id)getContactDisplayUsrName;
 - (BOOL)isGroupChat;
 - (BOOL)isMMChat;
 - (BOOL)isMMContact;
@@ -146,7 +149,20 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 - (BOOL)isVideoMsg;
 - (BOOL)isVoiceMsg;
 - (BOOL)canForward;
+- (BOOL)IsPlayingSound;
+- (id)summaryString:(BOOL)arg1;
+- (BOOL)isEmojiAppMsg;
+- (BOOL)isAppBrandMsg;
+- (BOOL)IsUnPlayed;
+- (void)SetPlayed;
 @property(retain, nonatomic) NSString *m_nsTitle;
+- (id)originalImageFilePath;
+@property(retain, nonatomic) NSString *m_nsVideoPath;
+@property(retain, nonatomic) NSString *m_nsFilePath;
+@property(retain, nonatomic) NSString *m_nsAppMediaUrl;
+@property(nonatomic) MessageData *m_refMessageData;
+@property(nonatomic) unsigned int m_uiDownloadStatus;
+- (void)SetPlayingSoundStatus:(BOOL)arg1;
 @end
 
 @interface CUtility : NSObject
@@ -190,6 +206,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 - (void)UnmuteSessionByUserName:(id)arg1;
 - (void)UntopSessionByUserName:(id)arg1;
 - (void)deleteSessionWithoutSyncToServerWithUserName:(id)arg1;
+- (void)removeSessionOfUser:(id)arg1 isDelMsg:(BOOL)arg2;
 - (void)sortSessions;
 - (id)getContact:(id)arg1;
 @end
@@ -328,9 +345,62 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @interface MMURLHandler : NSObject
 - (void)startGetA8KeyWithURL:(id)arg1;
 - (BOOL)openURLWithDefault:(id)arg1;
++ (BOOL)containsHTTPString:(id)arg1;
 @end
 
 @interface UserDefaultsService : NSObject
 - (void)setString:(id)arg1 forKey:(id)arg2;
 - (id)stringForKey:(id)arg1;
+@end
+
+@interface MMLinkInfo : NSObject
++ (NSRange)rangeOfUrlInString:(id)arg1 withRange:(NSRange)arg2;
+@end
+
+@interface MMCDNDownloadMgr : NSObject
+- (BOOL)downloadImageWithMessage:(id)arg1;
+@end
+
+@interface MMMessageVideoService : NSObject
+- (BOOL)downloadVideoWithMessage:(id)arg1;
+@end
+
+@interface MMVoiceMessagePlayer : NSObject
++ (id)defaultPlayer;
+- (void)playWithVoiceMessage:(id)arg1 isUnplayedBeforePlay:(BOOL)arg2;
+- (void)stop;
+@end
+
+@interface MultiPlatformStatusSyncMgr : NSObject
+- (void)markVoiceMessageAsRead:(id)arg1;
+@end
+
+@interface EmoticonDownloadMgr : NSObject
+- (void)downloadEmoticonWithMessageData:(id)arg1;
+@end
+
+@interface PathUtility : NSObject
++ (id)emoticonPath:(id)arg1;
++ (id)getMsgVideoPathWithMessage:(id)arg1;
++ (id)getMsgVideoPathWithUserName:(id)arg1 localId:(unsigned int)arg2;
+@end
+
+@interface MMExtensionCenter : NSObject
+- (id)getExtension:(id)arg1;
+@end
+
+@interface MMExtension : NSObject
+- (BOOL)registerExtension:(id)arg1;
+- (void)unregisterExtension:(id)arg1;
+@end
+
+@interface EmoticonMsgInfo : NSObject
+@property(copy, nonatomic) NSString *cdnUrl;
+@property(copy, nonatomic) NSString *m_nsMD5;
+@end
+
+@protocol EmoticonDownloadMgrExt <NSObject>
+@optional
+- (void)emoticonDownloadFailed:(EmoticonMsgInfo *)arg1;
+- (void)emoticonDownloadFinished:(EmoticonMsgInfo *)arg1;
 @end

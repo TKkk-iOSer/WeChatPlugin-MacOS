@@ -41,6 +41,7 @@
 "assistant.chat.unMultiSelect" = "Unmultiselect";
 "assistant.chat.readAll" = "Mark All As Read";
 "assistant.chat.clearEmpty" = "Clear All Empty Session";
+"assistant.chat.remove" = "remove";
 
 //  Remote Control
 "assistant.remoteControl.getList" = "Directive";
@@ -124,3 +125,5 @@
 "assistant.search.group" = "[Group] ";
 "assistant.search.official" = "[Official]";
 "assistant.search.chatlog" = "this is chat log👇🏻";
+"assistant.search.message.unread" = "unread";
+"assistant.search.yesterday" = "yesterday";

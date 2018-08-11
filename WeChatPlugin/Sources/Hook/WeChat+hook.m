@@ -155,36 +155,8 @@
             [self hook_onRevokeMsg:msg];
             return;
         }
-        
-        NSString *msgContent = [revokeMsgData getRealMessageContent];
-        NSString *msgType;
-        if (revokeMsgData.messageType == 1) {
-            msgType = @"";
-        } else if ([revokeMsgData isCustomEmojiMsg]) {
-            msgType = TKLocalizedString(@"assistant.revokeType.emoji");
-        } else if ([revokeMsgData isImgMsg]) {
-            msgType = TKLocalizedString(@"assistant.revokeType.image");
-        } else if ([revokeMsgData isVideoMsg]) {
-            msgType = TKLocalizedString(@"assistant.revokeType.video");
-        } else if ([revokeMsgData isVoiceMsg]) {
-            msgType = TKLocalizedString(@"assistant.revokeType.voice");
-        } else {
-            msgType = TKLocalizedString(@"assistant.revokeType.other");
-        }
-        
-        NSString *newMsgContent = [NSString stringWithFormat:@"%@ \n%@",TKLocalizedString(@"assistant.revoke.otherMessage.tip"), msgType];
-        NSString *displayName = [revokeMsgData groupChatSenderDisplayName];
-        if (revokeMsgData.messageType == 1) {
-            if ([revokeMsgData isChatRoomMessage]) {
-                newMsgContent = [NSString stringWithFormat:@"%@\n%@ : %@",TKLocalizedString(@"assistant.revoke.otherMessage.tip"), displayName, msgContent];
-            } else {
-                newMsgContent = [NSString stringWithFormat:@"%@\n%@",TKLocalizedString(@"assistant.revoke.otherMessage.tip"), msgContent];
-            }
-        } else {
-            if ([revokeMsgData isChatRoomMessage]) {
-                newMsgContent = [NSString stringWithFormat:@"%@ \n %@ : %@",TKLocalizedString(@"assistant.revoke.otherMessage.tip"), displayName, msgType];
-            }
-        }
+        NSString *msgContent = [[TKMessageManager shareManager] getMessageContentWithData:revokeMsgData];
+        NSString *newMsgContent = [NSString stringWithFormat:@"%@ \n%@",TKLocalizedString(@"assistant.revoke.otherMessage.tip"), msgContent];
         MessageData *newMsgData = ({
             MessageData *msg = [[objc_getClass("MessageData") alloc] initWithMsgType:0x2710];
             [msg setFromUsrName:revokeMsgData.toUsrName];

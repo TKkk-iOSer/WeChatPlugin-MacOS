@@ -4,7 +4,7 @@
 
 ![platform](https://img.shields.io/badge/platform-macos-lightgrey.svg)  [![release](https://img.shields.io/badge/release-v1.7-brightgreen.svg)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases)  ![support](https://img.shields.io/badge/support-wechat%202.3.10-blue.svg)  [![Readme](https://img.shields.io/badge/readme-english-yellow.svg)](./README_EN.md)   [![GitHub license](https://img.shields.io/github/license/TKkk-iOSer/WeChatPlugin-MacOS.svg)](./LICENSE)
 
-# 微信小助手 v1.7
+# 微信小助手 v1.7.1
 
  **[English](./README_EN.md) | 中文**
 
@@ -36,7 +36,8 @@
 * 新增一键更新
 * 新增关于小助手
 * 去除微信url转链（从此直接打开抖音链接🌝
-* alfred 搜索最近聊天、聊天记录(输入wx 空格即可)
+* 史上最强 alfred 扩展🌚
+* 新增移除会话(不删除聊天记录)
 
 远程控制：
 

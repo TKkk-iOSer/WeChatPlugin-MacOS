@@ -47,6 +47,10 @@
 		527E7F632018711800358D26 /* fishhook.h in Headers */ = {isa = PBXBuildFile; fileRef = 527E7F612018711800358D26 /* fishhook.h */; };
 		528B4F971EA7383800BC6A89 /* WeChatPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 528B4F951EA7383800BC6A89 /* WeChatPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		528B4FB41EA7386D00BC6A89 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 528B4FAA1EA7386D00BC6A89 /* main.mm */; };
+		529950622113DAF10008BEE3 /* TKCacheManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 529950602113DAF10008BEE3 /* TKCacheManager.h */; };
+		529950632113DAF10008BEE3 /* TKCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 529950612113DAF10008BEE3 /* TKCacheManager.m */; };
+		5299B2B021087C2B004810D2 /* NSDate+Action.h in Headers */ = {isa = PBXBuildFile; fileRef = 5299B2AE21087C2B004810D2 /* NSDate+Action.h */; };
+		5299B2B121087C2B004810D2 /* NSDate+Action.m in Sources */ = {isa = PBXBuildFile; fileRef = 5299B2AF21087C2B004810D2 /* NSDate+Action.m */; };
 		529CDDFE1F6E6A060056DC1A /* TKBaseModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 529CDDFC1F6E6A060056DC1A /* TKBaseModel.h */; };
 		529CDDFF1F6E6A060056DC1A /* TKBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 529CDDFD1F6E6A060056DC1A /* TKBaseModel.m */; };
 		52B5CEF21F3B4623000D9DD9 /* TKRemoteControlCommands.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52B5CEF01F3B4623000D9DD9 /* TKRemoteControlCommands.plist */; };
@@ -133,6 +137,10 @@
 		528B4F951EA7383800BC6A89 /* WeChatPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WeChatPlugin.h; sourceTree = "<group>"; };
 		528B4F961EA7383800BC6A89 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		528B4FAA1EA7386D00BC6A89 /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
+		529950602113DAF10008BEE3 /* TKCacheManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKCacheManager.h; sourceTree = "<group>"; };
+		529950612113DAF10008BEE3 /* TKCacheManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKCacheManager.m; sourceTree = "<group>"; };
+		5299B2AE21087C2B004810D2 /* NSDate+Action.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDate+Action.h"; sourceTree = "<group>"; };
+		5299B2AF21087C2B004810D2 /* NSDate+Action.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Action.m"; sourceTree = "<group>"; };
 		529CDDFC1F6E6A060056DC1A /* TKBaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKBaseModel.h; sourceTree = "<group>"; };
 		529CDDFD1F6E6A060056DC1A /* TKBaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKBaseModel.m; sourceTree = "<group>"; };
 		52B5CEF01F3B4623000D9DD9 /* TKRemoteControlCommands.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TKRemoteControlCommands.plist; sourceTree = "<group>"; };
@@ -234,6 +242,8 @@
 				52176DD8209809CE0035FA50 /* NSString+Action.m */,
 				52CD4C56209C5CA10061A5D6 /* NSWindowController+Action.h */,
 				52CD4C57209C5CA10061A5D6 /* NSWindowController+Action.m */,
+				5299B2AE21087C2B004810D2 /* NSDate+Action.h */,
+				5299B2AF21087C2B004810D2 /* NSDate+Action.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -339,7 +349,6 @@
 				52CD4C8D20A07D420061A5D6 /* about.rtfd */,
 				528B4F951EA7383800BC6A89 /* WeChatPlugin.h */,
 				528B4F961EA7383800BC6A89 /* Info.plist */,
-				52B5CEF01F3B4623000D9DD9 /* TKRemoteControlCommands.plist */,
 				52B5CEF11F3B4623000D9DD9 /* TKRemoteControlScript.scpt */,
 				521D75FB2080E3670093C820 /* Localizable.strings */,
 			);
@@ -400,7 +409,10 @@
 				520AE6F1208F62EF00BADE47 /* TKAssistantMenuManager.h */,
 				520AE6F2208F62EF00BADE47 /* TKAssistantMenuManager.m */,
 				520AE6F5208F632700BADE47 /* TKRemoteControlManager.h */,
+				52B5CEF01F3B4623000D9DD9 /* TKRemoteControlCommands.plist */,
 				520AE6F6208F632700BADE47 /* TKRemoteControlManager.m */,
+				529950602113DAF10008BEE3 /* TKCacheManager.h */,
+				529950612113DAF10008BEE3 /* TKCacheManager.m */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -484,6 +496,7 @@
 				52EA235920862D19008E6329 /* TKHTTPManager.h in Headers */,
 				529CDDFE1F6E6A060056DC1A /* TKBaseModel.h in Headers */,
 				52CD4C58209C5CA10061A5D6 /* NSWindowController+Action.h in Headers */,
+				5299B2B021087C2B004810D2 /* NSDate+Action.h in Headers */,
 				52B5CF1A1F3B4631000D9DD9 /* TKHelper.h in Headers */,
 				52CD4C83209ED23B0061A5D6 /* TKRemoteControlCell.h in Headers */,
 				527D017320903C1B007155C9 /* NSMenuItem+Action.h in Headers */,
@@ -502,6 +515,7 @@
 				520AE6F7208F632700BADE47 /* TKRemoteControlManager.h in Headers */,
 				522547CF1F4AE5A700226A2A /* NSView+Action.h in Headers */,
 				520AE6F0208E231F00BADE47 /* NotifyConstant.h in Headers */,
+				529950622113DAF10008BEE3 /* TKCacheManager.h in Headers */,
 				52CD4C5E209CA0510061A5D6 /* TKAboutWindowController.h in Headers */,
 				522547E11F4C312A00226A2A /* TKRemoteControlWindowController.h in Headers */,
 				520AE6F3208F62EF00BADE47 /* TKAssistantMenuManager.h in Headers */,
@@ -654,7 +668,9 @@
 				52DA3E0E2094790900C618BB /* TKDownloadWindowController.m in Sources */,
 				527E7F622018711800358D26 /* fishhook.c in Sources */,
 				52176DDA209809CE0035FA50 /* NSString+Action.m in Sources */,
+				529950632113DAF10008BEE3 /* TKCacheManager.m in Sources */,
 				52EA235A20862D19008E6329 /* TKHTTPManager.m in Sources */,
+				5299B2B121087C2B004810D2 /* NSDate+Action.m in Sources */,
 				527D017420903C1B007155C9 /* NSMenuItem+Action.m in Sources */,
 				52B5CF1B1F3B4631000D9DD9 /* TKHelper.m in Sources */,
 				52206B6B20836A230010C232 /* NSMenu+Action.m in Sources */,
