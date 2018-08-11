@@ -106,7 +106,12 @@
         while (!(hasResult && logic.isContactSearched && logic.isGroupContactSearched)) {};
 
         [logic.contactResults enumerateObjectsUsingBlock:^(MMSearchResultItem * _Nonnull contact, NSUInteger idx, BOOL * _Nonnull stop) {
-            [sessionList addObject:[weakSelf dictFromContactSearchResult:(MMComplexContactSearchResult *)contact.result]];
+            if ([contact.result isKindOfClass:objc_getClass("MMComplexContactSearchResult")]) {
+                [sessionList addObject:[weakSelf dictFromContactSearchResult:(MMComplexContactSearchResult *)contact.result]];
+            } else if([contact.result isKindOfClass:objc_getClass("MMComplexGroupContactSearchResult")]) {
+                [sessionList addObject:[weakSelf dictFromGroupSearchResult:(MMComplexGroupContactSearchResult *)contact.result]];
+            }
+            
         }];
         [logic.groupResults enumerateObjectsUsingBlock:^(MMSearchResultItem * _Nonnull group, NSUInteger idx, BOOL * _Nonnull stop) {
             [sessionList addObject:[weakSelf dictFromGroupSearchResult:(MMComplexGroupContactSearchResult *)group.result]];
