@@ -74,7 +74,7 @@
         NSString *keyword = request.query ? request.query[@"keyword"] ? request.query[@"keyword"] : @"" : @"";
         __block NSMutableArray *sessionList = [NSMutableArray array];
         
-//        返回最近聊天列表
+        //        返回最近聊天列表
         if ([keyword isEqualToString:@""]) {
             MMSessionMgr *sessionMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMSessionMgr")];
             NSMutableArray <MMSessionInfo *> *arrSession = sessionMgr.m_arrSession;
@@ -87,9 +87,9 @@
             return [GCDWebServerDataResponse responseWithJSONObject:sessionList];
         }
         
-//        返回搜索结果
+        //        返回搜索结果
         __block BOOL hasResult = NO;
-
+        
         MMContactSearchLogic *logic = weakSelf.searchLogic;
         [logic doSearchWithKeyword:keyword searchScene:31 resultIsShownBlock:nil completion:^ {
             if ([logic respondsToSelector:@selector(reloadSearchResultDataWithKeyword:completionBlock:)]) {
@@ -103,21 +103,22 @@
             }
         }];
         
-        while (!(hasResult && logic.isContactSearched && logic.isGroupContactSearched)) {};
-
-        [logic.contactResults enumerateObjectsUsingBlock:^(MMSearchResultItem * _Nonnull contact, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([contact.result isKindOfClass:objc_getClass("MMComplexContactSearchResult")]) {
-                [sessionList addObject:[weakSelf dictFromContactSearchResult:(MMComplexContactSearchResult *)contact.result]];
-            } else if([contact.result isKindOfClass:objc_getClass("MMComplexGroupContactSearchResult")]) {
-                [sessionList addObject:[weakSelf dictFromGroupSearchResult:(MMComplexGroupContactSearchResult *)contact.result]];
+        while (!(hasResult && logic.isContactSearched && logic.isGroupContactSearched && logic.isBrandContactSearched)) {};
+        
+        MMChatMangerSearchReportMgr *reportMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMChatMangerSearchReportMgr")];
+        
+        [reportMgr.contactSearchResults enumerateObjectsUsingBlock:^(id contact, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([contact isKindOfClass:objc_getClass("MMComplexContactSearchResult")]) {
+                [sessionList addObject:[weakSelf dictFromContactSearchResult:(MMComplexContactSearchResult *)contact]];
+            } else if([contact isKindOfClass:objc_getClass("MMComplexGroupContactSearchResult")]) {
+                [sessionList addObject:[weakSelf dictFromGroupSearchResult:(MMComplexGroupContactSearchResult *)contact]];
             }
-            
         }];
-        [logic.groupResults enumerateObjectsUsingBlock:^(MMSearchResultItem * _Nonnull group, NSUInteger idx, BOOL * _Nonnull stop) {
-            [sessionList addObject:[weakSelf dictFromGroupSearchResult:(MMComplexGroupContactSearchResult *)group.result]];
+        [reportMgr.groupContactSearchResults enumerateObjectsUsingBlock:^(MMComplexGroupContactSearchResult *group, NSUInteger idx, BOOL * _Nonnull stop) {
+            [sessionList addObject:[weakSelf dictFromGroupSearchResult:group]];
         }];
-        [logic.oaResults enumerateObjectsUsingBlock:^(MMSearchResultItem * _Nonnull contact, NSUInteger idx, BOOL * _Nonnull stop) {
-            [sessionList addObject:[weakSelf dictFromContactSearchResult:(MMComplexContactSearchResult *)contact.result]];
+        [reportMgr.brandContactSearchResults enumerateObjectsUsingBlock:^(MMComplexContactSearchResult *contact, NSUInteger idx, BOOL * _Nonnull stop) {
+            [sessionList addObject:[weakSelf dictFromContactSearchResult:contact]];
         }];
         
         [logic clearAllResults];
@@ -131,7 +132,7 @@
     [self.webServer addHandlerForMethod:@"GET" path:@"/wechat-plugin/chatlog" requestClass:[GCDWebServerRequest class] processBlock:^GCDWebServerResponse * _Nullable(__kindof GCDWebServerRequest * _Nonnull request) {
         NSString *userId = request.query ? request.query[@"userId"] ? request.query[@"userId"] : nil : nil;
         NSInteger count = request.query ? request.query[@"count"] ? [request.query[@"count"] integerValue] : 30 : 30;
-
+        
         if (userId) {
             NSMutableArray *chatLogList = [NSMutableArray array];
             
@@ -226,18 +227,30 @@
 }
 
 - (NSDictionary *)dictFromGroupSearchResult:(MMComplexGroupContactSearchResult *)result {
+    if (![result isKindOfClass:objc_getClass("MMComplexGroupContactSearchResult")]) {
+        return [self dictWithErrorMsg:result.className];
+    }
     WCContactData *groupContact = result.groupContact;
     if (!groupContact) {
         return [self dictWithErrorMsg:@"搜索群组有误"];
     }
-    __block NSString *subTitle = @"";
+    NSMutableArray *subTitleArray = [NSMutableArray array];
     if (result.searchType == 2) {
         [result.groupMembersResult.membersSearchReults enumerateObjectsUsingBlock:^(MMComplexContactSearchResult * _Nonnull contact, NSUInteger idx, BOOL * _Nonnull stop) {
             NSString *matchStr =[self matchWithContactResult:contact];
-            subTitle = [NSString stringWithFormat:@"%@%@(%@)", TKLocalizedString(@"assistant.search.member"), contact.contact.m_nsNickName, matchStr];
+            NSString *contactName;
+            if(contact.contact.m_nsRemark && ![contact.contact.m_nsRemark isEqualToString:@""]) {
+                contactName = contact.contact.m_nsRemark;
+            } else {
+                contactName = contact.contact.m_nsNickName;
+            }
+            [subTitleArray addObject:[NSString stringWithFormat:@"%@(%@)", contactName, matchStr]];
         }];
     }
-    
+    NSString *subTitle = @"";
+    if (subTitleArray.count > 0) {
+        subTitle = [NSString stringWithFormat:@"%@: %@",TKLocalizedString(@"assistant.search.member"),[subTitleArray componentsJoinedByString:@", "]];
+    }
     NSString *imgPath = [self cacheAvatarPathFromHeadImgUrl:groupContact.m_nsHeadImgUrl];
     NSString *wechatId = [groupContact getContactDisplayUsrName];
     
@@ -282,6 +295,9 @@
 }
 
 - (NSDictionary *)dictFromContactSearchResult:(MMComplexContactSearchResult *)result {
+    if (![result isKindOfClass:objc_getClass("MMComplexContactSearchResult")]) {
+        return [self dictWithErrorMsg:result.className];
+    }
     WCContactData *contact = result.contact;
     if (!contact) {
         return [self dictWithErrorMsg:@"搜索用户有误"];
@@ -312,7 +328,7 @@
     
     WCContactData *contact = sessionInfo.m_packedInfo.m_contact;
     MessageData *msgData = sessionInfo.m_packedInfo.m_msgData;
-
+    
     NSString *title = [self getUserNameWithContactData:contact showOriginName:YES];
     NSString *msgContent = [[TKMessageManager shareManager] getMessageContentWithData:msgData];
     NSString *imgPath = [self cacheAvatarPathFromHeadImgUrl:contact.m_nsHeadImgUrl];
@@ -345,7 +361,7 @@
     MMSessionMgr *sessionMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMSessionMgr")];
     WCContactData *msgContact = [sessionMgr getContact:msgData.fromUsrName];
     NSString *title = [[TKMessageManager shareManager] getMessageContentWithData:msgData];
-
+    
     NSString *url;
     long long voiceMessSvrId = 0;
     if (msgData.messageType == 1) {
@@ -372,22 +388,22 @@
             [imgMgr downloadImageWithMessage:msgData];
         }
     } else if (msgData.isCustomEmojiMsg || msgData.isEmojiAppMsg) {
-//        以下注释取的是表情包服务器的地址，这会有一个问题，alfred 无法播放远程 gif 图片
-//        NSDictionary *msgDict = [self dictWithMessageContent:msgData.msgContent];
-//        if (msgDict[@"msg"] && msgDict[@"msg"][@"emoji"] && msgDict[@"msg"][@"emoji"][@"cdnurl"]) {
-//            url = msgDict[@"msg"][@"emoji"][@"cdnurl"];
-//        } else {
-            if ([[TKCacheManager shareManager] fileExistsWithName:msgData.m_nsEmoticonMD5]) {
-                url = [[TKCacheManager shareManager] filePathWithName:msgData.m_nsEmoticonMD5];
-            } else {
-                url = [[TKCacheManager shareManager] cacheEmotionMessage:msgData];
-            }
-//        }
+        //        以下注释取的是表情包服务器的地址，这会有一个问题，alfred 无法播放远程 gif 图片
+        //        NSDictionary *msgDict = [self dictWithMessageContent:msgData.msgContent];
+        //        if (msgDict[@"msg"] && msgDict[@"msg"][@"emoji"] && msgDict[@"msg"][@"emoji"][@"cdnurl"]) {
+        //            url = msgDict[@"msg"][@"emoji"][@"cdnurl"];
+        //        } else {
+        if ([[TKCacheManager shareManager] fileExistsWithName:msgData.m_nsEmoticonMD5]) {
+            url = [[TKCacheManager shareManager] filePathWithName:msgData.m_nsEmoticonMD5];
+        } else {
+            url = [[TKCacheManager shareManager] cacheEmotionMessage:msgData];
+        }
+        //        }
         
     } else if(msgData.isVoiceMsg) {
         voiceMessSvrId = msgData.mesSvrID;
         if (msgData.msgVoiceText.length > 0) {
-           title = [title stringByAppendingString:msgData.msgVoiceText];
+            title = [title stringByAppendingString:msgData.msgVoiceText];
         }
         if (msgData.IsUnPlayed) {
             title = [NSString stringWithFormat:@"%@%@",TKLocalizedString(@"assistant.search.message.unread"),title];
@@ -418,7 +434,7 @@
 }
 
 - (NSDictionary *)dictWithMessageContent:(NSString *)msg {
-
+    
     NSError *error;
     //      转换群聊的 msg
     NSString *msgContent = [msg substringFromIndex:[msg rangeOfString:@"<msg"].location];

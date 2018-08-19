@@ -117,7 +117,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @property(retain, nonatomic) NSString *m_nsHeadHDImgUrl;
 @property(retain, nonatomic) NSString *m_nsHeadHDMd5;
 @property(retain, nonatomic) NSString *m_nsAliasName;
-@property(nonatomic) BOOL m_isShowRedDot; 
+@property(nonatomic) BOOL m_isShowRedDot;
 - (BOOL)isBrandContact;
 - (BOOL)isSelf;
 - (id)getGroupDisplayName;
@@ -403,4 +403,11 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @optional
 - (void)emoticonDownloadFailed:(EmoticonMsgInfo *)arg1;
 - (void)emoticonDownloadFinished:(EmoticonMsgInfo *)arg1;
+@end
+
+@interface MMChatMangerSearchReportMgr : NSObject
+@property(retain, nonatomic) NSMutableArray *brandContactSearchResults;
+@property(retain, nonatomic) NSMutableArray *chatLogSearchResults;
+@property(retain, nonatomic) NSMutableArray *contactSearchResults;
+@property(retain, nonatomic) NSMutableArray *groupContactSearchResults;
 @end
