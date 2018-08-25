@@ -24,7 +24,13 @@ then
 rm "$app_executable_path"
 rm -rf "$framework_path"
 mv "$app_executable_backup_path" "$app_executable_path"
-echo "\n\t卸载成功"
+
+if [ -f "$app_executable_backup_path" ]
+	echo "卸载失败，请到 /Applications/WeChat.app/Contents/MacOS 路径，删除 WeChatPlugin.framework、WeChat 两个文件文件，并将 WeChat_backup 重命名为 WeChat"
+then
+	echo "\n\t卸载成功"
+fi
+
 else
 echo "\n\t未发现微信小助手"
 fi

@@ -18,12 +18,12 @@
 @property (nonatomic, assign) BOOL autoLoginEnable;                     /**<    是否自动登录      */
 @property (nonatomic, assign) BOOL onTop;                               /**<    是否要置顶微信    */
 @property (nonatomic, assign) BOOL multipleSelectionEnable;             /**<    是否要进行多选    */
-@property (nonatomic, assign) BOOL forbidCheckVersion;                  /**<     禁止检测版本     */
-@property (nonatomic, copy) NSMutableArray *autoReplyModels;            /**<    自动回复的数组    */
-@property (nonatomic, copy) NSMutableArray *remoteControlModels;        /**<    远程控制的数组    */
-@property (nonatomic, copy) NSMutableArray *ignoreSessionModels;        /**<    聊天置底的数组    */
-@property (nonatomic, copy) NSMutableArray *selectSessions;             /**<    已经选中的会话    */
-@property (nonatomic, copy) NSMutableSet *revokeMsgSet;                 /**<    撤回的消息集合    */
+@property (nonatomic, assign) BOOL forbidCheckVersion;                  /**<    禁止检测版本      */
+@property (nonatomic, strong) NSMutableArray *autoReplyModels;          /**<    自动回复的数组    */
+@property (nonatomic, strong) NSMutableArray *remoteControlModels;      /**<    远程控制的数组    */
+@property (nonatomic, strong) NSMutableArray *ignoreSessionModels;      /**<    聊天置底的数组    */
+@property (nonatomic, strong) NSMutableArray *selectSessions;           /**<    已经选中的会话    */
+@property (nonatomic, strong) NSMutableSet *revokeMsgSet;               /**<    撤回的消息集合    */
 @property (nonatomic, copy) NSString *currentUserName;                  /**<    当前用户的id     */
 @property (nonatomic, copy, readonly) NSDictionary *localInfoPlist;
 @property (nonatomic, copy, readonly) NSDictionary *romoteInfoPlist;
