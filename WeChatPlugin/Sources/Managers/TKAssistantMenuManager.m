@@ -37,16 +37,18 @@ static char tkAboutWindowControllerKey;             //  关于窗口的关联 ke
                                                            target:self
                                                     keyEquivalent:@"t"
                                                             state:[[TKWeChatPluginConfig sharedConfig] preventRevokeEnable]];
-    //        防撤回自己
-    NSMenuItem *preventSelfRevokeItem = [NSMenuItem menuItemWithTitle:TKLocalizedString(@"assistant.menu.revokeSelf")
-                                                               action:@selector(onPreventSelfRevoke:)
-                                                               target:self
-                                                        keyEquivalent:@""
-                                                                state:[[TKWeChatPluginConfig sharedConfig] preventSelfRevokeEnable]];
-    
-    NSMenu *subPreventMenu = [[NSMenu alloc] initWithTitle:TKLocalizedString(@"assistant.menu.revoke")];
-    [subPreventMenu addItems:@[preventSelfRevokeItem]];
-    preventRevokeItem.submenu = subPreventMenu;
+    if ([[TKWeChatPluginConfig sharedConfig] preventRevokeEnable]) {
+        //        防撤回自己
+        NSMenuItem *preventSelfRevokeItem = [NSMenuItem menuItemWithTitle:TKLocalizedString(@"assistant.menu.revokeSelf")
+                                                                   action:@selector(onPreventSelfRevoke:)
+                                                                   target:self
+                                                            keyEquivalent:@""
+                                                                    state:[[TKWeChatPluginConfig sharedConfig] preventSelfRevokeEnable]];
+        
+        NSMenu *subPreventMenu = [[NSMenu alloc] initWithTitle:TKLocalizedString(@"assistant.menu.revoke")];
+        [subPreventMenu addItems:@[preventSelfRevokeItem]];
+        preventRevokeItem.submenu = subPreventMenu;
+    }
     
     //        自动回复
     NSMenuItem *autoReplyItem = [NSMenuItem menuItemWithTitle:TKLocalizedString(@"assistant.menu.autoReply")
@@ -164,6 +166,21 @@ static char tkAboutWindowControllerKey;             //  关于窗口的关联 ke
 - (void)onPreventRevoke:(NSMenuItem *)item {
     item.state = !item.state;
     [[TKWeChatPluginConfig sharedConfig] setPreventRevokeEnable:item.state];
+    if (item.state) {
+        //        防撤回自己
+        NSMenuItem *preventSelfRevokeItem = [NSMenuItem menuItemWithTitle:TKLocalizedString(@"assistant.menu.revokeSelf")
+                                                                   action:@selector(onPreventSelfRevoke:)
+                                                                   target:self
+                                                            keyEquivalent:@""
+                                                                    state:[[TKWeChatPluginConfig sharedConfig] preventSelfRevokeEnable]];
+        
+        NSMenu *subPreventMenu = [[NSMenu alloc] initWithTitle:TKLocalizedString(@"assistant.menu.revoke")];
+        [subPreventMenu addItems:@[preventSelfRevokeItem]];
+        item.submenu = subPreventMenu;
+    } else {
+        item.submenu = nil;
+    }
+    
 }
 
 /**

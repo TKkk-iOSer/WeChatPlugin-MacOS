@@ -12,6 +12,7 @@
 
 @property (nonatomic, copy) NSString *cacheDirectory;
 @property (nonatomic, strong) NSMutableSet *emotionSet;
+@property (nonatomic, strong) NSMutableSet *avatarSet;
 @end
 
 @implementation TKCacheManager
@@ -42,6 +43,7 @@
         }
         
         self.emotionSet = [NSMutableSet set];
+        self.avatarSet = [NSMutableSet set];
     }
     return self;
 }
@@ -113,4 +115,30 @@
     }];
 }
 
+- (NSString *)cacheAvatarWithContact:(WCContactData *)contact {
+    NSString *headImgUrl = contact.m_nsHeadImgUrl;
+    if (headImgUrl.length == 0) return @"";
+    
+    NSString *imgPath = @"";
+    if ([headImgUrl respondsToSelector:@selector(md5String)]) {
+        NSString *imgMd5Str = [headImgUrl performSelector:@selector(md5String)];
+        MMAvatarService *avatarService = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMAvatarService")];
+
+        if ([avatarService avatarCachePath] && imgMd5Str) {
+            imgPath = [NSString stringWithFormat:@"%@%@",[avatarService avatarCachePath], imgMd5Str];
+            NSFileManager *fileMgr = [NSFileManager defaultManager];
+            if (![fileMgr fileExistsAtPath:imgPath] && ![self.avatarSet containsObject:imgPath]) {
+                [self.avatarSet addObject:imgPath];
+                [avatarService avatarImageWithContact:contact completion:^(NSImage *image) {
+                    NSData *imageData = [image TIFFRepresentation];
+                    [imageData writeToFile:imgPath atomically:YES];
+                    [self.avatarSet removeObject:imgPath];
+                }];
+            }
+
+        }
+    }
+    return imgPath ?: @"";
+
+}
 @end

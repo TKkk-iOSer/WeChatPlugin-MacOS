@@ -145,7 +145,7 @@
             WCContactData *toUserContact = [sessionMgr getContact:userId];
             NSString *wechatId = [toUserContact getContactDisplayUsrName];
             NSString *title = [weakSelf getUserNameWithContactData:toUserContact showOriginName:YES];
-            NSString *imgPath = [weakSelf cacheAvatarPathFromHeadImgUrl:toUserContact.m_nsHeadImgUrl];
+            NSString *imgPath = [[TKCacheManager shareManager] cacheAvatarWithContact:toUserContact];
             NSDictionary *toUserContactDict = @{@"title": [NSString stringWithFormat:@"To: %@", title],
                                                 @"subTitle": chatLogList.count > 0 ? TKLocalizedString(@"assistant.search.chatlog") : @"",
                                                 @"icon": imgPath ?: @"",
@@ -241,17 +241,23 @@
             NSString *contactName;
             if(contact.contact.m_nsRemark && ![contact.contact.m_nsRemark isEqualToString:@""]) {
                 contactName = contact.contact.m_nsRemark;
+                if (contact.fieldType != 1) {
+                    contactName = [NSString stringWithFormat:@"%@(%@)", contactName, matchStr];
+                }
             } else {
                 contactName = contact.contact.m_nsNickName;
+                if (contact.fieldType != 3) {
+                    contactName = [NSString stringWithFormat:@"%@(%@)", contactName, matchStr];
+                }
             }
-            [subTitleArray addObject:[NSString stringWithFormat:@"%@(%@)", contactName, matchStr]];
+            [subTitleArray addObject:contactName];
         }];
     }
     NSString *subTitle = @"";
     if (subTitleArray.count > 0) {
-        subTitle = [NSString stringWithFormat:@"%@: %@",TKLocalizedString(@"assistant.search.member"),[subTitleArray componentsJoinedByString:@", "]];
+        subTitle = [NSString stringWithFormat:@"%@%@",TKLocalizedString(@"assistant.search.member"),[subTitleArray componentsJoinedByString:@", "]];
     }
-    NSString *imgPath = [self cacheAvatarPathFromHeadImgUrl:groupContact.m_nsHeadImgUrl];
+    NSString *imgPath = [[TKCacheManager shareManager] cacheAvatarWithContact:groupContact];
     NSString *wechatId = [groupContact getContactDisplayUsrName];
     
     return @{@"title": [NSString stringWithFormat:@"%@%@", TKLocalizedString(@"assistant.search.group"), groupContact.getGroupDisplayName],
@@ -311,7 +317,7 @@
     }
     
     NSString *subTitle =[self matchWithContactResult:result];
-    NSString *imgPath = [self cacheAvatarPathFromHeadImgUrl:contact.m_nsHeadImgUrl];
+    NSString *imgPath = [[TKCacheManager shareManager] cacheAvatarWithContact:contact];
     
     NSString *wechatId = [contact getContactDisplayUsrName];
     return @{@"title": title,
@@ -331,7 +337,7 @@
     
     NSString *title = [self getUserNameWithContactData:contact showOriginName:YES];
     NSString *msgContent = [[TKMessageManager shareManager] getMessageContentWithData:msgData];
-    NSString *imgPath = [self cacheAvatarPathFromHeadImgUrl:contact.m_nsHeadImgUrl];
+    NSString *imgPath = [[TKCacheManager shareManager] cacheAvatarWithContact:contact];
     
     NSString *wechatId = [contact getContactDisplayUsrName];
     return @{@"title": title,
@@ -419,7 +425,16 @@
     }
     
     NSString *subTitle = [self getDateStringWithTimeStr:msgData.msgCreateTime];
-    NSString *imgPath = [self cacheAvatarPathFromHeadImgUrl:msgContact.m_nsHeadImgUrl];
+
+    NSString *imgPath;
+    if ([msgContact isGroupChat]) {
+        GroupStorage *contactStorage = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("GroupStorage")];
+        WCContactData *fromContact = [contactStorage GetGroupMemberContact:[msgData getChatRoomUsrName]];
+        imgPath = [[TKCacheManager shareManager] cacheAvatarWithContact:fromContact];
+    } else {
+        imgPath = [[TKCacheManager shareManager] cacheAvatarWithContact:msgContact];
+    }
+
     if (!msgContact.isGroupChat) {
         subTitle = [NSString stringWithFormat:@"from: %@   %@",[self getUserNameWithContactData:msgContact showOriginName:NO], subTitle];
     }
@@ -460,21 +475,6 @@
         }
     }
     return @"";
-}
-
-//  获取本地图片缓存路径
-- (NSString *)cacheAvatarPathFromHeadImgUrl:(NSString *)imgUrl {
-    if (imgUrl.length == 0) return @"";
-    
-    NSString *imgPath = @"";
-    if ([imgUrl respondsToSelector:@selector(md5String)]) {
-        NSString *imgMd5Str = [imgUrl performSelector:@selector(md5String)];
-        MMAvatarService *avatarService = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMAvatarService")];
-        if ([avatarService avatarCachePath] && imgMd5Str) {
-            imgPath = [NSString stringWithFormat:@"%@%@",[avatarService avatarCachePath], imgMd5Str];
-        }
-    }
-    return imgPath ?: @"";
 }
 
 - (NSString *)getUserNameWithContactData:(WCContactData *)contact showOriginName:(BOOL)showOriginName {

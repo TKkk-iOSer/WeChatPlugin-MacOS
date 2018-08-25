@@ -15,5 +15,6 @@
 - (BOOL)fileExistsWithName:(NSString *)fileName;
 - (NSString *)filePathWithName:(NSString *)fileName;
 - (NSString *)cacheEmotionMessage:(MessageData *)emotionMsg;
+- (NSString *)cacheAvatarWithContact:(WCContactData *)contact;
 
 @end

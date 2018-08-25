@@ -106,6 +106,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
     NSMutableDictionary *m_dictGroupContacts;
 }
 - (id)GetAllGroups;
+- (id)GetGroupMemberContact:(id)arg1;
 @end
 
 @interface WCContactData : NSObject
@@ -143,6 +144,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 - (BOOL)isChatRoomMessage;
 - (NSString *)groupChatSenderDisplayName;
 - (id)getRealMessageContent;
+- (id)getChatRoomUsrName;
 - (BOOL)isSendFromSelf;
 - (BOOL)isCustomEmojiMsg;
 - (BOOL)isImgMsg;
@@ -291,6 +293,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 
 @interface MMAvatarService : NSObject
 - (NSString *)avatarCachePath;
+- (void)avatarImageWithContact:(id)arg1 completion:(void (^)(NSImage *image))arg2;
 @end
 
 @interface NSString (MD5)
