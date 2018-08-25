@@ -451,6 +451,11 @@
  @param addMsg 接收的消息
  */
 - (void)remoteControlWithMsg:(AddMsg *)addMsg {
+    NSDate *now = [NSDate date];
+    NSTimeInterval nowSecond = now.timeIntervalSince1970;
+    if (nowSecond - addMsg.createTime > 10) {      // 若是10秒前的消息，则不进行远程控制。
+        return;
+    }
     if (addMsg.msgType == 1 || addMsg.msgType == 3) {
         [TKRemoteControlManager executeRemoteControlCommandWithMsg:addMsg.content.string];
     } else if (addMsg.msgType == 34) {
