@@ -24,6 +24,8 @@
 
 @implementation TKWebServerManager
 
+static int port=52700;
+
 + (instancetype)shareManager {
     static TKWebServerManager *manager = nil;
     static dispatch_once_t onceToken;
@@ -45,7 +47,7 @@
     if (self.webServer) {
         return;
     }
-    NSDictionary *options = @{GCDWebServerOption_Port: @52700,
+    NSDictionary *options = @{GCDWebServerOption_Port: [NSNumber numberWithInt:port],
                               GCDWebServerOption_BindToLocalhost: @YES,
                               GCDWebServerOption_ConnectedStateCoalescingInterval: @2,
                               };
@@ -70,6 +72,13 @@
     __weak typeof(self) weakSelf = self;
     
     [self.webServer addHandlerForMethod:@"GET" path:@"/wechat-plugin/user" requestClass:[GCDWebServerRequest class] processBlock:^GCDWebServerResponse * _Nullable(__kindof GCDWebServerRequest * _Nonnull request) {
+        
+        NSString *hostname = request.headers[@"Host"];
+        NSString *url1 = [NSString stringWithFormat:@"127.0.0.1:%d", port];
+        NSString *url2 = [NSString stringWithFormat:@"localhost:%d", port];
+        if(!([hostname isEqualToString:url1] | [hostname isEqualToString:url2])){
+            return [GCDWebServerResponse responseWithStatusCode:404];
+        }
         
         NSString *keyword = request.query ? request.query[@"keyword"] ? request.query[@"keyword"] : @"" : @"";
         __block NSMutableArray *sessionList = [NSMutableArray array];
@@ -123,7 +132,9 @@
         
         [logic clearAllResults];
         
-        return [GCDWebServerDataResponse responseWithJSONObject:sessionList];
+            return [GCDWebServerDataResponse responseWithJSONObject:sessionList];
+            
+        
     }];
 }
 
@@ -132,6 +143,13 @@
     [self.webServer addHandlerForMethod:@"GET" path:@"/wechat-plugin/chatlog" requestClass:[GCDWebServerRequest class] processBlock:^GCDWebServerResponse * _Nullable(__kindof GCDWebServerRequest * _Nonnull request) {
         NSString *userId = request.query ? request.query[@"userId"] ? request.query[@"userId"] : nil : nil;
         NSInteger count = request.query ? request.query[@"count"] ? [request.query[@"count"] integerValue] : 30 : 30;
+        
+        NSString *hostname = request.headers[@"Host"];
+        NSString *url1 = [NSString stringWithFormat:@"127.0.0.1:%d", port];
+        NSString *url2 = [NSString stringWithFormat:@"localhost:%d", port];
+        if(!([hostname isEqualToString:url1] | [hostname isEqualToString:url2])){
+            return [GCDWebServerResponse responseWithStatusCode:404];
+        }
         
         if (userId) {
             NSMutableArray *chatLogList = [NSMutableArray array];
@@ -167,6 +185,13 @@
     [self.webServer addHandlerForMethod:@"POST" path:@"/wechat-plugin/open-session" requestClass:[GCDWebServerURLEncodedFormRequest class] processBlock:^GCDWebServerResponse * _Nullable(__kindof GCDWebServerURLEncodedFormRequest * _Nonnull request) {
         NSDictionary *requestBody = [request arguments];
         
+        NSString *hostname = request.headers[@"Host"];
+        NSString *url1 = [NSString stringWithFormat:@"127.0.0.1:%d", port];
+        NSString *url2 = [NSString stringWithFormat:@"localhost:%d", port];
+        if(!([hostname isEqualToString:url1] | [hostname isEqualToString:url2])){
+            return [GCDWebServerResponse responseWithStatusCode:404];
+        }
+        
         if (requestBody && requestBody[@"userId"]) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 MMSessionMgr *sessionMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMSessionMgr")];
@@ -198,6 +223,14 @@
     [self.webServer addHandlerForMethod:@"POST" path:@"/wechat-plugin/send-message" requestClass:[GCDWebServerURLEncodedFormRequest class] processBlock:^GCDWebServerResponse * _Nullable(__kindof GCDWebServerURLEncodedFormRequest * _Nonnull request) {
         NSDictionary *requestBody = [request arguments];
         NSString *userId = requestBody[@"userId"];
+        
+        NSString *hostname = request.headers[@"Host"];
+        NSString *url1 = [NSString stringWithFormat:@"127.0.0.1:%d", port];
+        NSString *url2 = [NSString stringWithFormat:@"localhost:%d", port];
+        if(!([hostname isEqualToString:url1] | [hostname isEqualToString:url2])){
+            return [GCDWebServerResponse responseWithStatusCode:404];
+        }
+        
         if (requestBody && userId.length > 0) {
             NSString *content = requestBody[@"content"];
             
