@@ -262,6 +262,9 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @end
 
 @interface MMContactSearchLogic : NSObject
+{
+    unsigned long long _logicSearchResultFlag;
+}
 @property(retain, nonatomic) NSMutableArray *contactResults;
 - (void)doSearchWithKeyword:(id)arg1 searchScene:(unsigned long long)arg2 resultIsShownBlock:(id)arg3 completion:(id)arg4;
 @property(retain, nonatomic) NSMutableArray *groupResults;

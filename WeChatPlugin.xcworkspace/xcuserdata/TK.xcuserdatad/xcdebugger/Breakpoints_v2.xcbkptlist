@@ -2,38 +2,4 @@
 <Bucket
    type = "0"
    version = "2.0">
-   <Breakpoints>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "WeChatPlugin/Sources/Hook/WeChat+hook.m"
-            timestampString = "556881584.921349"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "191"
-            endingLineNumber = "191"
-            landmarkName = "-hook_OnSyncBatchAddMsgs:isFirstSync:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "WeChatPlugin/Sources/Hook/WeChat+hook.m"
-            timestampString = "556881584.922109"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "194"
-            endingLineNumber = "194"
-            landmarkName = "-hook_OnSyncBatchAddMsgs:isFirstSync:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-   </Breakpoints>
 </Bucket>

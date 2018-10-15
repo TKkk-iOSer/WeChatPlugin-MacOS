@@ -1,14 +1,6 @@
 #!/bin/bash
 
-app_name="WeChat"
-shell_path="$(dirname "$0")"
 wechat_path="/Applications/WeChat.app"
-framework_name="WeChatPlugin"
-app_bundle_path="/Applications/${app_name}.app/Contents/MacOS"
-app_executable_path="${app_bundle_path}/${app_name}"
-app_executable_backup_path="${app_executable_path}_backup"
-framework_path="${app_bundle_path}/${framework_name}.framework"
-
 
 if [ ! -d "$wechat_path" ]
 then
@@ -19,6 +11,15 @@ echo -e "\n\n应用程序文件夹中未发现微信，请检查微信是否有�
 exit
 fi
 fi
+
+app_name="WeChat"
+shell_path="$(dirname "$0")"
+framework_name="WeChatPlugin"
+app_bundle_path="${wechat_path}/Contents/MacOS"
+app_executable_path="${app_bundle_path}/${app_name}"
+app_executable_backup_path="${app_executable_path}_backup"
+framework_path="${app_bundle_path}/${framework_name}.framework"
+
 
 # 对 WeChat 赋予权限
 if [ ! -w "$wechat_path" ]

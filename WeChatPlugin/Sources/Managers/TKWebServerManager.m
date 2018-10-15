@@ -72,12 +72,9 @@ static int port=52700;
     __weak typeof(self) weakSelf = self;
     
     [self.webServer addHandlerForMethod:@"GET" path:@"/wechat-plugin/user" requestClass:[GCDWebServerRequest class] processBlock:^GCDWebServerResponse * _Nullable(__kindof GCDWebServerRequest * _Nonnull request) {
-        
-        NSString *hostname = request.headers[@"Host"];
-        NSString *url1 = [NSString stringWithFormat:@"127.0.0.1:%d", port];
-        NSString *url2 = [NSString stringWithFormat:@"localhost:%d", port];
-        if(!([hostname isEqualToString:url1] | [hostname isEqualToString:url2])){
-            return [GCDWebServerResponse responseWithStatusCode:404];
+
+        if (![weakSelf isLocalhost:request.headers[@"Host"]]) {
+             return [GCDWebServerResponse responseWithStatusCode:404];
         }
         
         NSString *keyword = request.query ? request.query[@"keyword"] ? request.query[@"keyword"] : @"" : @"";
@@ -112,7 +109,11 @@ static int port=52700;
             }
         }];
         
-        while (!(hasResult && logic.isContactSearched && logic.isGroupContactSearched && logic.isBrandContactSearched)) {};
+        if ([logic respondsToSelector:@selector(isContactSearched)]) {
+            while (!(hasResult && logic.isContactSearched && logic.isGroupContactSearched && logic.isBrandContactSearched)) {};
+        } else {
+            while (!(hasResult && [[logic valueForKey:@"_logicSearchResultFlag"] longLongValue])) {};
+        }
         
         MMChatMangerSearchReportMgr *reportMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMChatMangerSearchReportMgr")];
         
@@ -141,15 +142,13 @@ static int port=52700;
 - (void)addHandleForSearchUserChatLog {
     __weak typeof(self) weakSelf = self;
     [self.webServer addHandlerForMethod:@"GET" path:@"/wechat-plugin/chatlog" requestClass:[GCDWebServerRequest class] processBlock:^GCDWebServerResponse * _Nullable(__kindof GCDWebServerRequest * _Nonnull request) {
-        NSString *userId = request.query ? request.query[@"userId"] ? request.query[@"userId"] : nil : nil;
-        NSInteger count = request.query ? request.query[@"count"] ? [request.query[@"count"] integerValue] : 30 : 30;
-        
-        NSString *hostname = request.headers[@"Host"];
-        NSString *url1 = [NSString stringWithFormat:@"127.0.0.1:%d", port];
-        NSString *url2 = [NSString stringWithFormat:@"localhost:%d", port];
-        if(!([hostname isEqualToString:url1] | [hostname isEqualToString:url2])){
+
+        if (![weakSelf isLocalhost:request.headers[@"Host"]]) {
             return [GCDWebServerResponse responseWithStatusCode:404];
         }
+        
+        NSString *userId = request.query ? request.query[@"userId"] ? request.query[@"userId"] : nil : nil;
+        NSInteger count = request.query ? request.query[@"count"] ? [request.query[@"count"] integerValue] : 30 : 30;
         
         if (userId) {
             NSMutableArray *chatLogList = [NSMutableArray array];
@@ -182,15 +181,15 @@ static int port=52700;
 }
 
 - (void)addHandleForOpenSession {
+    __weak typeof(self) weakSelf = self;
+    
     [self.webServer addHandlerForMethod:@"POST" path:@"/wechat-plugin/open-session" requestClass:[GCDWebServerURLEncodedFormRequest class] processBlock:^GCDWebServerResponse * _Nullable(__kindof GCDWebServerURLEncodedFormRequest * _Nonnull request) {
-        NSDictionary *requestBody = [request arguments];
-        
-        NSString *hostname = request.headers[@"Host"];
-        NSString *url1 = [NSString stringWithFormat:@"127.0.0.1:%d", port];
-        NSString *url2 = [NSString stringWithFormat:@"localhost:%d", port];
-        if(!([hostname isEqualToString:url1] | [hostname isEqualToString:url2])){
+
+        if (![weakSelf isLocalhost:request.headers[@"Host"]]) {
             return [GCDWebServerResponse responseWithStatusCode:404];
         }
+        
+        NSDictionary *requestBody = [request arguments];
         
         if (requestBody && requestBody[@"userId"]) {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -220,16 +219,16 @@ static int port=52700;
 }
 
 - (void)addHandleForSendMsg {
+    __weak typeof(self) weakSelf = self;
+    
     [self.webServer addHandlerForMethod:@"POST" path:@"/wechat-plugin/send-message" requestClass:[GCDWebServerURLEncodedFormRequest class] processBlock:^GCDWebServerResponse * _Nullable(__kindof GCDWebServerURLEncodedFormRequest * _Nonnull request) {
-        NSDictionary *requestBody = [request arguments];
-        NSString *userId = requestBody[@"userId"];
-        
-        NSString *hostname = request.headers[@"Host"];
-        NSString *url1 = [NSString stringWithFormat:@"127.0.0.1:%d", port];
-        NSString *url2 = [NSString stringWithFormat:@"localhost:%d", port];
-        if(!([hostname isEqualToString:url1] | [hostname isEqualToString:url2])){
+
+        if (![weakSelf isLocalhost:request.headers[@"Host"]]) {
             return [GCDWebServerResponse responseWithStatusCode:404];
         }
+
+        NSDictionary *requestBody = [request arguments];
+        NSString *userId = requestBody[@"userId"];
         
         if (requestBody && userId.length > 0) {
             NSString *content = requestBody[@"content"];
@@ -245,11 +244,14 @@ static int port=52700;
                     [[TKMessageManager shareManager] clearUnRead:requestBody[@"userId"]];
                     
                 } else if (content.length == 0 && requestBody[@"srvId"]) {
-                    NSInteger srvId = [requestBody[@"srvId"] integerValue];
-                    if (srvId != 0) {
-                        MessageData *msgData = [messageService GetMsgData:userId svrId:srvId];
-                        [[TKMessageManager shareManager] playVoiceWithMessageData:msgData];
+                    if (requestBody[@"srvId"]) {
+                        NSInteger srvId = [requestBody[@"srvId"] integerValue];
+                        if (srvId != 0) {
+                            MessageData *msgData = [messageService GetMsgData:userId svrId:srvId];
+                            [[TKMessageManager shareManager] playVoiceWithMessageData:msgData];
+                        }
                     }
+                    [[TKMessageManager shareManager] clearUnRead:userId];
                 }
             });
             return [GCDWebServerResponse responseWithStatusCode:200];
@@ -445,7 +447,7 @@ static int port=52700;
             title = [title stringByAppendingString:msgData.msgVoiceText];
         }
         if (msgData.IsUnPlayed) {
-            title = [NSString stringWithFormat:@"%@%@",TKLocalizedString(@"assistant.search.message.unread"),title];
+            title = [NSString stringWithFormat:@"%@(%@)",title,TKLocalizedString(@"assistant.search.message.unread")];
         }
     } else if (msgData.messageType == 49) {
         NSString *msgContact = [msgData summaryString:NO];
@@ -491,6 +493,7 @@ static int port=52700;
     
     return error? nil : msgDict;
 }
+
 - (NSString *)getDateStringWithTimeStr:(NSTimeInterval)time{
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:time];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -528,6 +531,13 @@ static int port=52700;
         }
     }
     return userName ?: @"";
+}
+
+- (BOOL)isLocalhost:(NSString *)host {
+    NSArray *localhostUrls = @[[NSString stringWithFormat:@"127.0.0.1:%d", port],
+                               [NSString stringWithFormat:@"localhost:%d", port]
+                               ];
+    return [localhostUrls containsObject:host];
 }
 
 @end
