@@ -1,12 +1,6 @@
 # !/bin/bash
 
-app_name="WeChat"
 wechat_path="/Applications/WeChat.app"
-framework_name="WeChatPlugin"
-app_bundle_path="/Applications/${app_name}.app/Contents/MacOS"
-app_executable_path="${app_bundle_path}/${app_name}"
-app_executable_backup_path="${app_executable_path}_backup"
-framework_path="${app_bundle_path}/${framework_name}.framework"
 
 if [ ! -d "$wechat_path" ]
 then
@@ -18,6 +12,13 @@ exit
 fi
 fi
 
+app_name="WeChat"
+framework_name="WeChatPlugin"
+app_bundle_path="${wechat_path}/Contents/MacOS"
+app_executable_path="${app_bundle_path}/${app_name}"
+app_executable_backup_path="${app_executable_path}_backup"
+framework_path="${app_bundle_path}/${framework_name}.framework"
+
 # 备份WeChat原始可执行文件
 if [ -f "$app_executable_backup_path" ]
 then
@@ -26,8 +27,9 @@ rm -rf "$framework_path"
 mv "$app_executable_backup_path" "$app_executable_path"
 
 if [ -f "$app_executable_backup_path" ]
-	echo "卸载失败，请到 /Applications/WeChat.app/Contents/MacOS 路径，删除 WeChatPlugin.framework、WeChat 两个文件文件，并将 WeChat_backup 重命名为 WeChat"
 then
+	echo "卸载失败，请到 /Applications/WeChat.app/Contents/MacOS 路径，删除 WeChatPlugin.framework、WeChat 两个文件文件，并将 WeChat_backup 重命名为 WeChat"
+else
 	echo "\n\t卸载成功"
 fi
 
