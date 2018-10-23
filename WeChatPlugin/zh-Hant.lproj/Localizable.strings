@@ -17,6 +17,7 @@
 "assistant.menu.windowSticky" = "微信窗口置頂";
 "assistant.menu.freeLogin" = "免認證登錄";
 "assistant.menu.other" = "小助手🌚";
+"assistant.menu.enableAlfred" = "开启 Alfred 功能";
 "assistant.menu.updateAssistant" = "更新小助手…";
 "assistant.menu.aboutAssistant" = "關於小助手";
 

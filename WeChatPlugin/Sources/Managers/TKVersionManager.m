@@ -28,6 +28,7 @@
         NSDictionary *romoteInfo = [[TKWeChatPluginConfig sharedConfig] romoteInfoPlist];
         NSString *localBundle = localInfo[@"CFBundleShortVersionString"];
         NSString *romoteBundle = romoteInfo[@"CFBundleShortVersionString"];
+        if (!romoteInfo[@"showUpdateWindow"]) return ;
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if ([localBundle isEqualToString:romoteBundle]) {

@@ -19,6 +19,7 @@ static NSString * const kTKAutoAuthEnableKey = @"kTKAutoAuthEnableKey";
 static NSString * const kTKAutoLoginEnableKey = @"kTKAutoLoginEnableKey";
 static NSString * const kTKOnTopKey = @"kTKOnTopKey";
 static NSString * const kTKForbidCheckVersionKey = @"kTKForbidCheckVersionKey";
+static NSString * const kTKAlfredEnableKey = @"kTKAlfredEnableKey";
 static NSString * const kTKWeChatResourcesPath = @"/Applications/WeChat.app/Contents/MacOS/WeChatPlugin.framework/Resources/";
 static NSString * const kTKWeChatRemotePlistPath = @"https://raw.githubusercontent.com/TKkk-iOSer/WeChatPlugin-MacOS/master/Other/Products/Debug/WeChatPlugin.framework/Resources/Info.plist";
 
@@ -54,6 +55,7 @@ static NSString * const kTKWeChatRemotePlistPath = @"https://raw.githubuserconte
         _autoLoginEnable = [[NSUserDefaults standardUserDefaults] boolForKey:kTKAutoLoginEnableKey];
         _onTop = [[NSUserDefaults standardUserDefaults] boolForKey:kTKOnTopKey];
         _forbidCheckVersion = [[NSUserDefaults standardUserDefaults] boolForKey:kTKForbidCheckVersionKey];
+        _alfredEnable = [[NSUserDefaults standardUserDefaults] boolForKey:kTKAlfredEnableKey];
     }
     return self;
 }
@@ -97,6 +99,12 @@ static NSString * const kTKWeChatRemotePlistPath = @"https://raw.githubuserconte
 - (void)setForbidCheckVersion:(BOOL)forbidCheckVersion {
     _forbidCheckVersion = forbidCheckVersion;
     [[NSUserDefaults standardUserDefaults] setBool:_forbidCheckVersion forKey:kTKForbidCheckVersionKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)setAlfredEnable:(BOOL)alfredEnable {
+    _alfredEnable = alfredEnable;
+    [[NSUserDefaults standardUserDefaults] setBool:_alfredEnable forKey:kTKAlfredEnableKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

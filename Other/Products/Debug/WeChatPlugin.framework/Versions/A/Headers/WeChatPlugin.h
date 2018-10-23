@@ -118,6 +118,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @property(retain, nonatomic) NSString *m_nsHeadHDImgUrl;
 @property(retain, nonatomic) NSString *m_nsHeadHDMd5;
 @property(retain, nonatomic) NSString *m_nsAliasName;
+@property(retain, nonatomic) NSString *avatarCacheKey;
 @property(nonatomic) BOOL m_isShowRedDot;
 - (BOOL)isBrandContact;
 - (BOOL)isSelf;
@@ -296,7 +297,9 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 
 @interface MMAvatarService : NSObject
 - (NSString *)avatarCachePath;
+- (id)_getImageFromCacheWithMD5Key:(id)arg1;
 - (void)avatarImageWithContact:(id)arg1 completion:(void (^)(NSImage *image))arg2;
+- (void)getAvatarImageWithContact:(id)arg1 completion:(void (^)(NSImage *image))arg2;
 @end
 
 @interface NSString (MD5)
@@ -386,6 +389,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @end
 
 @interface PathUtility : NSObject
++ (id)GetCurUserCachePath;
 + (id)emoticonPath:(id)arg1;
 + (id)getMsgVideoPathWithMessage:(id)arg1;
 + (id)getMsgVideoPathWithUserName:(id)arg1 localId:(unsigned int)arg2;

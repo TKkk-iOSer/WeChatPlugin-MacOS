@@ -2,9 +2,9 @@
 
 ![微信小助手.png](./Other/ScreenShots/wechatplugin.png)
 
-![platform](https://img.shields.io/badge/platform-macos-lightgrey.svg)  [![release](https://img.shields.io/badge/release-v1.7-brightgreen.svg)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases)  ![support](https://img.shields.io/badge/support-wechat%202.3.10-blue.svg)  [![Readme](https://img.shields.io/badge/readme-english-yellow.svg)](./README_EN.md)   [![GitHub license](https://img.shields.io/github/license/TKkk-iOSer/WeChatPlugin-MacOS.svg)](./LICENSE)
+![platform](https://img.shields.io/badge/platform-macos-lightgrey.svg)  [![release](https://img.shields.io/badge/release-v1.7.3-brightgreen.svg)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases)  ![support](https://img.shields.io/badge/support-wechat%202.3.19-blue.svg)  [![Readme](https://img.shields.io/badge/readme-english-yellow.svg)](./README_EN.md)   [![GitHub license](https://img.shields.io/github/license/TKkk-iOSer/WeChatPlugin-MacOS.svg)](./LICENSE)
 
-# 微信小助手 v1.7.1
+# 微信小助手 v1.7.3
 
  **[English](./README_EN.md) | 中文**
 
@@ -38,6 +38,7 @@
 * 去除微信url转链（从此直接打开抖音链接🌝
 * 史上最强 alfred 扩展🌚
 * 新增移除会话(不删除聊天记录)
+* 菜单栏(关于小助手)新增 alfred 开关 
 
 远程控制：
 
@@ -53,6 +54,8 @@
 ---
 
 ## 更新日志
+
+* [适配2.3.19 & 修复安全漏洞(2018-10-23)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.7.3)
 
 * [适配2.3.17 & 加强 alfred 搜索(2018-07-24)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.7.1)
 
@@ -196,6 +199,7 @@ curl -o- -L https://raw.githubusercontent.com/lmk123/oh-my-wechat/master/install
 - [x] 优化小助手设置(更新后保留相关设置，更新提醒)
 - [x] 语音远程控制 mac
 - [x] 支持中英文
+- [ ] 支持深色模式
 
 ---
 
@@ -208,6 +212,11 @@ curl -o- -L https://raw.githubusercontent.com/lmk123/oh-my-wechat/master/install
 
 ---
 
+### 免责声明
+
+本项目旨在方便生活中微信使用，不可使用于商业和个人其他意图。若使用不当，均由个人承担。
+
+---
 
 ### 听说你想请我喝下午茶？😏
 

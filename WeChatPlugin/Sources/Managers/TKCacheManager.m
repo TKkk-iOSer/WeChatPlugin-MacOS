@@ -124,19 +124,26 @@
         NSString *imgMd5Str = [headImgUrl performSelector:@selector(md5String)];
         MMAvatarService *avatarService = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMAvatarService")];
 
-        if ([avatarService avatarCachePath] && imgMd5Str) {
-            imgPath = [NSString stringWithFormat:@"%@%@",[avatarService avatarCachePath], imgMd5Str];
-            NSFileManager *fileMgr = [NSFileManager defaultManager];
-            if (![fileMgr fileExistsAtPath:imgPath] && ![self.avatarSet containsObject:imgPath]) {
-                [self.avatarSet addObject:imgPath];
-                [avatarService avatarImageWithContact:contact completion:^(NSImage *image) {
-                    NSData *imageData = [image TIFFRepresentation];
-                    [imageData writeToFile:imgPath atomically:YES];
-                    [self.avatarSet removeObject:imgPath];
-                }];
-            }
+        NSString *userCache =  [objc_getClass("PathUtility") GetCurUserCachePath];
+        imgPath = [NSString stringWithFormat:@"%@/avatar/%@",userCache, imgMd5Str];
 
+        NSFileManager *fileMgr = [NSFileManager defaultManager];
+        if (imgPath && ![fileMgr fileExistsAtPath:imgPath] && ![self.avatarSet containsObject:imgPath]) {
+            [self.avatarSet addObject:imgPath];
+            
+            void (^cacheImage)(NSImage *img) = ^(NSImage *img) {
+                NSData *imageData = [img TIFFRepresentation];
+                [imageData writeToFile:imgPath atomically:YES];
+                [self.avatarSet removeObject:imgPath];
+            };
+            
+            if ([avatarService respondsToSelector:@selector(avatarImageWithContact:completion:)]) {
+                [avatarService avatarImageWithContact:contact completion:cacheImage];
+            } else {
+                [avatarService getAvatarImageWithContact:contact completion:cacheImage];
+            }
         }
+
     }
     return imgPath ?: @"";
 

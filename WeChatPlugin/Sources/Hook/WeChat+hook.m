@@ -122,10 +122,14 @@
  hook 微信撤回消息
  
  */
-- (void)hook_onRevokeMsg:(id)msg {
+- (void)hook_onRevokeMsg:(id)msgData {
     if (![[TKWeChatPluginConfig sharedConfig] preventRevokeEnable]) {
-        [self hook_onRevokeMsg:msg];
+        [self hook_onRevokeMsg:msgData];
         return;
+    }
+    id msg = msgData;
+    if ([msgData isKindOfClass:objc_getClass("MessageData")]) {
+        msg = [msgData valueForKey:@"msgContent"];
     }
     if ([msg rangeOfString:@"<sysmsg"].length <= 0) return;
     
@@ -152,7 +156,7 @@
         MessageService *msgService = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
         MessageData *revokeMsgData = [msgService GetMsgData:session svrId:[newmsgid integerValue]];
         if ([revokeMsgData isSendFromSelf] && ![[TKWeChatPluginConfig sharedConfig] preventSelfRevokeEnable]) { 
-            [self hook_onRevokeMsg:msg];
+            [self hook_onRevokeMsg:msgData];
             return;
         }
         NSString *msgContent = [[TKMessageManager shareManager] getMessageContentWithData:revokeMsgData];
@@ -256,7 +260,9 @@
     [self hook_onAuthOK:arg1];
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [[TKWebServerManager shareManager] startServer];
+        if ([[TKWeChatPluginConfig sharedConfig] alfredEnable]) {
+            [[TKWebServerManager shareManager] startServer];
+        }
         NSMenu *mainMenu = [[NSApplication sharedApplication] mainMenu];
         NSMenuItem *pluginMenu = mainMenu.itemArray.lastObject;
         pluginMenu.enabled = YES;
@@ -266,7 +272,9 @@
 }
 
 - (void)hook_sendLogoutCGIWithCompletion:(id)arg1 {
-    [[TKWebServerManager shareManager] endServer];
+    if ([[TKWeChatPluginConfig sharedConfig] alfredEnable]) {
+        [[TKWebServerManager shareManager] endServer];
+    }
     
     BOOL autoAuthEnable = [[TKWeChatPluginConfig sharedConfig] autoAuthEnable];
     WeChat *wechat = [objc_getClass("WeChat") sharedInstance];

@@ -17,6 +17,7 @@
 "assistant.menu.windowSticky" = "Sticky on Top";
 "assistant.menu.freeLogin" = "AutoAuth Login";
 "assistant.menu.other" = "Others";
+"assistant.menu.enableAlfred" = "Enable Alfred";
 "assistant.menu.updateAssistant" = "Update Assistant…";
 "assistant.menu.aboutAssistant" = "About Assistant";
 

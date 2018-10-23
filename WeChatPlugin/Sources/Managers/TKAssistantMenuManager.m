@@ -14,6 +14,7 @@
 #import "NSMenuItem+Action.h"
 #import "TKDownloadWindowController.h"
 #import "TKAboutWindowController.h"
+#import "TKWebServerManager.h"
 
 static char tkAutoReplyWindowControllerKey;         //  自动回复窗口的关联 key
 static char tkRemoteControlWindowControllerKey;     //  远程控制窗口的关联 key
@@ -81,6 +82,13 @@ static char tkAboutWindowControllerKey;             //  关于窗口的关联 ke
                                                keyEquivalent:@"M"
                                                        state:[[TKWeChatPluginConfig sharedConfig] autoAuthEnable]];
     
+    //        开启 Alfred
+    NSMenuItem *enableAlfredItem = [NSMenuItem menuItemWithTitle:TKLocalizedString(@"assistant.menu.enableAlfred")
+                                                          action:@selector(onEnableaAlfred:)
+                                                          target:self
+                                                   keyEquivalent:@""
+                                                           state:0];
+
     //        更新小助手
     NSMenuItem *updatePluginItem = [NSMenuItem menuItemWithTitle:TKLocalizedString(@"assistant.menu.updateAssistant")
                                                           action:@selector(onUpdatePluginControl:)
@@ -101,7 +109,8 @@ static char tkAboutWindowControllerKey;             //  关于窗口的关联 ke
                                                    keyEquivalent:@""
                                                            state:0];
     NSMenu *subPluginMenu = [[NSMenu alloc] initWithTitle:TKLocalizedString(@"assistant.menu.other")];
-    [subPluginMenu addItems:@[updatePluginItem,
+    [subPluginMenu addItems:@[enableAlfredItem,
+                             updatePluginItem,
                              abountPluginItem]];
     
     NSMenu *subMenu = [[NSMenu alloc] initWithTitle:TKLocalizedString(@"assistant.menu.title")];
@@ -287,6 +296,16 @@ static char tkAboutWindowControllerKey;             //  关于窗口的关联 ke
             [alert runModal];
         }
     }];
+}
+
+- (void)onEnableaAlfred:(NSMenuItem *)item {
+    item.state = !item.state;
+    if (item.state) {
+        [[TKWebServerManager shareManager] startServer];
+    } else {
+        [[TKWebServerManager shareManager] endServer];
+    }
+    [[TKWeChatPluginConfig sharedConfig] setAlfredEnable:item.state];
 }
 
 - (void)onAboutPluginControl:(NSMenuItem *)item {
