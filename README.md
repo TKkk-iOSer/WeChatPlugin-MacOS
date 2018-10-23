@@ -12,12 +12,12 @@
 [ [功能](#功能) &bull; [更新日志](#更新日志) &bull; [Demo演示](#demo演示) &bull; [使用](#使用) &bull; [安装](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/blob/master/Install.md) &bull; [卸载](#卸载) &bull; [TODO](#todo) ]
 
 其他插件：
-[ [wechat-alfred-workflow](https://github.com/TKkk-iOSer/wechat-alfred-workflow) &bull; [QQ 版本](https://github.com/TKkk-iOSer/QQPlugin-macOS) &bull; [iOS 版本](https://github.com/TKkk-iOSer/WeChatPlugin-iOS) ]
+[ [wechat-alfred-workflow](https://github.com/TKkk-iOSer/wechat-alfred-workflow) &bull; [QQ 版本](https://github.com/TKkk-iOSer/QQPlugin-macOS) ]
 
 ---
 
 ## 功能
-* 消息自动回复(支持特定回复 v1.7)
+* 消息自动回复
 * 消息防撤回
 * 远程控制(已支持语音)
 * 微信多开
@@ -40,6 +40,8 @@
 * 新增移除会话(不删除聊天记录)
 * 菜单栏(关于小助手)新增 alfred 开关 
 
+**若无使用 alfred，则不必打开 alfred 开关**
+
 远程控制：
 
 - [x] 屏幕保护
@@ -49,7 +51,7 @@
 - [x] 网易云音乐(播放、暂停、下一首、上一首、喜欢、取消喜欢)
 - [x] 小助手(获取指令、防撤回开关、自动回复开关、免认证登录开关)
 
-**若想使用远程控制网易云音乐，请在“系统偏好设置 ==> 安全性与隐私 ==> 隐私 ==> 辅助功能”中添加微信**
+**若想使用远程控制网易云音乐，请在“系统偏好设置 ==> 安全性与隐私 ==> 隐私 ==> 辅助功能”中添加微信、脚本编辑器**
 
 ---
 
@@ -146,7 +148,7 @@
 
 ## 安装
 
-详细安装方法请查阅 [Install.md](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/blob/master/Install.md)
+详细安装方法(或者需要重新编译)请查阅 [Install.md](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/blob/master/Install.md)
 
 #### 1. 懒癌版安装
 
@@ -173,7 +175,6 @@ curl -o- -L https://raw.githubusercontent.com/lmk123/oh-my-wechat/master/install
 
 * 点击`clone or download`按钮下载 WeChatPlugin 并解压，打开Terminal(终端)，拖动解压后`Install.sh` 文件(在 Other 文件夹中)到 Terminal 回车即可。
 
-
 #### 3. 安装完成
 
 * 重启微信，在**菜单栏**中看到**微信小助手**即安装成功。
@@ -191,7 +192,6 @@ curl -o- -L https://raw.githubusercontent.com/lmk123/oh-my-wechat/master/install
 ## TODO
 - [x] 增加`Alfred`搜索
 - [ ] 查看单向好友
-- [ ] 语音(视频转发)
 - [ ] 增加 brew 安装方式
 - [x] 完善自动回复(指定好友回复)
 - [x] 完善消息防撤回(显示撤回用户昵称)
@@ -213,8 +213,9 @@ curl -o- -L https://raw.githubusercontent.com/lmk123/oh-my-wechat/master/install
 ---
 
 ### 免责声明
-
-本项目旨在方便生活中微信使用，不可使用于商业和个人其他意图。若使用不当，均由个人承担。
+* 使用插件有风险，使用需谨慎。
+* 本项目旨在提升生活幸福感使用，不可用于商业和个人其他意图。若使用不当，请使用者自行承担。
+* 如有侵权，请联系本人。tkk.ioser@gmail.com
 
 ---
 
