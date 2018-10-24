@@ -87,7 +87,7 @@ static char tkAboutWindowControllerKey;             //  关于窗口的关联 ke
                                                           action:@selector(onEnableaAlfred:)
                                                           target:self
                                                    keyEquivalent:@""
-                                                           state:0];
+                                                           state:[[TKWeChatPluginConfig sharedConfig] alfredEnable]];
 
     //        更新小助手
     NSMenuItem *updatePluginItem = [NSMenuItem menuItemWithTitle:TKLocalizedString(@"assistant.menu.updateAssistant")
