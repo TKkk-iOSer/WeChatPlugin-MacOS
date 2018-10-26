@@ -79,8 +79,15 @@ static char tkAboutWindowControllerKey;             //  关于窗口的关联 ke
     NSMenuItem *autoAuthItem = [NSMenuItem menuItemWithTitle:TKLocalizedString(@"assistant.menu.freeLogin")
                                                       action:@selector(onAutoAuthControl:)
                                                       target:self
-                                               keyEquivalent:@"M"
-                                                       state:[[TKWeChatPluginConfig sharedConfig] autoAuthEnable]];
+                                               keyEquivalent:@""
+                                                       state:[[TKWeChatPluginConfig sharedConfig] systemBrowerEnable]];
+    
+    //        使用自带浏览器
+    NSMenuItem *enableSystemBrowerItem = [NSMenuItem menuItemWithTitle:TKLocalizedString(@"assistant.menu.systemBrower")
+                                                                action:@selector(onEnableSystemBrower:)
+                                                                target:self
+                                                         keyEquivalent:@"B"
+                                                                 state:[[TKWeChatPluginConfig sharedConfig] systemBrowerEnable]];
     
     //        开启 Alfred
     NSMenuItem *enableAlfredItem = [NSMenuItem menuItemWithTitle:TKLocalizedString(@"assistant.menu.enableAlfred")
@@ -121,6 +128,7 @@ static char tkAboutWindowControllerKey;             //  关于窗口的关联 ke
                         newWeChatItem,
                         onTopItem,
                         autoAuthItem,
+                        enableSystemBrowerItem,
                         pluginItem
                         ]];
     [subMenu setSubmenu:subPluginMenu forItem:pluginItem];
@@ -306,6 +314,11 @@ static char tkAboutWindowControllerKey;             //  关于窗口的关联 ke
         [[TKWebServerManager shareManager] endServer];
     }
     [[TKWeChatPluginConfig sharedConfig] setAlfredEnable:item.state];
+}
+
+- (void)onEnableSystemBrower:(NSMenuItem *)item {
+    item.state = !item.state;
+    [[TKWeChatPluginConfig sharedConfig] setSystemBrowerEnable:item.state];
 }
 
 - (void)onAboutPluginControl:(NSMenuItem *)item {

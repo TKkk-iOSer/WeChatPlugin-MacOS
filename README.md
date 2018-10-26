@@ -39,6 +39,7 @@
 * 史上最强 alfred 扩展🌚
 * 新增移除会话(不删除聊天记录)
 * 菜单栏(关于小助手)新增 alfred 开关 
+* 新增是否使用微信自带浏览器开关
 
 **若无使用 alfred，则不必打开 alfred 开关**
 
@@ -217,9 +218,4 @@ curl -o- -L https://raw.githubusercontent.com/lmk123/oh-my-wechat/master/install
 * 本项目旨在提升生活幸福感使用，不可用于商业和个人其他意图。若使用不当，请使用者自行承担。
 * 如有侵权，请联系本人。tkk.ioser@gmail.com
 
----
-
-### 听说你想请我喝下午茶？😏
-
-<img src="http://upload-images.jianshu.io/upload_images/965383-cbc86dc1d75a6242.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" height="250" hspace="50"/>&nbsp;&nbsp;&nbsp;<img src="http://upload-images.jianshu.io/upload_images/965383-76a1c7c91b987e1a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" height="250" hspace="50"  />
 

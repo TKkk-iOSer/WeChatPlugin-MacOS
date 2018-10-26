@@ -107,12 +107,17 @@ static int port=52700;
                     hasResult = YES;
                 }];
             }
+            if (![logic respondsToSelector:@selector(clearAllResults)]) {
+                hasResult = YES;
+            }
         }];
         
         if ([logic respondsToSelector:@selector(isContactSearched)]) {
             while (!(hasResult && logic.isContactSearched && logic.isGroupContactSearched && logic.isBrandContactSearched)) {};
+        } else if ([logic respondsToSelector:@selector(clearAllResults)]) {
+             while (!(hasResult && [[logic valueForKey:@"_logicSearchResultFlag"] longLongValue])) {};
         } else {
-            while (!(hasResult && [[logic valueForKey:@"_logicSearchResultFlag"] longLongValue])) {};
+            while (!(hasResult)) {};
         }
         
         MMChatMangerSearchReportMgr *reportMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMChatMangerSearchReportMgr")];
@@ -131,10 +136,11 @@ static int port=52700;
             [sessionList addObject:[weakSelf dictFromContactSearchResult:contact]];
         }];
         
-        [logic clearAllResults];
-        
-            return [GCDWebServerDataResponse responseWithJSONObject:sessionList];
-            
+        if ([logic respondsToSelector:@selector(clearAllResults)]) {
+            [logic clearAllResults];
+        }
+
+        return [GCDWebServerDataResponse responseWithJSONObject:sessionList];
         
     }];
 }

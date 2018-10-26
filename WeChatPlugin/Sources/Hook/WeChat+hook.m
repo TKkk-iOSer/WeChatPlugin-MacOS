@@ -46,6 +46,9 @@
     //      登录逻辑
     tk_hookMethod(objc_getClass("WeChat"), @selector(onAuthOK:), [self class], @selector(hook_onAuthOK:));
     
+    //      自带浏览器打开链接
+    tk_hookClassMethod(objc_getClass("MMWebViewHelper"), @selector(preHandleWebUrlStr:withMessage:), [self class], @selector(hook_preHandleWebUrlStr:withMessage:));
+    
     tk_hookMethod(objc_getClass("MMURLHandler"), @selector(startGetA8KeyWithURL:), [self class], @selector(hook_startGetA8KeyWithURL:));
     tk_hookMethod(objc_getClass("WeChat"), @selector(applicationDidFinishLaunching:), [self class], @selector(hook_applicationDidFinishLaunching:));
     
@@ -58,6 +61,16 @@
     }, 2);
 
     [self setup];
+}
+
++ (BOOL)hook_preHandleWebUrlStr:(id)arg1 withMessage:(id)arg2 {
+    if ([[TKWeChatPluginConfig sharedConfig] systemBrowerEnable]) {
+        MMURLHandler *urlHander = [objc_getClass("MMURLHandler") defaultHandler];
+        [urlHander openURLWithDefault:arg1];
+        return YES;
+    } else {
+        return [self hook_preHandleWebUrlStr:arg1 withMessage:arg2];
+    }
 }
 
 + (void)setup {

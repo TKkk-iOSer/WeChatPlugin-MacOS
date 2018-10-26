@@ -264,7 +264,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 
 @interface MMContactSearchLogic : NSObject
 {
-    unsigned long long _logicSearchResultFlag;
+    unsigned long long _logicSearchResultFlag;      // 2.3.19 失效
 }
 @property(retain, nonatomic) NSMutableArray *contactResults;
 - (void)doSearchWithKeyword:(id)arg1 searchScene:(unsigned long long)arg2 resultIsShownBlock:(id)arg3 completion:(id)arg4;
@@ -274,7 +274,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @property(nonatomic) BOOL isContactSearched;
 @property(nonatomic) BOOL isGroupContactSearched;
 @property(retain, nonatomic) NSMutableArray *oaResults;
-- (void)clearAllResults;
+- (void)clearAllResults;    //  2.3.19 失效
 - (void)reloadSearchResultDataWithKeyword:(id)arg1 completionBlock:(id)arg2;    //  2.3.17
 - (void)reloadSearchResultDataWithCompletionBlock:(id)arg1;                     //  2.3.13
 @end
@@ -352,6 +352,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @end
 
 @interface MMURLHandler : NSObject
++ (id)defaultHandler;
 - (void)startGetA8KeyWithURL:(id)arg1;
 - (BOOL)openURLWithDefault:(id)arg1;
 + (BOOL)containsHTTPString:(id)arg1;
@@ -420,4 +421,8 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @property(retain, nonatomic) NSMutableArray *chatLogSearchResults;
 @property(retain, nonatomic) NSMutableArray *contactSearchResults;
 @property(retain, nonatomic) NSMutableArray *groupContactSearchResults;
+@end
+
+@interface MMWebViewHelper : NSObject
++ (BOOL)preHandleWebUrlStr:(id)arg1 withMessage:(id)arg2;
 @end

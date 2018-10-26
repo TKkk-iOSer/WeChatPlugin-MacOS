@@ -106,9 +106,4 @@ open `/Applications/Utilities/Terminal.app`,Drag the `Uninstall.sh` file(in `Oth
 * [fishhook](https://github.com/facebook/fishhook)
 * [GCDWebServer](https://github.com/swisspol/GCDWebServer)
 
----
-
-### I hear somebody want to buy me a cup of coffee😏
-
-<img src="http://upload-images.jianshu.io/upload_images/965383-cbc86dc1d75a6242.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" height="250" hspace="50"/>&nbsp;&nbsp;&nbsp;<img src="http://upload-images.jianshu.io/upload_images/965383-76a1c7c91b987e1a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" height="250" hspace="50"  />
 
