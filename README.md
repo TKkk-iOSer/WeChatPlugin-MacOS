@@ -40,6 +40,7 @@
 * 新增移除会话(不删除聊天记录)
 * 菜单栏(关于小助手)新增 alfred 开关 
 * 新增是否使用微信自带浏览器开关
+* 新增[LaunchBar 扩展](https://github.com/VDeamoV/WeChatHelper)
 
 **若无使用 alfred，则不必打开 alfred 开关**
 
