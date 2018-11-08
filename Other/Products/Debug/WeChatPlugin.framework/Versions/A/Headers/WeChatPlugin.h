@@ -262,6 +262,11 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @property(retain, nonatomic) MMBasicSearchResult *result;
 @end
 
+
+@interface MMSearchResultContainer : NSObject
+@property(nonatomic) unsigned long long logicSearchResultFlag; // @synthesize
+@end
+
 @interface MMContactSearchLogic : NSObject
 {
     unsigned long long _logicSearchResultFlag;      // 2.3.19 失效
@@ -275,8 +280,11 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @property(nonatomic) BOOL isGroupContactSearched;
 @property(retain, nonatomic) NSMutableArray *oaResults;
 - (void)clearAllResults;    //  2.3.19 失效
+- (void)clearDataWhenSearchEnd;
 - (void)reloadSearchResultDataWithKeyword:(id)arg1 completionBlock:(id)arg2;    //  2.3.17
 - (void)reloadSearchResultDataWithCompletionBlock:(id)arg1;                     //  2.3.13
+- (void)reloadSearchResultDataWithKeyword:(id)arg1 resultContainer:(id)arg2 completionBlock:(id)arg3;
+@property(retain, nonatomic) MMSearchResultContainer *searchResultContainer;
 @end
 
 @interface MMComplexContactSearchResult : MMBasicSearchResult

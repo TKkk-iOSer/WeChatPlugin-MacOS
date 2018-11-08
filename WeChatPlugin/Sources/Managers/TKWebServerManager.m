@@ -102,13 +102,16 @@ static int port=52700;
                 [logic reloadSearchResultDataWithKeyword:keyword completionBlock:^ {
                     hasResult = YES;
                 }];
+            } else if ([logic respondsToSelector:@selector(reloadSearchResultDataWithKeyword:resultContainer:completionBlock:)]) {
+                [logic reloadSearchResultDataWithKeyword:keyword resultContainer:nil completionBlock:^ {
+                    if (logic.searchResultContainer.logicSearchResultFlag == 7) {
+                        hasResult = YES;
+                    }
+                }];
             } else if ([logic respondsToSelector:@selector(reloadSearchResultDataWithCompletionBlock:)]) {
                 [logic reloadSearchResultDataWithCompletionBlock:^ {
                     hasResult = YES;
                 }];
-            }
-            if (![logic respondsToSelector:@selector(clearAllResults)]) {
-                hasResult = YES;
             }
         }];
         
@@ -117,7 +120,7 @@ static int port=52700;
         } else if ([logic respondsToSelector:@selector(clearAllResults)]) {
              while (!(hasResult && [[logic valueForKey:@"_logicSearchResultFlag"] longLongValue])) {};
         } else {
-            while (!(hasResult)) {};
+             while (!(hasResult)) {};
         }
         
         MMChatMangerSearchReportMgr *reportMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMChatMangerSearchReportMgr")];
@@ -138,6 +141,8 @@ static int port=52700;
         
         if ([logic respondsToSelector:@selector(clearAllResults)]) {
             [logic clearAllResults];
+        } else if ([logic respondsToSelector:@selector(clearDataWhenSearchEnd)]) {
+            [logic clearDataWhenSearchEnd];
         }
 
         return [GCDWebServerDataResponse responseWithJSONObject:sessionList];
