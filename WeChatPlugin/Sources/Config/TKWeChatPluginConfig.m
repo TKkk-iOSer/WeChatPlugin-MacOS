@@ -56,7 +56,7 @@ static NSString * const kTKWeChatRemotePlistPath = @"https://raw.githubuserconte
         _autoLoginEnable = [[NSUserDefaults standardUserDefaults] boolForKey:kTKAutoLoginEnableKey];
         _onTop = [[NSUserDefaults standardUserDefaults] boolForKey:kTKOnTopKey];
         _forbidCheckVersion = [[NSUserDefaults standardUserDefaults] boolForKey:kTKForbidCheckVersionKey];
-        _alfredEnable = [[NSUserDefaults standardUserDefaults] boolForKey:kTKSystemBrowerEnableKey];
+        _alfredEnable = [[NSUserDefaults standardUserDefaults] boolForKey:kTKAlfredEnableKey];
         _systemBrowerEnable = [[NSUserDefaults standardUserDefaults] boolForKey:kTKSystemBrowerEnableKey];
     }
     return self;
