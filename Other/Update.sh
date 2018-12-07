@@ -24,3 +24,4 @@ fi
 
 cp -r "${shell_path}/Products/Debug/${framework_name}.framework" ${app_bundle_path}
 ${shell_path}/insert_dylib --all-yes "${framework_path}/${framework_name}" "$app_executable_backup_path" "$app_executable_path"
+${shell_path}/UpdateRemoteControlCommandsPlist.py

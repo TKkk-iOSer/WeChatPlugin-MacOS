@@ -65,6 +65,7 @@
 "Assistant.Directive.Shutdown" = "Shut Down";
 "Assistant.Directive.Restart" = "Restart";
 "Assistant.Directive.EmptyTrash" = "Empty Trash";
+"Assistant.Directive.Mute" = "Mute";
 "Assistant.Directive.KillQQ" = "Kill QQ";
 "Assistant.Directive.KillWeChat" = "Kill WeChat";
 "Assistant.Directive.KillChrome" = "Kill Chrome";

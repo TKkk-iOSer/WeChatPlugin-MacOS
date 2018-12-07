@@ -65,6 +65,7 @@
 "Assistant.Directive.Shutdown" = "关机";
 "Assistant.Directive.Restart" = "重启";
 "Assistant.Directive.EmptyTrash" = "清空废纸篓";
+"Assistant.Directive.Mute" = "静音";
 "Assistant.Directive.KillQQ" = "退出 QQ";
 "Assistant.Directive.KillWeChat" = "退出 WeChat";
 "Assistant.Directive.KillChrome" = "退出 Chrome";
