@@ -64,7 +64,7 @@
 }
 
 + (BOOL)hook_preHandleWebUrlStr:(id)arg1 withMessage:(id)arg2 {
-    if ([[TKWeChatPluginConfig sharedConfig] systemBrowerEnable]) {
+    if ([[TKWeChatPluginConfig sharedConfig] systemBrowserEnable]) {
         MMURLHandler *urlHander = [objc_getClass("MMURLHandler") defaultHandler];
         [urlHander openURLWithDefault:arg1];
         return YES;

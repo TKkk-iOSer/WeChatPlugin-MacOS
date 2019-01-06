@@ -20,7 +20,7 @@
 @property (nonatomic, assign) BOOL multipleSelectionEnable;             /**<    是否要进行多选    */
 @property (nonatomic, assign) BOOL forbidCheckVersion;                  /**<    禁止检测版本      */
 @property (nonatomic, assign) BOOL alfredEnable;                        /**<    是否开启Alfred   */
-@property (nonatomic, assign) BOOL systemBrowerEnable;                  /**<    是否使用自身浏览器打开连接   */
+@property (nonatomic, assign) BOOL systemBrowserEnable;                  /**<    是否使用自身浏览器打开连接   */
 @property (nonatomic, strong) NSMutableArray *autoReplyModels;           /**<    自动回复的数组    */
 @property (nonatomic, strong) NSMutableArray *remoteControlModels;       /**<    远程控制的数组    */
 @property (nonatomic, strong) NSMutableArray *ignoreSessionModels;      /**<    聊天置底的数组    */

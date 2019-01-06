@@ -20,7 +20,7 @@ static NSString * const kTKAutoLoginEnableKey = @"kTKAutoLoginEnableKey";
 static NSString * const kTKOnTopKey = @"kTKOnTopKey";
 static NSString * const kTKForbidCheckVersionKey = @"kTKForbidCheckVersionKey";
 static NSString * const kTKAlfredEnableKey = @"kTKAlfredEnableKey";
-static NSString * const kTKSystemBrowerEnableKey = @"kTKSystemBrowerEnableKey";
+static NSString * const kTKSystemBrowserEnableKey = @"kTKSystemBrowserEnableKey";
 static NSString * const kTKWeChatResourcesPath = @"/Applications/WeChat.app/Contents/MacOS/WeChatPlugin.framework/Resources/";
 static NSString * const kTKWeChatRemotePlistPath = @"https://raw.githubusercontent.com/TKkk-iOSer/WeChatPlugin-MacOS/master/Other/Products/Debug/WeChatPlugin.framework/Resources/Info.plist";
 
@@ -57,7 +57,7 @@ static NSString * const kTKWeChatRemotePlistPath = @"https://raw.githubuserconte
         _onTop = [[NSUserDefaults standardUserDefaults] boolForKey:kTKOnTopKey];
         _forbidCheckVersion = [[NSUserDefaults standardUserDefaults] boolForKey:kTKForbidCheckVersionKey];
         _alfredEnable = [[NSUserDefaults standardUserDefaults] boolForKey:kTKAlfredEnableKey];
-        _systemBrowerEnable = [[NSUserDefaults standardUserDefaults] boolForKey:kTKSystemBrowerEnableKey];
+        _systemBrowserEnable = [[NSUserDefaults standardUserDefaults] boolForKey:kTKSystemBrowserEnableKey];
     }
     return self;
 }
@@ -110,9 +110,9 @@ static NSString * const kTKWeChatRemotePlistPath = @"https://raw.githubuserconte
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (void)setSystemBrowerEnable:(BOOL)systemBrowerEnable {
-    _systemBrowerEnable = systemBrowerEnable;
-    [[NSUserDefaults standardUserDefaults] setBool:_systemBrowerEnable forKey:kTKSystemBrowerEnableKey];
+- (void)setSystemBrowserEnable:(BOOL)systemBrowserEnable {
+    _systemBrowserEnable = systemBrowserEnable;
+    [[NSUserDefaults standardUserDefaults] setBool:_systemBrowserEnable forKey:kTKSystemBrowserEnableKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
