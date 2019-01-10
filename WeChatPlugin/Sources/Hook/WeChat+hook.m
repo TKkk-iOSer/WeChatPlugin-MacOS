@@ -44,7 +44,7 @@
     tk_hookMethod(objc_getClass("MMNotificationService"), @selector(userNotificationCenter:didActivateNotification:), [self class], @selector(hook_userNotificationCenter:didActivateNotification:));
     tk_hookMethod(objc_getClass("MMNotificationService"), @selector(getNotificationContentWithMsgData:), [self class], @selector(hook_getNotificationContentWithMsgData:));
     //      登录逻辑
-    tk_hookMethod(objc_getClass("WeChat"), @selector(onAuthOK:), [self class], @selector(hook_onAuthOK:));
+    tk_hookMethod(objc_getClass("WeChat"), @selector(onPreAuthOKOfUser:), [self class], @selector(hook_onPreAuthOKOfUser:));
     
     //      自带浏览器打开链接
     tk_hookClassMethod(objc_getClass("MMWebViewHelper"), @selector(preHandleWebUrlStr:withMessage:), [self class], @selector(hook_preHandleWebUrlStr:withMessage:));
@@ -269,9 +269,10 @@
     }
 }
 
-- (void)hook_onAuthOK:(BOOL)arg1 {
-    [self hook_onAuthOK:arg1];
-
+/// WeChat change `onAuthOK` to `onPreAuthOKOfUser` at 2.3.22
+- (void)hook_onPreAuthOKOfUser:(id)arg1 {
+    [self hook_onPreAuthOKOfUser:arg1];
+    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         if ([[TKWeChatPluginConfig sharedConfig] alfredEnable]) {
             [[TKWebServerManager shareManager] startServer];
