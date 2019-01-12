@@ -28,9 +28,10 @@ echo -e "\n\n为了将小助手写入微信, 请输入密码 ： "
 sudo chown -R $(whoami) "$wechat_path"
 fi
 
-# 备份 WeChat 原始可执行文件
-if [ ! -f "$app_executable_backup_path" ]
+# 判断是否已经存在备份文件 或者 是否强制覆盖安装
+if [ ! -f "$app_executable_backup_path" ] || [ -n "$1" -a "$1" = "--force" ]
 then
+# 备份 WeChat 原始可执行文件
 cp "$app_executable_path" "$app_executable_backup_path"
 result="y"
 else

@@ -1,5 +1,19 @@
 # 更新日志 
 
+### [v1.7.5 (2019-01-13)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.7.5)
+
+- 适配 2.3.22
+- 新增禁止微信检测更新开关
+- 优化 XML解析(在此感谢 @wangliangliang2 提醒)
+- 新增微信小助手.app 安装方式
+
+###[v1.7.3 (2018-10-23)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.7.3)
+
+- 适配2.3.19
+- 菜单栏新增 alfred 开关
+- 更改更新弹窗逻辑
+- 新增自带浏览器浏览开关
+
 ### [v1.7.1 (2018-07-24)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.7.1)
 
 * 适配微信 Version. 2.3.17
@@ -29,7 +43,7 @@
 ### [v1.6 (2018-03-18)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.6)
 
 * 新增 Alfred 快捷发送消息 & 打开聊天窗口
- 
+
 ### [v1.5.1 (2018-03-03)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.5.1)
 
 * 新增语音远程控制 mac

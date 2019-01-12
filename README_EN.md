@@ -101,7 +101,6 @@ open `/Applications/Utilities/Terminal.app`,Drag the `Uninstall.sh` file(in `Oth
 
 ## Dependency
 
-* [XMLReader](https://github.com/amarcadet/XMLReader)
 * [insert_dylib](https://github.com/Tyilo/insert_dylib)
 * [fishhook](https://github.com/facebook/fishhook)
 * [GCDWebServer](https://github.com/swisspol/GCDWebServer)

@@ -49,5 +49,4 @@ curl -o- -L https://raw.githubusercontent.com/lmk123/oh-my-wechat/master/install
 
 ## 卸载
 
-打开Terminal(终端)，拖动解压后`Uninstall.sh` 文件到 Terminal 回车即可。
-
+* 打开Terminal(终端)，拖动解压后`Uninstall.sh` 文件到 Terminal 回车即可。

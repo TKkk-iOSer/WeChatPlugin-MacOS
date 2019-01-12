@@ -2,9 +2,9 @@
 
 ![微信小助手.png](./Other/ScreenShots/wechatplugin.png)
 
-![platform](https://img.shields.io/badge/platform-macos-lightgrey.svg)  [![release](https://img.shields.io/badge/release-v1.7.3-brightgreen.svg)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases)  ![support](https://img.shields.io/badge/support-wechat%202.3.19-blue.svg)  [![Readme](https://img.shields.io/badge/readme-english-yellow.svg)](./README_EN.md)   [![GitHub license](https://img.shields.io/github/license/TKkk-iOSer/WeChatPlugin-MacOS.svg)](./LICENSE)
+![platform](https://img.shields.io/badge/platform-macos-lightgrey.svg)  [![release](https://img.shields.io/badge/release-v1.7.5-brightgreen.svg)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases)  ![support](https://img.shields.io/badge/support-wechat%202.3.22-blue.svg)  [![Readme](https://img.shields.io/badge/readme-english-yellow.svg)](./README_EN.md)   [![GitHub license](https://img.shields.io/github/license/TKkk-iOSer/WeChatPlugin-MacOS.svg)](./LICENSE)
 
-# 微信小助手 v1.7.3
+# 微信小助手 v1.7.5
 
  **[English](./README_EN.md) | 中文**
 
@@ -41,6 +41,8 @@
 * 菜单栏(关于小助手)新增 alfred 开关 
 * 新增是否使用微信自带浏览器开关
 * 新增[LaunchBar 扩展](https://github.com/VDeamoV/WeChatHelper)
+* 新增禁止微信检测更新开关
+* 新增小助手.app安装方式
 
 **若无使用 alfred，则不必打开 alfred 开关**
 
@@ -59,26 +61,17 @@
 
 ## 更新日志
 
+* [适配2.3.22 & 新增禁止微信检测更新开关(2019-01-13)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.7.5)
 * [适配2.3.19 & 修复安全漏洞(2018-10-23)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.7.3)
-
 * [适配2.3.17 & 加强 alfred 搜索(2018-07-24)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.7.1)
-
 * [新增好多功能…(2018-05-12)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.7)
-
 * [新增自动回复延迟 & 修改置顶窗口快捷(2018-04-07)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.6.1)
-
 * [新增 Alfred 快捷发送消息 & 打开聊天窗口(2018-03-18)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.6)
-
 * [新增语音远程控制mac & 优化撤回消息、快捷回复(2018-03-03)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.5.1)
-
 * [新增小助手检测更新&表情包复制存储等等 (2018-02-24)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.5.0)
-
 * [新增窗口置顶&多选删除等等 (2017-10-11)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.4.0)
-
 * [新增置底&免认证 (2017-09-17)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.3.0)
-
 * [修复聊天记录消失的bug (2017-09-11)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.2.0)
-
 * [重构自动回复，实现多回复 (2017-08-23)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.1.0)
 
 **详细内容请查看**[CHANGELOG](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/blob/master/CHANGELOG.md)
@@ -176,6 +169,7 @@ curl -o- -L https://raw.githubusercontent.com/lmk123/oh-my-wechat/master/install
 #### 2. 普通安装
 
 * 点击`clone or download`按钮下载 WeChatPlugin 并解压，打开Terminal(终端)，拖动解压后`Install.sh` 文件(在 Other 文件夹中)到 Terminal 回车即可。
+* APP安装：点击`clone or download`按钮下载 WeChatPlugin 并解压，双击 Ohter 文件夹中的 `微信小助手.app`即可。
 
 #### 3. 安装完成
 
@@ -207,7 +201,6 @@ curl -o- -L https://raw.githubusercontent.com/lmk123/oh-my-wechat/master/install
 
 ## 依赖
 
-* [XMLReader](https://github.com/amarcadet/XMLReader)
 * [insert_dylib](https://github.com/Tyilo/insert_dylib)
 * [fishhook](https://github.com/facebook/fishhook)
 * [GCDWebServer](https://github.com/swisspol/GCDWebServer)

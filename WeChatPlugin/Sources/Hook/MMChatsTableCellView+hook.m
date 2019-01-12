@@ -131,7 +131,11 @@
             [sessionMgr UnmuteSessionByUserName:sessionInfo.m_nsUserName];
         }
     }
-    [sessionMgr sortSessions];
+    if ([sessionMgr respondsToSelector:@selector(FFDataSvrMgrSvrFavZZ)]) {
+        [sessionMgr FFDataSvrMgrSvrFavZZ];
+    } else if ([sessionMgr respondsToSelector:@selector(sortSessions)]){
+        [sessionMgr sortSessions];
+    }
     [[TKWeChatPluginConfig sharedConfig] saveIgnoreSessionModels];
 }
 
@@ -224,7 +228,11 @@
         if (sessionInfo.m_bShowUnReadAsRedDot && sessionInfo.m_nsUserName) {
             [sessionMgr UnmuteSessionByUserName:sessionInfo.m_nsUserName];
         }
-        [sessionMgr sortSessions];
+        if ([sessionMgr respondsToSelector:@selector(FFDataSvrMgrSvrFavZZ)]) {
+            [sessionMgr FFDataSvrMgrSvrFavZZ];
+        } else if ([sessionMgr respondsToSelector:@selector(sortSessions)]){
+            [sessionMgr sortSessions];
+        }
         [[TKWeChatPluginConfig sharedConfig] saveIgnoreSessionModels];
     }
 }

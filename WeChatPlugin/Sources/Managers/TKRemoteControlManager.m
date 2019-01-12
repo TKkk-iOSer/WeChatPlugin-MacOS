@@ -81,7 +81,7 @@ static NSString * const kRemoteControlAppleScript = @"osascript /Applications/We
 
 + (BOOL)shouldExecuteRemoteControlWithModel:(TKRemoteControlModel *)model msg:(NSString *)msg msgType:(MessageDataType)type {
     if (model.enable && ![model.keyword isEqualToString:@""]) {
-        if ((type == MessageDataTypeText && [msg isEqualToString:model.keyword]) || (type == MessageDataTypeVoice && [msg containsString:model.keyword])) {
+        if ((type == MessageDataTypeText && [msg isEqualToString:model.keyword]) || (type == MessageDataTypeVoice && ([msg containsString:model.keyword] || [msg containsString:TKLocalizedString(model.function)]))) {
             return YES;
         } else {
             return NO;

@@ -13,6 +13,9 @@
 
 + (void)hookMMStickerMessageCellView {
     tk_hookMethod(objc_getClass("MMStickerMessageCellView"), @selector(contextMenu), [self class], @selector(hook_contextMenu));
+    if (LargerOrEqualVersion(@"2.3.22")) {
+         tk_hookMethod(objc_getClass("MMStickerMessageCellView"), @selector(contextMenuExport), [self class], @selector(hook_contextMenuExport));
+    }
 }
 
 - (id)hook_contextMenu {
@@ -28,6 +31,18 @@
 }
 
 - (void)contextMenuExport {
+    [self exportEmoji];
+}
+
+- (void)hook_contextMenuExport {
+    if (![self.className isEqualToString:@"MMStickerMessageCellView"]) {
+        [self hook_contextMenu];
+        return;
+    }
+    [self exportEmoji];
+}
+
+- (void)exportEmoji {
     MMStickerMessageCellView *currentCellView = (MMStickerMessageCellView *)self;
     MMMessageTableItem *item = currentCellView.messageTableItem;
     if (!item.message || !item.message.m_nsEmoticonMD5) {

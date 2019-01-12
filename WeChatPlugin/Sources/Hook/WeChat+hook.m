@@ -8,7 +8,6 @@
 
 #import "WeChat+hook.h"
 #import "WeChatPlugin.h"
-#import "XMLReader.h"
 #import "fishhook.h"
 #import "TKIgnoreSessonModel.h"
 #import "TKWebServerManager.h"
@@ -23,20 +22,27 @@
 
 + (void)hookWeChat {
     //      微信撤回消息
-    tk_hookMethod(objc_getClass("MessageService"), @selector(onRevokeMsg:), [self class], @selector(hook_onRevokeMsg:));
+    SEL revokeMsgMethod = LargerOrEqualVersion(@"2.3.22") ? @selector(FFToNameFavChatZZ:) : @selector(onRevokeMsg:);
+    tk_hookMethod(objc_getClass("MessageService"), revokeMsgMethod, [self class], @selector(hook_onRevokeMsg:));
     //      微信消息同步
-    tk_hookMethod(objc_getClass("MessageService"), @selector(OnSyncBatchAddMsgs:isFirstSync:), [self class], @selector(hook_OnSyncBatchAddMsgs:isFirstSync:));
+    SEL syncBatchAddMsgsMethod = LargerOrEqualVersion(@"2.3.22") ? @selector(FFImgToOnFavInfoInfoVCZZ:isFirstSync:) : @selector(OnSyncBatchAddMsgs:isFirstSync:);
+    tk_hookMethod(objc_getClass("MessageService"), syncBatchAddMsgsMethod, [self class], @selector(hook_OnSyncBatchAddMsgs:isFirstSync:));
     //      微信多开
-    tk_hookClassMethod(objc_getClass("CUtility"), @selector(HasWechatInstance), [self class], @selector(hook_HasWechatInstance));
+    SEL hasWechatInstanceMethod = LargerOrEqualVersion(@"2.3.22") ? @selector(FFSvrChatInfoMsgWithImgZZ) : @selector(HasWechatInstance);
+    tk_hookClassMethod(objc_getClass("CUtility"), hasWechatInstanceMethod, [self class], @selector(hook_HasWechatInstance));
     //      免认证登录
     tk_hookMethod(objc_getClass("MMLoginOneClickViewController"), @selector(onLoginButtonClicked:), [self class], @selector(hook_onLoginButtonClicked:));
-    tk_hookMethod(objc_getClass("LogoutCGI"), @selector(sendLogoutCGIWithCompletion:), [self class], @selector(hook_sendLogoutCGIWithCompletion:));
-    tk_hookMethod(objc_getClass("AccountService"), @selector(ManualLogout), [self class], @selector(hook_ManualLogout));
+    SEL sendLogoutCGIWithCompletionMethod = LargerOrEqualVersion(@"2.3.22") ? @selector(FFVCRecvDataAddDataToMsgChatMgrRecvZZ:) : @selector(sendLogoutCGIWithCompletion:);
+    tk_hookMethod(objc_getClass("LogoutCGI"), sendLogoutCGIWithCompletionMethod, [self class], @selector(hook_sendLogoutCGIWithCompletion:));
+    
+    SEL manualLogoutMethod = LargerOrEqualVersion(@"2.3.22") ? @selector(FFAddSvrMsgImgVCZZ) : @selector(ManualLogout);
+    tk_hookMethod(objc_getClass("AccountService"), manualLogoutMethod, [self class], @selector(hook_ManualLogout));
     
     //      自动登录
     tk_hookMethod(objc_getClass("MMLoginOneClickViewController"), @selector(viewWillAppear), [self class], @selector(hook_viewWillAppear));
     //      置底
-    tk_hookMethod(objc_getClass("MMSessionMgr"), @selector(sortSessions), [self class], @selector(hook_sortSessions));
+    SEL sortSessionsMethod = LargerOrEqualVersion(@"2.3.22") ? @selector(FFDataSvrMgrSvrFavZZ) : @selector(sortSessions);
+    tk_hookMethod(objc_getClass("MMSessionMgr"), sortSessionsMethod, [self class], @selector(hook_sortSessions));
     //      窗口置顶
     tk_hookMethod(objc_getClass("NSWindow"), @selector(makeKeyAndOrderFront:), [self class], @selector(hook_makeKeyAndOrderFront:));
     //      快捷回复
@@ -44,8 +50,8 @@
     tk_hookMethod(objc_getClass("MMNotificationService"), @selector(userNotificationCenter:didActivateNotification:), [self class], @selector(hook_userNotificationCenter:didActivateNotification:));
     tk_hookMethod(objc_getClass("MMNotificationService"), @selector(getNotificationContentWithMsgData:), [self class], @selector(hook_getNotificationContentWithMsgData:));
     //      登录逻辑
-    tk_hookMethod(objc_getClass("WeChat"), @selector(onAuthOK:), [self class], @selector(hook_onAuthOK:));
-    
+    tk_hookMethod(objc_getClass("AccountService"), @selector(onAuthOKOfUser:withSessionKey:withServerId:autoAuthKey:isAutoAuth:), [self class], @selector(hook_onAuthOKOfUser:withSessionKey:withServerId:autoAuthKey:isAutoAuth:));
+
     //      自带浏览器打开链接
     tk_hookClassMethod(objc_getClass("MMWebViewHelper"), @selector(preHandleWebUrlStr:withMessage:), [self class], @selector(hook_preHandleWebUrlStr:withMessage:));
     
@@ -54,17 +60,25 @@
     
     tk_hookMethod(objc_getClass("UserDefaultsService"), @selector(stringForKey:), [self class], @selector(hook_stringForKey:));
     
+    //      去除刚启动微信更新弹窗提醒
+    tk_hookMethod(objc_getClass("WeChat"), @selector(checkForUpdatesInBackground), [self class], @selector(hook_setupCheckUpdateIfNeeded));
     //      替换沙盒路径
     rebind_symbols((struct rebinding[2]) {
         { "NSSearchPathForDirectoriesInDomains", swizzled_NSSearchPathForDirectoriesInDomains, (void *)&original_NSSearchPathForDirectoriesInDomains },
         { "NSHomeDirectory", swizzled_NSHomeDirectory, (void *)&original_NSHomeDirectory }
     }, 2);
-
+    
     [self setup];
 }
 
+- (void)hook_setupCheckUpdateIfNeeded {
+    if ([[TKWeChatPluginConfig sharedConfig] checkUpdateWechatEnable]) {
+        [self hook_setupCheckUpdateIfNeeded];
+    }
+}
+
 + (BOOL)hook_preHandleWebUrlStr:(id)arg1 withMessage:(id)arg2 {
-    if ([[TKWeChatPluginConfig sharedConfig] systemBrowerEnable]) {
+    if ([[TKWeChatPluginConfig sharedConfig] systemBrowserEnable]) {
         MMURLHandler *urlHander = [objc_getClass("MMURLHandler") defaultHandler];
         [urlHander openURLWithDefault:arg1];
         return YES;
@@ -150,12 +164,12 @@
     NSString *msgContent = [msg substringFromIndex:[msg rangeOfString:@"<sysmsg"].location];
     
     //      xml 转 dict
-    NSError *error;
-    NSDictionary *msgDict = [XMLReader dictionaryForXMLString:msgContent error:&error];
+    XMLDictionaryParser *xmlParser = [objc_getClass("XMLDictionaryParser") sharedInstance];
+    NSDictionary *msgDict = [xmlParser dictionaryWithString:msgContent];
     
-    if (!error && msgDict && msgDict[@"sysmsg"] && msgDict[@"sysmsg"][@"revokemsg"]) {
-        NSString *newmsgid = msgDict[@"sysmsg"][@"revokemsg"][@"newmsgid"][@"text"];
-        NSString *session =  msgDict[@"sysmsg"][@"revokemsg"][@"session"][@"text"];
+    if (msgDict && msgDict[@"revokemsg"]) {
+        NSString *newmsgid = msgDict[@"revokemsg"][@"newmsgid"];
+        NSString *session =  msgDict[@"revokemsg"][@"session"];
         msgDict = nil;
         
         NSMutableSet *revokeMsgSet = [[TKWeChatPluginConfig sharedConfig] revokeMsgSet];
@@ -269,8 +283,8 @@
     }
 }
 
-- (void)hook_onAuthOK:(BOOL)arg1 {
-    [self hook_onAuthOK:arg1];
+- (void)hook_onAuthOKOfUser:(id)arg1 withSessionKey:(id)arg2 withServerId:(id)arg3 autoAuthKey:(id)arg4 isAutoAuth:(BOOL)arg5 {
+    [self hook_onAuthOKOfUser:arg1 withSessionKey:arg2 withServerId:arg3 autoAuthKey:arg4 isAutoAuth:arg5];
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         if ([[TKWeChatPluginConfig sharedConfig] alfredEnable]) {
@@ -285,18 +299,21 @@
 }
 
 - (void)hook_sendLogoutCGIWithCompletion:(id)arg1 {
-    if ([[TKWeChatPluginConfig sharedConfig] alfredEnable]) {
-        [[TKWebServerManager shareManager] endServer];
-    }
-    
     BOOL autoAuthEnable = [[TKWeChatPluginConfig sharedConfig] autoAuthEnable];
     WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
     if (autoAuthEnable && wechat.isAppTerminating) return;
     
-    return [self hook_sendLogoutCGIWithCompletion:arg1];
+    [self hook_sendLogoutCGIWithCompletion:arg1];
 }
 
 - (void)hook_ManualLogout {
+    if ([[TKWeChatPluginConfig sharedConfig] alfredEnable]) {
+        [[TKWebServerManager shareManager] endServer];
+    }
+    
+    NSMenu *mainMenu = [[NSApplication sharedApplication] mainMenu];
+    NSMenuItem *pluginMenu = mainMenu.itemArray.lastObject;
+    pluginMenu.enabled = NO;
     BOOL autoAuthEnable = [[TKWeChatPluginConfig sharedConfig] autoAuthEnable];
     if (autoAuthEnable) return;
     
@@ -330,9 +347,12 @@
     NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
     NSArray *instances = [NSRunningApplication runningApplicationsWithBundleIdentifier:bundleIdentifier];
     BOOL wechatHasRun = instances.count == 1;
-    
-    if (autoLogin && wechatHasRun) {
-        [loginVC onLoginButtonClicked:nil];
+    AccountService *accountService = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("AccountService")];
+    if (autoLogin && wechatHasRun && [accountService canAutoAuth]) {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+             [loginVC onLoginButtonClicked:nil];
+        });
     }
 }
 
