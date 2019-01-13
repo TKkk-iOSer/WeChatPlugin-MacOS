@@ -220,6 +220,13 @@ static NSString * const kTKWeChatRemotePlistPath = @"https://raw.githubuserconte
     return _revokeMsgSet;
 }
 
+- (NSMutableSet *)unreadSessionSet {
+    if (!_unreadSessionSet) {
+        _unreadSessionSet = [NSMutableSet set];
+    }
+    return _unreadSessionSet;
+}
+
 #pragma mark - 获取沙盒上的 plist 文件，包括：远程控制，自动回复，置底列表。
 - (NSString *)remoteControlPlistFilePath {
     if (!_remoteControlPlistFilePath) {

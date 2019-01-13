@@ -45,6 +45,7 @@
 "assistant.chat.readAll" = "一鍵已讀";
 "assistant.chat.clearEmpty" = "清除空會話";
 "assistant.chat.remove" = "移除";
+"assistant.chat.unread" = "标记未读";
 
 //  遠程控制相關
 "assistant.remoteControl.getList" = "獲取指令";

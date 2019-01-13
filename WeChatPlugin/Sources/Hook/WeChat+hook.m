@@ -60,6 +60,10 @@
     
     tk_hookMethod(objc_getClass("UserDefaultsService"), @selector(stringForKey:), [self class], @selector(hook_stringForKey:));
     
+    //    设置标记未读
+    tk_hookMethod(objc_getClass("MMChatMessageViewController"), @selector(onClickSession), [self class], @selector(hook_onClickSession));
+    tk_hookMethod(objc_getClass("MMSessionMgr"), @selector(onUnReadCountChange:), [self class], @selector(hook_onUnReadCountChange:));
+
     //      替换沙盒路径
     rebind_symbols((struct rebinding[2]) {
         { "NSSearchPathForDirectoriesInDomains", swizzled_NSSearchPathForDirectoriesInDomains, (void *)&original_NSSearchPathForDirectoriesInDomains },
@@ -412,6 +416,26 @@
     }
 }
 
+//  设置标记未读
+- (void)hook_onClickSession {
+    [self hook_onClickSession];
+    MMChatMessageViewController *chatMessageVC = (MMChatMessageViewController *)self;
+    NSMutableSet *unreadSessionSet = [[TKWeChatPluginConfig sharedConfig] unreadSessionSet];
+    if ([unreadSessionSet containsObject:chatMessageVC.chatContact.m_nsUsrName]) {
+        [unreadSessionSet removeObject:chatMessageVC.chatContact.m_nsUsrName];
+        [[TKMessageManager shareManager] clearUnRead:chatMessageVC.chatContact.m_nsUsrName];
+    }
+}
+
+- (void)hook_onUnReadCountChange:(id)arg1 {
+    NSMutableSet *unreadSessionSet = [[TKWeChatPluginConfig sharedConfig] unreadSessionSet];
+    if ([unreadSessionSet containsObject:arg1]) {
+        MMSessionMgr *sessionMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMSessionMgr")];
+        MMSessionInfo *sessionInfo = [sessionMgr sessionInfoByUserName:arg1];
+        sessionInfo.m_uUnReadCount++;
+    }
+    [self hook_onUnReadCountChange:arg1];
+}
 #pragma mark - hook 系统方法
 - (void)hook_makeKeyAndOrderFront:(nullable id)sender {
     BOOL top = [[TKWeChatPluginConfig sharedConfig] onTop];

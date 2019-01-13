@@ -191,6 +191,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @property(nonatomic) BOOL m_isMentionedUnread; // @synthesize
 @property(retain, nonatomic) NSString *m_nsUserName; // @synthesize m_nsUserName;
 @property(retain, nonatomic) MMSessionInfoPackedInfo *m_packedInfo;
+@property(nonatomic) unsigned int m_uUnReadCount; 
 @end
 
 @protocol MMChatsTableCellViewDelegate <NSObject>
@@ -210,11 +211,14 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @interface MMSessionMgr : NSObject
 @property(retain, nonatomic) NSMutableArray *m_arrSession;
 - (id)GetSessionAtIndex:(unsigned long long)arg1;
+- (id)sessionInfoByUserName:(id)arg1;
 - (void)MuteSessionByUserName:(id)arg1;
+- (void)onUnReadCountChange:(id)arg1;
 //- (void)TopSessionByUserName:(id)arg1;
 - (void)UnmuteSessionByUserName:(id)arg1;
 - (void)UntopSessionByUserName:(id)arg1;
 - (void)deleteSessionWithoutSyncToServerWithUserName:(id)arg1;
+- (void)changeSessionUnreadCountWithUserName:(id)arg1 to:(unsigned int)arg2;
 - (void)removeSessionOfUser:(id)arg1 isDelMsg:(BOOL)arg2;
 - (void)sortSessions;
 - (void)FFDataSvrMgrSvrFavZZ;
@@ -232,6 +236,8 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @end
 
 @interface MMChatMessageViewController : NSViewController
+@property(retain, nonatomic) WCContactData *chatContact;
+- (void)onClickSession;
 @end
 
 @interface MMMessageTableItem : NSObject

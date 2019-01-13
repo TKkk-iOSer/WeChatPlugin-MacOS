@@ -88,12 +88,15 @@
     
     NSMenuItem *removeSessionItem = [[NSMenuItem alloc] initWithTitle:TKLocalizedString(@"assistant.chat.remove") action:@selector(contextMenuRemoveSession) keyEquivalent:@""];
 
+    NSMenuItem *unreadSessionItem = [[NSMenuItem alloc] initWithTitle:TKLocalizedString(@"assistant.chat.unread") action:@selector(contextMenuUnreadSession) keyEquivalent:@""];
+
     [arg1 addItems:@[[NSMenuItem separatorItem],
                      preventRevokeItem,
                      multipleSelectionItem,
                      clearUnReadItem,
                      clearEmptySessionItem,
-                     removeSessionItem
+                     removeSessionItem,
+                     unreadSessionItem
                      ]];
     [self hook_menuWillOpen:arg1];
 }
@@ -203,6 +206,18 @@
     } else if (sessionInfo.m_nsUserName.length > 0) {
         [sessionMgr removeSessionOfUser:sessionInfo.m_nsUserName isDelMsg:NO];
     }
+}
+
+- (void)contextMenuUnreadSession {
+    MMSessionInfo *sessionInfo = [(MMChatsTableCellView *)self sessionInfo];
+    if (sessionInfo.m_uUnReadCount > 0) return;
+    
+    NSMutableSet *unreadSessionSet = [[TKWeChatPluginConfig sharedConfig] unreadSessionSet];
+    if ([unreadSessionSet containsObject:sessionInfo.m_nsUserName]) return;
+    
+    [unreadSessionSet addObject:sessionInfo.m_nsUserName];
+    MMSessionMgr *sessionMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMSessionMgr")];
+    [sessionMgr changeSessionUnreadCountWithUserName:sessionInfo.m_nsUserName to:sessionInfo.m_uUnReadCount + 1];
 }
 
 - (void)hook_contextMenuSticky:(id)arg1 {

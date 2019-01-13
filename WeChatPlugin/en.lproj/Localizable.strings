@@ -45,6 +45,7 @@
 "assistant.chat.readAll" = "Mark All As Read";
 "assistant.chat.clearEmpty" = "Clear All Empty Session";
 "assistant.chat.remove" = "remove";
+"assistant.chat.unread" = "Unread";
 
 //  Remote Control
 "assistant.remoteControl.getList" = "Directive";

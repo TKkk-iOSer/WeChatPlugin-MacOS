@@ -25,9 +25,10 @@
 @property (nonatomic, strong) NSMutableArray *autoReplyModels;           /**<    自动回复的数组    */
 @property (nonatomic, strong) NSMutableArray *remoteControlModels;       /**<    远程控制的数组    */
 @property (nonatomic, strong) NSMutableArray *ignoreSessionModels;       /**<    聊天置底的数组    */
-@property (nonatomic, strong) NSMutableArray *selectSessions;           /**<    已经选中的会话    */
-@property (nonatomic, strong) NSMutableSet *revokeMsgSet;               /**<    撤回的消息集合    */
-@property (nonatomic, copy) NSString *currentUserName;                  /**<    当前用户的id     */
+@property (nonatomic, strong) NSMutableArray *selectSessions;            /**<    已经选中的会话    */
+@property (nonatomic, strong) NSMutableSet *revokeMsgSet;                /**<    撤回的消息集合    */
+@property (nonatomic, strong) NSMutableSet *unreadSessionSet;            /**<    标记未读消息集合    */
+@property (nonatomic, copy) NSString *currentUserName;                   /**<    当前用户的id     */
 @property (nonatomic, copy, readonly) NSDictionary *localInfoPlist;
 @property (nonatomic, copy, readonly) NSDictionary *romoteInfoPlist;
 
