@@ -1,11 +1,12 @@
 <!--
 提 issue 前，请先完成以下三步：
+
 1. 确保微信小助手是最新版本，没有请更新.
 2. 请搜索下是否有人发了相同的 issue，可以的话请在相同的 issue 下描述自己的问题，避免 duplicate issue.
-3. 请详细查看Wiki 中的常见问题解决方法。
+3. 请详细查看 Wiki 中的常见问题解决方法。Wiki地址：https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/wiki
 
 如果以上三步仍然没有解决问题，那么请遵从以下的规范描述您的问题。
-之后可以点击上方的 Preview 进行预览
+之后可以点击上方的 Preview 进行预览。
 -->
 
 ### 问题描述
