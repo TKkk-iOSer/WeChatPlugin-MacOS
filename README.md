@@ -42,7 +42,6 @@
 * 新增是否使用微信自带浏览器开关
 * 新增[LaunchBar 扩展](https://github.com/VDeamoV/WeChatHelper)
 * 新增禁止微信检测更新开关
-* 新增小助手.app安装方式
 
 **若无使用 alfred，则不必打开 alfred 开关**
 
@@ -169,7 +168,6 @@ curl -o- -L https://raw.githubusercontent.com/lmk123/oh-my-wechat/master/install
 #### 2. 普通安装
 
 * 点击`clone or download`按钮下载 WeChatPlugin 并解压，打开Terminal(终端)，拖动解压后`Install.sh` 文件(在 Other 文件夹中)到 Terminal 回车即可。
-* APP安装：点击`clone or download`按钮下载 WeChatPlugin 并解压，双击 Ohter 文件夹中的 `微信小助手.app`即可。
 
 #### 3. 安装完成
 

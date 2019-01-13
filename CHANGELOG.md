@@ -5,7 +5,6 @@
 - 适配 2.3.22
 - 新增禁止微信检测更新开关
 - 优化 XML解析(在此感谢 @wangliangliang2 提醒)
-- 新增微信小助手.app 安装方式
 
 ###[v1.7.3 (2018-10-23)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.7.3)
 
