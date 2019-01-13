@@ -60,8 +60,6 @@
     
     tk_hookMethod(objc_getClass("UserDefaultsService"), @selector(stringForKey:), [self class], @selector(hook_stringForKey:));
     
-    //      去除刚启动微信更新弹窗提醒
-    tk_hookMethod(objc_getClass("WeChat"), @selector(checkForUpdatesInBackground), [self class], @selector(hook_setupCheckUpdateIfNeeded));
     //      替换沙盒路径
     rebind_symbols((struct rebinding[2]) {
         { "NSSearchPathForDirectoriesInDomains", swizzled_NSSearchPathForDirectoriesInDomains, (void *)&original_NSSearchPathForDirectoriesInDomains },
@@ -69,22 +67,6 @@
     }, 2);
     
     [self setup];
-}
-
-- (void)hook_setupCheckUpdateIfNeeded {
-    if ([[TKWeChatPluginConfig sharedConfig] checkUpdateWechatEnable]) {
-        [self hook_setupCheckUpdateIfNeeded];
-    }
-}
-
-+ (BOOL)hook_preHandleWebUrlStr:(id)arg1 withMessage:(id)arg2 {
-    if ([[TKWeChatPluginConfig sharedConfig] systemBrowserEnable]) {
-        MMURLHandler *urlHander = [objc_getClass("MMURLHandler") defaultHandler];
-        [urlHander openURLWithDefault:arg1];
-        return YES;
-    } else {
-        return [self hook_preHandleWebUrlStr:arg1 withMessage:arg2];
-    }
 }
 
 + (void)setup {
@@ -182,7 +164,7 @@
         //      获取原始的撤回提示消息
         MessageService *msgService = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
         MessageData *revokeMsgData = [msgService GetMsgData:session svrId:[newmsgid integerValue]];
-        if ([revokeMsgData isSendFromSelf] && ![[TKWeChatPluginConfig sharedConfig] preventSelfRevokeEnable]) { 
+        if ([revokeMsgData isSendFromSelf] && ![[TKWeChatPluginConfig sharedConfig] preventSelfRevokeEnable]) {
             [self hook_onRevokeMsg:msgData];
             return;
         }
@@ -351,7 +333,7 @@
     if (autoLogin && wechatHasRun && [accountService canAutoAuth]) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
-             [loginVC onLoginButtonClicked:nil];
+            [loginVC onLoginButtonClicked:nil];
         });
     }
 }
@@ -391,10 +373,15 @@
 }
 
 - (void)hook_applicationDidFinishLaunching:(id)arg1 {
+    WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
     if ([NSObject hook_HasWechatInstance]) {
-        WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
         wechat.hasAuthOK = YES;
     }
+    if ([wechat respondsToSelector:@selector(checkForUpdatesInBackground)]) {
+        //      去除刚启动微信更新弹窗提醒
+        tk_hookMethod(objc_getClass("WeChat"), @selector(checkForUpdatesInBackground), [self class], @selector(hook_checkForUpdatesInBackground));
+    }
+    
     [[TKAssistantMenuManager shareManager] initAssistantMenuItems];
     [self hook_applicationDidFinishLaunching:arg1];
 }
@@ -405,6 +392,24 @@
         return @"1";
     }
     return [self hook_stringForKey:key];
+}
+
+//  微信检测更新
+- (void)hook_checkForUpdatesInBackground {
+    if ([[TKWeChatPluginConfig sharedConfig] checkUpdateWechatEnable]) {
+        [self hook_checkForUpdatesInBackground];
+    }
+}
+
+//  是否使用微信浏览器
++ (BOOL)hook_preHandleWebUrlStr:(id)arg1 withMessage:(id)arg2 {
+    if ([[TKWeChatPluginConfig sharedConfig] systemBrowserEnable]) {
+        MMURLHandler *urlHander = [objc_getClass("MMURLHandler") defaultHandler];
+        [urlHander openURLWithDefault:arg1];
+        return YES;
+    } else {
+        return [self hook_preHandleWebUrlStr:arg1 withMessage:arg2];
+    }
 }
 
 #pragma mark - hook 系统方法
@@ -422,7 +427,7 @@
  @param addMsg 接收的消息
  */
 - (void)autoReplyWithMsg:(AddMsg *)addMsg {
-//    addMsg.msgType != 49
+    //    addMsg.msgType != 49
     if (![[TKWeChatPluginConfig sharedConfig] autoReplyEnable]) return;
     if (addMsg.msgType != 1 && addMsg.msgType != 3) return;
     

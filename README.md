@@ -41,7 +41,8 @@
 * 菜单栏(关于小助手)新增 alfred 开关 
 * 新增是否使用微信自带浏览器开关
 * 新增[LaunchBar 扩展](https://github.com/VDeamoV/WeChatHelper)
-* 新增禁止微信检测更新开关
+* 新增禁止微信检测更新开关(非App Store版本)
+* ~~新增小助手.app安装方式~~
 
 **若无使用 alfred，则不必打开 alfred 开关**
 

@@ -135,9 +135,12 @@ static char tkAboutWindowControllerKey;             //  关于窗口的关联 ke
                         onTopItem,
                         autoAuthItem,
                         enableSystemBrowserItem,
-                        forbidCheckUpdateItem,
                         pluginItem
                         ]];
+    WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
+    if ([wechat respondsToSelector:@selector(checkForUpdatesInBackground)]) {
+        [subMenu insertItem:forbidCheckUpdateItem atIndex:6];
+    }
     [subMenu setSubmenu:subPluginMenu forItem:pluginItem];
     NSMenuItem *menuItem = [[NSMenuItem alloc] init];
     [menuItem setTitle:TKLocalizedString(@"assistant.menu.title")];
