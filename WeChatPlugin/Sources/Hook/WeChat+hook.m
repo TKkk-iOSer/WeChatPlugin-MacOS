@@ -46,9 +46,9 @@
     //      窗口置顶
     tk_hookMethod(objc_getClass("NSWindow"), @selector(makeKeyAndOrderFront:), [self class], @selector(hook_makeKeyAndOrderFront:));
     //      快捷回复
-    tk_hookMethod(objc_getClass("_NSConcreteUserNotificationCenter"), @selector(deliverNotification:), [self class], @selector(hook_deliverNotification:));
-    tk_hookMethod(objc_getClass("MMNotificationService"), @selector(userNotificationCenter:didActivateNotification:), [self class], @selector(hook_userNotificationCenter:didActivateNotification:));
-    tk_hookMethod(objc_getClass("MMNotificationService"), @selector(getNotificationContentWithMsgData:), [self class], @selector(hook_getNotificationContentWithMsgData:));
+//    tk_hookMethod(objc_getClass("_NSConcreteUserNotificationCenter"), @selector(deliverNotification:), [self class], @selector(hook_deliverNotification:));
+//    tk_hookMethod(objc_getClass("MMNotificationService"), @selector(userNotificationCenter:didActivateNotification:), [self class], @selector(hook_userNotificationCenter:didActivateNotification:));
+//    tk_hookMethod(objc_getClass("MMNotificationService"), @selector(getNotificationContentWithMsgData:), [self class], @selector(hook_getNotificationContentWithMsgData:));
     //      登录逻辑
     tk_hookMethod(objc_getClass("AccountService"), @selector(onAuthOKOfUser:withSessionKey:withServerId:autoAuthKey:isAutoAuth:), [self class], @selector(hook_onAuthOKOfUser:withSessionKey:withServerId:autoAuthKey:isAutoAuth:));
 
@@ -219,33 +219,33 @@
  hook 微信通知消息
  
  */
-- (id)hook_getNotificationContentWithMsgData:(MessageData *)arg1 {
-    [[TKWeChatPluginConfig sharedConfig] setCurrentUserName:arg1.toUsrName];
-    return [self hook_getNotificationContentWithMsgData:arg1];;
-}
-
-- (void)hook_deliverNotification:(NSUserNotification *)notification {
-    NSMutableDictionary *dict = [notification.userInfo mutableCopy];
-    dict[@"currnetName"] = [[TKWeChatPluginConfig sharedConfig] currentUserName];
-    notification.userInfo = dict;
-    notification.hasReplyButton = YES;
-    [self hook_deliverNotification:notification];
-}
-
-- (void)hook_userNotificationCenter:(id)notificationCenter didActivateNotification:(NSUserNotification *)notification {
-    NSString *chatName = notification.userInfo[@"ChatName"];
-    if (chatName && notification.response.string) {
-        NSString *instanceUserName = [objc_getClass("CUtility") GetCurrentUserName];
-        NSString *currentUserName = notification.userInfo[@"currnetName"];
-        if ([instanceUserName isEqualToString:currentUserName]) {
-            MessageService *service = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
-            [service SendTextMessage:currentUserName toUsrName:chatName msgText:notification.response.string atUserList:nil];
-            [[TKMessageManager shareManager] clearUnRead:chatName];
-        }
-    } else {
-        [self hook_userNotificationCenter:notificationCenter didActivateNotification:notification];
-    }
-}
+//- (id)hook_getNotificationContentWithMsgData:(MessageData *)arg1 {
+//    [[TKWeChatPluginConfig sharedConfig] setCurrentUserName:arg1.toUsrName];
+//    return [self hook_getNotificationContentWithMsgData:arg1];;
+//}
+//
+//- (void)hook_deliverNotification:(NSUserNotification *)notification {
+//    NSMutableDictionary *dict = [notification.userInfo mutableCopy];
+//    dict[@"currnetName"] = [[TKWeChatPluginConfig sharedConfig] currentUserName];
+//    notification.userInfo = dict;
+//    notification.hasReplyButton = YES;
+//    [self hook_deliverNotification:notification];
+//}
+//
+//- (void)hook_userNotificationCenter:(id)notificationCenter didActivateNotification:(NSUserNotification *)notification {
+//    NSString *chatName = notification.userInfo[@"ChatName"];
+//    if (chatName && notification.response.string) {
+//        NSString *instanceUserName = [objc_getClass("CUtility") GetCurrentUserName];
+//        NSString *currentUserName = notification.userInfo[@"currnetName"];
+//        if ([instanceUserName isEqualToString:currentUserName]) {
+//            MessageService *service = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
+//            [service SendTextMessage:currentUserName toUsrName:chatName msgText:notification.response.string atUserList:nil];
+//            [[TKMessageManager shareManager] clearUnRead:chatName];
+//        }
+//    } else {
+//        [self hook_userNotificationCenter:notificationCenter didActivateNotification:notification];
+//    }
+//}
 
 /**
  hook 自动登录
