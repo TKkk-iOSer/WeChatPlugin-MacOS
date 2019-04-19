@@ -44,12 +44,12 @@
 "assistant.chat.unMultiSelect" = "Unmultiselect";
 "assistant.chat.readAll" = "Mark All As Read";
 "assistant.chat.clearEmpty" = "Clear All Empty Session";
-"assistant.chat.remove" = "remove";
+"assistant.chat.remove" = "Remove";
 "assistant.chat.unread" = "Unread";
 
 //  Remote Control
 "assistant.remoteControl.getList" = "Directive";
-"assistant.remoteControl.listTip" = "remote Control Directives: \n(function-directive-Switch)\n\n";
+"assistant.remoteControl.listTip" = "Remote Control Directives: \n(function-directive-Switch)\n\n";
 "assistant.remoteControl.recall" = "Assistant got a directive: ";
 "assistant.remoteControl.voiceRecall" = "Assistant got a audio message, Convert to Text👇👇👇:";
 "assistant.remoteControl.mac" = "Macbook:";
