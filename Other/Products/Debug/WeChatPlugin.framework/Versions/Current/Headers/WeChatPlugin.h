@@ -13,7 +13,23 @@
 FOUNDATION_EXPORT double WeChatPluginVersionNumber;
 FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 
+@class WCContactData;
+
 #pragma mark - 微信原始的部分类与方法
+
+@interface MMSystemLinkInfo : NSObject
+@property(retain, nonatomic) NSMutableAttributedString *msgContent;
+
+@end
+@interface MMContactProfileController : NSViewController
+@property(copy, nonatomic) NSString *groupName;
+@property(nonatomic) struct CGRect relativeToRect;
+@property(nonatomic) unsigned long long preferredEdge;
+@property(retain, nonatomic) WCContactData *contactData;
+- (void)sendGetContactRequest:(id)arg1 withGroupName:(id)arg2;
+- (void)showInView:(id)arg1;
+@end
+
 
 @interface MMBrandChatsViewController : NSObject
 - (void)startChatWithContact:(id)arg1;
@@ -41,26 +57,39 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @property(retain, nonatomic) MMLoginOneClickViewController *oneClickViewController;
 @end
 
+@interface MMHandoffButton : NSView
+@end
+
+@interface MMMainViewController : NSObject
+@property(nonatomic) __weak MMHandoffButton *handoffButton;
+@end
+
 @interface MMMainWindowController : NSWindowController
 @property(retain, nonatomic) MMLoginViewController *loginViewController;
+@property(retain, nonatomic) MMMainViewController *mainViewController;
 - (void)onAuthOK;
 - (void)onLogOut;
 @end
 
-@interface MessageService : NSObject
+@interface MMVoiceTranscribeCGI : NSObject
+- (void)transcribeVoiceMessage:(id)arg1 withCompletion:(void (^)(void))arg2;
+@end
+
+@interface FFProcessReqsvrZZ : NSObject
 - (void)onRevokeMsg:(id)arg1;
 - (void)FFToNameFavChatZZ:(id)arg1;
+- (void)FFToNameFavChatZZ:(id)arg1 sessionMsgList:(id)arg2;
 - (void)OnSyncBatchAddMsgs:(NSArray *)arg1 isFirstSync:(BOOL)arg2;
 - (void)FFImgToOnFavInfoInfoVCZZ:(id)arg1 isFirstSync:(BOOL)arg2;
-- (id)SendTextMessage:(id)arg1 toUsrName:(id)arg2 msgText:(id)arg3 atUserList:(id)arg4;
+- (id)FFProcessTReqZZ:(id)arg1 toUsrName:(id)arg2 msgText:(id)arg3 atUserList:(id)arg4;
 - (id)GetMsgData:(id)arg1 svrId:(long)arg2;
 - (void)AddLocalMsg:(id)arg1 msgData:(id)arg2;
 - (void)TranscribeVoiceMessage:(id)arg1 completion:(void (^)(void))arg2;
 - (BOOL)ClearUnRead:(id)arg1 FromID:(unsigned int)arg2 ToID:(unsigned int)arg3;
 - (BOOL)ClearUnRead:(id)arg1 FromCreateTime:(unsigned int)arg2 ToCreateTime:(unsigned int)arg3;
-- (BOOL)hasMsgInChat:(id)arg1;
-- (id)GetMsgListWithChatName:(id)arg1 fromLocalId:(unsigned int)arg2 limitCnt:(NSInteger)arg3 hasMore:(char *)arg4 sortAscend:(BOOL)arg5;
-- (id)GetMsgListWithChatName:(id)arg1 fromCreateTime:(unsigned int)arg2 limitCnt:(NSInteger)arg3 hasMore:(char *)arg4 sortAscend:(BOOL)arg5;
+- (BOOL)HasMsgInChat:(id)arg1;
+- (id)GetMsgListWithChatName:(id)arg1 fromCreateTime:(unsigned int)arg2 localId:(NSInteger)arg3 limitCnt:(NSInteger)arg4 hasMore:(char *)arg5 sortAscend:(BOOL)arg6;
+- (void)DelMsg:(id)arg1 msgList:(id)arg2 isDelAll:(BOOL)arg3 isManual:(BOOL)arg4;
 @end
 
 @interface MMServiceCenter : NSObject
@@ -81,9 +110,24 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @property(nonatomic, setter=SetNewMsgId:) long long newMsgId;
 @end
 
+@interface MMChatMessageViewController : NSViewController
+@property(retain, nonatomic) WCContactData *chatContact;
+@property(nonatomic) __weak NSTableView *messageTableView;
+- (void)scrollToMessage:(NSUInteger)arg1;
+- (BOOL)showLocatedMessage:(NSUInteger)arg1;
+- (BOOL)showLocatedMessage:(unsigned int)arg1 needHighLighted:(BOOL)arg2;
+- (void)onClickSession;
+- (void)reloadTableView;
+@end
+
+@interface MMChatDetailSplitViewController : NSObject
+@property(retain, nonatomic) MMChatMessageViewController *chatMessageViewController;
+@end
+
 @interface MMChatsViewController : NSViewController <NSTableViewDataSource, NSTableViewDelegate>
 @property(nonatomic) __weak NSTableView *tableView;
 @property(retain, nonatomic) MMBrandChatsViewController *brandChatsViewController;
+@property(retain, nonatomic) MMChatDetailSplitViewController *chatDetailSplitViewController;
 @end
 
 @interface WeChat : NSObject
@@ -96,6 +140,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 - (void)_clearAllUnreadMessages:(id)arg1;
 - (void)onAuthOK:(BOOL)arg1;
 - (void)checkForUpdatesInBackground;
+- (void)FFAddRecvFavZZ:(BOOL)arg1;
 @end
 
 @interface ContactStorage : NSObject
@@ -112,6 +157,15 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 }
 - (id)GetAllGroups;
 - (id)GetGroupMemberContact:(id)arg1;
+- (void)notifyModifyGroupContactsOnMainThread:(id)arg1;
+//- (id)GetGroupMemberListWithGroupContact:(id)arg1;
+- (id)GetGroupMemberListWithGroupContact:(id)arg1 limit:(unsigned int)arg2 filterSelf:(BOOL)arg3;
+@end
+
+@interface ChatRoomData : NSObject
+{
+    NSMutableDictionary *m_dicData;
+}
 @end
 
 @interface WCContactData : NSObject
@@ -124,14 +178,24 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @property(retain, nonatomic) NSString *m_nsHeadHDMd5;
 @property(retain, nonatomic) NSString *m_nsAliasName;
 @property(retain, nonatomic) NSString *avatarCacheKey;
+@property(readonly, nonatomic) unsigned long long groupMemberCount;
+@property(retain, nonatomic) ChatRoomData *m_chatRoomData;
 @property(nonatomic) BOOL m_isShowRedDot;
 - (BOOL)isBrandContact;
 - (BOOL)isSelf;
-- (id)getGroupDisplayName;
+- (id)innerGetGroupDisplayName;
+- (NSString *)groupChatDisplayNameInGroup:(id)arg1;
 - (id)getContactDisplayUsrName;
 - (BOOL)isGroupChat;
 - (BOOL)isMMChat;
 - (BOOL)isMMContact;
+- (BOOL)containsMember:(id)arg1;
+- (id)displayRegion;
+- (BOOL)isStickyFolder;
+@end
+
+@interface WCPayInfoItem : NSObject
+@property(retain, nonatomic) NSString *m_nsFeeDesc;
 @end
 
 @interface MessageData : NSObject
@@ -140,6 +204,10 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @property(retain, nonatomic) NSString *toUsrName;
 @property(retain, nonatomic) NSString *msgContent;
 @property(retain, nonatomic) NSString *msgPushContent;
+@property(retain, nonatomic) NSString *realChatUserName;
+@property(retain, nonatomic) WCPayInfoItem *m_oWCPayInfoItem; // @dynamic m_oWCPayInfoItem;
+@property(retain, nonatomic) NSString *m_nsAppName;
+@property(retain, nonatomic) NSString *m_nsSourceDisplayname;
 @property(nonatomic) int messageType;
 @property(nonatomic) int msgStatus;
 @property(nonatomic) int msgCreateTime;
@@ -179,7 +247,10 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 + (unsigned long long)getFreeDiskSpace;
 + (void)ReloadSessionForMsgSync;
 + (id)GetCurrentUserName;
++ (id)GetContactByUsrName:(id)arg1;
++ (BOOL)IsStickyChatsFolder:(id)arg1;
 @end
+
 @interface MMSessionInfoPackedInfo: NSObject
 @property(retain, nonatomic) WCContactData *m_contact;
 @property(retain, nonatomic) MessageData *m_msgData;
@@ -189,6 +260,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @property(nonatomic) BOOL m_bIsTop; // @synthesize m_bIsTop;
 @property(nonatomic) BOOL m_bShowUnReadAsRedDot;
 @property(nonatomic) BOOL m_isMentionedUnread; // @synthesize
+@property BOOL isInGroupBox; 
 @property(retain, nonatomic) NSString *m_nsUserName; // @synthesize m_nsUserName;
 @property(retain, nonatomic) MMSessionInfoPackedInfo *m_packedInfo;
 @property(nonatomic) unsigned int m_uUnReadCount; 
@@ -209,20 +281,22 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @end
 
 @interface MMSessionMgr : NSObject
-@property(retain, nonatomic) NSMutableArray *m_arrSession;
-- (id)GetSessionAtIndex:(unsigned long long)arg1;
+//@property(retain, nonatomic) NSMutableArray *m_arrSession;
+- (id)getSessionAtIndex:(unsigned long long)arg1;
 - (id)sessionInfoByUserName:(id)arg1;
-- (void)MuteSessionByUserName:(id)arg1;
+- (void)muteSessionByUserName:(id)arg1;
 - (void)onUnReadCountChange:(id)arg1;
 //- (void)TopSessionByUserName:(id)arg1;
-- (void)UnmuteSessionByUserName:(id)arg1;
-- (void)UntopSessionByUserName:(id)arg1;
-- (void)deleteSessionWithoutSyncToServerWithUserName:(id)arg1;
+- (void)unmuteSessionByUserName:(id)arg1;
+- (void)untopSessionByUserName:(id)arg1;
 - (void)changeSessionUnreadCountWithUserName:(id)arg1 to:(unsigned int)arg2;
 - (void)removeSessionOfUser:(id)arg1 isDelMsg:(BOOL)arg2;
 - (void)sortSessions;
 - (void)FFDataSvrMgrSvrFavZZ;
 - (id)getContact:(id)arg1;
+- (id)getSessionContact:(id)arg1;
+- (void)onModifyContacts:(id)arg1;
+- (NSMutableArray *)getAllSessions;
 @end
 
 @interface LogoutCGI : NSTableCellView
@@ -233,11 +307,6 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @interface MMNotificationService : NSObject
 - (id)getNotificationContentWithMsgData:(id)arg1;
 - (void)userNotificationCenter:(id)arg1 didActivateNotification:(id)arg2;
-@end
-
-@interface MMChatMessageViewController : NSViewController
-@property(retain, nonatomic) WCContactData *chatContact;
-- (void)onClickSession;
 @end
 
 @interface MMMessageTableItem : NSObject
@@ -256,9 +325,16 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @property(retain, nonatomic) MMMessageTableItem *messageTableItem;
 @end
 
+@interface MMSystemMessageCellView: NSObject
+@property(nonatomic) id delegate; 
+@property(retain, nonatomic) MMMessageTableItem *messageTableItem;
+@property(retain, nonatomic) NSTextView *msgTextView;
+- (void)populateWithMessage:(id)arg1;
+@end
 @interface EmoticonMgr : NSObject
 @property(retain, nonatomic) MessageData *message;
 - (id)getEmotionDataWithMD5:(id)arg1;
+- (id)getEmotionImgWithMD5:(id)arg1;
 - (void)addFavEmoticon:(id)arg1;
 - (void)addEmoticonToUploadQueueWithMD5:(id)arg1;
 - (void)setAppStickerToastViewDelegate:(id)arg1;
@@ -377,6 +453,8 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 - (void)startGetA8KeyWithURL:(id)arg1;
 - (BOOL)openURLWithDefault:(id)arg1;
 + (BOOL)containsHTTPString:(id)arg1;
+- (void)openURLWithDefault:(id)arg1 useA8Key:(BOOL)arg2;
+- (BOOL)preHandleUrlStr:(id)arg1 withMessage:(id)arg2;
 @end
 
 @interface UserDefaultsService : NSObject
@@ -389,7 +467,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @end
 
 @interface MMCDNDownloadMgr : NSObject
-- (BOOL)downloadImageWithMessage:(id)arg1;
+- (BOOL)downloadImageWithMessage:(id)arg1 disableHevc:(BOOL)arg2 downloadType:(unsigned long long)arg3;
 @end
 
 @interface MMMessageVideoService : NSObject
@@ -399,6 +477,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @interface MMVoiceMessagePlayer : NSObject
 + (id)defaultPlayer;
 - (void)playWithVoiceMessage:(id)arg1 isUnplayedBeforePlay:(BOOL)arg2;
+- (void)playVoiceWithMessage:(id)arg1 isUnplayedBeforePlay:(BOOL)arg2;
 - (void)stop;
 @end
 
@@ -424,6 +503,7 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @interface MMExtension : NSObject
 - (BOOL)registerExtension:(id)arg1;
 - (void)unregisterExtension:(id)arg1;
+- (id)getExtensionListForSelector:(SEL)arg1;
 @end
 
 @interface EmoticonMsgInfo : NSObject
@@ -435,6 +515,10 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 @optional
 - (void)emoticonDownloadFailed:(EmoticonMsgInfo *)arg1;
 - (void)emoticonDownloadFinished:(EmoticonMsgInfo *)arg1;
+@end
+
+@protocol IGroupMgrExt <NSObject>
+
 @end
 
 @interface MMChatMangerSearchReportMgr : NSObject
@@ -452,3 +536,39 @@ FOUNDATION_EXPORT const unsigned char WeChatPluginVersionString[];
 + (id)sharedInstance;
 - (id)dictionaryWithString:(id)arg1;
 @end
+
+@interface MMEmoticonData : NSObject
+@property(retain, nonatomic) NSString *md5; // @synthesize md5=_md5;
+@end
+
+@interface MMStickerPickerCell : NSView <NSMenuDelegate>
+@property(retain, nonatomic) MMEmoticonData *emoticonData; // @synthesize emoticonData=_emoticonData;
+@property(nonatomic) __weak NSScrollView *collectionView; 
+@end
+
+@interface MMStickerCollectionViewController : NSViewController
+@property(nonatomic) __weak id delegate;
+@end
+
+@interface MMStickerPicker : NSViewController
+- (void)hide;
+@end
+
+@interface MMVoiceTranslateMgr : NSObject
+- (void)doTranslate:(id)arg1 isAuto:(BOOL)arg2;
+- (void)updateTranscribeVoiceMessage:(id)arg1 voiceText:(id)arg2 voiceToTextStatus:(unsigned int)arg3;
+@end
+
+@interface MMAppBrandMessageCellView : NSObject
++ (id)makeAppBrandTableItemWithItem:(id)arg1;
+@end
+
+@interface MMUnsupportedCellView : NSObject
++ (id)makeUnsupportedTableItemWithItem:(id)arg1;
+@end
+
+@interface MMPayTransferCellView : NSObject
++ (id)makePayTransferTableItemWithItem:(id)arg1;
+@end
+
+

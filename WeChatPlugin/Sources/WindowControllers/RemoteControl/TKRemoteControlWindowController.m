@@ -61,7 +61,7 @@
 }
 
 - (void)setup {
-    self.window.contentView.layer.backgroundColor = [NSColor whiteColor].CGColor;
+    self.window.contentView.layer.backgroundColor = [NSColor windowBackgroundColor].CGColor;
     [self.window.contentView.layer setNeedsDisplay];
     self.remoteControlModels = [[TKWeChatPluginConfig sharedConfig] remoteControlModels][0];
 }

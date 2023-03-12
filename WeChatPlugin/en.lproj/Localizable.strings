@@ -22,7 +22,7 @@
 "assistant.menu.enableAlfred" = "Enable Alfred";
 "assistant.menu.updateAssistant" = "Update Assistant…";
 "assistant.menu.aboutAssistant" = "About Assistant";
-
+"assistant.menu.memberExitMonitoring" = "Member Exit Monitoring";
 //  Prevent Revoke
 "assistant.revokeType.emoji" = "[Sticker]";
 "assistant.revokeType.image" = "[Photo]";
@@ -127,7 +127,7 @@
 //  Alfred
 "assistant.search.member" = "Member: ";
 "assistant.search.friend" = "[Friend]";
-"assistant.search.group" = "[Group] ";
+"assistant.search.group" = "[Group]";
 "assistant.search.official" = "[Official]";
 "assistant.search.chatlog" = "this is chat log👇🏻";
 "assistant.search.message.unread" = "unread";

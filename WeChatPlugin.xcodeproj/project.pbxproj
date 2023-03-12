@@ -22,6 +22,10 @@
 		521D75F92080E3670093C820 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 521D75FB2080E3670093C820 /* Localizable.strings */; };
 		52206B6A20836A230010C232 /* NSMenu+Action.h in Headers */ = {isa = PBXBuildFile; fileRef = 52206B6820836A230010C232 /* NSMenu+Action.h */; };
 		52206B6B20836A230010C232 /* NSMenu+Action.m in Sources */ = {isa = PBXBuildFile; fileRef = 52206B6920836A230010C232 /* NSMenu+Action.m */; };
+		52232710223922610016D3F7 /* TKEmoticonManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 5223270E223922610016D3F7 /* TKEmoticonManager.h */; };
+		52232711223922610016D3F7 /* TKEmoticonManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5223270F223922610016D3F7 /* TKEmoticonManager.m */; };
+		522327142239258D0016D3F7 /* MMStickerPickerCell+hook.h in Headers */ = {isa = PBXBuildFile; fileRef = 522327122239258D0016D3F7 /* MMStickerPickerCell+hook.h */; };
+		522327152239258D0016D3F7 /* MMStickerPickerCell+hook.m in Sources */ = {isa = PBXBuildFile; fileRef = 522327132239258D0016D3F7 /* MMStickerPickerCell+hook.m */; };
 		522547CF1F4AE5A700226A2A /* NSView+Action.h in Headers */ = {isa = PBXBuildFile; fileRef = 522547CD1F4AE5A700226A2A /* NSView+Action.h */; };
 		522547D01F4AE5A700226A2A /* NSView+Action.m in Sources */ = {isa = PBXBuildFile; fileRef = 522547CE1F4AE5A700226A2A /* NSView+Action.m */; };
 		522547DE1F4C312A00226A2A /* TKAutoReplyWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 522547D71F4C312A00226A2A /* TKAutoReplyWindowController.h */; };
@@ -108,6 +112,10 @@
 		521D75FC2080E3780093C820 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		52206B6820836A230010C232 /* NSMenu+Action.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMenu+Action.h"; sourceTree = "<group>"; };
 		52206B6920836A230010C232 /* NSMenu+Action.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMenu+Action.m"; sourceTree = "<group>"; };
+		5223270E223922610016D3F7 /* TKEmoticonManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKEmoticonManager.h; sourceTree = "<group>"; };
+		5223270F223922610016D3F7 /* TKEmoticonManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TKEmoticonManager.m; sourceTree = "<group>"; };
+		522327122239258D0016D3F7 /* MMStickerPickerCell+hook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MMStickerPickerCell+hook.h"; sourceTree = "<group>"; };
+		522327132239258D0016D3F7 /* MMStickerPickerCell+hook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MMStickerPickerCell+hook.m"; sourceTree = "<group>"; };
 		522547CD1F4AE5A700226A2A /* NSView+Action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSView+Action.h"; sourceTree = "<group>"; };
 		522547CE1F4AE5A700226A2A /* NSView+Action.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSView+Action.m"; sourceTree = "<group>"; };
 		522547D71F4C312A00226A2A /* TKAutoReplyWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKAutoReplyWindowController.h; sourceTree = "<group>"; };
@@ -121,6 +129,7 @@
 		5228EAB91F70B59500D808CF /* NSButton+Action.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSButton+Action.m"; sourceTree = "<group>"; };
 		523848A91F70E73500771BA3 /* NSTextField+Action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTextField+Action.h"; sourceTree = "<group>"; };
 		523848AA1F70E73500771BA3 /* NSTextField+Action.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTextField+Action.m"; sourceTree = "<group>"; };
+		5239B393241CAFDD00A471B4 /* TKConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TKConstants.h; sourceTree = "<group>"; };
 		52475C301F6BA43800760E3E /* TKIgnoreSessonModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TKIgnoreSessonModel.h; sourceTree = "<group>"; };
 		52475C311F6BA43800760E3E /* TKIgnoreSessonModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TKIgnoreSessonModel.m; sourceTree = "<group>"; };
 		526A26702081AC03005B3E3C /* DefineConstant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefineConstant.h; sourceTree = "<group>"; };
@@ -376,6 +385,7 @@
 			children = (
 				52B5CEF91F3B4631000D9DD9 /* TKWeChatPluginConfig.h */,
 				52B5CEFA1F3B4631000D9DD9 /* TKWeChatPluginConfig.m */,
+				5239B393241CAFDD00A471B4 /* TKConstants.h */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -413,6 +423,8 @@
 				52B5CEF01F3B4623000D9DD9 /* TKRemoteControlCommands.plist */,
 				529950602113DAF10008BEE3 /* TKCacheManager.h */,
 				529950612113DAF10008BEE3 /* TKCacheManager.m */,
+				5223270E223922610016D3F7 /* TKEmoticonManager.h */,
+				5223270F223922610016D3F7 /* TKEmoticonManager.m */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -476,6 +488,8 @@
 				52CD4C9620A088590061A5D6 /* MMChatsTableCellView+hook.m */,
 				52CD4C9320A088590061A5D6 /* MMStickerMessageCellView+hook.h */,
 				52CD4C9420A088590061A5D6 /* MMStickerMessageCellView+hook.m */,
+				522327122239258D0016D3F7 /* MMStickerPickerCell+hook.h */,
+				522327132239258D0016D3F7 /* MMStickerPickerCell+hook.m */,
 			);
 			path = Hook;
 			sourceTree = "<group>";
@@ -487,6 +501,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				522327142239258D0016D3F7 /* MMStickerPickerCell+hook.h in Headers */,
 				522547DE1F4C312A00226A2A /* TKAutoReplyWindowController.h in Headers */,
 				5228EABA1F70B59500D808CF /* NSButton+Action.h in Headers */,
 				526F4D7D1F4AAADA00E46004 /* ColorConstant.h in Headers */,
@@ -514,6 +529,7 @@
 				520F2009205E1DF900A36B1E /* TKWebServerManager.h in Headers */,
 				520AE6F7208F632700BADE47 /* TKRemoteControlManager.h in Headers */,
 				522547CF1F4AE5A700226A2A /* NSView+Action.h in Headers */,
+				52232710223922610016D3F7 /* TKEmoticonManager.h in Headers */,
 				520AE6F0208E231F00BADE47 /* NotifyConstant.h in Headers */,
 				529950622113DAF10008BEE3 /* TKCacheManager.h in Headers */,
 				52CD4C5E209CA0510061A5D6 /* TKAboutWindowController.h in Headers */,
@@ -571,6 +587,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				"zh-Hans",
 				"zh-Hant",
@@ -631,7 +648,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\napp_name=\"WeChat\"\nframework_name=\"WeChatPlugin\"\napp_bundle_path=\"/Applications/${app_name}.app/Contents/MacOS\"\napp_executable_path=\"${app_bundle_path}/${app_name}\"\napp_executable_backup_path=\"${app_executable_path}_backup\"\nframework_path=\"${app_bundle_path}/${framework_name}.framework\"\n# 备份WeChat原始可执行文件\nif [ ! -f \"$app_executable_backup_path\" ]\nthen\ncp \"$app_executable_path\" \"$app_executable_backup_path\"\nfi\n\nrm -rf \"./Other/Products/Debug/${framework_name}.framework\"\ncp -r \"${BUILT_PRODUCTS_DIR}/${framework_name}.framework\" \"./Other/Products/Debug/${framework_name}.framework\"\ncp -r \"${BUILT_PRODUCTS_DIR}/${framework_name}.framework\" \"./Other/微信小助手.app/Contents/Data/${framework_name}.framework\"\n\ncp -r \"${BUILT_PRODUCTS_DIR}/${framework_name}.framework\" ${app_bundle_path}\n./Other/insert_dylib --all-yes \"${framework_path}/${framework_name}\" \"$app_executable_backup_path\" \"$app_executable_path\"\n";
+			shellScript = "#!/bin/bash\napp_name=\"WeChat\"\nframework_name=\"WeChatPlugin\"\napp_bundle_path=\"/Applications/${app_name}.app/Contents/MacOS\"\napp_executable_path=\"${app_bundle_path}/${app_name}\"\napp_executable_backup_path=\"${app_executable_path}_backup\"\nframework_path=\"${app_bundle_path}/${framework_name}.framework\"\n# 备份WeChat原始可执行文件\nif [ ! -f \"$app_executable_backup_path\" ]\nthen\ncp \"$app_executable_path\" \"$app_executable_backup_path\"\nfi\n\nrm -rf \"./Other/Products/Debug/${framework_name}.framework\"\ncp -r \"${BUILT_PRODUCTS_DIR}/${framework_name}.framework\" \"./Other/Products/Debug/${framework_name}.framework\"\n\ncp -r \"${BUILT_PRODUCTS_DIR}/${framework_name}.framework\" ${app_bundle_path}\n./Other/insert_dylib --all-yes \"${framework_path}/${framework_name}\" \"$app_executable_backup_path\" \"$app_executable_path\"\n";
 		};
 		A23204925F0A37A0EBE14B92 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -683,12 +700,14 @@
 				526F4D841F4AAC1900E46004 /* TKAutoReplyModel.m in Sources */,
 				522547DF1F4C312A00226A2A /* TKAutoReplyWindowController.m in Sources */,
 				5226D5CB2040FC3E0013C048 /* TKVersionManager.m in Sources */,
+				522327152239258D0016D3F7 /* MMStickerPickerCell+hook.m in Sources */,
 				52CD4C7E209ED2300061A5D6 /* TKAutoReplyContentView.m in Sources */,
 				520AE6E9208E1DA300BADE47 /* TKMessageManager.m in Sources */,
 				52B5CF191F3B4631000D9DD9 /* TKRemoteControlModel.m in Sources */,
 				5228EABB1F70B59500D808CF /* NSButton+Action.m in Sources */,
 				52CD4C59209C5CA10061A5D6 /* NSWindowController+Action.m in Sources */,
 				52CD4C82209ED23B0061A5D6 /* TKRemoteControlCell.m in Sources */,
+				52232711223922610016D3F7 /* TKEmoticonManager.m in Sources */,
 				528B4FB41EA7386D00BC6A89 /* main.mm in Sources */,
 				52CD4C9A20A0885A0061A5D6 /* MMStickerMessageCellView+hook.m in Sources */,
 				52475C331F6BA43800760E3E /* TKIgnoreSessonModel.m in Sources */,
@@ -868,6 +887,8 @@
 				INFOPLIST_FILE = WeChatPlugin/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MARKETING_VERSION = 1.7.5;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = tk.WeChatPlugin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -890,6 +911,8 @@
 				INFOPLIST_FILE = WeChatPlugin/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MARKETING_VERSION = 1.7.5;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = tk.WeChatPlugin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

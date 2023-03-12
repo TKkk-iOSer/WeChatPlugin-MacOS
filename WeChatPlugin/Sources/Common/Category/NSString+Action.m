@@ -19,10 +19,31 @@
 }
 
 - (NSString *)substringFromString:(NSString *)fromStr {
+    if (!fromStr || [fromStr isKindOfClass:NSNull.class]) {
+        return self;
+    }
     NSRange range = [self rangeOfString:fromStr];
     if (range.length > 0) {
         return [self substringFromIndex:range.location + range.length];
     }
     return nil;
+}
+
+- (NSString *)substringToString:(NSString *)fromStr {
+    if (!fromStr || [fromStr isKindOfClass:NSNull.class]) {
+        return self;
+    }
+   NSRange range = [self rangeOfString:fromStr];
+    if (range.length > 0) {
+        return [self substringToIndex:range.location];
+    }
+    return nil;
+}
+
+- (NSString *)substringFromString:(NSString *)fromStr toString:(NSString *)toString {
+    NSString *subString = [self substringFromString:fromStr];
+    subString = [subString substringToString:toString];
+
+    return subString;
 }
 @end

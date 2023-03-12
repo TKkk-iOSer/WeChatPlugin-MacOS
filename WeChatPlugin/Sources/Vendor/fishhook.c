@@ -21,15 +21,20 @@
 // OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#import "fishhook.h"
+#include "fishhook.h"
 
-#import <dlfcn.h>
-#import <stdlib.h>
-#import <string.h>
-#import <sys/types.h>
-#import <mach-o/dyld.h>
-#import <mach-o/loader.h>
-#import <mach-o/nlist.h>
+#include <dlfcn.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/mman.h>
+#include <sys/types.h>
+#include <mach/mach.h>
+#include <mach/vm_map.h>
+#include <mach/vm_region.h>
+#include <mach-o/dyld.h>
+#include <mach-o/loader.h>
+#include <mach-o/nlist.h>
 
 #ifdef __LP64__
 typedef struct mach_header_64 mach_header_t;
@@ -76,6 +81,36 @@ static int prepend_rebindings(struct rebindings_entry **rebindings_head,
   return 0;
 }
 
+#if 0
+static int get_protection(void *addr, vm_prot_t *prot, vm_prot_t *max_prot) {
+  mach_port_t task = mach_task_self();
+  vm_size_t size = 0;
+  vm_address_t address = (vm_address_t)addr;
+  memory_object_name_t object;
+#ifdef __LP64__
+  mach_msg_type_number_t count = VM_REGION_BASIC_INFO_COUNT_64;
+  vm_region_basic_info_data_64_t info;
+  kern_return_t info_ret = vm_region_64(
+      task, &address, &size, VM_REGION_BASIC_INFO_64, (vm_region_info_64_t)&info, &count, &object);
+#else
+  mach_msg_type_number_t count = VM_REGION_BASIC_INFO_COUNT;
+  vm_region_basic_info_data_t info;
+  kern_return_t info_ret = vm_region(task, &address, &size, VM_REGION_BASIC_INFO, (vm_region_info_t)&info, &count, &object);
+#endif
+  if (info_ret == KERN_SUCCESS) {
+    if (prot != NULL)
+      *prot = info.protection;
+
+    if (max_prot != NULL)
+      *max_prot = info.max_protection;
+
+    return 0;
+  }
+
+  return -1;
+}
+#endif
+
 static void perform_rebinding_with_section(struct rebindings_entry *rebindings,
                                            section_t *section,
                                            intptr_t slide,
@@ -84,6 +119,7 @@ static void perform_rebinding_with_section(struct rebindings_entry *rebindings,
                                            uint32_t *indirect_symtab) {
   uint32_t *indirect_symbol_indices = indirect_symtab + section->reserved1;
   void **indirect_symbol_bindings = (void **)((uintptr_t)slide + section->addr);
+
   for (uint i = 0; i < section->size / sizeof(void *); i++) {
     uint32_t symtab_index = indirect_symbol_indices[i];
     if (symtab_index == INDIRECT_SYMBOL_ABS || symtab_index == INDIRECT_SYMBOL_LOCAL ||
@@ -92,18 +128,33 @@ static void perform_rebinding_with_section(struct rebindings_entry *rebindings,
     }
     uint32_t strtab_offset = symtab[symtab_index].n_un.n_strx;
     char *symbol_name = strtab + strtab_offset;
-    if (strnlen(symbol_name, 2) < 2) {
-      continue;
-    }
+    bool symbol_name_longer_than_1 = symbol_name[0] && symbol_name[1];
     struct rebindings_entry *cur = rebindings;
     while (cur) {
       for (uint j = 0; j < cur->rebindings_nel; j++) {
-        if (strcmp(&symbol_name[1], cur->rebindings[j].name) == 0) {
-          if (cur->rebindings[j].replaced != NULL &&
-              indirect_symbol_bindings[i] != cur->rebindings[j].replacement) {
+        if (symbol_name_longer_than_1 && strcmp(&symbol_name[1], cur->rebindings[j].name) == 0) {
+          kern_return_t err;
+
+          if (cur->rebindings[j].replaced != NULL && indirect_symbol_bindings[i] != cur->rebindings[j].replacement)
             *(cur->rebindings[j].replaced) = indirect_symbol_bindings[i];
+
+          /**
+           * 1. Moved the vm protection modifying codes to here to reduce the
+           *    changing scope.
+           * 2. Adding VM_PROT_WRITE mode unconditionally because vm_region
+           *    API on some iOS/Mac reports mismatch vm protection attributes.
+           * -- Lianfu Hao Jun 16th, 2021
+           **/
+          err = vm_protect (mach_task_self (), (uintptr_t)indirect_symbol_bindings, section->size, 0, VM_PROT_READ | VM_PROT_WRITE | VM_PROT_COPY);
+          if (err == KERN_SUCCESS) {
+            /**
+             * Once we failed to change the vm protection, we
+             * MUST NOT continue the following write actions!
+             * iOS 15 has corrected the const segments prot.
+             * -- Lionfore Hao Jun 11th, 2021
+             **/
+            indirect_symbol_bindings[i] = cur->rebindings[j].replacement;
           }
-          indirect_symbol_bindings[i] = cur->rebindings[j].replacement;
           goto symbol_loop;
         }
       }
@@ -187,6 +238,9 @@ int rebind_symbols_image(void *header,
     struct rebindings_entry *rebindings_head = NULL;
     int retval = prepend_rebindings(&rebindings_head, rebindings, rebindings_nel);
     rebind_symbols_for_image(rebindings_head, (const struct mach_header *) header, slide);
+    if (rebindings_head) {
+      free(rebindings_head->rebindings);
+    }
     free(rebindings_head);
     return retval;
 }

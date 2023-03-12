@@ -1,53 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Bucket
+   uuid = "6CFB7591-92E2-4372-82DC-C754B29D6A07"
    type = "0"
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
          <BreakpointContent
+            uuid = "52973E54-9201-4438-8ACF-46EC78959C83"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "WeChatPlugin/Sources/Managers/TKCacheManager.m"
-            timestampString = "571667301.3898031"
+            scope = "1"
+            stopOnStyle = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7E5CF296-3A04-4D2B-A782-9F9A9E2F8ED6"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WeChatPlugin/Sources/Hook/WeChat+hook.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "132"
-            endingLineNumber = "132"
-            landmarkName = "-cacheAvatarWithContact:"
+            startingLineNumber = "547"
+            endingLineNumber = "547"
+            landmarkName = "-replyWithMsg:model:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "549C88F9-7D14-43B2-94E8-335E3FE0AF3B"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "WeChatPlugin/Sources/Managers/TKCacheManager.m"
-            timestampString = "571667301.390004"
+            filePath = "WeChatPlugin/Sources/Hook/WeChat+hook.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "131"
-            endingLineNumber = "131"
-            landmarkName = "-cacheAvatarWithContact:"
+            startingLineNumber = "524"
+            endingLineNumber = "524"
+            landmarkName = "-replyWithMsg:model:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "EBEE3FF7-5115-49F5-B1F3-212D2203ABBA"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "WeChatPlugin/Sources/Managers/TKCacheManager.m"
-            timestampString = "571667301.390099"
+            filePath = "WeChatPlugin/Sources/Hook/WeChat+hook.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "136"
-            endingLineNumber = "136"
-            landmarkName = "-cacheAvatarWithContact:"
+            startingLineNumber = "209"
+            endingLineNumber = "209"
+            landmarkName = "-hook_OnSyncBatchAddMsgs:isFirstSync:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

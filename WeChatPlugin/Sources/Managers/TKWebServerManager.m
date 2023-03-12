@@ -18,12 +18,12 @@
 
 @property (nonatomic, strong) GCDWebServer *webServer;
 @property (nonatomic, strong) MMContactSearchLogic *searchLogic;
-
+@property (nonatomic, strong) dispatch_semaphore_t semaphore;
 @end
 
 @implementation TKWebServerManager
 
-static int port=52700;
+static int port=57270;
 
 + (instancetype)shareManager {
     static TKWebServerManager *manager = nil;
@@ -38,6 +38,7 @@ static int port=52700;
     self = [super init];
     if (self) {
         self.searchLogic = [[objc_getClass("MMContactSearchLogic") alloc] init];
+        self.semaphore = dispatch_semaphore_create(0);
     }
     return self;
 }
@@ -82,45 +83,35 @@ static int port=52700;
         //        返回最近聊天列表
         if ([keyword isEqualToString:@""]) {
             MMSessionMgr *sessionMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMSessionMgr")];
-            NSMutableArray <MMSessionInfo *> *arrSession = sessionMgr.m_arrSession;
+            NSMutableArray <MMSessionInfo *> *arrSession = [sessionMgr getAllSessions];
             [arrSession enumerateObjectsUsingBlock:^(MMSessionInfo * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 if ([obj.m_packedInfo.m_contact.m_nsUsrName isEqualToString:@"brandsessionholder"]) {
                     return ;
+                }
+                if (obj.isInGroupBox) {
+                    return;
                 }
                 [sessionList addObject:[weakSelf dictFromSessionInfo:obj]];
             }];
             return [GCDWebServerDataResponse responseWithJSONObject:sessionList];
         }
         
-        //        返回搜索结果
-        __block BOOL hasResult = NO;
-        
+        __block NSInteger count = 2;
         MMContactSearchLogic *logic = weakSelf.searchLogic;
         [logic doSearchWithKeyword:keyword searchScene:31 resultIsShownBlock:nil completion:^ {
-            if ([logic respondsToSelector:@selector(reloadSearchResultDataWithKeyword:completionBlock:)]) {
-                [logic reloadSearchResultDataWithKeyword:keyword completionBlock:^ {
-                    hasResult = YES;
-                }];
-            } else if ([logic respondsToSelector:@selector(reloadSearchResultDataWithKeyword:resultContainer:completionBlock:)]) {
+            if ([logic respondsToSelector:@selector(reloadSearchResultDataWithKeyword:resultContainer:completionBlock:)]) {
                 [logic reloadSearchResultDataWithKeyword:keyword resultContainer:nil completionBlock:^ {
-                    if (logic.searchResultContainer.logicSearchResultFlag == 7) {
-                        hasResult = YES;
+                    NSLog(@"TKKK ---- %d", logic.searchResultContainer.logicSearchResultFlag);
+                    if (logic.searchResultContainer.logicSearchResultFlag == 55) {
+                        count -= 1;
+                        if (count <= 0) {
+                            dispatch_semaphore_signal(weakSelf.semaphore);
+                        }
                     }
-                }];
-            } else if ([logic respondsToSelector:@selector(reloadSearchResultDataWithCompletionBlock:)]) {
-                [logic reloadSearchResultDataWithCompletionBlock:^ {
-                    hasResult = YES;
                 }];
             }
         }];
-        
-        if ([logic respondsToSelector:@selector(isContactSearched)]) {
-            while (!(hasResult && logic.isContactSearched && logic.isGroupContactSearched && logic.isBrandContactSearched)) {};
-        } else if ([logic respondsToSelector:@selector(clearAllResults)]) {
-             while (!(hasResult && [[logic valueForKey:@"_logicSearchResultFlag"] longLongValue])) {};
-        } else {
-             while (!(hasResult)) {};
-        }
+        dispatch_semaphore_wait(weakSelf.semaphore, DISPATCH_TIME_FOREVER);
         
         MMChatMangerSearchReportMgr *reportMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMChatMangerSearchReportMgr")];
         
@@ -169,7 +160,7 @@ static int port=52700;
             }];
             
             MMSessionMgr *sessionMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMSessionMgr")];
-            WCContactData *toUserContact = [sessionMgr getContact:userId];
+            WCContactData *toUserContact = [sessionMgr getSessionContact:userId];
             NSString *wechatId = [toUserContact getContactDisplayUsrName];
             NSString *title = [weakSelf getUserNameWithContactData:toUserContact showOriginName:YES];
             NSString *imgPath = [[TKCacheManager shareManager] cacheAvatarWithContact:toUserContact];
@@ -203,12 +194,14 @@ static int port=52700;
         
         if (requestBody && requestBody[@"userId"]) {
             dispatch_async(dispatch_get_main_queue(), ^{
+                NSString *userId = requestBody[@"userId"];
+                NSInteger srvId = [requestBody[@"srvId"] integerValue];
                 MMSessionMgr *sessionMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMSessionMgr")];
-                WCContactData *selectContact = [sessionMgr getContact:requestBody[@"userId"]];
+                WCContactData *selectContact = [sessionMgr getSessionContact:userId];
                 
                 WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
                 if ([selectContact isBrandContact]) {
-                    WCContactData *brandsessionholder  = [sessionMgr getContact:@"brandsessionholder"];
+                    WCContactData *brandsessionholder  = [sessionMgr getSessionContact:@"brandsessionholder"];
                     if (brandsessionholder) {
                         [wechat startANewChatWithContact:brandsessionholder];
                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -218,6 +211,17 @@ static int port=52700;
                     }
                 } else {
                     [wechat startANewChatWithContact:selectContact];
+                    if (srvId > 0) {
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            FFProcessReqsvrZZ *msgService = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("FFProcessReqsvrZZ")];
+                            MessageData *msgData = [msgService GetMsgData:userId svrId:srvId];
+                            if (msgData) {
+                                MMChatMessageViewController *vc = wechat.chatsViewController.chatDetailSplitViewController.chatMessageViewController;
+                                [vc scrollToMessage:msgData];
+                            }
+                            
+                        });
+                    }
                 }
                 [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
             });
@@ -243,11 +247,11 @@ static int port=52700;
         if (requestBody && userId.length > 0) {
             NSString *content = requestBody[@"content"];
             
-            MessageService *messageService = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
+            FFProcessReqsvrZZ *messageService = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("FFProcessReqsvrZZ")];
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (content.length > 0) {
                     NSString *currentUserName = [objc_getClass("CUtility") GetCurrentUserName];
-                    [messageService SendTextMessage:currentUserName
+                    [messageService FFProcessTReqZZ:currentUserName
                                           toUsrName:requestBody[@"userId"]
                                             msgText:requestBody[@"content"]
                                          atUserList:nil];
@@ -298,6 +302,10 @@ static int port=52700;
             [subTitleArray addObject:contactName];
         }];
     }
+    NSString *title = [NSString stringWithFormat:@"%@%@", TKLocalizedString(@"assistant.search.group"), groupContact.innerGetGroupDisplayName];
+    if ([groupContact isGroupChat]) {
+        title = [title stringByAppendingFormat:@" (%@)",@(groupContact.groupMemberCount)];
+    }
     NSString *subTitle = @"";
     if (subTitleArray.count > 0) {
         subTitle = [NSString stringWithFormat:@"%@%@",TKLocalizedString(@"assistant.search.member"),[subTitleArray componentsJoinedByString:@", "]];
@@ -305,7 +313,7 @@ static int port=52700;
     NSString *imgPath = [[TKCacheManager shareManager] cacheAvatarWithContact:groupContact];
     NSString *wechatId = [groupContact getContactDisplayUsrName];
     
-    return @{@"title": [NSString stringWithFormat:@"%@%@", TKLocalizedString(@"assistant.search.group"), groupContact.getGroupDisplayName],
+    return @{@"title": title,
              @"subTitle": subTitle,
              @"icon": imgPath,
              @"userId": groupContact.m_nsUsrName,
@@ -381,6 +389,9 @@ static int port=52700;
     MessageData *msgData = sessionInfo.m_packedInfo.m_msgData;
     
     NSString *title = [self getUserNameWithContactData:contact showOriginName:YES];
+    if ([contact isGroupChat]) {
+        title = [title stringByAppendingFormat:@" (%@)",@(contact.groupMemberCount)];
+    }
     NSString *msgContent = [[TKMessageManager shareManager] getMessageContentWithData:msgData];
     NSString *imgPath = [[TKCacheManager shareManager] cacheAvatarWithContact:contact];
     
@@ -390,6 +401,7 @@ static int port=52700;
              @"icon": imgPath,
              @"userId": contact.m_nsUsrName,
              @"copyText": wechatId ?: @"",
+             @"unReadCount": @(sessionInfo.m_bShowUnReadAsRedDot ? 0 : sessionInfo.m_uUnReadCount),
              @"url": contact.m_nsHeadHDImgUrl ?: @""
              };
 }
@@ -410,11 +422,11 @@ static int port=52700;
         return [self dictWithErrorMsg:@"消息不存在"];
     }
     MMSessionMgr *sessionMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMSessionMgr")];
-    WCContactData *msgContact = [sessionMgr getContact:msgData.fromUsrName];
+    WCContactData *msgContact = [sessionMgr getSessionContact:msgData.fromUsrName];
     NSString *title = [[TKMessageManager shareManager] getMessageContentWithData:msgData];
     
     NSString *url;
-    long long voiceMessSvrId = 0;
+    long long svrId = msgData.mesSvrID;
     if (msgData.messageType == 1) {
         //        文本消息，如果有链接，传到 copyText 复制
         NSRange range = [objc_getClass("MMLinkInfo") rangeOfUrlInString:title withRange:NSMakeRange(0, title.length)];
@@ -436,7 +448,7 @@ static int port=52700;
         NSFileManager *manager = [NSFileManager defaultManager];
         if (![manager fileExistsAtPath:url]) {
             MMCDNDownloadMgr *imgMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMCDNDownloadMgr")];
-            [imgMgr downloadImageWithMessage:msgData];
+            [imgMgr downloadImageWithMessage:msgData disableHevc:NO downloadType:1];
         }
     } else if (msgData.isCustomEmojiMsg || msgData.isEmojiAppMsg) {
         if ([[TKCacheManager shareManager] fileExistsWithName:msgData.m_nsEmoticonMD5]) {
@@ -447,13 +459,12 @@ static int port=52700;
         //        }
         
     } else if(msgData.isVoiceMsg) {
-        voiceMessSvrId = msgData.mesSvrID;
         if (msgData.msgVoiceText.length > 0) {
             title = [title stringByAppendingString:msgData.msgVoiceText];
         }
-        if (msgData.IsUnPlayed) {
-            title = [NSString stringWithFormat:@"%@(%@)",title,TKLocalizedString(@"assistant.search.message.unread")];
-        }
+//        if (msgData.IsUnPlayed) {
+//            title = [NSString stringWithFormat:@"%@(%@)",title,TKLocalizedString(@"assistant.search.message.unread")];
+//        }
     } else if (msgData.messageType == 49) {
         NSString *msgContact = [msgData summaryString:NO];
         if (!msgData.isAppBrandMsg && ![msgContact isEqualToString:WXLocalizedString(@"Message_type_unsupport")]) {
@@ -484,7 +495,7 @@ static int port=52700;
              @"userId": msgContact.m_nsUsrName,
              @"url": url ?: @"",
              @"copyText": url ?: title,
-             @"srvId": @(voiceMessSvrId)
+             @"srvId": @(svrId)
              };
 }
 
@@ -512,7 +523,7 @@ static int port=52700;
     
     NSString *userName;
     if (contact.isGroupChat) {
-        userName = [NSString stringWithFormat:@"%@%@", TKLocalizedString(@"assistant.search.group"), contact.getGroupDisplayName];
+        userName = [NSString stringWithFormat:@"%@%@", TKLocalizedString(@"assistant.search.group"), contact.innerGetGroupDisplayName];
     } else if ([contact respondsToSelector:@selector(isBrandContact)]){
         userName = contact.isBrandContact ? [NSString stringWithFormat:@"%@%@",TKLocalizedString(@"assistant.search.official"), contact.m_nsNickName] : contact.m_nsNickName;
         if(contact.m_nsRemark && ![contact.m_nsRemark isEqualToString:@""]) {

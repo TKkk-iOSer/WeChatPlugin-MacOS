@@ -22,6 +22,7 @@ static NSString * const kTKForbidCheckVersionKey = @"kTKForbidCheckVersionKey";
 static NSString * const kTKAlfredEnableKey = @"kTKAlfredEnableKey";
 static NSString * const kTKCheckUpdateWechatEnableKey = @"kTKCheckUpdateWechatEnableKey";
 static NSString * const kTKSystemBrowserEnableKey = @"kTKSystemBrowserEnableKey";
+static NSString * const kTKmemberExitMonitoringEnableKey = @"kTKmemberExitMonitoringEnableKey";
 static NSString * const kTKWeChatResourcesPath = @"/Applications/WeChat.app/Contents/MacOS/WeChatPlugin.framework/Resources/";
 static NSString * const kTKWeChatRemotePlistPath = @"https://raw.githubusercontent.com/TKkk-iOSer/WeChatPlugin-MacOS/master/Other/Products/Debug/WeChatPlugin.framework/Resources/Info.plist";
 
@@ -30,6 +31,7 @@ static NSString * const kTKWeChatRemotePlistPath = @"https://raw.githubuserconte
 @property (nonatomic, copy) NSString *remoteControlPlistFilePath;
 @property (nonatomic, copy) NSString *autoReplyPlistFilePath;
 @property (nonatomic, copy) NSString *ignoreSessionPlistFilePath;
+@property (nonatomic, copy) NSString *quitChatroomMemberPlistFilePath;
 
 @property (nonatomic, copy) NSDictionary *localInfoPlist;
 @property (nonatomic, copy) NSDictionary *romoteInfoPlist;
@@ -60,6 +62,7 @@ static NSString * const kTKWeChatRemotePlistPath = @"https://raw.githubuserconte
         _alfredEnable = [[NSUserDefaults standardUserDefaults] boolForKey:kTKAlfredEnableKey];
         _checkUpdateWechatEnable = [[NSUserDefaults standardUserDefaults] boolForKey:kTKCheckUpdateWechatEnableKey];
         _systemBrowserEnable = [[NSUserDefaults standardUserDefaults] boolForKey:kTKSystemBrowserEnableKey];
+        _memberExitMonitoringEnable = [[NSUserDefaults standardUserDefaults] boolForKey:kTKmemberExitMonitoringEnableKey];
     }
     return self;
 }
@@ -121,6 +124,12 @@ static NSString * const kTKWeChatRemotePlistPath = @"https://raw.githubuserconte
 - (void)setSystemBrowserEnable:(BOOL)systemBrowserEnable {
     _systemBrowserEnable = systemBrowserEnable;
     [[NSUserDefaults standardUserDefaults] setBool:_systemBrowserEnable forKey:kTKSystemBrowserEnableKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)setMemberExitMonitoringEnable:(BOOL)memberExitMonitoringEnable {
+    _memberExitMonitoringEnable = memberExitMonitoringEnable;
+    [[NSUserDefaults standardUserDefaults] setBool:_memberExitMonitoringEnable forKey:kTKmemberExitMonitoringEnableKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -227,6 +236,19 @@ static NSString * const kTKWeChatRemotePlistPath = @"https://raw.githubuserconte
     return _unreadSessionSet;
 }
 
+- (NSMutableDictionary *)quitChatRoomMemberDict {
+    if (!_quitChatRoomMemberDict) {
+        _quitChatRoomMemberDict = [NSMutableDictionary dictionaryWithContentsOfFile:self.quitChatroomMemberPlistFilePath];
+        if (!_quitChatRoomMemberDict) {
+            _quitChatRoomMemberDict = [NSMutableDictionary dictionary];
+        }
+    }
+    return _quitChatRoomMemberDict;
+}
+
+- (void)saveQuitChatRoomMemberDict {
+    [self.quitChatRoomMemberDict writeToFile:self.quitChatroomMemberPlistFilePath atomically:YES];
+}
 #pragma mark - 获取沙盒上的 plist 文件，包括：远程控制，自动回复，置底列表。
 - (NSString *)remoteControlPlistFilePath {
     if (!_remoteControlPlistFilePath) {
@@ -247,6 +269,13 @@ static NSString * const kTKWeChatRemotePlistPath = @"https://raw.githubuserconte
         _ignoreSessionPlistFilePath = [self getSandboxFilePathWithPlistName:@"TKIgnoreSessons.plist"];
     }
     return _ignoreSessionPlistFilePath;
+}
+
+- (NSString *)quitChatroomMemberPlistFilePath {
+    if (!_quitChatroomMemberPlistFilePath) {
+        _quitChatroomMemberPlistFilePath = [self getSandboxFilePathWithPlistName:@"TKQuitChatRoomMember.plist"];
+    }
+    return _quitChatroomMemberPlistFilePath;
 }
 
 #pragma mark - 获取本地 & github 上的小助手 info 信息

@@ -4,7 +4,7 @@
 
 ![platform](https://img.shields.io/badge/platform-macos-lightgrey.svg)  [![release](https://img.shields.io/badge/release-v1.7.5-brightgreen.svg)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases)  ![support](https://img.shields.io/badge/support-wechat%202.3.22-blue.svg)  [![Readme](https://img.shields.io/badge/readme-english-yellow.svg)](./README_EN.md)   [![GitHub license](https://img.shields.io/github/license/TKkk-iOSer/WeChatPlugin-MacOS.svg)](./LICENSE)
 
-# 微信小助手 v1.7.5
+# 微信小助手 v2.0
 
  **[English](./README_EN.md) | 中文**
 
@@ -43,6 +43,8 @@
 * 新增[LaunchBar 扩展](https://github.com/VDeamoV/WeChatHelper)
 * 新增禁止微信检测更新开关(非App Store版本)
 * ~~新增小助手.app安装方式~~
+* 支持退群监控，撤回消息定位
+* 支持微信 3.7.0 
 
 **若无使用 alfred，则不必打开 alfred 开关**
 
@@ -61,6 +63,7 @@
 
 ## 更新日志
 
+* [适配3.7.0(2023-03-12)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v2.0)
 * [适配2.3.22 & 新增禁止微信检测更新开关(2019-01-13)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.7.5)
 * [适配2.3.19 & 修复安全漏洞(2018-10-23)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.7.3)
 * [适配2.3.17 & 加强 alfred 搜索(2018-07-24)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.7.1)

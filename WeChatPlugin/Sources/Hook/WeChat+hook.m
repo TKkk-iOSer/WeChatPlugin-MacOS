@@ -17,44 +17,27 @@
 #import "TKVersionManager.h"
 #import "TKRemoteControlManager.h"
 #import "TKDownloadWindowController.h"
+#import "TKConstants.h"
 
 @implementation NSObject (WeChatHook)
 
 + (void)hookWeChat {
     //      微信撤回消息
-    SEL revokeMsgMethod = LargerOrEqualVersion(@"2.3.22") ? @selector(FFToNameFavChatZZ:) : @selector(onRevokeMsg:);
-    tk_hookMethod(objc_getClass("MessageService"), revokeMsgMethod, [self class], @selector(hook_onRevokeMsg:));
+    tk_hookMethod(objc_getClass("FFProcessReqsvrZZ"), @selector(FFToNameFavChatZZ:sessionMsgList:), [self class], @selector(hook_FFToNameFavChatZZ:sessionMsgList:));
     //      微信消息同步
     SEL syncBatchAddMsgsMethod = LargerOrEqualVersion(@"2.3.22") ? @selector(FFImgToOnFavInfoInfoVCZZ:isFirstSync:) : @selector(OnSyncBatchAddMsgs:isFirstSync:);
-    tk_hookMethod(objc_getClass("MessageService"), syncBatchAddMsgsMethod, [self class], @selector(hook_OnSyncBatchAddMsgs:isFirstSync:));
+    tk_hookMethod(objc_getClass("FFProcessReqsvrZZ"), syncBatchAddMsgsMethod, [self class], @selector(hook_OnSyncBatchAddMsgs:isFirstSync:));
     //      微信多开
     SEL hasWechatInstanceMethod = LargerOrEqualVersion(@"2.3.22") ? @selector(FFSvrChatInfoMsgWithImgZZ) : @selector(HasWechatInstance);
     tk_hookClassMethod(objc_getClass("CUtility"), hasWechatInstanceMethod, [self class], @selector(hook_HasWechatInstance));
-    //      免认证登录
-    tk_hookMethod(objc_getClass("MMLoginOneClickViewController"), @selector(onLoginButtonClicked:), [self class], @selector(hook_onLoginButtonClicked:));
-    SEL sendLogoutCGIWithCompletionMethod = LargerOrEqualVersion(@"2.3.22") ? @selector(FFVCRecvDataAddDataToMsgChatMgrRecvZZ:) : @selector(sendLogoutCGIWithCompletion:);
-    tk_hookMethod(objc_getClass("LogoutCGI"), sendLogoutCGIWithCompletionMethod, [self class], @selector(hook_sendLogoutCGIWithCompletion:));
-    
-    SEL manualLogoutMethod = LargerOrEqualVersion(@"2.3.22") ? @selector(FFAddSvrMsgImgVCZZ) : @selector(ManualLogout);
-    tk_hookMethod(objc_getClass("AccountService"), manualLogoutMethod, [self class], @selector(hook_ManualLogout));
-    
-    //      自动登录
-    tk_hookMethod(objc_getClass("MMLoginOneClickViewController"), @selector(viewWillAppear), [self class], @selector(hook_viewWillAppear));
-    //      置底
-    SEL sortSessionsMethod = LargerOrEqualVersion(@"2.3.22") ? @selector(FFDataSvrMgrSvrFavZZ) : @selector(sortSessions);
-    tk_hookMethod(objc_getClass("MMSessionMgr"), sortSessionsMethod, [self class], @selector(hook_sortSessions));
     //      窗口置顶
     tk_hookMethod(objc_getClass("NSWindow"), @selector(makeKeyAndOrderFront:), [self class], @selector(hook_makeKeyAndOrderFront:));
-    //      快捷回复
-//    tk_hookMethod(objc_getClass("_NSConcreteUserNotificationCenter"), @selector(deliverNotification:), [self class], @selector(hook_deliverNotification:));
-//    tk_hookMethod(objc_getClass("MMNotificationService"), @selector(userNotificationCenter:didActivateNotification:), [self class], @selector(hook_userNotificationCenter:didActivateNotification:));
-//    tk_hookMethod(objc_getClass("MMNotificationService"), @selector(getNotificationContentWithMsgData:), [self class], @selector(hook_getNotificationContentWithMsgData:));
     //      登录逻辑
     tk_hookMethod(objc_getClass("AccountService"), @selector(onAuthOKOfUser:withSessionKey:withServerId:autoAuthKey:isAutoAuth:), [self class], @selector(hook_onAuthOKOfUser:withSessionKey:withServerId:autoAuthKey:isAutoAuth:));
 
     //      自带浏览器打开链接
-    tk_hookClassMethod(objc_getClass("MMWebViewHelper"), @selector(preHandleWebUrlStr:withMessage:), [self class], @selector(hook_preHandleWebUrlStr:withMessage:));
-    
+    tk_hookMethod(objc_getClass("MMURLHandler"), @selector(preHandleUrlStr:withMessage:), [self class], @selector(hook_preHandleUrlStr:withMessage:));
+
     tk_hookMethod(objc_getClass("MMURLHandler"), @selector(startGetA8KeyWithURL:), [self class], @selector(hook_startGetA8KeyWithURL:));
     tk_hookMethod(objc_getClass("WeChat"), @selector(applicationDidFinishLaunching:), [self class], @selector(hook_applicationDidFinishLaunching:));
     
@@ -64,6 +47,18 @@
     tk_hookMethod(objc_getClass("MMChatMessageViewController"), @selector(onClickSession), [self class], @selector(hook_onClickSession));
     tk_hookMethod(objc_getClass("MMSessionMgr"), @selector(onUnReadCountChange:), [self class], @selector(hook_onUnReadCountChange:));
 
+    //    远程语音控制
+    tk_hookMethod(objc_getClass("MMVoiceTranslateMgr"), @selector(updateTranscribeVoiceMessage:voiceText:voiceToTextStatus:), [self class], @selector(hook_updateTranscribeVoiceMessage:voiceText:voiceToTextStatus:));
+
+    //    不支持的消息提示（小程序、转账等
+    tk_hookClassMethod(objc_getClass("MMAppBrandMessageCellView"), @selector(makeAppBrandTableItemWithItem:), [self class], @selector(hook_makeAppBrandTableItemWithItem:));
+    tk_hookClassMethod(objc_getClass("MMUnsupportedCellView"), @selector(makeUnsupportedTableItemWithItem:), [self class], @selector(hook_makeUnsupportedTableItemWithItem:));
+    tk_hookClassMethod(objc_getClass("MMPayTransferCellView"), @selector(makePayTransferTableItemWithItem:), [self class], @selector(hook_makePayTransferTableItemWithItem:));
+    
+    //  退群提示
+    tk_hookMethod(objc_getClass("GroupStorage"), @selector(notifyModifyGroupContactsOnMainThread:), [self class], @selector(hook_notifyModifyGroupContactsOnMainThread:));
+    tk_hookMethod(objc_getClass("MMSystemMessageCellView"), @selector(textView:clickedOnLink:atIndex:), [self class], @selector(hook_textView:clickedOnLink:atIndex:));
+    tk_hookMethod(objc_getClass("MMSystemMessageCellView"), @selector(populateWithMessage:), [self class], @selector(hook_populateWithMessage:));
     //      替换沙盒路径
     rebind_symbols((struct rebinding[2]) {
         { "NSSearchPathForDirectoriesInDomains", swizzled_NSSearchPathForDirectoriesInDomains, (void *)&original_NSSearchPathForDirectoriesInDomains },
@@ -135,9 +130,9 @@
  hook 微信撤回消息
  
  */
-- (void)hook_onRevokeMsg:(id)msgData {
+- (void)hook_FFToNameFavChatZZ:(id)msgData sessionMsgList:(id)arg2 {
     if (![[TKWeChatPluginConfig sharedConfig] preventRevokeEnable]) {
-        [self hook_onRevokeMsg:msgData];
+        [self hook_FFToNameFavChatZZ:msgData sessionMsgList:arg2];
         return;
     }
     id msg = msgData;
@@ -166,14 +161,14 @@
         [revokeMsgSet addObject:newmsgid];
         
         //      获取原始的撤回提示消息
-        MessageService *msgService = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
+        FFProcessReqsvrZZ *msgService = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("FFProcessReqsvrZZ")];
         MessageData *revokeMsgData = [msgService GetMsgData:session svrId:[newmsgid integerValue]];
         if ([revokeMsgData isSendFromSelf] && ![[TKWeChatPluginConfig sharedConfig] preventSelfRevokeEnable]) {
-            [self hook_onRevokeMsg:msgData];
+            [self hook_FFToNameFavChatZZ:msgData sessionMsgList:arg2];
             return;
         }
         NSString *msgContent = [[TKMessageManager shareManager] getMessageContentWithData:revokeMsgData];
-        NSString *newMsgContent = [NSString stringWithFormat:@"%@ \n%@",TKLocalizedString(@"assistant.revoke.otherMessage.tip"), msgContent];
+        NSString *newMsgContent = [NSString stringWithFormat:@"%@ \n%@%@%d",TKLocalizedString(@"assistant.revoke.otherMessage.tip"), msgContent, kTKRevokeLocationKey, revokeMsgData.mesLocalID];
         MessageData *newMsgData = ({
             MessageData *msg = [[objc_getClass("MessageData") alloc] initWithMsgType:0x2710];
             [msg setFromUsrName:revokeMsgData.toUsrName];
@@ -247,28 +242,6 @@
 //    }
 //}
 
-/**
- hook 自动登录
- 
- */
-- (void)hook_onLoginButtonClicked:(NSButton *)btn {
-    AccountService *accountService = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("AccountService")];
-    BOOL autoAuthEnable = [[TKWeChatPluginConfig sharedConfig] autoAuthEnable];
-    if (autoAuthEnable && [accountService canAutoAuth]) {
-        [accountService AutoAuth];
-        
-        WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
-        MMLoginOneClickViewController *loginVC = wechat.mainWindowController.loginViewController.oneClickViewController;
-        loginVC.loginButton.hidden = YES;
-        ////        [wechat.mainWindowController onAuthOK];
-        loginVC.descriptionLabel.stringValue = TKLocalizedString(@"assistant.autoAuth.tip");
-        loginVC.descriptionLabel.textColor = TK_RGB(0x88, 0x88, 0x88);
-        loginVC.descriptionLabel.hidden = NO;
-    } else {
-        [self hook_onLoginButtonClicked:btn];
-    }
-}
-
 - (void)hook_onAuthOKOfUser:(id)arg1 withSessionKey:(id)arg2 withServerId:(id)arg3 autoAuthKey:(id)arg4 isAutoAuth:(BOOL)arg5 {
     [self hook_onAuthOKOfUser:arg1 withSessionKey:arg2 withServerId:arg3 autoAuthKey:arg4 isAutoAuth:arg5];
 
@@ -283,93 +256,6 @@
         preventMenu.enabled = YES;
     });
 }
-
-- (void)hook_sendLogoutCGIWithCompletion:(id)arg1 {
-    BOOL autoAuthEnable = [[TKWeChatPluginConfig sharedConfig] autoAuthEnable];
-    WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
-    if (autoAuthEnable && wechat.isAppTerminating) return;
-    
-    [self hook_sendLogoutCGIWithCompletion:arg1];
-}
-
-- (void)hook_ManualLogout {
-    if ([[TKWeChatPluginConfig sharedConfig] alfredEnable]) {
-        [[TKWebServerManager shareManager] endServer];
-    }
-    
-    NSMenu *mainMenu = [[NSApplication sharedApplication] mainMenu];
-    NSMenuItem *pluginMenu = mainMenu.itemArray.lastObject;
-    pluginMenu.enabled = NO;
-    BOOL autoAuthEnable = [[TKWeChatPluginConfig sharedConfig] autoAuthEnable];
-    if (autoAuthEnable) return;
-    
-    [self hook_ManualLogout];
-}
-
-- (void)hook_viewWillAppear {
-    [self hook_viewWillAppear];
-    
-    BOOL autoAuthEnable = [[TKWeChatPluginConfig sharedConfig] autoAuthEnable];
-    if (![self.className isEqualToString:@"MMLoginOneClickViewController"] || !autoAuthEnable) return;
-
-    NSButton *autoLoginButton = ({
-        NSButton *btn = [NSButton tk_checkboxWithTitle:@"" target:self action:@selector(selectAutoLogin:)];
-        btn.frame = NSMakeRect(110, 60, 80, 30);
-        NSMutableParagraphStyle *pghStyle = [[NSMutableParagraphStyle alloc] init];
-        pghStyle.alignment = NSTextAlignmentCenter;
-        NSDictionary *dicAtt = @{NSForegroundColorAttributeName: kBG4, NSParagraphStyleAttributeName: pghStyle};
-        btn.attributedTitle = [[NSAttributedString alloc] initWithString:TKLocalizedString(@"assistant.autoLogin.text") attributes:dicAtt];
-        
-        btn;
-    });
-    
-    WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
-    MMLoginOneClickViewController *loginVC = wechat.mainWindowController.loginViewController.oneClickViewController;
-    [loginVC.view addSubview:autoLoginButton];
-    
-    BOOL autoLogin = [[TKWeChatPluginConfig sharedConfig] autoLoginEnable];
-    autoLoginButton.state = autoLogin;
-    
-    NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
-    NSArray *instances = [NSRunningApplication runningApplicationsWithBundleIdentifier:bundleIdentifier];
-    BOOL wechatHasRun = instances.count == 1;
-    AccountService *accountService = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("AccountService")];
-    if (autoLogin && wechatHasRun && [accountService canAutoAuth]) {
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            [loginVC onLoginButtonClicked:nil];
-        });
-    }
-}
-
-- (void)hook_sortSessions {
-    [self hook_sortSessions];
-    
-    MMSessionMgr *sessionMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMSessionMgr")];
-    NSMutableArray *arrSession = sessionMgr.m_arrSession;
-    NSMutableArray *ignoreSessions = [[[TKWeChatPluginConfig sharedConfig] ignoreSessionModels] mutableCopy];
-    
-    NSString *currentUserName = [objc_getClass("CUtility") GetCurrentUserName];
-    [ignoreSessions enumerateObjectsUsingBlock:^(TKIgnoreSessonModel *model, NSUInteger index, BOOL * _Nonnull stop) {
-        __block NSInteger ignoreIdx = -1;
-        [arrSession enumerateObjectsUsingBlock:^(MMSessionInfo *sessionInfo, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([model.userName isEqualToString:sessionInfo.m_nsUserName] && [model.selfContact isEqualToString:currentUserName]) {
-                ignoreIdx = idx;
-                *stop = YES;
-            }
-        }];
-        
-        if (ignoreIdx != -1) {
-            MMSessionInfo *sessionInfo = arrSession[ignoreIdx];
-            [arrSession removeObjectAtIndex:ignoreIdx];
-            [arrSession addObject:sessionInfo];
-        }
-    }];
-    
-    WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
-    [wechat.chatsViewController.tableView reloadData];
-}
-
 
 - (void)hook_startGetA8KeyWithURL:(id)arg1 {
     MMURLHandler *urlHandler = (MMURLHandler *)self;
@@ -406,14 +292,18 @@
 }
 
 //  是否使用微信浏览器
-+ (BOOL)hook_preHandleWebUrlStr:(id)arg1 withMessage:(id)arg2 {
-    if ([[TKWeChatPluginConfig sharedConfig] systemBrowserEnable]) {
+- (BOOL)hook_preHandleUrlStr:(id)arg1 withMessage:(id)arg2 {
+   if ([[TKWeChatPluginConfig sharedConfig] systemBrowserEnable]) {
         MMURLHandler *urlHander = [objc_getClass("MMURLHandler") defaultHandler];
-        [urlHander openURLWithDefault:arg1];
-        return YES;
-    } else {
-        return [self hook_preHandleWebUrlStr:arg1 withMessage:arg2];
+       if ([urlHander respondsToSelector:@selector(openURLWithDefault:)]) { // 2.3.22
+           [urlHander openURLWithDefault:arg1];
+           return YES;
+       } else if ([urlHander respondsToSelector:@selector(openURLWithDefault:useA8Key:)]) { // 2.3.30
+           [urlHander openURLWithDefault:arg1 useA8Key:YES];
+           return YES;
+       }
     }
+    return [self hook_preHandleUrlStr:arg1 withMessage:arg2];
 }
 
 //  设置标记未读
@@ -436,6 +326,20 @@
     }
     [self hook_onUnReadCountChange:arg1];
 }
+
+//  拦截微信语音转换，用于语音远程控制
+- (void)hook_updateTranscribeVoiceMessage:(MessageData *)arg1 voiceText:(id)arg2 voiceToTextStatus:(unsigned int)arg3 {
+    [self hook_updateTranscribeVoiceMessage:arg1 voiceText:arg2 voiceToTextStatus:arg3];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if ([arg1 isSendFromSelf]) {
+             NSString *currentUserName = [objc_getClass("CUtility") GetCurrentUserName];
+            if ([arg1.toUsrName isEqualToString:currentUserName]) {
+                [TKRemoteControlManager executeRemoteControlCommandWithVoiceMsg:arg2];
+            }
+        }
+    });
+}
+
 #pragma mark - hook 系统方法
 - (void)hook_makeKeyAndOrderFront:(nullable id)sender {
     BOOL top = [[TKWeChatPluginConfig sharedConfig] onTop];
@@ -458,7 +362,7 @@
     NSString *userName = addMsg.fromUserName.string;
     
     MMSessionMgr *sessionMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMSessionMgr")];
-    WCContactData *msgContact = [sessionMgr getContact:userName];
+    WCContactData *msgContact = [sessionMgr getSessionContact:userName];
     if ([msgContact isBrandContact] || [msgContact isSelf]) {
         //        该消息为公众号或者本人发送的消息
         return;
@@ -484,10 +388,7 @@
 - (void)replyWithMsg:(AddMsg *)addMsg model:(TKAutoReplyModel *)model {
     NSString *msgContent = addMsg.content.string;
     if ([addMsg.fromUserName.string containsString:@"@chatroom"]) {
-        NSRange range = [msgContent rangeOfString:@":\n"];
-        if (range.length > 0) {
-            msgContent = [msgContent substringFromIndex:range.location + range.length];
-        }
+        msgContent = [msgContent substringFromString:@":\n"];
     }
     
     NSArray *replyArray = [model.replyContent componentsSeparatedByString:@"|"];
@@ -530,16 +431,12 @@
         [TKRemoteControlManager executeRemoteControlCommandWithMsg:addMsg.content.string];
     } else if (addMsg.msgType == 34) {
         //      此为语音消息
-        MessageService *msgService = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MessageService")];
+        FFProcessReqsvrZZ *msgService = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("FFProcessReqsvrZZ")];
         MessageData *msgData = [msgService GetMsgData:addMsg.fromUserName.string svrId:addMsg.newMsgId];
-        long long mesSvrID = msgData.mesSvrID;
-        NSString *sessionName = msgData.fromUsrName;
-        [msgService TranscribeVoiceMessage:msgData completion:^ {
-            MessageData *callbackMsgData = [msgService GetMsgData:sessionName svrId:mesSvrID];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [TKRemoteControlManager executeRemoteControlCommandWithVoiceMsg:callbackMsgData.msgVoiceText];
-            });
-        }];
+         dispatch_async(dispatch_get_main_queue(), ^{
+             MMVoiceTranslateMgr *voiceMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMVoiceTranslateMgr")];
+             [voiceMgr doTranslate:msgData isAuto:YES];
+         });
     }
 }
 
@@ -555,6 +452,223 @@
 - (void)windowsWillMiniaturize:(NSNotification *)notification {
     NSObject *window = notification.object;
     ((NSWindow *)window).level =NSNormalWindowLevel;
+}
+
+#pragma mark - 不支持的消息展示
++ (id)hook_makePayTransferTableItemWithItem:(MMMessageTableItem *)arg1 {
+    MMMessageTableItem *tableItem = [self hook_makePayTransferTableItemWithItem:arg1];
+    
+    NSString *feeDesc = tableItem.message.m_oWCPayInfoItem.m_nsFeeDesc;
+    if (feeDesc.length > 0) {
+        tableItem.message.msgContent = [NSString stringWithFormat:@"%@\n金额：%@元",tableItem.message.msgContent,feeDesc];
+    }
+    return tableItem;
+    
+}
++ (id)hook_makeAppBrandTableItemWithItem:(MMMessageTableItem *)arg1 {
+    MMMessageTableItem *tableItem = [self hook_makeAppBrandTableItemWithItem:arg1];
+    tableItem.message = [self resetMsgContent:tableItem.message];
+    return tableItem;
+}
+
++ (id)hook_makeUnsupportedTableItemWithItem:(MMMessageTableItem *)arg1 {
+    MMMessageTableItem *tableItem = [self hook_makeUnsupportedTableItemWithItem:arg1];
+    tableItem.message = [self resetMsgContent:tableItem.message];
+    return tableItem;
+}
+
++ (MessageData *)resetMsgContent:(MessageData *)msgData {
+    if (msgData.m_nsTitle.length > 0) {
+        NSString *from = @"内容";
+        if (msgData.m_nsSourceDisplayname.length > 0) {
+            from = msgData.m_nsSourceDisplayname;
+        } else if (msgData.m_nsAppName.length > 0) {
+            from = msgData.m_nsAppName;
+        }
+        msgData.msgContent = [msgData.msgContent stringByAppendingFormat:@"\n%@：%@", from, msgData.m_nsTitle];
+    }
+
+    return msgData;
+}
+
+#pragma mark - 退群处理
+- (void)hook_notifyModifyGroupContactsOnMainThread:(NSArray <WCContactData *> *)arg1 {
+    [self hook_notifyModifyGroupContactsOnMainThread:arg1];
+    if (![TKWeChatPluginConfig sharedConfig].memberExitMonitoringEnable) {
+        return;
+    }
+    GroupStorage *contactStorage = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("GroupStorage")];
+    [arg1 enumerateObjectsUsingBlock:^(WCContactData * obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSDictionary *m_dicData = [obj.m_chatRoomData valueForKey:@"m_dicData"];
+        [m_dicData.allKeys enumerateObjectsUsingBlock:^(NSString *userName, NSUInteger idx, BOOL * _Nonnull stop) {
+            if (![obj containsMember:userName]) {
+                NSString *localKey = [NSString stringWithFormat:@"%@-%@",obj.m_nsUsrName, userName];
+                NSMutableDictionary *quitChatRoomMemberDict = [TKWeChatPluginConfig sharedConfig].quitChatRoomMemberDict;
+                NSString *saveDateKey = quitChatRoomMemberDict[localKey];
+                BOOL canShowQuitTip = NO;
+                if (saveDateKey) {
+                    NSDate *currentDate = [NSDate date];
+                    NSDate *lastSaveDate = [[TKUtility getDateFormater] dateFromString:saveDateKey];
+                    NSTimeInterval days = [currentDate timeIntervalSinceDate:lastSaveDate] / (3600.0 * 24);
+                    canShowQuitTip = days > kTKMemberQuitDayInterval;
+                } else {
+                    canShowQuitTip = YES;
+                }
+                if (canShowQuitTip) {
+                    [TKWeChatPluginConfig sharedConfig].quitChatRoomMemberDict[localKey] = [TKUtility getOnlyDateString];
+                    [[TKWeChatPluginConfig sharedConfig] saveQuitChatRoomMemberDict];
+                    WCContactData *quitChatroomUser = [contactStorage GetGroupMemberContact:userName];
+                    NSString *msgContent = [NSString stringWithFormat:@"%@ %@ \n %@%@",quitChatroomUser.m_nsNickName, WXLocalizedString(@"ChatInspector.LeaveChat"),WXLocalizedString(@"Contacts.UserNameKeyLabel"),userName];
+                    FFProcessReqsvrZZ *msgService = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("FFProcessReqsvrZZ")];
+                    MessageData *newMsgData = ({
+                        MessageData *msg = [[objc_getClass("MessageData") alloc] initWithMsgType:0x2710];
+                        [msg setFromUsrName:userName];
+                        [msg setToUsrName:obj.m_nsUsrName];
+                        [msg setM_nsAppName:userName];
+                        [msg setMsgStatus:4];
+                        [msg setMsgContent:msgContent];
+                        [msg setMsgCreateTime:[[NSDate date] timeIntervalSince1970]];
+
+                        msg;
+                    });
+                    [msgService AddLocalMsg:obj.m_nsUsrName msgData:newMsgData];
+                }
+            }
+        }];
+    }];
+}
+
+- (BOOL)hook_textView:(NSTextView *)arg1 clickedOnLink:(NSString *)arg2 atIndex:(unsigned long long)arg3 {
+    if ([arg2 containsString:kTKScrollToMessageKey]) {
+        MMSystemMessageCellView *currentCellView = (MMSystemMessageCellView *)self;
+        NSString *localIDStr = [arg2 substringFromString:kTKScrollToMessageKey];
+        NSUInteger localId = [localIDStr integerValue];
+        if (localId > 0) {
+            if ([currentCellView.delegate isKindOfClass:objc_getClass("MMChatMessageViewController")]) {
+                MMChatMessageViewController *vc = currentCellView.delegate;
+                if ([vc respondsToSelector:@selector(showLocatedMessage:)]) {
+                    [vc showLocatedMessage:localId];
+                } else if ([vc respondsToSelector:@selector(showLocatedMessage:needHighLighted:)]) {
+                    [vc showLocatedMessage:localId needHighLighted:YES];
+                }
+            }
+        }
+        return YES;
+    } else if ([arg2 containsString:kTKShowMembeContactProfileKey]) {
+        NSString *usrName = [arg2 substringFromString:kTKShowMembeContactProfileKey];
+        if (usrName.length) {
+            MMSystemMessageCellView *currentCellView = (MMSystemMessageCellView *)self;
+            MMMessageTableItem *item = currentCellView.messageTableItem;
+            MessageData *msgData = item.message;
+            GroupStorage *contactStorage = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("GroupStorage")];
+            WCContactData *contactData = [objc_getClass("CUtility") GetContactByUsrName:usrName];
+            if (!contactData) {
+                contactData = [contactStorage GetGroupMemberContact:usrName];
+            }
+            if (contactData) {
+                MMContactProfileController *vc = [[objc_getClass("MMContactProfileController") alloc] initWithNibName:@"MMContactProfileController" bundle:0];
+                vc.groupName = msgData.fromUsrName;
+                vc.relativeToRect = CGRectMake(150, 11, 200, 50);
+                vc.preferredEdge = 2;
+                vc.contactData = contactData;
+                [vc showInView:self];
+                return YES;
+            }
+        }
+    }
+    
+    return [self hook_textView:arg1 clickedOnLink:arg2 atIndex:arg3];
+}
+
+- (void)hook_populateWithMessage:(id)arg1 {
+    [self hook_populateWithMessage:arg1];
+    
+    MMSystemMessageCellView *currentCellView = (MMSystemMessageCellView *)self;
+    MMMessageTableItem *item = currentCellView.messageTableItem;
+    MessageData *msgData = item.message;
+    NSString *msgContent = msgData.msgContent;
+    if ([msgContent containsString:WXLocalizedString(@"ChatInspector.LeaveChat")] &&
+        [msgContent containsString:WXLocalizedString(@"Contacts.UserNameKeyLabel")]) {
+        NSMutableAttributedString *attStr = [currentCellView.msgTextView.attributedString mutableCopy];
+        NSString *displayMsgContent = attStr.string;
+        NSString *userName = [displayMsgContent substringToString:WXLocalizedString(@"ChatInspector.LeaveChat")];
+        NSString *userId = [displayMsgContent substringFromString:WXLocalizedString(@"Contacts.UserNameKeyLabel")];
+        
+        if (userName && userId) {
+            // 将用户昵称标记超链接
+            NSRange userRange = [displayMsgContent rangeOfString:userName];
+            if (userRange.length > 0 && userId) {
+                NSString *linkValue = [kTKShowMembeContactProfileKey stringByAppendingString:userId];
+                [attStr addAttribute:NSLinkAttributeName value:linkValue range:userRange];
+            }
+            //  删除其他信息，不显示微信号
+            NSString *otherMsg = [displayMsgContent substringFromString:WXLocalizedString(@"ChatInspector.LeaveChat")];
+            if (otherMsg) {
+                NSRange otherMsgRange = [displayMsgContent rangeOfString:otherMsg];
+                [attStr deleteCharactersInRange:otherMsgRange];
+            }
+            currentCellView.msgTextView.textStorage.attributedString = attStr;
+        }
+    } else if ([msgContent containsString:kTKRevokeLocationKey]) {
+        NSMutableAttributedString *attStr = [currentCellView.msgTextView.attributedString mutableCopy];
+        NSString *displayMsgContent = attStr.string;
+        NSString *originMsg = [displayMsgContent substringFromString:TKLocalizedString(@"assistant.revoke.otherMessage.tip")];
+        if (originMsg) {
+            // 将撤回内容标记超链接
+            NSRange msgRange = [displayMsgContent rangeOfString:originMsg];
+            if (msgRange.length > 0) {
+                NSString *localID = [displayMsgContent substringFromString:kTKRevokeLocationKey];
+                if (localID) {
+                    NSString *linkValue = [kTKScrollToMessageKey stringByAppendingString:localID];
+                    [attStr addAttribute:NSLinkAttributeName value:linkValue range:msgRange];
+                }
+            }
+        }
+        //  删除其他信息，不显示微信号
+        NSRange tipRange = [attStr.string rangeOfString:kTKRevokeLocationKey];
+        if (tipRange.length > 0) {
+            NSString *tipAndLocalId = [attStr.string substringFromIndex:tipRange.location];
+            NSRange localIdrange = [attStr.string rangeOfString:tipAndLocalId];
+            if (localIdrange.length > 0) {
+                if (localIdrange.length + localIdrange.location > attStr.length) {
+                    localIdrange.length = attStr.length - localIdrange.location;
+                }
+                [attStr deleteCharactersInRange:localIdrange];
+            }
+            currentCellView.msgTextView.textStorage.attributedString = attStr;
+        }
+    }
+    NSMutableArray *names = [TKUtility getMemberNameWithMsgContent:msgContent];
+    if (names.count > 0) {
+        NSMutableAttributedString *attStr = [currentCellView.msgTextView.attributedString mutableCopy];
+         NSString *displayMsgContent = attStr.string;
+        GroupStorage *contactStorage = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("GroupStorage")];
+        MMSessionMgr *sessionMgr = [[objc_getClass("MMServiceCenter") defaultCenter] getService:objc_getClass("MMSessionMgr")];
+        WCContactData *group = [sessionMgr getSessionContact:msgData.fromUsrName];
+        NSArray *memberList = [contactStorage GetGroupMemberListWithGroupContact:group limit:500 filterSelf:YES];
+
+        [memberList enumerateObjectsUsingBlock:^(WCContactData *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            __block NSString *needRemoveName = nil;
+            [names enumerateObjectsUsingBlock:^(NSString *name, NSUInteger idx, BOOL * _Nonnull subStop) {
+                if ( [[obj groupChatDisplayNameInGroup:msgData.fromUsrName] isEqualToString:name] ||
+                    [obj.m_nsNickName isEqualToString:name] ||
+                    [obj.m_nsRemark isEqual:name]) {
+                    NSRange nameRange = [displayMsgContent rangeOfString:name];
+                    NSString *value = [NSString stringWithFormat:@"%@%@",kTKShowMembeContactProfileKey,obj.m_nsUsrName];
+                    [attStr addAttribute:NSLinkAttributeName value:value range:nameRange];
+                    needRemoveName = name;
+                    *subStop = YES;
+                }
+            }];
+            if (needRemoveName) {
+                [names removeObject:needRemoveName];
+            }
+            if (names.count == 0) {
+                *stop = YES;
+            }
+        }];
+        currentCellView.msgTextView.textStorage.attributedString = attStr;
+    }
 }
 
 #pragma mark - 替换 NSSearchPathForDirectoriesInDomains & NSHomeDirectory

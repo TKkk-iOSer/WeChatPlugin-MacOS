@@ -57,12 +57,6 @@ static char tkAboutWindowControllerKey;             //  关于窗口的关联 ke
                                                        target:self
                                                 keyEquivalent:@"k"
                                                         state:[[TKWeChatPluginConfig sharedConfig] autoReplyEnable]];
-    //        登录新微信
-    NSMenuItem *newWeChatItem = [NSMenuItem menuItemWithTitle:TKLocalizedString(@"assistant.menu.newWeChat")
-                                                       action:@selector(onNewWechatInstance:)
-                                                       target:self
-                                                keyEquivalent:@"N"
-                                                        state:0];
     //        远程控制
     NSMenuItem *commandItem = [NSMenuItem menuItemWithTitle:TKLocalizedString(@"assistant.menu.remoteControl")
                                                      action:@selector(onRemoteControl:)
@@ -75,12 +69,6 @@ static char tkAboutWindowControllerKey;             //  关于窗口的关联 ke
                                                    target:self
                                             keyEquivalent:@"D"
                                                     state:[[TKWeChatPluginConfig sharedConfig] onTop]];
-    //        免认证登录
-    NSMenuItem *autoAuthItem = [NSMenuItem menuItemWithTitle:TKLocalizedString(@"assistant.menu.freeLogin")
-                                                      action:@selector(onAutoAuthControl:)
-                                                      target:self
-                                               keyEquivalent:@""
-                                                       state:[[TKWeChatPluginConfig sharedConfig] autoAuthEnable]];
     
     //        使用自带浏览器
     NSMenuItem *enableSystemBrowserItem = [NSMenuItem menuItemWithTitle:TKLocalizedString(@"assistant.menu.systemBrowser")
@@ -88,6 +76,14 @@ static char tkAboutWindowControllerKey;             //  关于窗口的关联 ke
                                                                 target:self
                                                          keyEquivalent:@"B"
                                                                  state:[[TKWeChatPluginConfig sharedConfig] systemBrowserEnable]];
+    
+    //        退群监控
+    NSMenuItem *memberExitMonitoringItem = [NSMenuItem menuItemWithTitle:TKLocalizedString(@"assistant.menu.memberExitMonitoring")
+                                                                action:@selector(onEnablememberExitMonitoring:)
+                                                                target:self
+                                                         keyEquivalent:@""
+                                                                 state:[[TKWeChatPluginConfig sharedConfig] memberExitMonitoringEnable]];
+    
     //        是否禁止微信开启时检测新版本
     NSMenuItem *forbidCheckUpdateItem = [NSMenuItem menuItemWithTitle:TKLocalizedString(@"assistant.menu.forbidCheck")
                                                                  action:@selector(onForbidWeChatCheckUpdate:)
@@ -131,10 +127,9 @@ static char tkAboutWindowControllerKey;             //  关于窗口的关联 ke
     [subMenu addItems:@[preventRevokeItem,
                         autoReplyItem,
                         commandItem,
-                        newWeChatItem,
                         onTopItem,
-                        autoAuthItem,
                         enableSystemBrowserItem,
+                        memberExitMonitoringItem,
                         pluginItem
                         ]];
     WeChat *wechat = [objc_getClass("WeChat") sharedInstance];
@@ -237,15 +232,6 @@ static char tkAboutWindowControllerKey;             //  关于窗口的关联 ke
 }
 
 /**
- 打开新的微信
- 
- @param item 登录新微信的item
- */
-- (void)onNewWechatInstance:(NSMenuItem *)item {
-    [TKRemoteControlManager executeShellCommand:@"open -n /Applications/WeChat.app"];
-}
-
-/**
  菜单栏-帮助-远程控制 MAC OS 设置
  
  @param item 远程控制的item
@@ -260,16 +246,6 @@ static char tkAboutWindowControllerKey;             //  关于窗口的关联 ke
     }
     
     [remoteControlWC show];
-}
-
-/**
- 菜单栏-微信小助手-免认证登录 设置
- 
- @param item 免认证登录的 item
- */
-- (void)onAutoAuthControl:(NSMenuItem *)item {
-    item.state = !item.state;
-    [[TKWeChatPluginConfig sharedConfig] setAutoAuthEnable:item.state];
 }
 
 /**
@@ -329,6 +305,11 @@ static char tkAboutWindowControllerKey;             //  关于窗口的关联 ke
 - (void)onEnableSystemBrowser:(NSMenuItem *)item {
     item.state = !item.state;
     [[TKWeChatPluginConfig sharedConfig] setSystemBrowserEnable:item.state];
+}
+
+- (void)onEnablememberExitMonitoring:(NSMenuItem *)item {
+    item.state = !item.state;
+    [[TKWeChatPluginConfig sharedConfig] setMemberExitMonitoringEnable:item.state];
 }
 
 - (void)onForbidWeChatCheckUpdate:(NSMenuItem *)item {

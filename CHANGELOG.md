@@ -1,5 +1,12 @@
 # 更新日志 
 
+### [v2.0 (2023-03-12)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v2.)
+
+- 适配 3.7.0
+- 新增撤回消息定位
+- 新增群聊监控
+- 移除官方已支持的功能（自动登录，移除会话，标为未读等等）
+
 ### [v1.7.5 (2019-01-13)](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/releases/tag/v1.7.5)
 
 - 适配 2.3.22

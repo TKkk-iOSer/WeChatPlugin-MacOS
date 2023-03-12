@@ -122,7 +122,7 @@
 
 - (void)setup {
     self.window.title = TKLocalizedString(@"assistant.autoReply.title");
-    self.window.contentView.layer.backgroundColor = [kBG1 CGColor];
+    self.window.contentView.layer.backgroundColor = [NSColor windowBackgroundColor].CGColor;
     [self.window.contentView.layer setNeedsDisplay];
     
     self.lastSelectIndex = -1;

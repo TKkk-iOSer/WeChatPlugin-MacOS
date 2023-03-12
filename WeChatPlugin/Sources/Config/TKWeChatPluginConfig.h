@@ -22,6 +22,7 @@
 @property (nonatomic, assign) BOOL alfredEnable;                        /**<    是否开启Alfred   */
 @property (nonatomic, assign) BOOL checkUpdateWechatEnable;             /**<    是否允许微信启动检测更新  */
 @property (nonatomic, assign) BOOL systemBrowserEnable;                 /**<    是否使用自身浏览器打开连接   */
+@property (nonatomic, assign) BOOL memberExitMonitoringEnable;                 /**<    是否使用自身浏览器打开连接   */
 @property (nonatomic, strong) NSMutableArray *autoReplyModels;           /**<    自动回复的数组    */
 @property (nonatomic, strong) NSMutableArray *remoteControlModels;       /**<    远程控制的数组    */
 @property (nonatomic, strong) NSMutableArray *ignoreSessionModels;       /**<    聊天置底的数组    */
@@ -31,10 +32,12 @@
 @property (nonatomic, copy) NSString *currentUserName;                   /**<    当前用户的id     */
 @property (nonatomic, copy, readonly) NSDictionary *localInfoPlist;
 @property (nonatomic, copy, readonly) NSDictionary *romoteInfoPlist;
+@property (nonatomic, strong) NSMutableDictionary *quitChatRoomMemberDict;     /**<    退群的好友集合    */
 
 - (void)saveAutoReplyModels;
 - (void)saveRemoteControlModels;
 - (void)saveIgnoreSessionModels;
+- (void)saveQuitChatRoomMemberDict;
 
 + (instancetype)sharedConfig;
 

@@ -14,6 +14,10 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TKUtility : NSObject
 
 + (BOOL)isLargerOrEqualVersion:(NSString *)version;
++ (NSString *)getTypeForImageData:(NSData *)data;
++ (NSDateFormatter *)getDateFormater;
++ (NSString *)getOnlyDateString;
++ (NSMutableArray *)getMemberNameWithMsgContent:(NSString *)msgContent;
 
 @end
 

@@ -10,10 +10,13 @@
 #import "WeChat+hook.h"
 #import "MMChatsTableCellView+hook.h"
 #import "MMStickerMessageCellView+hook.h"
+#import "MMStickerPickerCell+hook.h"
 
 static void __attribute__((constructor)) initialize(void) {
     NSLog(@"++++++++ WeChatPlugin loaded ++++++++");
     [NSObject hookWeChat];
     [NSObject hookMMChatsTableCellView];
     [NSObject hookMMStickerMessageCellView];
+    [NSObject hookMMStickerPickerCell];
+    
 }

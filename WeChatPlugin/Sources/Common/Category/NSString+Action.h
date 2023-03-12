@@ -13,5 +13,6 @@
 - (CGFloat)widthWithFont:(NSFont *)font;
 - (NSRect)rectWithFont:(NSFont *)font;
 - (NSString *)substringFromString:(NSString *)fromStr;
-
+- (NSString *)substringToString:(NSString *)fromStr;
+- (NSString *)substringFromString:(NSString *)fromStr toString:(NSString *)toString; 
 @end
