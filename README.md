@@ -148,21 +148,9 @@
 
 详细安装方法(或者需要重新编译)请查阅 [Install.md](https://github.com/TKkk-iOSer/WeChatPlugin-MacOS/blob/master/Install.md)
 
-#### 1. 懒癌版安装
+#### 1. 安装
 
-##### 1.1 无需安装Git
-
-打开`应用程序-实用工具-Terminal(终端)`，执行下面的命令安装 [Oh My WeChat](https://github.com/lmk123/oh-my-wechat)：
-
-```sh
-curl -o- -L https://raw.githubusercontent.com/lmk123/oh-my-wechat/master/install.sh | bash -s
-```
-
-然后运行 `omw` 即可。
-
-> 可以访问 [Oh My WeChat 的项目主页](https://github.com/lmk123/oh-my-wechat#oh-my-wechat)查看更多用法。
-
-##### 1.2 需要安装Git
+##### 1.1 需要安装Git
 
 打开`应用程序-实用工具-Terminal(终端)`，执行下面的命令安装
 
