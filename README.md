@@ -150,6 +150,8 @@
 
 #### 1. 安装
 
+**若提示无权限：`Permission denied`，执行 `sudo chmod -R 777 /Applications/WeChat.app`**
+
 ##### 1.1 需要安装Git
 
 打开`应用程序-实用工具-Terminal(终端)`，执行下面的命令安装
