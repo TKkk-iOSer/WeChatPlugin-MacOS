@@ -79,7 +79,7 @@
 "Assistant.Directive.Next" = "下一首";
 "Assistant.Directive.Previous" = "上一首";
 "Assistant.Directive.VolumeUp" = "增大音量";
-"Assistant.Directive.VolumeDown" = "VolumeDown";
+"Assistant.Directive.VolumeDown" = "减小音量";
 "Assistant.Directive.LikeChange" = "喜欢/取消喜欢";
 "Assistant.Directive.GetList" = "获取指令";
 "Assistant.Directive.AutoReplySwitch" = "自动回复开关";
